@@ -3,7 +3,9 @@
 프로젝트 아이템 논의가 마치고 결정이 되면 수정 예정입니다.
 
 ### 사용중인 상태관리, 디자인 패턴
-Getx 상태관리 패키지를 사용하며 mvvm 디자인 패턴을 채택하여 프로젝트를 구성 할 계획입니다.
+Getx 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나인 mvvm 디자인 패턴을 채택하여 프로젝트를 구성 할 계획입니다.
+
+![0_zUtZYiJ1bDTugOYY](https://user-images.githubusercontent.com/73716178/201530142-9a2df361-6c7d-4898-94e9-3cd5880118df.png)
 
 # 프로젝트 구성 안내
 
@@ -14,7 +16,7 @@ Getx 상태관리 패키지를 사용하며 mvvm 디자인 패턴을 채택하�
 
 `flutter doctor -v` 로 현재 사용중인 프로젝트의 개발환경 확인이 가능합니다.
 
-## 프로젝트 사용법
+## 프로젝트 Clone
 
 [https://github.com/beside04/frontend](https://github.com/beside04/frontend)
 
@@ -34,7 +36,15 @@ Getx 상태관리 패키지를 사용하며 mvvm 디자인 패턴을 채택하�
 - `flutter build appbundle` 를 통해 appbundle를 추출 할 수 있습니다.
 - 추출 후 `build/app/outputs/bundle/release` 에서 추출된 appbundle 확인이 가능합니다.
 
-# C**ode Convention**
+## Git Flow Rules
+- 이니셜-2022-xx-xx 를 develop branch 기준으로 분기합니다.
+    - ex ) JGW-2022-11-13/feature main screen
+- 한번 커밋은 하나의 기능 개발을 목표로 합니다.
+- 상대방에게 코드리뷰를 부탁하고 develop branch 로 merge 합니다.
+    - 개인 branch 에서 develop branch 로는 squash merge
+    - develop branch 에서 master branch 는 create merge 를 합니다.
+
+# C**ode Convention Rules**
 
 Flutter에서는 코딩에 대한 구체적인 표준이나 규범을 정의하지 않고 있습니다. 하지만 Flutter는 Dart 언어를 사용하기에 되도록이면 [Dart의 Coding Standard](https://dart.dev/guides/language/effective-dart/style)를 준수하여 작성하려고 합니다.
 
@@ -121,19 +131,14 @@ class Dice {
 
 - 상대 경로와 절대 경로의 각자 취향이 있고 장단점이 존재하지만, 절대경로를 사용하면 **직관적으로 어디서 사용**하는지 알기가 쉽고, **수정이 용이**하여 저는 대부분 절대 경로를 사용하는 편입니다.
 
-📌 그외 여러가지 있지만, 사실 제일 중요한 두가지만 지키면 좋을 것 같습니다!
+📌 그외 여러가지 있지만, 제일 중요한 두가지만 지키면 좋을 것 같습니다!
 
 - **일관성을 최대한 유지**
 - **가독성을 높이며 최대한 간단하게**
 
-# **File Structure**
+# **File Structure Rules**
 
-📌 여기서도 **신경써야 할 부분을 두가지만 지키면 좋을 것 같습니다.**
-
-1. **명명법(Naming Convention)**
-2. **관심사의 분리(separation of concerns, SoC) - File Structure**
-
-### 1) Naming Convention
+### 1) Naming Convention (명명법)
 
 - 폴더명과 파일명은 snake_case를 쓸 것
 - 클래스명은 PascalCase를 쓸 것
@@ -144,64 +149,34 @@ class Dice {
 
 ### 2) **File Structure**
 
-해당 디렉토리 구조는 MVVM 패턴의 사용되는 여러 구조의 자료를 찾아 적용했습니다.
+해당 디렉토리 구조는 클린 아키텍쳐 패턴중 하나인 MVVM 패턴의 사용되는 여러 구조의 자료를 찾아 적용했습니다.
 
-참고자료 : [***https://code.pieces.app/blog/using-mvvm-in-flutter***](https://code.pieces.app/blog/using-mvvm-in-flutter)
-
-[***https://blog.devgenius.io/flutter-mvvm-architecture-with-provider-a81164ef6da6***](https://blog.devgenius.io/flutter-mvvm-architecture-with-provider-a81164ef6da6) [](https://www.notion.so/SangGaTalk-Documentation-7cfd9e5901084d03a84a98500688c11b)
-
-***[https://medium.com/@ermarajhussain/flutter-mvvm-architecture-best-practice-using-provide-http-4939bdaae171](https://medium.com/@ermarajhussain/flutter-mvvm-architecture-best-practice-using-provide-http-4939bdaae171)***
-
-<img width="371" alt="스크린샷 2022-09-09 오전 3 02 10" src="https://user-images.githubusercontent.com/73716178/189203272-5570ca1a-1be0-43c1-a740-e8c0c04e98c0.png">
+![제목 없는 다이어그램 drawio (1)](https://user-images.githubusercontent.com/73716178/201528919-277f99a9-64e3-409e-afbb-ba8b8e000252.png)
 
 ⚠️ **어디까지나 참고로 작성한 내용이며, 작업중 불필요하다거나, 추가로 넣어야 한다면 수정이나 말씀 부탁드립니다! 🙏**
 
-- assets : fonts, images, logo 등의 세부 폴더들이 위치할 수 있으며, 앱에서 사용할 **design asset**들을 모아두는 폴더입니다.
-- data : 이 디렉토리는 **모든 네트워크 및 로컬 DB 관련 클래스**를 보유합니다.
-  - local_datasource: 로컬에 저장된 정보를 가져오는 모든 함수들이 구현되어 있다.
-  - remote_datasource : API서버와 통신에 필요한 모든 함수들이 구현되어 있다.
-- models **:** API 응답에 대한 모든 **모델 클래스**를 보유하고 클린 아키텍처를 위해 각 API 응답 모델 클래스에 대한 내부 디렉토리를 생성합니다.
-- repository : **ViewModel에서 관련된 정보**가 필요할때 이곳을 통해서 가져가게 된다.
-- res **: 색상, 스타일 및 문자 파일과 관련된 모든 클래스**를 보유합니다.
-  - components : 공통으로 사용되는 위젯 클래스를 모아둔 디렉토리입니다.
-  - constant : 공통으로 사용하게 될 상수를 모아둔 파일입니다.
-
-
-    ```dart
-    final String APP_VERSION = "1.0.11";
-    
-    const kPrimaryColor = Color(0xFFF8B616);
-    const kBlackColor = Color(0xFF000000); 
-    
-    final kRegular14PrimaryStyle = TextStyle(
-      fontFamily: Font,
-      fontSize: 10.sp,
-      color: kPrimaryColor,
-    );
-    ...
-    ```
-
-- utils **: 프로젝트의 모든 유틸리티 클래스**를 보유합니다. 예를 들면 여러곳에서 공통으로 사용되는 function이나 logic을 모아두는 폴더라고 이해하시면 편할것 같습니다.
-
-    ```dart
-    //시간을 입력 받고 사용자에게 친숙한 시간 데이터(텍스트)를 출력하는 함수
-    String reviewDisplayedAt(DateTime time) {
-      var milliSeconds = DateTime.now().difference(time).inMilliseconds;
-      var seconds = milliSeconds / 1000;
-      if (seconds < 60) return '방금 전'.tr;
-      var minutes = seconds / 60;
-      if (minutes < 60) return '분 전'.trParams({"time": "${minutes.floor()}"});
-      var hours = minutes / 60;
-      if (hours < 24) return '시간 전'.trParams({"time": "${hours.floor()}"});
-      var days = hours / 24;
-      if (days < 7) return '일 전'.trParams({"time": "${days.floor()}"});
-      return '${DateFormat('yyyy-MM-dd HH:mm').format(time)}';
-    }
-    ```
-
-  - routes : 앱 화면 간 이동을 구현할 때 사용한다.
-- view : 유저에게 **UI를 직접 보여주는 곳**으로, View 클래스 하나로 이루어져 있습니다.
-- view_model : View 단위의 **비지니스 로직을 처리**하고 View상태를 유지/관리하는 곳으로 ViewModel클래스 하나로 이루어 집니다.
+- config : 앱의 **전반적** 구성요소들입니다.
+   - theme : theme 요소 및 theme 관리 데이터
+   - route : 라우팅 소스
+   - assets : images, logo 등의 앱에서 사용할 design asset
+- core : 앱에서 **전역적**으로 사용되는 요소들입니다.
+   - params : API 호출시 필요한 파라미터 모아둔 클래스
+   - resources : API 호출시 결과를 갖는 wrapper class. 통신 성공/실패 케이스등
+   - utils : 프로젝트의 모든 유틸리티 클래스
+- data : data layer 관련 요소들
+   - datasources : api 호출 클래스
+       - local: 로컬에 저장된 정보를 가져오는 모든 함수들이 구현되어 있다.
+       - remote: API서버와 통신에 필요한 모든 함수들이 구현되어 있다.
+   - models : api 결과 데이터 관련 클래스(DTO)
+   - repositories : api 클래스를 주입받아 사용하는 레포지토리 구현체
+- domain : domain layer 관련 요소들
+   - model : POJO (data폴더의 model과 달리 데이터 파싱, 변환에 영향을 받지않는 근본적인 데이터 구조를 나타내는 클래스)
+   - repositories : api호출 인터페이스.
+   - usecases : repository를 주입받아서 하나의 액션 수행하는 클래스 (비지니스 로직)
+- presentation : presentation layer 관련 요소들
+   - view : 사용자가 직접 확인이 가능한 하는 화면
+     - component(widget) : 공통된 위젯 컴포넌트
+   - viewmodel : View상태를 유지/관리하는 곳
 
 # 사용중인 패키지
 
