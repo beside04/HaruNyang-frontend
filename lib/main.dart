@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/login_test/login_test_screen.dart';
-import 'package:frontend/presentation/login_test/login_test_view_model.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(
+    fileName: '.env', //default
+  );
   // runApp() 호출 전 Flutter SDK 초기화
-  KakaoSdk.init(nativeAppKey: '9259b7d6cf61cfa59dd4c396a97bd2a4');
+  String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
+  print(appkey);
+  KakaoSdk.init(nativeAppKey: appkey);
   runApp(const MyApp());
 }
 

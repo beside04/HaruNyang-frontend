@@ -32,6 +32,10 @@ migrate_working_dir/
 .pub/
 /build/
 
+.env
+strings.xml
+/ios/Runner/Info.plist
+
 # Symbolication related
 app.*.symbols
 
