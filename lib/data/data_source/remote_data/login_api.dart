@@ -21,11 +21,26 @@ class LoginApi {
         },
       );
       if (response.statusCode != 200) {
-        throw Exception('create juso api의 응답 코드가 200이 아닙니다.');
+        throw Exception('login api의 응답 코드가 200이 아닙니다.');
       }
       print(response.body);
       final json = jsonDecode(response.body);
       LoginResultData result = LoginResultData.fromJson(json['data']);
+    } catch (e) {}
+  }
+
+  Future<void> checkMember(String socialId) async {
+    String checkMemberUrl = '$baseUrl/v1/members/$socialId';
+    try {
+      http.Response response;
+      Uri uri = Uri.parse(checkMemberUrl);
+      response = await _client.get(
+        uri,
+      );
+      if (response.statusCode != 200) {
+        throw Exception('check member api의 응답 코드가 200이 아닙니다.');
+      }
+      print(response.body);
     } catch (e) {}
   }
 }
