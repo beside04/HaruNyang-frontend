@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/domain/model/login_result_data.dart';
 import 'package:http/http.dart' as http;
 
 class LoginApi {
@@ -24,7 +25,7 @@ class LoginApi {
       }
       print(response.body);
       final json = jsonDecode(response.body);
-
+      LoginResultData result = LoginResultData.fromJson(json['data']);
     } catch (e) {}
   }
 }
