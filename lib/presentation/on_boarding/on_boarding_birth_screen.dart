@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/BlackPoints.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_birth_screen.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname_viewmodel.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_birth_viewmodel.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
-class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
-  OnBoardingNicknameScreen({Key? key}) : super(key: key);
+class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
+  OnBoardingBirthScreen({Key? key}) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OnBoardingNicknameViewModel());
+    final controller = Get.put(OnBoardingBirthViewModel());
 
     return Scaffold(
       body: FormBuilder(
@@ -35,36 +34,45 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                       height: 93.h,
                     ),
                     const BlackPoints(
-                      blackNumber: 1,
+                      blackNumber: 2,
                     ),
                     SizedBox(
                       height: 7.h,
                     ),
                     Text(
-                      "저는 댕청봇이에요",
-                      style: kHeader1BlackStyle,
-                    ),
-                    Text(
-                      "제게 별명을 알려주세요!",
+                      "몇 살이에요?",
                       style: kHeader1BlackStyle,
                     ),
                     SizedBox(
-                      height: 22.h,
+                      height: 50.h,
                     ),
                     SizedBox(
-                      width: 327.w,
+                      width: 322.w,
                       child: Padding(
                         padding: EdgeInsets.only(left: 8.0.w),
                         child: FormBuilderTextField(
-                          name: 'name',
+                          controller: controller.birthEditingController,
                           style: kSubtitle4BlackStyle,
-                          controller: controller.nicknameEditingController,
+                          onTap: () async {
+                            DatePicker.showDatePicker(
+                              context,
+                              showTitleActions: true,
+                              minTime: DateTime(1930, 1, 1),
+                              maxTime: DateTime(2005, 12, 30),
+                              onConfirm: (date) {
+                                controller.getBirthDateFormat(date);
+                              },
+                              currentTime: DateTime(1995, 12, 30),
+                              locale: LocaleType.ko,
+                            );
+                          },
+                          readOnly: true,
+                          name: 'birth',
                           keyboardType: TextInputType.text,
-                          textAlignVertical: TextAlignVertical.center,
                           decoration: InputDecoration(
                             helperText: "",
                             counterText: "",
-                            hintText: '예시: 덩아',
+                            hintText: 'YYYY/MM/DD 입력',
                             hintStyle: kSubtitle3Gray300Style,
                             contentPadding: const EdgeInsets.symmetric(
                               vertical: 16,
@@ -75,22 +83,9 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                             ),
                           ),
                           validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.minLength(
-                              2,
-                              errorText: '2글자 이상 입력해 주세요.',
+                            FormBuilderValidators.required(
+                              errorText: '생년월일을 입력해주세요.',
                             ),
-                            FormBuilderValidators.maxLength(
-                              12,
-                              errorText: '12글자 이내로 입력해 주세요.',
-                            ),
-                            (value) {
-                              RegExp regex = RegExp(r'([^가-힣a-z\x20])');
-                              if (regex.hasMatch(value!)) {
-                                return '허용되지 않는 닉네임 입니다.';
-                              } else {
-                                return null;
-                              }
-                            },
                           ]),
                         ),
                       ),
@@ -118,17 +113,12 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      onPressed: controller.nicknameValue.value.isEmpty
+                      onPressed: controller.birthValue.value.isEmpty
                           ? null
                           : () {
                               var key = _fbKey.currentState!;
                               if (key.saveAndValidate()) {
                                 FocusScope.of(context).unfocus();
-
-                                Get.to(
-                                  () => OnBoardingBirthScreen(),
-                                  transition: Transition.cupertino,
-                                );
                               }
                             },
                       child: Text(
