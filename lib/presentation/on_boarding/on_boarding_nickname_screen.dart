@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
-import 'package:frontend/presentation/on_boarding/components/BlackPoints.dart';
+import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname_viewmodel.dart';
 import 'package:get/get.dart';

@@ -3,8 +3,9 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/presentation/on_boarding/components/BlackPoints.dart';
+import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth_viewmodel.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_job_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -119,6 +120,11 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
                               var key = _fbKey.currentState!;
                               if (key.saveAndValidate()) {
                                 FocusScope.of(context).unfocus();
+
+                                Get.to(
+                                  () => OnBoardingJobScreen(),
+                                  transition: Transition.cupertino,
+                                );
                               }
                             },
                       child: Text(
