@@ -15,10 +15,26 @@ class KakaoLoginUseCase {
     final OAuthToken? result = await socialLoginRepository.login();
     if (result != null) {
       User user = await UserApi.instance.me();
+
+      final String email = user.kakaoAccount?.email ?? '';
+      String socialId = '${user.id}';
       print('사용자 정보'
-          '\n회원번호: ${user.id}'
-          '\n이메일: ${user.kakaoAccount?.email}');
-      serverLoginRepository.login('KAKAO', '${user.id}');
+          '\n회원번호: $socialId'
+          '\n이메일: $email');
+
+      socialId='5';
+      //checkMember : true면 가입되지 않은 회원, false면 이미 가입된 회원
+      final checkMember = await serverLoginRepository.checkMember(socialId);
+      if (checkMember) {
+        //회원가입 api 호출
+        await serverLoginRepository.signup(email, 'KAKAO', socialId);
+      } else {
+        //로그인 api 호출
+        await serverLoginRepository.login('KAKAO', socialId);
+      }
+      print(checkMember);
+
+      //await serverLoginRepository.login('KAKAO', '${user.id}');
     }
 
     return result;

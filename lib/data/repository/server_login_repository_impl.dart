@@ -14,4 +14,14 @@ class ServerLoginRepositoryImpl implements ServerLoginRepository {
     // TODO: implement logout
     throw UnimplementedError();
   }
+
+  @override
+  Future<bool> checkMember(String socialId) async {
+    return await loginApi.checkMember(socialId);
+  }
+
+  @override
+  Future<bool> signup(String email, String loginType, String socialId) async {
+    return await loginApi.signup(email, loginType, socialId);
+  }
 }
