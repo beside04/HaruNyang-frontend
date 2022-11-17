@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_screen.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 Get.offAll(
-                  const OnBoardingScreen(),
+                  OnBoardingNicknameScreen(),
                 );
               },
               child: const Text('로그인(온보딩 이동)'),

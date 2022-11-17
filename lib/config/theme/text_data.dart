@@ -51,11 +51,25 @@ TextStyle kSubtitle2BlackStyle = TextStyle(
   fontWeight: FontWeight.w600,
 );
 
+TextStyle kSubtitle2WhiteStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kWhiteColor,
+  fontWeight: FontWeight.w600,
+);
+
 //Subtitle3 Style
 TextStyle kSubtitle3BlackStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kBlackColor,
+  fontWeight: FontWeight.w500,
+);
+
+TextStyle kSubtitle3Gray300Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor300,
   fontWeight: FontWeight.w500,
 );
 
