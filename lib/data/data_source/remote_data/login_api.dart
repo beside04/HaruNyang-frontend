@@ -43,4 +43,25 @@ class LoginApi {
       print(response.body);
     } catch (e) {}
   }
+
+  Future<void> signup(String email, String loginType, String socialId) async {
+    String signupUrl = '$baseUrl/v1/signup';
+    try {
+      http.Response response;
+      Uri uri = Uri.parse(signupUrl);
+      response = await _client.post(
+        uri,
+        body: {
+          'email': email,
+          'login_type': loginType,
+          'social_id': socialId,
+        },
+      );
+      if (response.statusCode != 200) {
+        throw Exception('signup api의 응답 코드가 200이 아닙니다.');
+      }
+      print(response.body);
+      final json = jsonDecode(response.body);
+    } catch (e) {}
+  }
 }
