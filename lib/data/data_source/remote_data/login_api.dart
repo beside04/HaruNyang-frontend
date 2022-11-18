@@ -2,13 +2,16 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/login_result_data.dart';
+import 'package:frontend/res/constants.dart';
 
 class LoginApi {
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
   final Dio _client = Dio();
 
-  Future<void> login(String loginType, String socialId) async {
+  Future<Result<LoginResultData>> login(
+      String loginType, String socialId) async {
     String loginUrl = '$baseUrl/v1/login';
     try {
       Response response;
@@ -20,43 +23,47 @@ class LoginApi {
         },
       );
 
-      print(response.data);
       final json = response.data['data'];
       LoginResultData result = LoginResultData.fromJson(json);
       print(result);
+
+      return Result.success(result);
     } on DioError catch (e) {
+      String errMessage = '';
+
       if (e.response != null) {
         if (e.response!.statusCode != 200) {
-          print(
-              'login api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}');
+          errMessage =
+              'login api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
         }
       } else {
         print(e.requestOptions);
-        print(e.message);
+        errMessage = e.message;
       }
+      return Result.error(errMessage);
     } catch (e) {
-      print(e.toString());
+      return Result.error(e.toString());
     }
   }
 
-  Future<bool> checkMember(String socialId) async {
+  Future<SocialIDCheck> checkMember(String socialId) async {
     String checkMemberUrl = '$baseUrl/v1/members/$socialId';
     try {
       Response response;
       response = await _client.get(
         checkMemberUrl,
       );
-      if (response.statusCode == 400) {
-        throw Exception('이미 가입된 회원입니다.');
-      } else if (response.statusCode != 200) {
-        throw Exception('check member api의 응답 코드가 200이 아닙니다.');
-      }
       bool result = response.data;
-      return result;
+      if (result) {
+        return SocialIDCheck.notMember;
+      } else {
+        return SocialIDCheck.existMember;
+      }
     } on DioError catch (e) {
       if (e.response != null) {
         if (e.response!.statusCode == 400) {
           print('이미 가입된 회원입니다.');
+          return SocialIDCheck.existMember;
         } else if (e.response!.statusCode != 200) {
           print(
               'check member api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}');
@@ -68,7 +75,7 @@ class LoginApi {
     } catch (e) {
       print(e.toString());
     }
-    return false;
+    return SocialIDCheck.error;
   }
 
   Future<bool> signup(String email, String loginType, String socialId) async {
@@ -84,7 +91,6 @@ class LoginApi {
           'social_id': socialId,
         },
       );
-      print(response.data);
       bool result = response.data;
       return result;
     } on DioError catch (e) {

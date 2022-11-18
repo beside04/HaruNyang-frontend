@@ -1,9 +1,16 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LocalSecureDataSource {
-  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  LocalSecureDataSource._privateConstructor();
 
-  LocalSecureDataSource();
+  static final LocalSecureDataSource _instance =
+      LocalSecureDataSource._privateConstructor();
+
+  factory LocalSecureDataSource() {
+    return _instance;
+  }
+
+  final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   Future<String?> loadData(String key) async {
     return await secureStorage.read(key: key);
