@@ -1,16 +1,14 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/login_result_data.dart';
+import 'package:frontend/domain/model/login_token_data.dart';
 import 'package:frontend/res/constants.dart';
 
 class LoginApi {
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
   final Dio _client = Dio();
 
-  Future<Result<LoginResultData>> login(
+  Future<Result<LoginTokenData>> login(
       String loginType, String socialId) async {
     String loginUrl = '$baseUrl/v1/login';
     try {
@@ -24,7 +22,7 @@ class LoginApi {
       );
 
       final json = response.data['data'];
-      LoginResultData result = LoginResultData.fromJson(json);
+      LoginTokenData result = LoginTokenData.fromJson(json);
       print(result);
 
       return Result.success(result);
