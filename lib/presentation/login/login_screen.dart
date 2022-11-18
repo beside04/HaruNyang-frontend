@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/presentation/login/login_terms_information_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
@@ -165,8 +166,8 @@ class LoginScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Get.offAll(
-                    OnBoardingNicknameScreen(),
+                  Get.to(
+                    () => const LoginTermsInformationScreen(),
                   );
                 },
                 child: const Text('이용약관 이동'),

@@ -155,3 +155,10 @@ TextStyle kRegular30BlackStyle = TextStyle(
   fontSize: 30.sp,
   color: kBlackColor,
 );
+
+TextStyle kRegular20GrayStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 20.sp,
+  color: kGrayColor400,
+  fontWeight: FontWeight.w400,
+);
