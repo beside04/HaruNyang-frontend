@@ -25,7 +25,6 @@ class KakaoLoginUseCase {
           '\n회원번호: $socialId'
           '\n이메일: $email');
 
-      //checkMember : true면 가입되지 않은 회원, false면 이미 가입된 회원
       final checkMember = await serverLoginRepository.checkMember(socialId);
       if (checkMember == SocialIDCheck.notMember) {
         //가입 되지 않았으므로 회원 가입 프로세스
