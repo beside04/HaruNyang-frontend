@@ -20,13 +20,20 @@ class LoginApi {
         },
       );
 
-      if (response.statusCode != 200) {
-        throw Exception('login api의 응답 코드가 200이 아닙니다.');
-      }
       print(response.data);
       final json = response.data['data'];
       LoginResultData result = LoginResultData.fromJson(json);
       print(result);
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode != 200) {
+          print(
+              'login api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}');
+        }
+      } else {
+        print(e.requestOptions);
+        print(e.message);
+      }
     } catch (e) {
       print(e.toString());
     }
@@ -46,10 +53,22 @@ class LoginApi {
       }
       bool result = response.data;
       return result;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode == 400) {
+          print('이미 가입된 회원입니다.');
+        } else if (e.response!.statusCode != 200) {
+          print(
+              'check member api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}');
+        }
+      } else {
+        print(e.requestOptions);
+        print(e.message);
+      }
     } catch (e) {
       print(e.toString());
-      return false;
     }
+    return false;
   }
 
   Future<bool> signup(String email, String loginType, String socialId) async {
@@ -65,15 +84,22 @@ class LoginApi {
           'social_id': socialId,
         },
       );
-      if (response.statusCode != 200) {
-        throw Exception('signup api의 응답 코드가 200이 아닙니다.');
-      }
       print(response.data);
       bool result = response.data;
       return result;
+    } on DioError catch (e) {
+      if (e.response != null) {
+        if (e.response!.statusCode != 200) {
+          print(
+              'signup api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}');
+        }
+      } else {
+        print(e.requestOptions);
+        print(e.message);
+      }
     } catch (e) {
       print(e.toString());
-      return false;
     }
+    return false;
   }
 }
