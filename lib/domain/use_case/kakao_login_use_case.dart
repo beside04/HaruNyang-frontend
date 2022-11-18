@@ -1,3 +1,4 @@
+import 'package:frontend/core/result.dart';
 import 'package:frontend/data/data_source/local_data/local_secure_data_source.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/repository/social_login_repository.dart';
@@ -13,14 +14,14 @@ class KakaoLoginUseCase {
     required this.serverLoginRepository,
   });
 
-  Future<String> login() async {
+  Future<Result<String>> login() async {
     final OAuthToken? kakaoLoginResult = await socialLoginRepository.login();
     String accessToken = '';
     if (kakaoLoginResult != null) {
       User user = await UserApi.instance.me();
 
       final String email = user.kakaoAccount?.email ?? '';
-      String socialId = '${user.id}';
+      final String socialId = '${user.id}';
       print('사용자 정보'
           '\n회원번호: $socialId'
           '\n이메일: $email');
@@ -36,18 +37,23 @@ class KakaoLoginUseCase {
         if (result) {
           //회원가입 정상 완료되었으니 로그인 프로세스 호출
           accessToken = await loginProcess(socialId);
+          return Result.success(accessToken);
         } else {
           //회원가입 실패
+          return const Result.error('회원가입에 실패했습니다.');
         }
       } else if (checkMember == SocialIDCheck.existMember) {
         //이미 가입 되었으므로 바로 login
         accessToken = await loginProcess(socialId);
+        return Result.success(accessToken);
       } else {
         //통신 에러
+        return const Result.error('서버와의 연결이 실패했습니다.');
       }
+    } else {
+      //카카오 로그인 실패
+      return const Result.error('카카오 로그인이 실패했습니다.');
     }
-
-    return accessToken;
   }
 
   Future<String> loginProcess(String socialId) async {
