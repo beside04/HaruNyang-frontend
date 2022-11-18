@@ -47,6 +47,7 @@ dependencies:
   flutter_datetime_picker: ^1.5.1
   flutter_screenutil: ^5.6.0
   flutter_svg: ^1.1.6
+  flutter_dotenv: ^5.0.2
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,8 @@ flutter:
   assets:
     - lib/config/assets/images/
     - lib/config/assets/images/login/
+    - .env
+  #   - images/a_dot_ham.jpeg
 
   fonts:
     - family: pretendard
