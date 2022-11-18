@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/presentation/login/components/term_buttons.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
 class LoginPrivacyPolicyScreen extends StatelessWidget {

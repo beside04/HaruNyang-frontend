@@ -64,7 +64,7 @@ class LoginTermsInformationScreen
                     title: '이용약관 (필수)',
                     onTap: () async {
                       controller.isTermsAgree.value = await Get.to(
-                        () => LoginTermsOfServiceScreen(),
+                        () => const LoginTermsOfServiceScreen(),
                         transition: Transition.rightToLeft,
                       );
                     },
@@ -79,7 +79,7 @@ class LoginTermsInformationScreen
                     title: '개인정보 처리방침 (필수)',
                     onTap: () async {
                       controller.isPrivacyPolicyAgree.value = await Get.to(
-                        () => LoginPrivacyPolicyScreen(),
+                        () => const LoginPrivacyPolicyScreen(),
                         transition: Transition.rightToLeft,
                       );
                     },
@@ -89,16 +89,18 @@ class LoginTermsInformationScreen
                 SizedBox(
                   height: 16.h,
                 ),
-                TermButtons(
-                  title: '전체 동의하기',
-                  onTap: () {
-                    if (controller.isTermsAgree.value &&
-                        controller.isPrivacyPolicyAgree.value) {
-                      Get.offAll(() => OnBoardingNicknameScreen());
-                    }
-                  },
-                  isAgree: controller.isTermsAgree.value &&
-                      controller.isPrivacyPolicyAgree.value,
+                Obx(
+                  () => TermButtons(
+                    title: '전체 동의하기',
+                    onTap: () {
+                      if (controller.isTermsAgree.value &&
+                          controller.isPrivacyPolicyAgree.value) {
+                        Get.offAll(() => OnBoardingNicknameScreen());
+                      }
+                    },
+                    isAgree: controller.isTermsAgree.value &&
+                        controller.isPrivacyPolicyAgree.value,
+                  ),
                 ),
               ],
             ),
