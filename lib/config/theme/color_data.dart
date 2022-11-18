@@ -41,3 +41,4 @@ const kWhiteColor = Color(0xffffffff);
 
 //temp data
 const kFillGrayColor = Color(0xFFF8F8F8);
+const kKakaoPrimaryColor = Color(0xFFFAE100);
