@@ -5,7 +5,8 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_job_viewmodel.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 

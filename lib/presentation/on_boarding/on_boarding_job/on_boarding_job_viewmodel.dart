@@ -1,12 +1,5 @@
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
-
-enum Job {
-  student,
-  jobSeeker,
-  officeWorkers,
-  freelancer,
-  etc,
-}
 
 class OnBoardingJobViewModel extends GetxController {
   final Rx<Job> jobStatus = Job.student.obs;

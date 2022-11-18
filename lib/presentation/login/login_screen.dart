@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/presentation/login/login_terms_information_screen.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname_screen.dart';
+import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {

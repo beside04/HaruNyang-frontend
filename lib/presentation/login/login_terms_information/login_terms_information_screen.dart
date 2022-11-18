@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/login/components/term_buttons.dart';
-import 'package:frontend/presentation/login/login_privacy_policy_screen.dart';
-import 'package:frontend/presentation/login/login_terms_information_viewmodel.dart';
-import 'package:frontend/presentation/login/login_terms_of_service_screen.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname_screen.dart';
+import 'package:frontend/presentation/login/login_terms_information/login_privacy_policy/login_privacy_policy_screen.dart';
+import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
+import 'package:frontend/presentation/login/login_terms_information/login_terms_of_service/login_terms_of_service_screen.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
 class LoginTermsInformationScreen
