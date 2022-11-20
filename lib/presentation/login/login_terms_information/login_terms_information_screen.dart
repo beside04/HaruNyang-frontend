@@ -91,7 +91,7 @@ class LoginTermsInformationScreen
                 ),
                 Obx(
                   () => TermButtons(
-                    title: '전체 동의하기',
+                    title: '다음 페이지',
                     onTap: () {
                       if (controller.isTermsAgree.value &&
                           controller.isPrivacyPolicyAgree.value) {

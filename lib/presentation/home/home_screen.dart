@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
+import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_screen.dart';
+import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:frontend/presentation/profile/profile_screen.dart';
+import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:frontend/presentation/report/report_screen.dart';
+import 'package:frontend/presentation/report/report_view_model.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
+import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
-class LoginScreen extends StatelessWidget {
+import 'components/apple_login_widget.dart';
+
+class LoginScreen extends GetView<LoginViewModel> {
   const LoginScreen({Key? key}) : super(key: key);
 
   @override
@@ -39,81 +42,18 @@ class LoginScreen extends StatelessWidget {
           SizedBox(
             height: 54.h,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: kKakaoPrimaryColor,
-              ),
-              width: 360.w,
-              height: 56.h,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 95.0.w,
-                    ),
-                    child: SizedBox(
-                      width: 27.w,
-                      height: 27.h,
-                      child: Image.asset(
-                        'lib/config/assets/images/login/kakao_logo.png',
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 7.w,
-                  ),
-                  Text(
-                    "카카오톡으로 로그인",
-                    style: kSubtitle1BlackStyle,
-                  ),
-                ],
-              ),
-            ),
+          InkWell(
+            onTap: () async {
+              await controller.login();
+            },
+            child: const KakaoLoginWidget(),
           ),
           SizedBox(
             height: 12.h,
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.0.w),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: kBlackColor,
-              ),
-              width: 360.w,
-              height: 56.h,
-              child: Stack(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 95.0.w,
-                      top: 10.h,
-                    ),
-                    child: SizedBox(
-                      width: 51.w,
-                      height: 35.h,
-                      child: Image.asset(
-                        'lib/config/assets/images/login/apple_logo.png',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(
-                      left: 138.0.w,
-                      top: 18.h,
-                    ),
-                    child: Text(
-                      "애플로 로그인",
-                      style: kSubtitle1WhiteStyle,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+          InkWell(
+            onTap: () {},
+            child: const AppleLoginWidget(),
           ),
           SizedBox(
             height: 20.h,
