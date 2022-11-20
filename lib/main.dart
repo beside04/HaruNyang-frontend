@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/login_test/login_test_screen.dart';
@@ -21,13 +24,29 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const LoginTestScreen(),
-      initialBinding: BindingsBuilder(getLoginBinding),
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      builder: (BuildContext context, Widget? child) {
+        return GetMaterialApp(
+          title: 'Flutter Demo',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            inputDecorationTheme: const InputDecorationTheme(
+              filled: true,
+              fillColor: kGrayColor50,
+              enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: kGrayColor150),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: kSuccessColor),
+              ),
+            ),
+          ),
+          home: const LoginScreen(),
+          // home: const LoginTestScreen(),
+          initialBinding: BindingsBuilder(getLoginBinding),
+        );
+      },
     );
   }
 }

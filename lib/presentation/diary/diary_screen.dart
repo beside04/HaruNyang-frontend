@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:get/get.dart';
 
 class DiaryScreen extends StatelessWidget {
   const DiaryScreen({Key? key}) : super(key: key);
@@ -12,8 +14,16 @@ class DiaryScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text('다이어리'),
+            ElevatedButton(
+              onPressed: () {
+                Get.offAll(
+                  const LoginScreen(),
+                );
+              },
+              child: const Text('로그인 페이지로 이동'),
+            ),
           ],
         ),
       ),
