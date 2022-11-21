@@ -13,7 +13,6 @@ void main() async {
   );
   // runApp() 호출 전 Flutter SDK 초기화
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
-  print(appkey);
   KakaoSdk.init(nativeAppKey: appkey);
   runApp(const MyApp());
 }

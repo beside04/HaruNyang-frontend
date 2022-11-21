@@ -23,7 +23,6 @@ class LoginApi {
 
       final json = response.data['data'];
       LoginTokenData result = LoginTokenData.fromJson(json);
-      print(result);
 
       return Result.success(result);
     } on DioError catch (e) {
@@ -35,7 +34,6 @@ class LoginApi {
               'login api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
         }
       } else {
-        print(e.requestOptions);
         errMessage = e.message;
       }
       return Result.error(errMessage);
@@ -60,18 +58,16 @@ class LoginApi {
     } on DioError catch (e) {
       if (e.response != null) {
         if (e.response!.statusCode == 400) {
-          print('이미 가입된 회원입니다.');
+          //이미 가입된 회원
           return SocialIDCheck.existMember;
         } else if (e.response!.statusCode != 200) {
-          print(
-              'check member api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}');
+          //서버 통신 에러
         }
       } else {
-        print(e.requestOptions);
-        print(e.message);
+        //서버 통신 에러
       }
     } catch (e) {
-      print(e.toString());
+      //에러 처리
     }
     return SocialIDCheck.error;
   }
@@ -94,15 +90,13 @@ class LoginApi {
     } on DioError catch (e) {
       if (e.response != null) {
         if (e.response!.statusCode != 200) {
-          print(
-              'signup api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}');
+          //서버 통신 에러
         }
       } else {
-        print(e.requestOptions);
-        print(e.message);
+        //서버 통신 에러
       }
     } catch (e) {
-      print(e.toString());
+      //서버 통신 에러
     }
     return false;
   }

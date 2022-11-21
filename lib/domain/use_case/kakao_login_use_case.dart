@@ -23,9 +23,6 @@ class KakaoLoginUseCase {
 
       final String email = user.kakaoAccount?.email ?? '';
       final String socialId = '${user.id}';
-      print('사용자 정보'
-          '\n회원번호: $socialId'
-          '\n이메일: $email');
 
       final checkMember = await serverLoginRepository.checkMember(socialId);
       if (checkMember == SocialIDCheck.notMember) {
@@ -78,12 +75,11 @@ class KakaoLoginUseCase {
         await LocalSecureDataSource()
             .saveData(refreshTokenKey, loginData.refreshToken);
 
-        print(await LocalSecureDataSource().loadData(refreshTokenKey));
         //access token은 return하기 위해 다른 변수에 저장.
         accessToken = loginData.accessToken;
       },
       error: (message) {
-        print(message);
+        //로그인 에러 처리
       },
     );
 
