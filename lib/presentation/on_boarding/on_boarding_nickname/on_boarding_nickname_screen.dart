@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/core/utils/utils.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
@@ -11,12 +12,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
-  OnBoardingNicknameScreen({Key? key}) : super(key: key);
+  final String socialId;
+
+  OnBoardingNicknameScreen({
+    Key? key,
+    required this.socialId,
+  }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OnBoardingNicknameViewModel());
+    getOnBoardingNickNameBinding();
 
     return WillPopScope(
       onWillPop: () async {
@@ -131,7 +137,9 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                                   FocusScope.of(context).unfocus();
 
                                   Get.to(
-                                    () => OnBoardingBirthScreen(),
+                                    () => OnBoardingBirthScreen(
+                                      socialId: socialId,
+                                    ),
                                     transition: Transition.cupertino,
                                   );
                                 }

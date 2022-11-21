@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -14,7 +13,6 @@ void main() async {
   );
   // runApp() 호출 전 Flutter SDK 초기화
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
-  print(appkey);
   KakaoSdk.init(nativeAppKey: appkey);
   runApp(const MyApp());
 }
@@ -43,7 +41,6 @@ class MyApp extends StatelessWidget {
             ),
           ),
           home: const LoginScreen(),
-          // home: const LoginTestScreen(),
           initialBinding: BindingsBuilder(getLoginBinding),
         );
       },

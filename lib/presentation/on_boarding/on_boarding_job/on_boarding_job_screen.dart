@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
@@ -11,12 +12,17 @@ import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
-  OnBoardingJobScreen({Key? key}) : super(key: key);
+  final String socialId;
+
+  OnBoardingJobScreen({
+    Key? key,
+    required this.socialId,
+  }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OnBoardingJobViewModel());
+    getOnBoardingJobBinding();
 
     return Scaffold(
       body: FormBuilder(
@@ -93,10 +99,12 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       var key = _fbKey.currentState!;
                       if (key.saveAndValidate()) {
                         FocusScope.of(context).unfocus();
+
+                        await controller.login(socialId);
 
                         Get.offAll(
                           () => const HomeScreen(),

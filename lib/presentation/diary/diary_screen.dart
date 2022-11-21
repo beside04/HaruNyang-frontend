@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:get/get.dart';
 
-class DiaryScreen extends StatelessWidget {
+class DiaryScreen extends GetView<DiaryViewModel> {
   const DiaryScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    getDiaryBinding();
     return Scaffold(
       appBar: AppBar(
         title: const Text('다이어리'),
@@ -15,14 +18,15 @@ class DiaryScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('다이어리'),
+            const Text('다이어리'),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                await Get.find<DiaryViewModel>().logout();
                 Get.offAll(
                   const LoginScreen(),
                 );
               },
-              child: const Text('로그인 페이지로 이동'),
+              child: const Text('로그아웃'),
             ),
           ],
         ),

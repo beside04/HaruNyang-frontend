@@ -3,6 +3,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
@@ -11,12 +12,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
-  OnBoardingBirthScreen({Key? key}) : super(key: key);
+  final String socialId;
+
+  OnBoardingBirthScreen({
+    Key? key,
+    required this.socialId,
+  }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(OnBoardingBirthViewModel());
+    getOnBoardingBirthBinding();
 
     return Scaffold(
       body: FormBuilder(
@@ -122,7 +128,9 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
                                 FocusScope.of(context).unfocus();
 
                                 Get.to(
-                                  () => OnBoardingJobScreen(),
+                                  () => OnBoardingJobScreen(
+                                    socialId: socialId,
+                                  ),
                                   transition: Transition.cupertino,
                                 );
                               }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/login/components/term_buttons.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_privacy_policy/login_privacy_policy_screen.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
@@ -10,11 +11,18 @@ import 'package:get/get.dart';
 
 class LoginTermsInformationScreen
     extends GetView<LoginTermsInformationViewModel> {
-  const LoginTermsInformationScreen({Key? key}) : super(key: key);
+  final String email;
+  final String socialId;
+
+  const LoginTermsInformationScreen({
+    Key? key,
+    required this.email,
+    required this.socialId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(LoginTermsInformationViewModel());
+    getLoginTermsInformationBinding();
 
     return Scaffold(
       body: Column(
@@ -91,11 +99,18 @@ class LoginTermsInformationScreen
                 ),
                 Obx(
                   () => TermButtons(
-                    title: '전체 동의하기',
-                    onTap: () {
+                    title: '다음 페이지',
+                    onTap: () async {
                       if (controller.isTermsAgree.value &&
                           controller.isPrivacyPolicyAgree.value) {
-                        Get.offAll(() => OnBoardingNicknameScreen());
+                        final result = await controller.signup(socialId, email);
+                        if (result) {
+                          Get.offAll(
+                            () => OnBoardingNicknameScreen(
+                              socialId: socialId,
+                            ),
+                          );
+                        }
                       }
                     },
                     isAgree: controller.isTermsAgree.value &&
