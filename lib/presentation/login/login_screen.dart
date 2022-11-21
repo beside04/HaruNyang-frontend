@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
 import 'components/apple_login_widget.dart';
@@ -94,30 +92,6 @@ class LoginScreen extends GetView<LoginViewModel> {
                   ],
                 ),
               ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Get.offAll(
-                      OnBoardingNicknameScreen(),
-                    );
-                  },
-                  child: const Text('온보딩 이동'),
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Get.to(
-                      () => const LoginTermsInformationScreen(),
-                    );
-                  },
-                  child: const Text('이용약관 이동'),
-                ),
-              ],
             ),
           ],
         ),
