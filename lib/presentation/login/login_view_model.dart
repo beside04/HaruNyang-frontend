@@ -38,7 +38,7 @@ class LoginViewModel extends GetxController {
     switch (checkMemberResult) {
       case SocialIDCheck.existMember:
         //로그인
-        await _onLoginAndMoveHome();
+        await _onLoginAndMoveHome(isSocialKakao: true);
         break;
       case SocialIDCheck.notMember:
         //멤버가 아니면 약관 동의 페이지 이동
@@ -62,16 +62,15 @@ class LoginViewModel extends GetxController {
       Get.snackbar('알림', '애플 세션과 연결이 실패했습니다.');
       return;
     }
-
     //멤버 조회
     final checkMemberResult =
-        await kakaoLoginUseCase.checkMember(state.value.socialId);
+        await appleLoginUseCase.checkMember(state.value.socialId);
 
     //조회 결과
     switch (checkMemberResult) {
       case SocialIDCheck.existMember:
         //로그인
-        await _onLoginAndMoveHome();
+        await _onLoginAndMoveHome(isSocialKakao: false);
         break;
       case SocialIDCheck.notMember:
         //멤버가 아니면 약관 동의 페이지 이동
@@ -106,8 +105,11 @@ class LoginViewModel extends GetxController {
     return true;
   }
 
-  Future<void> _onLoginAndMoveHome() async {
-    final loginResult = await kakaoLoginUseCase.login(state.value.socialId);
+  Future<void> _onLoginAndMoveHome({required isSocialKakao}) async {
+    final loginResult = isSocialKakao
+        ? await kakaoLoginUseCase.login(state.value.socialId)
+        : await appleLoginUseCase.login(state.value.socialId);
+
     await loginResult.when(
       success: (accessToken) async {
         await accessTokenUseCase.setAccessToken(accessToken);
