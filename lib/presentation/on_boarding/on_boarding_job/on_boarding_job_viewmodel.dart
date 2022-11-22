@@ -1,5 +1,5 @@
 import 'package:frontend/domain/use_case/access_token_use_case.dart';
-import 'package:frontend/domain/use_case/kakao_login_use_case.dart';
+import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';

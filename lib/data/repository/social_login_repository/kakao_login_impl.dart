@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
-import 'package:frontend/domain/repository/social_login_repository.dart';
+import 'package:frontend/domain/repository/social_login_repository/kakao_login_repository.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-class KakaoLoginImpl implements SocialLoginRepository {
+class KakaoLoginImpl implements KakaoLoginRepository {
   @override
   Future<OAuthToken?> login() async {
     OAuthToken token;
@@ -43,6 +43,16 @@ class KakaoLoginImpl implements SocialLoginRepository {
 
   @override
   Future<UserIdResponse?> logout() async {
+    try {
+      final UserIdResponse response = await UserApi.instance.logout();
+      return response;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  @override
+  Future<UserIdResponse?> withdrawal() async {
     try {
       final UserIdResponse response = await UserApi.instance.unlink();
       return response;

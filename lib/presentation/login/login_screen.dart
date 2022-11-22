@@ -48,7 +48,7 @@ class LoginScreen extends GetView<LoginViewModel> {
             ),
             InkWell(
               onTap: () async {
-                await controller.login();
+                await controller.connectKakaoLogin();
               },
               child: const KakaoLoginWidget(),
             ),
@@ -56,7 +56,9 @@ class LoginScreen extends GetView<LoginViewModel> {
               height: 12.h,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                await controller.connectAppleLogin();
+              },
               child: const AppleLoginWidget(),
             ),
             SizedBox(

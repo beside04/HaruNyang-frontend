@@ -2,35 +2,36 @@ import 'package:frontend/core/result.dart';
 import 'package:frontend/data/data_source/local_data/local_secure_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
-import 'package:frontend/domain/repository/social_login_repository.dart';
+import 'package:frontend/domain/repository/social_login_repository/apple_login_repository.dart';
 import 'package:frontend/res/constants.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
-class KakaoLoginUseCase {
-  final SocialLoginRepository socialLoginRepository;
+class AppleLoginUseCase {
+  final AppleLoginRepository socialLoginRepository;
   final ServerLoginRepository serverLoginRepository;
 
-  KakaoLoginUseCase({
+  AppleLoginUseCase({
     required this.socialLoginRepository,
     required this.serverLoginRepository,
   });
 
-  Future<SocialLoginResult> getKakaoSocialId() async {
-    //카카오 social id 및 email 얻기
-    String email = '';
-    String socialId = '';
+  Future<SocialLoginResult> getAppleSocialId() async {
+    //애플 social id 및 email 얻기
+    String? email = '';
+    String? socialId = '';
 
-    final OAuthToken? kakaoLoginResult = await socialLoginRepository.login();
-    if (kakaoLoginResult != null) {
-      User user = await UserApi.instance.me();
+    final AuthorizationCredentialAppleID? appleLoginResult =
+        await socialLoginRepository.login();
+    if (appleLoginResult != null) {
+      final AuthorizationCredentialAppleID user = appleLoginResult;
 
-      email = user.kakaoAccount?.email ?? '';
-      socialId = '${user.id}';
+      email = user.email;
+      socialId = user.userIdentifier;
     }
 
     return SocialLoginResult(
-      email: email,
-      socialId: socialId,
+      email: email ?? '',
+      socialId: socialId!,
     );
   }
 
@@ -48,7 +49,7 @@ class KakaoLoginUseCase {
   Future<bool> signup(String email, String socialId) async {
     //social id를 사용하여 회원 가입
     final bool result =
-        await serverLoginRepository.signup(email, 'KAKAO', socialId);
+        await serverLoginRepository.signup(email, 'APPLE', socialId);
 
     return result;
   }
@@ -56,7 +57,7 @@ class KakaoLoginUseCase {
   Future<Result<String>> loginProcess(String socialId) async {
     String accessToken = '';
     //로그인 api 호출
-    final loginResult = await serverLoginRepository.login('KAKAO', socialId);
+    final loginResult = await serverLoginRepository.login('APPLE', socialId);
 
     return await loginResult.when(
       success: (loginData) async {
@@ -73,9 +74,5 @@ class KakaoLoginUseCase {
         return Result.error(message);
       },
     );
-  }
-
-  Future<UserIdResponse?> logout() async {
-    return await socialLoginRepository.logout();
   }
 }

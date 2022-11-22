@@ -1,4 +1,4 @@
-package com.beside04.emotionDiary
+package com.beside04.haruNyang
 
 import io.flutter.embedding.android.FlutterActivity
 
