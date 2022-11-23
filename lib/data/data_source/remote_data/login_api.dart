@@ -1,12 +1,19 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:frontend/core/result.dart';
+import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
+import 'package:frontend/domain/model/me_data.dart';
 import 'package:frontend/res/constants.dart';
 
 class LoginApi {
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
   final Dio _client = Dio();
+  final storage = new FlutterSecureStorage();
 
   Future<Result<LoginTokenData>> login(
       String loginType, String socialId) async {
@@ -23,6 +30,9 @@ class LoginApi {
 
       final json = response.data['data'];
       LoginTokenData result = LoginTokenData.fromJson(json);
+
+      await storage.write(key: 'ACCESS_TOKEN', value: result.accessToken);
+      await storage.write(key: 'REFRESH_TOKEN', value: result.refreshToken);
 
       return Result.success(result);
     } on DioError catch (e) {
@@ -99,5 +109,42 @@ class LoginApi {
       //서버 통신 에러
     }
     return false;
+  }
+
+  Future<Result<meData>> getMe(BuildContext context) async {
+    String meUrl = '$baseUrl/v1/me';
+
+    var dio = await authDio(context);
+
+    try {
+      Response response;
+      response = await dio.get(meUrl,
+          options: Options(headers: {
+            HttpHeaders.contentTypeHeader: "application/json;charset=utf-8",
+          }));
+      print(response);
+
+      final json = response.data['data'];
+      meData result = meData.fromJson(json);
+
+      print(result.id);
+      print(result.loginType);
+
+      return Result.success(result);
+    } on DioError catch (e) {
+      String errMessage = '';
+
+      if (e.response != null) {
+        if (e.response!.statusCode != 200) {
+          errMessage =
+              'login api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        }
+      } else {
+        errMessage = e.message;
+      }
+      return Result.error(errMessage);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 }
