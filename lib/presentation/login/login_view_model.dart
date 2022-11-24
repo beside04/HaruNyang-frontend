@@ -1,4 +1,3 @@
-import 'package:frontend/domain/use_case/access_token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -10,12 +9,10 @@ import 'package:get/get.dart';
 class LoginViewModel extends GetxController {
   final KakaoLoginUseCase kakaoLoginUseCase;
   final AppleLoginUseCase appleLoginUseCase;
-  final AccessTokenUseCase accessTokenUseCase;
 
   LoginViewModel({
     required this.kakaoLoginUseCase,
     required this.appleLoginUseCase,
-    required this.accessTokenUseCase,
   });
 
   final Rx<LoginState> _state = LoginState().obs;
@@ -46,6 +43,7 @@ class LoginViewModel extends GetxController {
           LoginTermsInformationScreen(
             socialId: state.value.socialId,
             email: state.value.email,
+            isSocialKakao: true,
           ),
         );
         break;
@@ -78,6 +76,7 @@ class LoginViewModel extends GetxController {
           LoginTermsInformationScreen(
             socialId: state.value.socialId,
             email: state.value.email,
+            isSocialKakao: false,
           ),
         );
         break;
@@ -112,7 +111,6 @@ class LoginViewModel extends GetxController {
 
     await loginResult.when(
       success: (accessToken) async {
-        await accessTokenUseCase.setAccessToken(accessToken);
         Get.offAll(const HomeScreen());
       },
       error: (message) {
