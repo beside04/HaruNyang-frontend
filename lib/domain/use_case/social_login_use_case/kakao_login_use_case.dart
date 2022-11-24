@@ -1,18 +1,20 @@
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/local_data/local_secure_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/repository/social_login_repository/kakao_login_repository.dart';
+import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class KakaoLoginUseCase {
   final KakaoLoginRepository socialLoginRepository;
   final ServerLoginRepository serverLoginRepository;
+  final TokenRepository tokenRepository;
 
   KakaoLoginUseCase({
     required this.socialLoginRepository,
     required this.serverLoginRepository,
+    required this.tokenRepository,
   });
 
   Future<SocialLoginResult> getKakaoSocialId() async {
@@ -60,12 +62,8 @@ class KakaoLoginUseCase {
 
     return await loginResult.when(
       success: (loginData) async {
-        //secure store에 refresh token 저장.
-        await LocalSecureDataSource()
-            .saveData(refreshTokenKey, loginData.refreshToken);
-
-        //access token은 return하기 위해 다른 변수에 저장.
-        accessToken = loginData.accessToken;
+        await tokenRepository.setAccessToken(loginData.accessToken);
+        await tokenRepository.setRefreshToken(loginData.refreshToken);
         return Result.success(accessToken);
       },
       error: (message) {
@@ -76,10 +74,12 @@ class KakaoLoginUseCase {
   }
 
   Future<UserIdResponse?> logout() async {
+    await tokenRepository.deleteAllToken();
     return await socialLoginRepository.logout();
   }
 
   Future<UserIdResponse?> withdrawal() async {
+    await tokenRepository.deleteAllToken();
     return await socialLoginRepository.withdrawal();
   }
 }

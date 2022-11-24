@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
+import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
+import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/res/constants.dart';
 
 class LoginApi {
@@ -99,5 +102,35 @@ class LoginApi {
       //서버 통신 에러
     }
     return false;
+  }
+
+  Future<Result<MyInformation>> getMyInformation(BuildContext context) async {
+    String myInformationUrl = '$baseUrl/v1/me';
+
+    var dio = await refreshInterceptor(context);
+
+    try {
+      Response response;
+      response = await dio.get(myInformationUrl);
+
+      final json = response.data['data'];
+      MyInformation result = MyInformation.fromJson(json);
+
+      return Result.success(result);
+    } on DioError catch (e) {
+      String errMessage = '';
+
+      if (e.response != null) {
+        if (e.response!.statusCode != 200) {
+          errMessage =
+              'login api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        }
+      } else {
+        errMessage = e.message;
+      }
+      return Result.error(errMessage);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 }

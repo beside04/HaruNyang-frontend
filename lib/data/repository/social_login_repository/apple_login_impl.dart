@@ -25,4 +25,10 @@ class AppleLoginImpl implements AppleLoginRepository {
       return null;
     }
   }
+
+  @override
+  Future<void> logout() async {}
+
+  @override
+  Future<void> withdrawal() async {}
 }

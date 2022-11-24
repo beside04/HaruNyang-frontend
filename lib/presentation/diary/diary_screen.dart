@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/data/data_source/remote_data/login_api.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
@@ -27,6 +28,14 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                 );
               },
               child: const Text('로그아웃'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                final LoginApi loginApi = LoginApi();
+
+                await loginApi.getMyInformation(context);
+              },
+              child: const Text('test'),
             ),
           ],
         ),

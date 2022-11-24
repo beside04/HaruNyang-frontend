@@ -13,11 +13,13 @@ class LoginTermsInformationScreen
     extends GetView<LoginTermsInformationViewModel> {
   final String email;
   final String socialId;
+  final bool isSocialKakao;
 
   const LoginTermsInformationScreen({
     Key? key,
     required this.email,
     required this.socialId,
+    required this.isSocialKakao,
   }) : super(key: key);
 
   @override
@@ -103,7 +105,8 @@ class LoginTermsInformationScreen
                     onTap: () async {
                       if (controller.isTermsAgree.value &&
                           controller.isPrivacyPolicyAgree.value) {
-                        final result = await controller.signup(socialId, email);
+                        final result = await controller.signup(
+                            socialId, email, isSocialKakao);
                         if (result) {
                           Get.offAll(
                             () => OnBoardingNicknameScreen(

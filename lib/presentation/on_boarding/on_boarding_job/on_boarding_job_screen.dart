@@ -104,8 +104,6 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                       if (key.saveAndValidate()) {
                         FocusScope.of(context).unfocus();
 
-                        await controller.login(socialId);
-
                         Get.offAll(
                           () => const HomeScreen(),
                           transition: Transition.cupertino,

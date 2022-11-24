@@ -1,18 +1,20 @@
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/local_data/local_secure_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/repository/social_login_repository/apple_login_repository.dart';
+import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppleLoginUseCase {
   final AppleLoginRepository socialLoginRepository;
   final ServerLoginRepository serverLoginRepository;
+  final TokenRepository tokenRepository;
 
   AppleLoginUseCase({
     required this.socialLoginRepository,
     required this.serverLoginRepository,
+    required this.tokenRepository,
   });
 
   Future<SocialLoginResult> getAppleSocialId() async {
@@ -61,12 +63,8 @@ class AppleLoginUseCase {
 
     return await loginResult.when(
       success: (loginData) async {
-        //secure store에 refresh token 저장.
-        await LocalSecureDataSource()
-            .saveData(refreshTokenKey, loginData.refreshToken);
-
-        //access token은 return하기 위해 다른 변수에 저장.
-        accessToken = loginData.accessToken;
+        await tokenRepository.setAccessToken(loginData.accessToken);
+        await tokenRepository.setRefreshToken(loginData.refreshToken);
         return Result.success(accessToken);
       },
       error: (message) {
@@ -74,5 +72,15 @@ class AppleLoginUseCase {
         return Result.error(message);
       },
     );
+  }
+
+  Future<void> logout() async {
+    await tokenRepository.deleteAllToken();
+    return await socialLoginRepository.logout();
+  }
+
+  Future<void> withdrawal() async {
+    await tokenRepository.deleteAllToken();
+    return await socialLoginRepository.withdrawal();
   }
 }
