@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/data/repository/token_repository_impl.dart';
-import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -30,11 +28,15 @@ class MyApp extends GetView<MainViewModel> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(390, 844),
+      designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
           title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: kSuccessColor,
+            ),
             primarySwatch: Colors.blue,
             inputDecorationTheme: const InputDecorationTheme(
               filled: true,
@@ -43,7 +45,7 @@ class MyApp extends GetView<MainViewModel> {
                 borderSide: BorderSide(color: kGrayColor150),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: kSuccessColor),
+                borderSide: BorderSide(color: kGrayColor950),
               ),
             ),
           ),

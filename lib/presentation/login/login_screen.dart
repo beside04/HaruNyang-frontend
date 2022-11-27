@@ -39,7 +39,7 @@ class LoginScreen extends GetView<LoginViewModel> {
             ),
             Center(
               child: Text(
-                "댕청봇과 함께해볼까요?",
+                "하루냥과 함께해볼까요?",
                 style: kHeader1BlackStyle,
               ),
             ),
@@ -55,12 +55,14 @@ class LoginScreen extends GetView<LoginViewModel> {
             SizedBox(
               height: 12.h,
             ),
-            InkWell(
-              onTap: () async {
-                await controller.connectAppleLogin();
-              },
-              child: const AppleLoginWidget(),
-            ),
+            GetPlatform.isAndroid
+                ? Container()
+                : InkWell(
+                    onTap: () async {
+                      await controller.connectAppleLogin();
+                    },
+                    child: const AppleLoginWidget(),
+                  ),
             SizedBox(
               height: 20.h,
             ),
@@ -70,7 +72,7 @@ class LoginScreen extends GetView<LoginViewModel> {
               ),
               child: Text.rich(
                 TextSpan(
-                  text: '로그인시 댕청봇의 ',
+                  text: '로그인시 하루냥의 ',
                   style: kSubtitle2BlackStyle,
                   children: const [
                     TextSpan(

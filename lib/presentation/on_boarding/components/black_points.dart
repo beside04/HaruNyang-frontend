@@ -14,34 +14,36 @@ class BlackPoints extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Container(
-          width: 12.w,
-          height: 12.h,
-          decoration: BoxDecoration(
-            color: blackNumber == 1 ? kBlackColor : kGrayColor200,
-            shape: BoxShape.circle,
+        Flexible(
+          child: Container(
+            height: 4.h,
+            decoration: BoxDecoration(
+              color: blackNumber >= 1 ? kBlackColor : kGrayColor200,
+            ),
           ),
         ),
-        SizedBox(
-          width: 11.w,
-        ),
-        Container(
-          width: 12.w,
-          height: 12.h,
-          decoration: BoxDecoration(
-            color: blackNumber == 2 ? kBlackColor : kGrayColor200,
-            shape: BoxShape.circle,
+        Flexible(
+          child: Container(
+            height: 4.h,
+            decoration: BoxDecoration(
+              color: blackNumber >= 2 ? kBlackColor : kGrayColor200,
+            ),
           ),
         ),
-        SizedBox(
-          width: 11.w,
+        Flexible(
+          child: Container(
+            height: 4.h,
+            decoration: BoxDecoration(
+              color: blackNumber >= 3 ? kBlackColor : kGrayColor200,
+            ),
+          ),
         ),
-        Container(
-          width: 12.w,
-          height: 12.h,
-          decoration: BoxDecoration(
-            color: blackNumber == 3 ? kBlackColor : kGrayColor200,
-            shape: BoxShape.circle,
+        Flexible(
+          child: Container(
+            height: 4.h,
+            decoration: BoxDecoration(
+              color: blackNumber >= 4 ? kBlackColor : kGrayColor200,
+            ),
           ),
         ),
       ],
