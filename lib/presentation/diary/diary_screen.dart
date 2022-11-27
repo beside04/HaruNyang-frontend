@@ -33,7 +33,7 @@ class DiaryScreen extends GetView<DiaryViewModel> {
               onPressed: () async {
                 final LoginApi loginApi = LoginApi();
 
-                await loginApi.getMyInformation(context);
+                await loginApi.getMyInformation();
               },
               child: const Text('test'),
             ),

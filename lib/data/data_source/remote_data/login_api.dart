@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
@@ -104,10 +103,10 @@ class LoginApi {
     return false;
   }
 
-  Future<Result<MyInformation>> getMyInformation(BuildContext context) async {
+  Future<Result<MyInformation>> getMyInformation() async {
     String myInformationUrl = '$baseUrl/v1/me';
 
-    var dio = await refreshInterceptor(context);
+    var dio = await refreshInterceptor();
 
     try {
       Response response;
