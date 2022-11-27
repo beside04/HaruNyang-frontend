@@ -34,6 +34,7 @@ class MyApp extends GetView<MainViewModel> {
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            scaffoldBackgroundColor: kWhiteColor,
             textSelectionTheme: const TextSelectionThemeData(
               cursorColor: kSuccessColor,
             ),

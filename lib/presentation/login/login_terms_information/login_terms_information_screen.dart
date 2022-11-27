@@ -109,9 +109,7 @@ class LoginTermsInformationScreen
                             socialId, email, isSocialKakao);
                         if (result) {
                           Get.offAll(
-                            () => OnBoardingNicknameScreen(
-                              socialId: socialId,
-                            ),
+                            () => OnBoardingNicknameScreen(),
                           );
                         }
                       }

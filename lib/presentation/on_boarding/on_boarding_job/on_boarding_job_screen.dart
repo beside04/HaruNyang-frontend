@@ -13,13 +13,13 @@ import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
-  final String socialId;
   final String nickname;
+  final String birth;
 
   OnBoardingJobScreen({
     Key? key,
-    required this.socialId,
     required this.nickname,
+    required this.birth,
   }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
@@ -97,6 +97,12 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                   var key = _fbKey.currentState!;
                   if (key.saveAndValidate()) {
                     FocusScope.of(context).unfocus();
+
+                    controller.putMyInformation(
+                      nickname: nickname,
+                      job: controller.jobStatus.value.name,
+                      age: birth,
+                    );
 
                     Get.to(
                       () => const OnBoardingFinishScreen(),

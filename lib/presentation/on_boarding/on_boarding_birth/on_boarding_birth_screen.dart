@@ -14,12 +14,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
-  final String socialId;
   final String nickname;
 
   OnBoardingBirthScreen({
     Key? key,
-    required this.socialId,
     required this.nickname,
   }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
@@ -139,8 +137,8 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
 
                             Get.to(
                               () => OnBoardingJobScreen(
-                                socialId: socialId,
                                 nickname: nickname,
+                                birth: controller.birthValue.value,
                               ),
                               transition: Transition.cupertino,
                             );
