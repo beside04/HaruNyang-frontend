@@ -21,6 +21,6 @@ class OnBoardingBirthViewModel extends GetxController {
   }
 
   void getBirthDateFormat(date) {
-    birthEditingController.text = DateFormat('yyyy/MM/dd').format(date);
+    birthEditingController.text = DateFormat('yyyy-MM-dd').format(date);
   }
 }

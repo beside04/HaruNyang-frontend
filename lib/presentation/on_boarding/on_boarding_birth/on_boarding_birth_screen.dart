@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
@@ -12,11 +14,11 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
 class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
-  final String socialId;
+  final String nickname;
 
   OnBoardingBirthScreen({
     Key? key,
-    required this.socialId,
+    required this.nickname,
   }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
@@ -25,126 +27,127 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
     getOnBoardingBirthBinding();
 
     return Scaffold(
-      body: FormBuilder(
-        key: _fbKey,
-        autovalidateMode: AutovalidateMode.disabled,
-        child: Stack(
-          children: [
-            Center(
-              child: Padding(
-                padding: EdgeInsets.only(left: 16.0.w),
+      body: SafeArea(
+        child: FormBuilder(
+          key: _fbKey,
+          autovalidateMode: AutovalidateMode.disabled,
+          child: Stack(
+            children: [
+              Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      height: 93.h,
-                    ),
                     const BlackPoints(
                       blackNumber: 2,
                     ),
-                    SizedBox(
-                      height: 7.h,
-                    ),
-                    Text(
-                      "몇 살이에요?",
-                      style: kHeader1BlackStyle,
-                    ),
-                    SizedBox(
-                      height: 50.h,
-                    ),
-                    SizedBox(
-                      width: 322.w,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 8.0.w),
-                        child: FormBuilderTextField(
-                          controller: controller.birthEditingController,
-                          style: kSubtitle4BlackStyle,
-                          onTap: () async {
-                            DatePicker.showDatePicker(
-                              context,
-                              showTitleActions: true,
-                              minTime: DateTime(1930, 1, 1),
-                              maxTime: DateTime(2005, 12, 30),
-                              onConfirm: (date) {
-                                controller.getBirthDateFormat(date);
-                              },
-                              currentTime: DateTime(1995, 12, 30),
-                              locale: LocaleType.ko,
-                            );
-                          },
-                          readOnly: true,
-                          name: 'birth',
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            helperText: "",
-                            counterText: "",
-                            hintText: 'YYYY/MM/DD 입력',
-                            hintStyle: kSubtitle3Gray300Style,
-                            contentPadding: const EdgeInsets.symmetric(
-                              vertical: 16,
-                              horizontal: 19,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
+                    Padding(
+                      padding: kPrimarySidePadding,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 40.h,
                           ),
-                          validator: FormBuilderValidators.compose([
-                            FormBuilderValidators.required(
-                              errorText: '생년월일을 입력해주세요.',
+                          Text(
+                            nickname,
+                            style: kHeader2BlackStyle,
+                          ),
+                          SizedBox(
+                            height: 4.h,
+                          ),
+                          Text(
+                            "나이는 어떻게 돼?",
+                            style: kHeader2BlackStyle,
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          FormBuilderTextField(
+                            controller: controller.birthEditingController,
+                            style: kSubtitle4BlackStyle,
+                            onTap: () async {
+                              DatePicker.showDatePicker(
+                                context,
+                                showTitleActions: true,
+                                minTime: DateTime(1930, 1, 1),
+                                maxTime: DateTime(2005, 12, 30),
+                                onConfirm: (date) {
+                                  controller.getBirthDateFormat(date);
+                                },
+                                currentTime: DateTime(1995, 12, 30),
+                                locale: LocaleType.ko,
+                              );
+                            },
+                            readOnly: true,
+                            name: 'birth',
+                            keyboardType: TextInputType.text,
+                            decoration: InputDecoration(
+                              helperText: "",
+                              counterText: "",
+                              hintText: 'YYYY/MM/DD 입력',
+                              hintStyle: kSubtitle3Gray300Style,
+                              contentPadding: const EdgeInsets.only(
+                                top: 14,
+                                right: 14,
+                                bottom: 14,
+                                left: 16,
+                              ),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              suffixIcon: Obx(
+                                () => controller.birthValue.value.isEmpty
+                                    ? Visibility(
+                                        visible: false,
+                                        child: Container(),
+                                      )
+                                    : GestureDetector(
+                                        child: const Icon(
+                                          Icons.cancel,
+                                          color: kGrayColor200,
+                                          size: 20,
+                                        ),
+                                        onTap: () => controller
+                                            .birthEditingController
+                                            .clear(),
+                                      ),
+                              ),
                             ),
-                          ]),
-                        ),
+                            validator: FormBuilderValidators.compose([
+                              FormBuilderValidators.required(
+                                errorText: '생년월일을 입력해주세요.',
+                              ),
+                            ]),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
               ),
-            ),
-            Obx(
-              () => Align(
-                alignment: Alignment.bottomLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    left: 28.w,
-                    bottom: 37.h,
-                    right: 31.w,
-                  ),
-                  child: SizedBox(
-                    width: 331.w,
-                    height: 48.h,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: kBlackColor,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      onPressed: controller.birthValue.value.isEmpty
-                          ? null
-                          : () {
-                              var key = _fbKey.currentState!;
-                              if (key.saveAndValidate()) {
-                                FocusScope.of(context).unfocus();
+              Obx(
+                () => BottomButton(
+                  title: '다음',
+                  onTap: controller.birthValue.value.isEmpty
+                      ? null
+                      : () {
+                          var key = _fbKey.currentState!;
+                          if (key.saveAndValidate()) {
+                            FocusScope.of(context).unfocus();
 
-                                Get.to(
-                                  () => OnBoardingJobScreen(
-                                    socialId: socialId,
-                                  ),
-                                  transition: Transition.cupertino,
-                                );
-                              }
-                            },
-                      child: Text(
-                        "다음",
-                        style: kSubtitle2WhiteStyle,
-                      ),
-                    ),
-                  ),
+                            Get.to(
+                              () => OnBoardingJobScreen(
+                                nickname: nickname,
+                                birth: controller.birthValue.value,
+                              ),
+                              transition: Transition.cupertino,
+                            );
+                          }
+                        },
                 ),
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );

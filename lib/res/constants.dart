@@ -1,8 +1,9 @@
 enum Job {
   student,
-  jobSeeker,
   officeWorkers,
+  jobSeeker,
   freelancer,
+  rest,
   etc,
 }
 

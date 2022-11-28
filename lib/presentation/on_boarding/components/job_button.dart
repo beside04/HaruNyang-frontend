@@ -1,35 +1,73 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
 class JobButton extends StatelessWidget {
   final String job;
+  final String icon;
   final bool selected;
   final VoidCallback onPressed;
-  const JobButton(
-    this.job, {
+  const JobButton({
     super.key,
+    required this.job,
+    required this.icon,
     required this.selected,
     required this.onPressed,
   });
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 170.w,
-      height: 48.h,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          splashFactory: NoSplash.splashFactory,
-          backgroundColor: selected ? kBlackColor : kGrayColor50,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-        ),
-        onPressed: onPressed,
-        child: Text(
-          job,
-          style: selected ? kSubtitle3White300Style : kSubtitle3Gray300Style,
-        ),
+    return GestureDetector(
+      onTap: onPressed,
+      child: Column(
+        children: [
+          Container(
+            width: 96.w,
+            height: 96.h,
+            decoration: BoxDecoration(
+              color: kGrayColor50,
+              shape: BoxShape.circle,
+              border: Border.all(
+                width: selected ? 2 : 0.5,
+                color: selected ? kPrimaryColor : kGrayColor150,
+              ),
+            ),
+            child: Stack(
+              children: [
+                Center(
+                  child: Text(
+                    icon,
+                    style: TextStyle(
+                      fontSize: 40.sp,
+                    ),
+                  ),
+                ),
+                selected
+                    ? Positioned(
+                        bottom: 10.h,
+                        right: 2.w,
+                        child: SizedBox(
+                          width: 16.w,
+                          height: 16.h,
+                          child: SvgPicture.asset(
+                            "lib/config/assets/images/on_boarding/check.svg",
+                          ),
+                        ),
+                      )
+                    : Container(),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 8.h,
+          ),
+          Text(
+            job,
+            style: kSubtitle4BlackStyle,
+          )
+        ],
       ),
     );
   }

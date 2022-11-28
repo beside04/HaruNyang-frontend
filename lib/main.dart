@@ -5,12 +5,14 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'presentation/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +24,8 @@ void main() async {
   // runApp() 호출 전 Flutter SDK 초기화
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
   KakaoSdk.init(nativeAppKey: appkey);
+  getLoginBinding();
+  await Get.find<MainViewModel>().getAccessToken();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {
@@ -31,17 +35,22 @@ void main() async {
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends GetView<MainViewModel> {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(390, 844),
+      designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {
         return GetMaterialApp(
           title: 'Flutter Demo',
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
+            scaffoldBackgroundColor: kWhiteColor,
+            textSelectionTheme: const TextSelectionThemeData(
+              cursorColor: kSuccessColor,
+            ),
             primarySwatch: Colors.blue,
             inputDecorationTheme: const InputDecorationTheme(
               filled: true,
@@ -50,12 +59,13 @@ class MyApp extends StatelessWidget {
                 borderSide: BorderSide(color: kGrayColor150),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: kSuccessColor),
+                borderSide: BorderSide(color: kGrayColor950),
               ),
             ),
           ),
-          home: const LoginScreen(),
-          initialBinding: BindingsBuilder(getLoginBinding),
+          home: Get.find<MainViewModel>().token == null
+              ? const LoginScreen()
+              : const HomeScreen(),
         );
       },
     );

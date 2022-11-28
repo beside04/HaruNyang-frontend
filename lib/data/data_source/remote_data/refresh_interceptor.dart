@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:get/get.dart';
 
-Future<Dio> refreshInterceptor(BuildContext context) async {
+Future<Dio> refreshInterceptor() async {
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
   var dio = Dio();
 

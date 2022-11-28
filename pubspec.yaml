@@ -82,6 +82,7 @@ flutter:
   assets:
     - lib/config/assets/images/
     - lib/config/assets/images/login/
+    - lib/config/assets/images/on_boarding/
     - .env
   #   - images/a_dot_ham.jpeg
 
