@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "686085329730",
+    "project_id": "harunyang",
+    "storage_bucket": "harunyang.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:686085329730:android:f379b765adc11931b92edb",
+        "android_client_info": {
+          "package_name": "com.beside04.haruNyang"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "686085329730-eq5bu40l7l9b9hc6bkvmc890crosn289.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1dfQhX8kLNFL2aGXnA7rJkXu2NrMr62g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "686085329730-eq5bu40l7l9b9hc6bkvmc890crosn289.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "686085329730-35ea7hi3q0vcjshp752td0dn9eb2jpkq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.beside04.haruNyang"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

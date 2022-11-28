@@ -1,4 +1,5 @@
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
+import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
@@ -52,6 +53,7 @@ void getLoginBinding() {
   Get.put(MainViewModel(
     tokenUseCase: tokenUseCase,
   ));
+  Get.put(NotificationController());
 }
 
 void getDiaryBinding() {
