@@ -119,6 +119,20 @@ TextStyle kBody3BlackStyle = TextStyle(
   fontWeight: FontWeight.w600,
 );
 
+TextStyle kBody3WhiteStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 12.sp,
+  color: kWhiteColor,
+  fontWeight: FontWeight.w600,
+);
+
+TextStyle kBody3PrimaryStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 12.sp,
+  color: kPrimaryColor,
+  fontWeight: FontWeight.w600,
+);
+
 //Body4 Style
 TextStyle kBody4BlackStyle = TextStyle(
   fontFamily: pretendard,
