@@ -11,6 +11,7 @@ import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:get/get.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'presentation/home/home_screen.dart';
 
@@ -31,7 +32,7 @@ void main() async {
   runZonedGuarded<Future<void>>(() async {
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
-    runApp(const MyApp());
+    initializeDateFormatting().then((_) => runApp(const MyApp()));
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 

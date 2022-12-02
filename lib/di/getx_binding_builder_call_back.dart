@@ -10,6 +10,7 @@ import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_c
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
+import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
@@ -87,4 +88,8 @@ void getProfileBinding() {
   Get.put(ProfileViewModel(
     onBoardingUseCase: onBoardingUseCase,
   ));
+}
+
+void getEmotionStampBinding() {
+  Get.put(EmotionStampViewModel());
 }
