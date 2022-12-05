@@ -3,7 +3,6 @@ import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_screen.dart';
 import 'package:frontend/presentation/profile/profile_screen.dart';
-import 'package:frontend/presentation/report/report_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -24,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   List<Widget> widgetList = const [
     DiaryScreen(),
     EmotionStampScreen(),
-    ReportScreen(),
     ProfileScreen(),
   ];
 
@@ -45,10 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
               icon: Icon(Icons.emoji_emotions),
               label: '감정 스탬프',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.analytics),
-              label: '리포트',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

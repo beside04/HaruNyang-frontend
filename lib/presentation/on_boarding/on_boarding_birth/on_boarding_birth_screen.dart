@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
@@ -118,6 +119,18 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
                                 errorText: '생년월일을 입력해주세요.',
                               ),
                             ]),
+                          ),
+                          SizedBox(
+                            height: 178.h,
+                          ),
+                          Center(
+                            child: SizedBox(
+                              width: 240.w,
+                              height: 240.h,
+                              child: SvgPicture.asset(
+                                "lib/config/assets/images/character/onboarding2.svg",
+                              ),
+                            ),
                           ),
                         ],
                       ),

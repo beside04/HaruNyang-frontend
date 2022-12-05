@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -52,6 +53,18 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                           Text(
                             "집사 등록이 완료되었어요!",
                             style: kHeader2BlackStyle,
+                          ),
+                          SizedBox(
+                            height: 210.h,
+                          ),
+                          Center(
+                            child: SizedBox(
+                              width: 240.w,
+                              height: 240.h,
+                              child: SvgPicture.asset(
+                                "lib/config/assets/images/character/onboarding3.svg",
+                              ),
+                            ),
                           ),
                         ],
                       ),
