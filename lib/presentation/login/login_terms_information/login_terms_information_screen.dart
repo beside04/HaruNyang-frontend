@@ -44,7 +44,7 @@ class LoginTermsInformationScreen
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 16.0.w),
+            padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -96,29 +96,37 @@ class LoginTermsInformationScreen
                     isAgree: controller.isPrivacyPolicyAgree.value,
                   ),
                 ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Obx(
-                  () => TermButtons(
-                    title: '다음 페이지',
-                    onTap: () async {
-                      if (controller.isTermsAgree.value &&
-                          controller.isPrivacyPolicyAgree.value) {
-                        final result = await controller.signup(
-                            socialId, email, isSocialKakao);
-                        if (result) {
-                          Get.offAll(
-                            () => OnBoardingNicknameScreen(),
-                          );
-                        }
-                      }
-                    },
-                    isAgree: controller.isTermsAgree.value &&
-                        controller.isPrivacyPolicyAgree.value,
-                  ),
-                ),
+                // SizedBox(
+                //   height: 16.h,
+                // ),
+
               ],
+            ),
+          ),
+          const Spacer(),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 40.h),
+            child: Obx(
+                  () => TermButtons(
+                title: '가입 완료하기',
+                onTap: () async {
+                  if (controller.isTermsAgree.value &&
+                      controller.isPrivacyPolicyAgree.value) {
+                    final result = await controller.signup(
+                        socialId, email, isSocialKakao);
+                    if (result) {
+                      //회원가입이 성공하면 login
+
+                      //로그인이
+                      Get.offAll(
+                            () => OnBoardingNicknameScreen(),
+                      );
+                    }
+                  }
+                },
+                isAgree: controller.isTermsAgree.value &&
+                    controller.isPrivacyPolicyAgree.value,
+              ),
             ),
           ),
         ],
