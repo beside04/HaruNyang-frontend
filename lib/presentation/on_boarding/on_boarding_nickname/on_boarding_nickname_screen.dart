@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
@@ -22,7 +23,6 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
   @override
   Widget build(BuildContext context) {
     getOnBoardingNickNameBinding();
-
     return WillPopScope(
       onWillPop: () async {
         bool backResult = GlobalUtils.onBackPressed();
@@ -36,8 +36,7 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
             child: Stack(
               children: [
                 Center(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: ListView(
                     children: [
                       const BlackPoints(
                         blackNumber: 1,
@@ -120,6 +119,22 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                                   }
                                 },
                               ]),
+                            ),
+                            Obx(
+                              () => controller.isOnKeyboard.value
+                                  ? Container()
+                                  : SizedBox(
+                                      height: 178.h,
+                                    ),
+                            ),
+                            Center(
+                              child: SizedBox(
+                                width: 240.w,
+                                height: 240.h,
+                                child: SvgPicture.asset(
+                                  "lib/config/assets/images/character/onboarding1.svg",
+                                ),
+                              ),
                             ),
                           ],
                         ),
