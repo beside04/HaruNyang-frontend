@@ -3,23 +3,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/login/components/term_buttons.dart';
+import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_privacy_policy/login_privacy_policy_screen.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_of_service/login_terms_of_service_screen.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:get/get.dart';
 
 class LoginTermsInformationScreen
     extends GetView<LoginTermsInformationViewModel> {
-  final String email;
-  final String socialId;
-  final bool isSocialKakao;
-
   const LoginTermsInformationScreen({
     Key? key,
-    required this.email,
-    required this.socialId,
-    required this.isSocialKakao,
   }) : super(key: key);
 
   @override
@@ -44,7 +37,7 @@ class LoginTermsInformationScreen
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 16.0.w,right: 16.0.w),
+            padding: EdgeInsets.only(left: 16.0.w, right: 16.0.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -96,32 +89,23 @@ class LoginTermsInformationScreen
                     isAgree: controller.isPrivacyPolicyAgree.value,
                   ),
                 ),
-                // SizedBox(
-                //   height: 16.h,
-                // ),
-
               ],
             ),
           ),
           const Spacer(),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w,vertical: 40.h),
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w, vertical: 40.h),
             child: Obx(
-                  () => TermButtons(
+              () => TermButtons(
                 title: '가입 완료하기',
                 onTap: () async {
                   if (controller.isTermsAgree.value &&
                       controller.isPrivacyPolicyAgree.value) {
-                    final result = await controller.signup(
-                        socialId, email, isSocialKakao);
-                    if (result) {
-                      //회원가입이 성공하면 login
-
-                      //로그인이
-                      Get.offAll(
-                            () => OnBoardingNicknameScreen(),
-                      );
-                    }
+                    Get.offAll(
+                      () => const LoginScreen(
+                        isSignup: true,
+                      ),
+                    );
                   }
                 },
                 isAgree: controller.isTermsAgree.value &&

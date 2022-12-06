@@ -165,7 +165,7 @@ class ProfileSettingScreen extends StatelessWidget {
                   child: InkWell(
                     onTap: () {
                       Get.to(
-                        () => OnBoardingNicknameScreen(),
+                        () => const OnBoardingNicknameScreen(),
                       );
                     },
                     child: Container(

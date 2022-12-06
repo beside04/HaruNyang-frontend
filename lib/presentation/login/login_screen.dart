@@ -9,10 +9,19 @@ import 'package:get/get.dart';
 import 'components/apple_login_widget.dart';
 
 class LoginScreen extends GetView<LoginViewModel> {
-  const LoginScreen({Key? key}) : super(key: key);
+  final bool isSignup;
+
+  const LoginScreen({
+    Key? key,
+    this.isSignup = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (isSignup) {
+      controller.signupAndLogin();
+    }
+
     return WillPopScope(
       onWillPop: () async {
         bool backResult = GlobalUtils.onBackPressed();

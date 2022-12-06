@@ -26,7 +26,8 @@ void main() async {
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
   KakaoSdk.init(nativeAppKey: appkey);
   getLoginBinding();
-  await Get.find<MainViewModel>().getAccessToken();
+  //await Get.find<MainViewModel>().getAccessToken();
+  //Get.find<MainViewModel>().getMyInformation();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {

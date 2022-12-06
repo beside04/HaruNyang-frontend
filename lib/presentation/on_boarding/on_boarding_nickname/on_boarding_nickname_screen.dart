@@ -13,11 +13,12 @@ import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 
+final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+
 class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
-  OnBoardingNicknameScreen({
+  const OnBoardingNicknameScreen({
     Key? key,
   }) : super(key: key);
-  final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {

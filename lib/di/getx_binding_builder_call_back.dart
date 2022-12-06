@@ -50,9 +50,11 @@ void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
     appleLoginUseCase: appleLoginUseCase,
+    onBoardingUseCase: onBoardingUseCase,
   ));
   Get.put(MainViewModel(
     tokenUseCase: tokenUseCase,
+    onBoardingUseCase: onBoardingUseCase,
   ));
   Get.put(NotificationController());
 }
