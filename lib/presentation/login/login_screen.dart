@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
@@ -37,14 +38,18 @@ class LoginScreen extends GetView<LoginViewModel> {
                 top: 165.h,
                 left: 56.w,
               ),
-              child: Image.asset(
-                "lib/config/assets/images/temp_img.png",
-                width: 293.w,
-                height: 285.h,
+              child: Center(
+                child: SizedBox(
+                  width: 280.w,
+                  height: 280.h,
+                  child: SvgPicture.asset(
+                    "lib/config/assets/images/character/onboarding2.svg",
+                  ),
+                ),
               ),
             ),
             SizedBox(
-              height: 54.h,
+              height: 50.h,
             ),
             Center(
               child: Text(
