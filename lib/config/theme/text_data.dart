@@ -103,6 +103,13 @@ TextStyle kBody1BlackStyle = TextStyle(
   fontWeight: FontWeight.w500,
 );
 
+TextStyle kBody1Gray600Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kGrayColor600,
+  fontWeight: FontWeight.w500,
+);
+
 //Body2 Style
 TextStyle kBody2BlackStyle = TextStyle(
   fontFamily: pretendard,

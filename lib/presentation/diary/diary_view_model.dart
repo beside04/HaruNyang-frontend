@@ -1,5 +1,7 @@
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/domain/model/diary/weather_data.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -11,8 +13,43 @@ class DiaryViewModel extends GetxController {
     required this.kakaoLoginUseCase,
   });
 
+  final weatherStatus = Rx<Weather?>(null);
   final pickedFile = Rx<XFile?>(null);
   final croppedFile = Rx<CroppedFile?>(null);
+  final nowDate = DateTime.now().obs;
+
+  List<WeatherData> weatherDataList = [
+    WeatherData(
+      name: "맑음",
+      icon: 'lib/config/assets/images/diary/weather/sunny.svg',
+      value: 'sunny',
+    ),
+    WeatherData(
+      name: "흐림",
+      icon: 'lib/config/assets/images/diary/weather/cloudy.svg',
+      value: 'cloudy',
+    ),
+    WeatherData(
+      name: "비",
+      icon: 'lib/config/assets/images/diary/weather/rainy.svg',
+      value: 'rainy',
+    ),
+    WeatherData(
+      name: "눈",
+      icon: 'lib/config/assets/images/diary/weather/snow.svg',
+      value: 'snow',
+    ),
+    WeatherData(
+      name: "바람",
+      icon: 'lib/config/assets/images/diary/weather/windy.svg',
+      value: 'windy',
+    ),
+    WeatherData(
+      name: "번개",
+      icon: 'lib/config/assets/images/diary/weather/thunder.svg',
+      value: 'thunder',
+    ),
+  ].obs;
 
   Future<void> cropImage() async {
     if (pickedFile.value != null) {
