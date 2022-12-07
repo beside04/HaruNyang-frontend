@@ -13,15 +13,4 @@ class LoginTermsInformationViewModel extends GetxController {
 
   final RxBool isTermsAgree = false.obs;
   final RxBool isPrivacyPolicyAgree = false.obs;
-
-  Future<bool> signup(String socialId, String email, bool isSocialKakao) async {
-    final result = isSocialKakao
-        ? await kakaoLoginUseCase.signup(email, socialId)
-        : await appleLoginUseCase.signup(email, socialId);
-
-    if (!result) {
-      Get.snackbar('알림', '회원가입에 실패했습니다.');
-    }
-    return result;
-  }
 }

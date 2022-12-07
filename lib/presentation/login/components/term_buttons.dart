@@ -24,7 +24,6 @@ class TermButtons extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           color: isAgree ? kBlackColor : kGrayColor300,
         ),
-        width: 360.w,
         height: 54.h,
         child: Stack(
           children: [
