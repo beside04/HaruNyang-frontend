@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/diary/components/weather_icon.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
-import 'package:frontend/presentation/profile/profile_view_model.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -30,227 +25,166 @@ class DiaryScreen extends GetView<DiaryViewModel> {
             colors: [Color(0xffE69954), Color(0xffE4A469), Color(0xffE4A86F)],
           ),
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 60.h,
-            ),
-            Center(
-              child: Text(
-                DateFormat('MM월 dd일').format(controller.nowDate.value),
-                style: kHeader3BlackStyle,
+        child: SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 24.h,
               ),
-            ),
-            SizedBox(
-              height: 24.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 28.w),
-              child: Row(
-                children: [
-                  Text(
-                    "${Get.find<ProfileViewModel>().nickname}",
-                    style: kHeader1BlackStyle,
-                  ),
-                  Text(
-                    "님",
-                    style: TextStyle(
-                      fontFamily: pretendard,
-                      fontSize: 28.sp,
-                      color: kBlackColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 28.w),
-              child: Row(
-                children: [
-                  Text(
-                    "오늘 날씨 ",
-                    style: kHeader1BlackStyle,
-                  ),
-                  Text(
-                    "어때요?",
-                    style: TextStyle(
-                      fontFamily: pretendard,
-                      fontSize: 28.sp,
-                      color: kBlackColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Center(
-              child: SizedBox(
-                width: 290.w,
-                height: 290.h,
-                child: SvgPicture.asset(
-                  "lib/config/assets/images/character/onboarding3.svg",
+              Padding(
+                padding: EdgeInsets.only(left: 24.w),
+                child: Text(
+                  DateFormat('MM월 dd일').format(controller.nowDate.value),
+                  style: kSubtitle2BlackStyle,
                 ),
               ),
-            ),
-            // Obx(
-            //   () => (controller.croppedFile.value != null ||
-            //           controller.pickedFile.value != null)
-            //       ? Center(
-            //           child: Column(
-            //             mainAxisSize: MainAxisSize.min,
-            //             crossAxisAlignment: CrossAxisAlignment.center,
-            //             children: [
-            //               Padding(
-            //                 padding:
-            //                     const EdgeInsets.symmetric(horizontal: 16.0),
-            //                 child: Card(
-            //                   elevation: 4.0,
-            //                   child: Padding(
-            //                     padding: const EdgeInsets.all(16.0),
-            //                     child: controller.croppedFile.value != null
-            //                         ? ConstrainedBox(
-            //                             constraints: BoxConstraints(
-            //                               maxWidth: 0.8,
-            //                               maxHeight: 0.7,
-            //                             ),
-            //                             child: Image.file(
-            //                               File(controller
-            //                                   .croppedFile.value!.path),
-            //                             ),
-            //                           )
-            //                         : controller.pickedFile.value != null
-            //                             ? ConstrainedBox(
-            //                                 constraints: BoxConstraints(
-            //                                   maxWidth: 0.8,
-            //                                   maxHeight: 0.7,
-            //                                 ),
-            //                                 child: Image.file(
-            //                                   File(controller
-            //                                       .pickedFile.value!.path),
-            //                                 ),
-            //                               )
-            //                             : const SizedBox.shrink(),
-            //                   ),
-            //                 ),
-            //               ),
-            //               const SizedBox(height: 24.0),
-            //               Row(
-            //                 mainAxisSize: MainAxisSize.min,
-            //                 children: [
-            //                   FloatingActionButton(
-            //                     onPressed: () {
-            //                       controller.clear();
-            //                     },
-            //                     backgroundColor: Colors.redAccent,
-            //                     tooltip: 'Delete',
-            //                     child: const Icon(Icons.delete),
-            //                   ),
-            //                   if (controller.croppedFile.value == null)
-            //                     Padding(
-            //                       padding: const EdgeInsets.only(left: 32.0),
-            //                       child: FloatingActionButton(
-            //                         onPressed: () {
-            //                           controller.cropImage();
-            //                         },
-            //                         backgroundColor: const Color(0xFFBC764A),
-            //                         tooltip: 'Crop',
-            //                         child: const Icon(Icons.crop),
-            //                       ),
-            //                     )
-            //                 ],
-            //               ),
-            //             ],
-            //           ),
-            //         )
-            //       : Center(
-            //           child: Card(
-            //             elevation: 4.0,
-            //             shape: RoundedRectangleBorder(
-            //               borderRadius: BorderRadius.circular(16.0),
-            //             ),
-            //             child: SizedBox(
-            //               width: 100.0,
-            //               height: 100.0,
-            //               child: Column(
-            //                 mainAxisSize: MainAxisSize.max,
-            //                 crossAxisAlignment: CrossAxisAlignment.center,
-            //                 mainAxisAlignment: MainAxisAlignment.center,
-            //                 children: [
-            //                   Padding(
-            //                     padding:
-            //                         const EdgeInsets.symmetric(vertical: 24.0),
-            //                     child: ElevatedButton(
-            //                       onPressed: () {
-            //                         controller.uploadImage();
-            //                       },
-            //                       child: const Text('Upload'),
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //         ),
-            // ),
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                  color: kWhiteColor,
-                ),
-                child: Stack(
+              SizedBox(
+                height: 8.h,
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 24.w),
+                child: Row(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.only(left: 28.w, top: 28.w),
-                      child: Row(
-                        children: [
-                          Text(
-                            "날씨",
-                            style: kHeader3BlackStyle,
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 6.w, top: 75.w),
-                      child: ListView.builder(
-                        physics: const BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: controller.weatherDataList.length,
-                        itemBuilder: (BuildContext context, int i) {
-                          return Obx(
-                            () => WeatherIconButton(
-                              name: controller.weatherDataList[i].name,
-                              icon: controller.weatherDataList[i].icon,
-                              selected: controller.weatherStatus.value ==
-                                  Weather.values[i],
-                              onPressed: () {
-                                controller.weatherStatus.value =
-                                    Weather.values[i];
-                              },
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                    Obx(
-                      () => BottomButton(
-                        title: '다음으로',
-                        onTap: controller.weatherStatus.value == null
-                            ? null
-                            : () {},
-                      ),
+                    Text(
+                      "메타몽님",
+                      style: kHeader1BlackStyle,
                     ),
                   ],
                 ),
               ),
-            )
-          ],
+              Padding(
+                padding: EdgeInsets.only(left: 24.w),
+                child: Row(
+                  children: [
+                    Text(
+                      "오늘 날씨 어때요?",
+                      style: kHeader1BlackStyle,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 20.h,
+              ),
+              Center(
+                child: SvgPicture.asset(
+                  "lib/config/assets/images/character/onboarding1.svg",
+                  width: 232.w,
+                  height: 232.h,
+                ),
+              ),
+
+              // Obx(
+              //   () => (controller.croppedFile.value != null ||
+              //           controller.pickedFile.value != null)
+              //       ? Center(
+              //           child: Column(
+              //             mainAxisSize: MainAxisSize.min,
+              //             crossAxisAlignment: CrossAxisAlignment.center,
+              //             children: [
+              //               Padding(
+              //                 padding:
+              //                     const EdgeInsets.symmetric(horizontal: 16.0),
+              //                 child: Card(
+              //                   elevation: 4.0,
+              //                   child: Padding(
+              //                     padding: const EdgeInsets.all(16.0),
+              //                     child: controller.croppedFile.value != null
+              //                         ? ConstrainedBox(
+              //                             constraints: BoxConstraints(
+              //                               maxWidth: 0.8,
+              //                               maxHeight: 0.7,
+              //                             ),
+              //                             child: Image.file(
+              //                               File(controller
+              //                                   .croppedFile.value!.path),
+              //                             ),
+              //                           )
+              //                         : controller.pickedFile.value != null
+              //                             ? ConstrainedBox(
+              //                                 constraints: BoxConstraints(
+              //                                   maxWidth: 0.8,
+              //                                   maxHeight: 0.7,
+              //                                 ),
+              //                                 child: Image.file(
+              //                                   File(controller
+              //                                       .pickedFile.value!.path),
+              //                                 ),
+              //                               )
+              //                             : const SizedBox.shrink(),
+              //                   ),
+              //                 ),
+              //               ),
+              //               const SizedBox(height: 24.0),
+              //               Row(
+              //                 mainAxisSize: MainAxisSize.min,
+              //                 children: [
+              //                   FloatingActionButton(
+              //                     onPressed: () {
+              //                       controller.clear();
+              //                     },
+              //                     backgroundColor: Colors.redAccent,
+              //                     tooltip: 'Delete',
+              //                     child: const Icon(Icons.delete),
+              //                   ),
+              //                   if (controller.croppedFile.value == null)
+              //                     Padding(
+              //                       padding: const EdgeInsets.only(left: 32.0),
+              //                       child: FloatingActionButton(
+              //                         onPressed: () {
+              //                           controller.cropImage();
+              //                         },
+              //                         backgroundColor: const Color(0xFFBC764A),
+              //                         tooltip: 'Crop',
+              //                         child: const Icon(Icons.crop),
+              //                       ),
+              //                     )
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //         )
+              //       : Center(
+              //           child: Card(
+              //             elevation: 4.0,
+              //             shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(16.0),
+              //             ),
+              //             child: SizedBox(
+              //               width: 100.0,
+              //               height: 100.0,
+              //               child: Column(
+              //                 mainAxisSize: MainAxisSize.max,
+              //                 crossAxisAlignment: CrossAxisAlignment.center,
+              //                 mainAxisAlignment: MainAxisAlignment.center,
+              //                 children: [
+              //                   Padding(
+              //                     padding:
+              //                         const EdgeInsets.symmetric(vertical: 24.0),
+              //                     child: ElevatedButton(
+              //                       onPressed: () {
+              //                         controller.uploadImage();
+              //                       },
+              //                       child: const Text('Upload'),
+              //                     ),
+              //                   ),
+              //                 ],
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              // ),
+              GetBuilder<DiaryViewModel>(builder: (context) {
+                return Expanded(
+                  child: Stack(
+                    children: controller.stackChildren,
+                  ),
+                );
+              }),
+            ],
+          ),
         ),
       ),
     );

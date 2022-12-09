@@ -1,13 +1,18 @@
+import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/domain/model/diary/weather_data.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/presentation/diary/components/emotion_modal.dart';
+import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
-class DiaryViewModel extends GetxController {
+class DiaryViewModel extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final KakaoLoginUseCase kakaoLoginUseCase;
+  late AnimationController animationController;
 
   DiaryViewModel({
     required this.kakaoLoginUseCase,
@@ -17,6 +22,42 @@ class DiaryViewModel extends GetxController {
   final pickedFile = Rx<XFile?>(null);
   final croppedFile = Rx<CroppedFile?>(null);
   final nowDate = DateTime.now().obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    animationController = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+  }
+
+  @override
+  void dispose() {
+    animationController.dispose();
+    super.dispose();
+  }
+
+  List<Widget> stackChildren = <Widget>[
+    const EmotionModal(),
+    const WeatherModal(),
+  ];
+
+  void swapStackChildren() {
+    stackChildren = [
+      const WeatherModal(),
+      const EmotionModal(),
+    ];
+    update();
+  }
+
+  void swapStackChildren2() {
+    stackChildren = [
+      const EmotionModal(),
+      const WeatherModal(),
+    ];
+    update();
+  }
 
   List<WeatherData> weatherDataList = [
     WeatherData(
