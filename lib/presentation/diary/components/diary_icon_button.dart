@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
-class WeatherIconButton extends StatelessWidget {
-  const WeatherIconButton({
+class DiaryIconButton extends StatelessWidget {
+  const DiaryIconButton({
     super.key,
     required this.icon,
     required this.name,
@@ -30,7 +30,9 @@ class WeatherIconButton extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  padding: const EdgeInsets.all(10),
+                  padding: selected
+                      ? const EdgeInsets.all(8.5)
+                      : const EdgeInsets.all(10),
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: selected ? 2 : 0.5,

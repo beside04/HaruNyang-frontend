@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/domain/model/diary/emotion_data.dart';
 import 'package:frontend/domain/model/diary/weather_data.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/diary/components/emotion_modal.dart';
@@ -19,9 +20,11 @@ class DiaryViewModel extends GetxController
   });
 
   final weatherStatus = Rx<Weather?>(null);
+  final emotionStatus = Rx<Emotion?>(null);
   final pickedFile = Rx<XFile?>(null);
   final croppedFile = Rx<CroppedFile?>(null);
   final nowDate = DateTime.now().obs;
+  final numberValue = 0.0.obs;
 
   @override
   void onInit() {
@@ -89,6 +92,54 @@ class DiaryViewModel extends GetxController
       name: "번개",
       icon: 'lib/config/assets/images/diary/weather/thunder.svg',
       value: 'thunder',
+    ),
+  ].obs;
+
+  List<EmotionData> emotionDataList = [
+    EmotionData(
+      name: "기뻐",
+      icon: 'lib/config/assets/images/diary/emotion/happy.svg',
+      value: 'happy',
+    ),
+    EmotionData(
+      name: "슬퍼",
+      icon: 'lib/config/assets/images/diary/emotion/sad.svg',
+      value: 'sad',
+    ),
+    EmotionData(
+      name: "화나",
+      icon: 'lib/config/assets/images/diary/emotion/angry.svg',
+      value: 'angry',
+    ),
+    EmotionData(
+      name: "신나",
+      icon: 'lib/config/assets/images/diary/emotion/enjoy.svg',
+      value: 'enjoy',
+    ),
+    EmotionData(
+      name: "힘들어",
+      icon: 'lib/config/assets/images/diary/emotion/tired.svg',
+      value: 'tired',
+    ),
+    EmotionData(
+      name: "놀라워",
+      icon: 'lib/config/assets/images/diary/emotion/suprise2.svg',
+      value: 'tired',
+    ),
+    EmotionData(
+      name: "그저그래",
+      icon: 'lib/config/assets/images/diary/emotion/soso.svg',
+      value: 'soso',
+    ),
+    EmotionData(
+      name: "당황스러워",
+      icon: 'lib/config/assets/images/diary/emotion/embarrassment.svg',
+      value: 'embarrassment',
+    ),
+    EmotionData(
+      name: "설레",
+      icon: 'lib/config/assets/images/diary/emotion/good.svg',
+      value: 'good',
     ),
   ].obs;
 
