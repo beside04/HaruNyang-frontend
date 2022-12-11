@@ -16,7 +16,7 @@ class BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.bottomLeft,
+      alignment: Alignment.bottomCenter,
       child: Padding(
         padding: EdgeInsets.only(
           left: 16.w,

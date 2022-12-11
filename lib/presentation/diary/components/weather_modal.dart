@@ -53,12 +53,12 @@ class WeatherModal extends GetView<DiaryViewModel> {
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: controller.weatherDataList.length,
+                          itemCount: weatherDataList.length,
                           itemBuilder: (BuildContext context, int i) {
                             return Obx(
                               () => DiaryIconButton(
-                                name: controller.weatherDataList[i].name,
-                                icon: controller.weatherDataList[i].icon,
+                                name: weatherDataList[i].name,
+                                icon: weatherDataList[i].icon,
                                 selected: controller.weatherStatus.value ==
                                     Weather.values[i],
                                 onPressed: () {
