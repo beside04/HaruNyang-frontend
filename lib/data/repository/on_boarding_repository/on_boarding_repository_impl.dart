@@ -8,7 +8,18 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
 
   @override
   Future<Result<MyInformation>> getMyInformation() async {
-    return await onBoardingApi.getMyInformation();
+    if (myInformation != null) {
+      return Result.success(myInformation!);
+    } else {
+      final result = await onBoardingApi.getMyInformation();
+      result.when(
+          success: (info) {
+            myInformation = info.copyWith();
+          },
+          error: (message) {});
+
+      return result;
+    }
   }
 
   @override
@@ -24,3 +35,5 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
     );
   }
 }
+
+MyInformation? myInformation;

@@ -4,9 +4,13 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/core/utils/utils.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_screen.dart';
+import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/profile/profile_screen.dart';
+import 'package:get/get.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -16,6 +20,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    getHomeViewModelBinding();
+    Get.find<HomeViewModel>().getMyInformation();
+
+    super.initState();
+  }
+
   int _selectedIndex = 0;
 
   void _onItemTapped(int index) {

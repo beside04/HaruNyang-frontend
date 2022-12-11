@@ -12,6 +12,7 @@ import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
+import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
@@ -51,6 +52,7 @@ void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
     appleLoginUseCase: appleLoginUseCase,
+    onBoardingUseCase: onBoardingUseCase,
   ));
   Get.put(MainViewModel(
     tokenUseCase: tokenUseCase,
@@ -97,4 +99,10 @@ void getProfileBinding() {
 
 void getEmotionStampBinding() {
   Get.put(EmotionStampViewModel());
+}
+
+void getHomeViewModelBinding() {
+  Get.put(
+    HomeViewModel(onBoardingUseCase: onBoardingUseCase),
+  );
 }
