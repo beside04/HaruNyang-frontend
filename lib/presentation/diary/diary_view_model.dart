@@ -21,10 +21,13 @@ class DiaryViewModel extends GetxController
   }
 
   final weatherStatus = Rx<Weather?>(null);
-  final emotionStatus = Rx<Emotion?>(null);
+
+  // final emotionStatus = Rx<Emotion?>(null);
   final nowDate = DateTime.now().obs;
   final numberValue = 2.0.obs;
   final RxList<EmoticonData> emoticonDataList = <EmoticonData>[].obs;
+  final Rx<EmoticonData> selectedEmotion =
+      EmoticonData(emoticon: '', value: '', desc: '').obs;
 
   @override
   void onInit() {
@@ -78,5 +81,9 @@ class DiaryViewModel extends GetxController
         Get.snackbar('알림', message);
       },
     );
+  }
+
+  void setSelectedEmoticon(EmoticonData emoticon) {
+    selectedEmotion.value = emoticon;
   }
 }
