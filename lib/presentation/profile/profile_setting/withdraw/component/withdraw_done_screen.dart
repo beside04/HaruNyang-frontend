@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:get/get.dart';
 
 class WithdrawDoneScreen extends StatelessWidget {
   const WithdrawDoneScreen({Key? key}) : super(key: key);
@@ -65,8 +67,12 @@ class WithdrawDoneScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                     ),
                   ),
-                  onPressed: () {},
-                  child: Text('첫 화면으로'),
+                  onPressed: () {
+                    Get.offAll(
+                      const LoginScreen(),
+                    );
+                  },
+                  child: const Text('첫 화면으로'),
                 ),
               ),
             ),

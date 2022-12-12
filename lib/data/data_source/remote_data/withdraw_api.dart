@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/core/result.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 
 class WithdrawApi {
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
-  Future<void> withdrawal() async {
+  Future<Result<bool>> withdrawUser() async {
     String withdrawUrl = '$_baseUrl/v1/withdraw';
     var dio = await refreshInterceptor();
 
@@ -15,6 +16,7 @@ class WithdrawApi {
         withdrawUrl,
       );
       print(response);
+      return const Result.success(true);
     } on DioError catch (e) {
       String errMessage = '';
 
@@ -26,6 +28,9 @@ class WithdrawApi {
       } else {
         errMessage = e.message;
       }
-    } catch (e) {}
+      return Result.error(errMessage);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
   }
 }

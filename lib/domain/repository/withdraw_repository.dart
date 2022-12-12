@@ -1,3 +1,5 @@
+import 'package:frontend/core/result.dart';
+
 abstract class WithdrawRepository {
-  Future<void> withdrawUser();
+  Future<Result<bool>> withdrawUser();
 }

@@ -51,8 +51,10 @@ final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: TokenRepositoryImpl(),
 );
 
-final WithdrawUseCase withDrawUseCase =
-    WithdrawUseCase(withdrawRepository: WithdrawRepositoryImpl());
+final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
+  withdrawRepository: WithdrawRepositoryImpl(),
+  tokenUseCase: tokenUseCase,
+);
 
 void getLoginBinding() {
   Get.put(LoginViewModel(

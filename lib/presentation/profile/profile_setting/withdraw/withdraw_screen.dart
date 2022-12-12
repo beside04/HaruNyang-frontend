@@ -126,11 +126,14 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                     ),
                                     DialogButton(
                                       title: "예",
-                                      onTap: () {
-                                        //controller.withdrawUser();
-                                        Get.offAll(
-                                          () => const WithdrawDoneScreen(),
-                                        );
+                                      onTap: () async {
+                                        final result =
+                                            await controller.withdrawUser();
+                                        if (result) {
+                                          Get.offAll(
+                                            () => const WithdrawDoneScreen(),
+                                          );
+                                        }
                                       },
                                       backgroundColor: kPrimary2Color,
                                       textStyle: kSubtitle1WhiteStyle,

@@ -19,7 +19,18 @@ class WithdrawViewModel extends GetxController {
     );
   }
 
-  Future<void> withdrawUser() async {
-    await withdrawUseCase.withdrawUser();
+  Future<bool> withdrawUser() async {
+    bool isSuccessWithdraw = false;
+    final result = await withdrawUseCase.withdrawUser();
+    result.when(
+      success: (isSuccess) {
+        isSuccessWithdraw = true;
+      },
+      error: (message) {
+        Get.snackbar('알림', '회원 탈퇴가 실패했습니다.');
+      },
+    );
+
+    return isSuccessWithdraw;
   }
 }
