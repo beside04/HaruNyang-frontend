@@ -31,6 +31,7 @@ class OnBoardingNicknameViewModel extends GetxController {
   @override
   void onClose() {
     nicknameEditingController.dispose();
+    keyboardSubscription.value?.cancel();
     super.onClose();
   }
 }

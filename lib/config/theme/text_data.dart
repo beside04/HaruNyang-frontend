@@ -10,6 +10,7 @@ TextStyle kHeader1BlackStyle = TextStyle(
   fontSize: 28.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w700,
+  height: 1.2857.sp,
 );
 
 TextStyle kHeader1WhiteStyle = TextStyle(
@@ -17,6 +18,7 @@ TextStyle kHeader1WhiteStyle = TextStyle(
   fontSize: 28.sp,
   color: kWhiteColor,
   fontWeight: FontWeight.w700,
+  height: 1.2857.sp,
 );
 
 //Header2 Style
@@ -25,6 +27,7 @@ TextStyle kHeader2BlackStyle = TextStyle(
   fontSize: 24.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w700,
+  height: 1.3333.sp,
 );
 
 //Header3 Style
@@ -33,6 +36,7 @@ TextStyle kHeader3BlackStyle = TextStyle(
   fontSize: 20.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w700,
+  height: 1.4.sp,
 );
 
 //Subtitle1 Style
@@ -41,6 +45,23 @@ TextStyle kSubtitle1BlackStyle = TextStyle(
   fontSize: 18.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w700,
+  height: 1.3333.sp,
+);
+
+TextStyle kSubtitle1Gray950Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 18.sp,
+  color: kGrayColor950,
+  fontWeight: FontWeight.w700,
+  height: 1.3333.sp,
+);
+
+TextStyle kSubtitle1Gray600Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 18.sp,
+  color: kGrayColor600,
+  fontWeight: FontWeight.w700,
+  height: 1.3333.sp,
 );
 
 TextStyle kSubtitle1WhiteStyle = TextStyle(
@@ -48,6 +69,7 @@ TextStyle kSubtitle1WhiteStyle = TextStyle(
   fontSize: 18.sp,
   color: kWhiteColor,
   fontWeight: FontWeight.w700,
+  height: 1.3333.sp,
 );
 
 //Subtitle2 Style
@@ -56,6 +78,7 @@ TextStyle kSubtitle2BlackStyle = TextStyle(
   fontSize: 16.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w600,
+  height: 1.375.sp,
 );
 
 TextStyle kSubtitle2WhiteStyle = TextStyle(
@@ -63,6 +86,7 @@ TextStyle kSubtitle2WhiteStyle = TextStyle(
   fontSize: 16.sp,
   color: kWhiteColor,
   fontWeight: FontWeight.w600,
+  height: 1.375.sp,
 );
 
 //Subtitle3 Style
@@ -71,6 +95,15 @@ TextStyle kSubtitle3BlackStyle = TextStyle(
   fontSize: 16.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+TextStyle kSubtitle3Gray600Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor600,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
 );
 
 TextStyle kSubtitle3Gray300Style = TextStyle(
@@ -78,6 +111,23 @@ TextStyle kSubtitle3Gray300Style = TextStyle(
   fontSize: 16.sp,
   color: kGrayColor300,
   fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+TextStyle kSubtitle3Gray250Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor250,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+TextStyle kSubtitle3Primary250Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kPrimaryColor,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
 );
 
 TextStyle kSubtitle3White300Style = TextStyle(
@@ -85,6 +135,7 @@ TextStyle kSubtitle3White300Style = TextStyle(
   fontSize: 16.sp,
   color: kWhiteColor,
   fontWeight: FontWeight.w500,
+  height: 1.375.sp,
 );
 
 //Subtitle4 Style
@@ -93,6 +144,7 @@ TextStyle kSubtitle4BlackStyle = TextStyle(
   fontSize: 14.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w600,
+  height: 1.4285.sp,
 );
 
 //Body1 Style
@@ -100,53 +152,50 @@ TextStyle kBody1BlackStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 14.sp,
   color: kBlackColor,
-  fontWeight: FontWeight.w500,
+  fontWeight: FontWeight.w400,
+  height: 1.4285.sp,
+);
+
+TextStyle kBody1Gray600Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kGrayColor600,
+  fontWeight: FontWeight.w400,
+  height: 1.4285.sp,
 );
 
 //Body2 Style
 TextStyle kBody2BlackStyle = TextStyle(
   fontFamily: pretendard,
-  fontSize: 14.sp,
+  fontSize: 12.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w400,
+  height: 1.5.sp,
 );
 
-//Body3 Style
-TextStyle kBody3BlackStyle = TextStyle(
-  fontFamily: pretendard,
-  fontSize: 12.sp,
-  color: kBlackColor,
-  fontWeight: FontWeight.w600,
-);
-
-TextStyle kBody3WhiteStyle = TextStyle(
-  fontFamily: pretendard,
-  fontSize: 12.sp,
-  color: kWhiteColor,
-  fontWeight: FontWeight.w600,
-);
-
-TextStyle kBody3PrimaryStyle = TextStyle(
+TextStyle kBody2PrimaryStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 12.sp,
   color: kPrimaryColor,
-  fontWeight: FontWeight.w600,
+  fontWeight: FontWeight.w400,
+  height: 1.5.sp,
 );
 
-//Body4 Style
-TextStyle kBody4BlackStyle = TextStyle(
+TextStyle kBody2WhiteStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 12.sp,
-  color: kBlackColor,
-  fontWeight: FontWeight.w500,
+  color: kWhiteColor,
+  fontWeight: FontWeight.w400,
+  height: 1.5.sp,
 );
 
 //Caption1 Style
 TextStyle kCaption1BlackStyle = TextStyle(
   fontFamily: pretendard,
-  fontSize: 10.sp,
+  fontSize: 12.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w600,
+  height: 1.2.sp,
 );
 
 //Caption2 Style
@@ -155,6 +204,7 @@ TextStyle kCaption2BlackStyle = TextStyle(
   fontSize: 10.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w500,
+  height: 1.2.sp,
 );
 
 // temp data

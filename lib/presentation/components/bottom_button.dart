@@ -16,11 +16,11 @@ class BottomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: Alignment.bottomLeft,
+      alignment: Alignment.bottomCenter,
       child: Padding(
         padding: EdgeInsets.only(
           left: 16.w,
-          bottom: 42.h,
+          bottom: 12.h,
           right: 16.w,
         ),
         child: SizedBox(
@@ -30,7 +30,7 @@ class BottomButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: kPrimaryColor,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.circular(60),
               ),
             ),
             onPressed: onTap,
