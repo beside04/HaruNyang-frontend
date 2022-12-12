@@ -3,7 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/diary/components/diary_icon_button.dart';
+import 'package:frontend/presentation/diary/components/weather_icon_button.dart';
+import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/res/constants.dart';
@@ -58,12 +59,12 @@ class EmotionModal extends GetView<DiaryViewModel> {
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: emotionDataList.length,
+                          itemCount: controller.emoticonDataList.length,
                           itemBuilder: (BuildContext context, int i) {
                             return Obx(
-                              () => DiaryIconButton(
-                                name: emotionDataList[i].name,
-                                icon: emotionDataList[i].icon,
+                              () => EmoticonIconButton(
+                                name: controller.emoticonDataList[i].desc,
+                                icon: controller.emoticonDataList[i].emoticon,
                                 selected: controller.emotionStatus.value ==
                                     Emotion.values[i],
                                 onPressed: () {

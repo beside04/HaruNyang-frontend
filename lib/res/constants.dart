@@ -39,6 +39,8 @@ enum SocialIDCheck {
   error,
 }
 
+const int getEmoticonLimitCount = 100;
+
 List<WeatherData> weatherDataList = [
   WeatherData(
     name: "맑음",
