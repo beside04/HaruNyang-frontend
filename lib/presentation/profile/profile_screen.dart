@@ -4,7 +4,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/profile/prodile_setting/profile_setting_screen.dart';
+import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
 

@@ -3,9 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
+import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileSettingScreen extends StatelessWidget {
@@ -34,7 +36,14 @@ class ProfileSettingScreen extends StatelessWidget {
             ),
             Expanded(
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(
+                    () => const WithdrawScreen(),
+                    binding: BindingsBuilder(
+                      getWithdrawViewModelBinding,
+                    ),
+                  );
+                },
                 child: Text(
                   "회원탈퇴",
                   style: kBody1BlackStyle,

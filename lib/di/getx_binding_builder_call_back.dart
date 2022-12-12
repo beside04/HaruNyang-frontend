@@ -4,10 +4,12 @@ import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
+import 'package:frontend/data/repository/withdraw_repository_impl.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/domain/use_case/withdraw_use_case.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -17,6 +19,7 @@ import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
+import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
 
@@ -46,6 +49,9 @@ final OnBoardingUseCase onBoardingUseCase = OnBoardingUseCase(
 final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: TokenRepositoryImpl(),
 );
+
+final WithdrawUseCase withDrawUseCase =
+    WithdrawUseCase(withdrawRepository: WithdrawRepositoryImpl());
 
 void getLoginBinding() {
   Get.put(LoginViewModel(
@@ -99,5 +105,13 @@ void getEmotionStampBinding() {
 void getHomeViewModelBinding() {
   Get.put(
     HomeViewModel(onBoardingUseCase: onBoardingUseCase),
+  );
+}
+
+void getWithdrawViewModelBinding() {
+  Get.put(
+    WithdrawViewModel(
+      withdrawUseCase: withDrawUseCase,
+    ),
   );
 }
