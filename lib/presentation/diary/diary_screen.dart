@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,11 +12,6 @@ class DiaryScreen extends GetView<DiaryViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    final Image noImage = Image.asset(
-      'lib/config/assets/images/temp_img.png',
-      width: 50,
-      height: 50,
-    );
     getDiaryBinding();
 
     return Scaffold(

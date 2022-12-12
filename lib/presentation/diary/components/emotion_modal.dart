@@ -6,7 +6,6 @@ import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class EmotionModal extends GetView<DiaryViewModel> {
@@ -78,7 +77,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       Obx(
                         () => Padding(
                           padding: EdgeInsets.only(left: 6.w, top: 184.h),
-                          child: controller.selectedEmotion.value == null
+                          child: controller.selectedEmotion.value.emoticon.isEmpty
                               ? Container()
                               : buildSlider(),
                         ),
@@ -86,13 +85,13 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       Obx(
                         () => BottomButton(
                           title: '일기쓰기',
-                          onTap: controller.selectedEmotion.value == null
+                          onTap: controller.selectedEmotion.value.emoticon.isEmpty
                               ? null
                               : () {
                                   Get.to(() => WriteDiaryScreen(
                                         date: controller.nowDate.value,
                                         emotion:
-                                            controller.selectedEmotion.value!,
+                                            controller.selectedEmotion.value,
                                         weather:
                                             controller.weatherStatus.value!,
                                       ));
