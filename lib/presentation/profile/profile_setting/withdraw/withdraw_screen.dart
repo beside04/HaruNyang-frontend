@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/presentation/components/dialog_button.dart';
+import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:get/get.dart';
 
@@ -13,8 +17,14 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('회원 탈퇴'),
+        title: Text(
+          '회원 탈퇴',
+          style: kHeader2BlackStyle,
+        ),
         centerTitle: false,
+        backgroundColor: kBackGroundLightColor,
+        foregroundColor: kBlackColor,
+        elevation: 0,
       ),
       body: Padding(
         padding: kPrimaryPadding,
@@ -31,23 +41,20 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
               children: [
                 Center(
                   child: SizedBox(
-                    width: 100,
-                    height: 100,
+                    width: 100.w,
+                    height: 100.h,
                     child: CircleAvatar(
                       backgroundColor: kPrimaryColor,
-                      child: Transform.translate(
-                        offset: const Offset(6, 5),
-                        child: SvgPicture.asset(
-                          "lib/config/assets/images/character/onboarding1.svg",
-                          width: 90,
-                          height: 90,
-                        ),
+                      child: SvgPicture.asset(
+                        "lib/config/assets/images/character/onboarding1.svg",
+                        width: 90,
+                        height: 90,
                       ),
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 80,
+                SizedBox(
+                  height: 80.h,
                 ),
                 Container(
                   padding: kPrimaryPadding,
@@ -81,27 +88,63 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                 )
               ],
             ),
-            Center(
-              child: Obx(
-                () => ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: kPrimaryColor,
-                    minimumSize: const Size(150, 50),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+            Padding(
+              padding: kPrimaryPadding,
+              child: Center(
+                child: Obx(
+                  () => ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: kPrimaryColor,
+                      minimumSize: const Size(150, 50),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
+                    onPressed: controller.state.value.isAgreeWithdrawTerms
+                        ? () {
+                            showDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (context) {
+                                return DialogComponent(
+                                  title: "회원 탈퇴",
+                                  content: Text(
+                                    "정말 탈퇴 하시겠어요?",
+                                    style: kSubtitle3Gray600Style,
+                                  ),
+                                  actionContent: [
+                                    DialogButton(
+                                      title: "아니요",
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      backgroundColor: kGrayColor100,
+                                      textStyle: kSubtitle1Gray600Style,
+                                    ),
+                                    SizedBox(
+                                      width: 12.w,
+                                    ),
+                                    DialogButton(
+                                      title: "예",
+                                      onTap: () {
+                                        //controller.withdrawUser();
+                                        Get.offAll(
+                                          () => const WithdrawDoneScreen(),
+                                        );
+                                      },
+                                      backgroundColor: kPrimary2Color,
+                                      textStyle: kSubtitle1WhiteStyle,
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }
+                        : null,
+                    child: const Text('회원 탈퇴'),
                   ),
-                  onPressed: controller.state.value.isAgreeWithdrawTerms
-                      ? () {
-                          controller.withdrawUser();
-                        }
-                      : null,
-                  child: const Text('회원 탈퇴'),
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 30,
             ),
           ],
         ),

@@ -37,17 +37,20 @@ class KakaoLoginUseCase {
   }
 
   Future<SocialIDCheck> checkMember(String socialId) async {
+    socialId = '2';
     //멤버 조회
     return await serverLoginRepository.checkMember(socialId);
   }
 
   Future<Result<String>> login(String socialId) async {
+    socialId = '2';
     //social id를 사용하여 서버에 login
     final loginResult = await loginProcess(socialId);
     return loginResult;
   }
 
   Future<bool> signup(String email, String socialId) async {
+    socialId = '2';
     //social id를 사용하여 회원 가입
     final bool result =
         await serverLoginRepository.signup(email, 'KAKAO', socialId);
