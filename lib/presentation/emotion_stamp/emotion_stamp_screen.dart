@@ -134,7 +134,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                               child: Center(
                                 child: Text(
                                   DateFormat('dd').format(day),
-                                  style: kBody3WhiteStyle,
+                                  style: kBody2WhiteStyle,
                                 ),
                               ),
                             ),
@@ -144,14 +144,14 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   DateFormat('dd').format(day),
-                                  style: kBody3PrimaryStyle,
+                                  style: kBody2PrimaryStyle,
                                 ),
                               )
                             : Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   DateFormat('dd').format(day),
-                                  style: kBody3BlackStyle,
+                                  style: kBody2BlackStyle,
                                 ),
                               );
                   },
