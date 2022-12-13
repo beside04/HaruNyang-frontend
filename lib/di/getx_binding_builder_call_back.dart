@@ -1,9 +1,11 @@
+import 'package:frontend/data/repository/emoticon/emoticon_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
+import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
@@ -48,6 +50,9 @@ final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: TokenRepositoryImpl(),
 );
 
+final GetEmoticonUseCase getEmoticonUseCase =
+    GetEmoticonUseCase(emoticonRepository: EmoticonRepositoryImpl());
+
 void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
@@ -61,9 +66,12 @@ void getLoginBinding() {
 }
 
 void getDiaryBinding() {
-  Get.put(DiaryViewModel(
-    kakaoLoginUseCase: kakaoLoginUseCase,
-  ));
+  Get.put(
+    DiaryViewModel(
+      kakaoLoginUseCase: kakaoLoginUseCase,
+      getEmoticonUseCase: getEmoticonUseCase,
+    ),
+  );
 }
 
 void getWriteDiaryBinding() {
@@ -103,6 +111,8 @@ void getEmotionStampBinding() {
 
 void getHomeViewModelBinding() {
   Get.put(
-    HomeViewModel(onBoardingUseCase: onBoardingUseCase),
+    HomeViewModel(
+      onBoardingUseCase: onBoardingUseCase,
+    ),
   );
 }

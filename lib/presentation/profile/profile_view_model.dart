@@ -8,7 +8,9 @@ class ProfileViewModel extends GetxController {
 
   ProfileViewModel({
     required this.onBoardingUseCase,
-  });
+  }) {
+    getMyInformation();
+  }
 
   String? nickname = '';
   String? job = '';

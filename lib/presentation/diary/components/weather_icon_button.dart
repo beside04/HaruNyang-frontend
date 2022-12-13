@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
-class DiaryIconButton extends StatelessWidget {
-  const DiaryIconButton({
+class WeatherIconButton extends StatelessWidget {
+  const WeatherIconButton({
     super.key,
     required this.icon,
     required this.name,
