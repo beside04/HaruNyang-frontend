@@ -7,7 +7,13 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/core/utils/delay_tween_animation.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
+import 'package:frontend/presentation/components/dialog_button.dart';
+import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
+import 'package:frontend/presentation/diary/write_diary_screen.dart';
+import 'package:frontend/presentation/home/home_screen.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -27,6 +33,157 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
         backgroundColor: const Color(0xffE69954),
         elevation: 0,
         centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.bottomSheet(
+                ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16.w),
+                    topRight: Radius.circular(16.w),
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 40.h, right: 16.w, left: 16.w, bottom: 16.h),
+                    height: 176.h,
+                    color: Colors.white,
+                    child: Column(
+                      children: [
+                        InkWell(
+                          onTap: () async {
+                            Get.back();
+                            Get.to(
+                              () => WriteDiaryScreen(
+                                date: date,
+                                emotion: EmoticonData(
+                                  emoticon:
+                                      'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media',
+                                  value: '기쁨',
+                                  desc: '기쁨',
+                                ),
+                                weather: Weather.values[0],
+                              ),
+                            );
+                          },
+                          child: Container(
+                            height: 52.h,
+                            width: double.infinity,
+                            padding: EdgeInsets.all(15.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(60.0.w),
+                              border: Border.all(
+                                width: 1,
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "일기 수정",
+                                style: kSubtitle2Primary2Style,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 16,
+                        ),
+                        InkWell(
+                          onTap: () async {
+                            Get.back();
+
+                            showDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (ctx) {
+                                return DialogComponent(
+                                  title: "삭제 하실래요",
+                                  content: Text(
+                                    "삭제 후 일기를 복원 할 수 없어요",
+                                    style: kSubtitle3Gray600Style,
+                                  ),
+                                  actionContent: [
+                                    DialogButton(
+                                      title: "아니요",
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      backgroundColor: kGrayColor100,
+                                      textStyle: kSubtitle1Gray600Style,
+                                    ),
+                                    SizedBox(
+                                      width: 12.w,
+                                    ),
+                                    DialogButton(
+                                      title: "예",
+                                      onTap: () {
+                                        Get.back();
+                                        showDialog(
+                                          barrierDismissible: true,
+                                          context: context,
+                                          builder: (ctx) {
+                                            return DialogComponent(
+                                              title: "삭제 완료",
+                                              content: Text(
+                                                "일기를 삭제했어요.",
+                                                style: kSubtitle3Gray600Style,
+                                              ),
+                                              actionContent: [
+                                                DialogButton(
+                                                  title: "확인",
+                                                  onTap: () {
+                                                    Get.offAll(() =>
+                                                        const HomeScreen());
+                                                  },
+                                                  backgroundColor:
+                                                      kPrimary2Color,
+                                                  textStyle:
+                                                      kSubtitle1WhiteStyle,
+                                                ),
+                                              ],
+                                            );
+                                          },
+                                        );
+                                      },
+                                      backgroundColor: kPrimary2Color,
+                                      textStyle: kSubtitle1WhiteStyle,
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            height: 52.h,
+                            width: double.infinity,
+                            padding: EdgeInsets.all(15.w),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(60.0.w),
+                              border: Border.all(
+                                width: 1,
+                                color: kPrimaryColor,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "일기 삭제",
+                                style: kSubtitle2Primary2Style,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+            icon: Icon(
+              Icons.more_vert,
+              color: kBlackColor,
+              size: 24.w,
+            ),
+          ),
+        ],
         title: Text(
           DateFormat('MM월 dd일').format(date),
           style: kHeader3BlackStyle,

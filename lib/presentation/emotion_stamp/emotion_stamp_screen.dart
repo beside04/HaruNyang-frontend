@@ -58,17 +58,13 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                         controller.selectedCalendarDate.value = day;
                         controller.focusedCalendarDate.value = day;
 
+                        // events.isEmpty ? null
+
                         Get.to(
                           () => DiaryDetailScreen(
                             date: day,
                           ),
                         );
-
-                        // Get.to(() => EmotionStampDetailScreen(
-                        //       icon: events.isEmpty ? null : events[0].icon,
-                        //       title:
-                        //           events.isEmpty ? null : events[0].eventTitle,
-                        //     ));
                       },
                       child: Center(
                         child: Container(
