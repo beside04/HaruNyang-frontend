@@ -8,6 +8,20 @@ class EmoticonRepositoryImpl implements EmoticonRepository {
 
   @override
   Future<Result<List<EmoticonData>>> getEmoticon(int limit, int page) async {
-    return await _dataSource.getEmoticons(limit, page);
+    if (emoticons.isEmpty) {
+      final result = await _dataSource.getEmoticons(limit, page);
+      result.when(
+        success: (data) {
+          emoticons = List.from(data);
+        },
+        error: (message) {},
+      );
+
+      return result;
+    } else {
+      return Result.success(emoticons);
+    }
   }
 }
+
+List<EmoticonData> emoticons = [];

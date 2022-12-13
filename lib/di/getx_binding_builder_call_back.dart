@@ -111,6 +111,8 @@ void getEmotionStampBinding() {
 
 void getHomeViewModelBinding() {
   Get.put(
-    HomeViewModel(onBoardingUseCase: onBoardingUseCase),
+    HomeViewModel(
+      onBoardingUseCase: onBoardingUseCase,
+    ),
   );
 }
