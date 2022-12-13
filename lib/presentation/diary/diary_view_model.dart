@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/diary/components/emotion_modal.dart';
+import 'package:frontend/presentation/diary/dot_animation_test.dart';
 import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
