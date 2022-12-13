@@ -16,8 +16,6 @@ class DiaryScreen extends GetView<DiaryViewModel> {
 
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -176,6 +174,7 @@ class DiaryScreen extends GetView<DiaryViewModel> {
               //           ),
               //         ),
               // ),
+
               GetBuilder<DiaryViewModel>(builder: (context) {
                 return Expanded(
                   child: Stack(
