@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/diary/components/diary_icon_button.dart';
+import 'package:frontend/presentation/diary/components/weather_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
@@ -56,7 +56,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
                           itemCount: weatherDataList.length,
                           itemBuilder: (BuildContext context, int i) {
                             return Obx(
-                              () => DiaryIconButton(
+                              () => WeatherIconButton(
                                 name: weatherDataList[i].name,
                                 icon: weatherDataList[i].icon,
                                 selected: controller.weatherStatus.value ==

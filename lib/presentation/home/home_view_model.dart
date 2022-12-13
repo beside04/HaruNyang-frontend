@@ -6,7 +6,14 @@ class HomeViewModel extends GetxController {
 
   HomeViewModel({
     required this.onBoardingUseCase,
-  });
+  }) {
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    //토큰 확인
+    await getMyInformation();
+  }
 
   Future<void> getMyInformation() async {
     await onBoardingUseCase.getMyInformation();

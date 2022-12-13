@@ -15,7 +15,6 @@ class ProfileScreen extends GetView<ProfileViewModel> {
   Widget build(BuildContext context) {
     getProfileBinding();
 
-    Get.find<ProfileViewModel>().getMyInformation();
     return Scaffold(
       body: SafeArea(
         child: Column(
