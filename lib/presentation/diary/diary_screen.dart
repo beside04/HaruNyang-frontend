@@ -3,9 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/diary/dot_animation_test.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
-import 'package:frontend/presentation/diary/dot_animation_test_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -15,12 +13,9 @@ class DiaryScreen extends GetView<DiaryViewModel> {
   @override
   Widget build(BuildContext context) {
     getDiaryBinding();
-    Get.put(DotAnimationTestViewModel());
 
     return Scaffold(
       body: Container(
-        height: MediaQuery.of(context).size.height,
-        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
@@ -179,7 +174,6 @@ class DiaryScreen extends GetView<DiaryViewModel> {
               //           ),
               //         ),
               // ),
-              DotAnimationTest(),
 
               GetBuilder<DiaryViewModel>(builder: (context) {
                 return Expanded(

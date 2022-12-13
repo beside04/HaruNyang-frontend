@@ -10,7 +10,9 @@ import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
+import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -96,8 +98,12 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                 DialogButton(
                                   title: "예",
                                   onTap: () {
-                                    Get.back();
-                                    Get.back();
+                                    Get.offAll(() => const HomeScreen());
+                                    Get.to(
+                                      () => DiaryDetailScreen(
+                                        date: date,
+                                      ),
+                                    );
                                   },
                                   backgroundColor: kPrimary2Color,
                                   textStyle: kSubtitle1WhiteStyle,
