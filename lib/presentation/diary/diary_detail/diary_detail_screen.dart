@@ -45,7 +45,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                   child: Container(
                     padding: EdgeInsets.only(
                         top: 40.h, right: 16.w, left: 16.w, bottom: 16.h),
-                    height: 176.h,
+                    height: 200.h,
                     color: Colors.white,
                     child: Column(
                       children: [
