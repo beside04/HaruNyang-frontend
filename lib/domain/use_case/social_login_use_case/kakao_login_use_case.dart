@@ -37,13 +37,11 @@ class KakaoLoginUseCase {
   }
 
   Future<SocialIDCheck> checkMember(String socialId) async {
-    socialId = '4';
     //멤버 조회
     return await serverLoginRepository.checkMember(socialId);
   }
 
   Future<Result<String>> login(String socialId) async {
-    socialId = '4';
     //social id를 사용하여 서버에 login
     final loginResult = await loginProcess(socialId);
     return loginResult;
