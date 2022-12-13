@@ -1,20 +1,11 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/components/dialog_button.dart';
-import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
-import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -34,7 +25,6 @@ class EmptyDiaryScreen extends StatelessWidget {
         backgroundColor: kWhiteColor,
         elevation: 0,
         centerTitle: true,
-        actions: [],
         title: Text(
           DateFormat('MM월 dd일').format(date),
           style: kHeader3BlackStyle,
@@ -80,7 +70,7 @@ class EmptyDiaryScreen extends StatelessWidget {
               title: '일기쓰기',
               onTap: () {
                 Get.offAll(
-                  () => HomeScreen(),
+                  () => const HomeScreen(),
                   arguments: {'index': 1},
                 );
               },
