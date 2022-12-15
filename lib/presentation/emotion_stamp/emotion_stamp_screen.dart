@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
@@ -59,12 +58,23 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                         controller.selectedCalendarDate.value = day;
                         controller.focusedCalendarDate.value = day;
 
+                        // events.isEmpty
+                        //     ? Get.to(() => EmptyDiaryScreen(
+                        //           date: day,
+                        //         ))
+                        //     : Get.to(
+                        //         () => DiaryDetailScreen(
+                        //           date: day,
+                        //           emoticon: ,
+                        //           diaryContents: '',
+                        //         ),
+                        //       );
                         events.isEmpty
                             ? Get.to(() => EmptyDiaryScreen(
                                   date: day,
                                 ))
                             : Get.to(
-                                () => DiaryDetailScreen(
+                                () => EmptyDiaryScreen(
                                   date: day,
                                 ),
                               );
