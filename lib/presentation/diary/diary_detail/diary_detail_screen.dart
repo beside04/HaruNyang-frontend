@@ -19,15 +19,19 @@ import 'package:intl/intl.dart';
 
 class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   final DateTime date;
+  final int emoticonId;
+  final String diaryContents;
 
   const DiaryDetailScreen({
     Key? key,
     required this.date,
+    required this.emoticonId,
+    required this.diaryContents,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getDiaryDetailBinding();
+    getDiaryDetailBinding(emoticonId, diaryContents);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffE69954),

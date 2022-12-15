@@ -22,7 +22,7 @@ class WiseSayingApi {
       );
 
       if (response.data['status'] == 200) {
-        final Iterable wiseSayingIterable = response.data['data']['data'];
+        final Iterable wiseSayingIterable = response.data['data'];
         final List<WiseSayingData> wiseSayingList =
             wiseSayingIterable.map((e) => WiseSayingData.fromJson(e)).toList();
 

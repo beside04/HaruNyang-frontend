@@ -66,6 +66,8 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                             : Get.to(
                                 () => DiaryDetailScreen(
                                   date: day,
+                                  emoticonId: 0,
+                                  diaryContents: '',
                                 ),
                               );
                       },
