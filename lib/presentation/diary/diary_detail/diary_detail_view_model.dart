@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:get/get.dart';
 
@@ -16,6 +17,7 @@ class DiaryDetailViewModel extends GetxController
 
   late AnimationController animationController;
   final List<double> delays = [-0.9, -0.6, -0.3];
+  List<WiseSayingData> wiseSayingList = [];
   final RxBool isLoading = false.obs;
   final RxBool isBookmark = false.obs;
 
@@ -56,15 +58,14 @@ class DiaryDetailViewModel extends GetxController
 
   Future<void> getWiseSayingList(int emoticonId, String content) async {
     _updateIsLoading(true);
-
     final result = await getWiseSayingUseCase(emoticonId, content);
 
     result.when(
-      success: (wiseSayingList) {
-        print(wiseSayingList);
+      success: (result) {
+        wiseSayingList = List.from(result);
       },
       error: (message) {
-        print(message);
+        Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
       },
     );
 

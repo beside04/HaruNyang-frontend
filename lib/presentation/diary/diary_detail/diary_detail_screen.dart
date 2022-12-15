@@ -19,19 +19,19 @@ import 'package:intl/intl.dart';
 
 class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   final DateTime date;
-  final int emoticonId;
+  final EmoticonData emoticon;
   final String diaryContents;
 
   const DiaryDetailScreen({
     Key? key,
     required this.date,
-    required this.emoticonId,
+    required this.emoticon,
     required this.diaryContents,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getDiaryDetailBinding(emoticonId, diaryContents);
+    getDiaryDetailBinding(emoticon.id!, diaryContents);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffE69954),
@@ -252,7 +252,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                 color: kSurfaceLightColor,
                               ),
                               child: SvgPicture.network(
-                                "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
+                                emoticon.emoticon,
                                 width: 16.w,
                                 height: 16.h,
                               ),
@@ -263,7 +263,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                           height: 12.h,
                         ),
                         Text(
-                          "Lorem ipsum dolor sit amet consectetur. Arcuegenstas malesuada mauris quisque.",
+                          diaryContents,
                           style: kBody1BlackStyle,
                         )
                       ],
@@ -355,9 +355,8 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                       child: ListView.builder(
                         shrinkWrap: true,
                         padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                        physics: const BouncingScrollPhysics(
-                            parent: AlwaysScrollableScrollPhysics()),
-                        itemCount: 3,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: controller.wiseSayingList.length,
                         itemBuilder: (BuildContext context, int index) {
                           return AnimationConfiguration.staggeredList(
                             position: index,
@@ -440,7 +439,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                             height: 12.h,
                                           ),
                                           Text(
-                                            "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가마바사 \n- 가나다",
+                                            "${controller.wiseSayingList[index].message} \n- ${controller.wiseSayingList[index].author}",
                                             style: kBody1BlackStyle,
                                           )
                                         ],
