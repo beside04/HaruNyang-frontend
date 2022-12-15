@@ -102,6 +102,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                     Get.to(
                                       () => DiaryDetailScreen(
                                         date: date,
+                                        emoticon: emotion,
+                                        diaryContents: controller
+                                            .nicknameEditingController.text,
                                       ),
                                     );
                                   },

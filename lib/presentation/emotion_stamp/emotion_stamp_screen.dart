@@ -7,6 +7,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -34,8 +35,8 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                 controller.isCalendar.value = !controller.isCalendar.value;
               },
               icon: controller.isCalendar.value
-                  ? Icon(Icons.list)
-                  : Icon(Icons.calendar_month_outlined),
+                  ? const Icon(Icons.list)
+                  : const Icon(Icons.calendar_month_outlined),
               color: kBlackColor,
             ),
           )
@@ -69,7 +70,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                   SizedBox(
                     width: 6.w,
                   ),
-                  Icon(
+                  const Icon(
                     Icons.keyboard_arrow_down,
                     color: kBlackColor,
                   )
@@ -88,21 +89,21 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
             Obx(
               () => Expanded(
                 child: PageTransitionSwitcher(
-                  duration: Duration(milliseconds: 300),
+                  duration: const Duration(milliseconds: 300),
                   reverse: !controller.isCalendar.value,
                   transitionBuilder: (Widget child, Animation<double> animation,
                       Animation<double> secondaryAnimation) {
                     return SharedAxisTransition(
-                        child: child,
-                        animation: animation,
-                        secondaryAnimation: secondaryAnimation,
-                        transitionType: SharedAxisTransitionType.horizontal);
+                      animation: animation,
+                      secondaryAnimation: secondaryAnimation,
+                      transitionType: SharedAxisTransitionType.horizontal,
+                      child: child,
+                    );
                   },
                   child: controller.isCalendar.value
                       ? Obx(
                           () => TableCalendar<TempEvent>(
                             onPageChanged: (day) {
-                              print(day);
                               controller.focusedCalendarDate.value = day;
                             },
                             rowHeight: 70,
@@ -150,6 +151,13 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                         : Get.to(
                                             () => DiaryDetailScreen(
                                               date: day,
+                                              emoticon: EmoticonData(
+                                                emoticon:
+                                                    'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media',
+                                                value: '기쁨',
+                                                desc: '기쁨',
+                                              ),
+                                              diaryContents: '',
                                             ),
                                           );
                                   },

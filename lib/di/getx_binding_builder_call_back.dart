@@ -5,11 +5,13 @@ import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
+import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
@@ -29,6 +31,8 @@ final AppleLoginImpl appleLoginImpl = AppleLoginImpl();
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
 final ServerLoginRepositoryImpl serverLoginImpl = ServerLoginRepositoryImpl();
 final OnBoardingRepositoryImpl onBoardingImpl = OnBoardingRepositoryImpl();
+final WiseSayingRepositoryImpl wiseSayingRepositoryImpl =
+    WiseSayingRepositoryImpl();
 
 //use case
 final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
@@ -48,7 +52,11 @@ final OnBoardingUseCase onBoardingUseCase = OnBoardingUseCase(
 );
 
 final TokenUseCase tokenUseCase = TokenUseCase(
-  tokenRepository: TokenRepositoryImpl(),
+  tokenRepository: tokenRepositoryImpl,
+);
+
+final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
+  wiseSayingRepository: wiseSayingRepositoryImpl,
 );
 
 final GetEmoticonUseCase getEmoticonUseCase =
@@ -76,11 +84,17 @@ void getDiaryBinding() {
 }
 
 void getWriteDiaryBinding() {
-  Get.put(WriteDiaryViewModel());
+  Get.put(
+    WriteDiaryViewModel(),
+  );
 }
 
-void getDiaryDetailBinding() {
-  Get.put(DiaryDetailViewModel());
+void getDiaryDetailBinding(int emoticonId, String diaryContents) {
+  Get.put(DiaryDetailViewModel(
+    getWiseSayingUseCase: getWiseSayingUseCase,
+    emoticonId: emoticonId,
+    diaryContents: diaryContents,
+  ));
 }
 
 void getLoginTermsInformationBinding() {
