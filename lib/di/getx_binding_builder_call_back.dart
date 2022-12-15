@@ -11,6 +11,7 @@ import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -76,6 +77,10 @@ void getDiaryBinding() {
 
 void getWriteDiaryBinding() {
   Get.put(WriteDiaryViewModel());
+}
+
+void getDiaryDetailBinding() {
+  Get.put(DiaryDetailViewModel());
 }
 
 void getLoginTermsInformationBinding() {

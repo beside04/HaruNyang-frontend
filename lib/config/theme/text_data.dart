@@ -89,6 +89,14 @@ TextStyle kSubtitle2WhiteStyle = TextStyle(
   height: 1.375.sp,
 );
 
+TextStyle kSubtitle2Primary2Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kPrimary2Color,
+  fontWeight: FontWeight.w600,
+  height: 1.375.sp,
+);
+
 //Subtitle3 Style
 TextStyle kSubtitle3BlackStyle = TextStyle(
   fontFamily: pretendard,
