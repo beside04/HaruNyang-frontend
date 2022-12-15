@@ -206,6 +206,22 @@ TextStyle kCaption1BlackStyle = TextStyle(
   height: 1.2.sp,
 );
 
+TextStyle kCaption1WhiteStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 12.sp,
+  color: kWhiteColor,
+  fontWeight: FontWeight.w600,
+  height: 1.2.sp,
+);
+
+TextStyle kCaption1PrimaryStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 12.sp,
+  color: kPrimaryColor,
+  fontWeight: FontWeight.w600,
+  height: 1.2.sp,
+);
+
 //Caption2 Style
 TextStyle kCaption2BlackStyle = TextStyle(
   fontFamily: pretendard,
