@@ -1,18 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
+import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 
-class EmoticonApi {
+class WiseSayingApi {
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
-  final Dio _client = Dio();
 
   Future<Result<List<WiseSayingData>>> getWiseSaying(
       int emoticonId, String content) async {
+    var dio = await refreshInterceptor();
+
     try {
       String emoticonUrl = '$_baseUrl/v1/emotion/$emoticonId/wisesaying';
       Response response;
-      response = await _client.get(
+      response = await dio.get(
         emoticonUrl,
         queryParameters: {
           'diaryContent': content,
