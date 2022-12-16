@@ -44,15 +44,18 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
         title: Obx(
           () => InkWell(
             onTap: () {
-              DatePicker.showDatePicker(
+              DatePicker.showPicker(
                 context,
+                pickerModel: YearMonthModel(
+                  currentTime: controller.focusedCalendarDate.value,
+                  maxTime: DateTime(2099, 12),
+                  minTime: DateTime(2000, 1),
+                  locale: LocaleType.ko,
+                ),
                 showTitleActions: true,
-                minTime: DateTime(2000, 1),
-                maxTime: DateTime(2099, 12),
                 onConfirm: (date) {
                   controller.focusedCalendarDate.value = date;
                 },
-                currentTime: DateTime.now(),
                 locale: LocaleType.ko,
               );
             },
@@ -126,18 +129,6 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                               outsideDaysVisible: false,
                             ),
                             calendarBuilders: CalendarBuilders(
-                              // dowBuilder: (context, day) {
-                              //   if (day.weekday == DateTime.sunday) {
-                              //     final text = DateFormat.E().format(day);
-                              //
-                              //     return Center(
-                              //       child: Text(
-                              //         text,
-                              //         style: TextStyle(color: Colors.red),
-                              //       ),
-                              //     );
-                              //   }
-                              // },
                               markerBuilder: (context, day, events) {
                                 return InkWell(
                                   onTap: () {
@@ -152,12 +143,13 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                             () => DiaryDetailScreen(
                                               date: day,
                                               emoticon: EmoticonData(
+                                                id: 3,
                                                 emoticon:
                                                     'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media',
                                                 value: '기쁨',
                                                 desc: '기쁨',
                                               ),
-                                              diaryContents: '',
+                                              diaryContents: 'jj',
                                             ),
                                           );
                                   },
@@ -285,319 +277,183 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                             controller.controllerTempCount.value = currentPage;
                           },
                           itemBuilder: (context, i) {
-                            return ListView(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: 20.h, left: 20.w),
-                                  child: Text(
-                                    "세번째 주",
-                                    style: kSubtitle1BlackStyle,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20.h, left: 20.w, right: 20.w),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: kGrayColor50,
-                                      borderRadius:
-                                          BorderRadius.circular(20.0.w),
+                            return ListView.builder(
+                              itemCount: controller.tempEventSource.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 20.h, left: 20.w),
+                                      child: Text(
+                                        "${controller.weekOfMonthForSimple(controller.tempEventSource.keys.toList()[index])}번째 주",
+                                        style: kSubtitle1BlackStyle,
+                                      ),
                                     ),
-                                    child: Padding(
-                                      padding: kPrimaryPadding,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 20.h, left: 20.w, right: 20.w),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: kGrayColor50,
+                                          borderRadius:
+                                              BorderRadius.circular(20.0.w),
+                                        ),
+                                        child: Padding(
+                                          padding: kPrimaryPadding,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text(
-                                                "11월 22일 (화)",
-                                                style: kSubtitle2BlackStyle,
-                                              ),
                                               Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/weather/sunny.svg",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
+                                                  Text(
+                                                    "${DateFormat.MMMEd("ko_KR").format(controller.tempEventSource.keys.toList()[index])}",
+                                                    style: kSubtitle2BlackStyle,
                                                   ),
-                                                  SizedBox(
-                                                    width: 7.w,
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.network(
-                                                      "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
+                                                  Row(
+                                                    children: [
+                                                      Container(
+                                                        padding:
+                                                            EdgeInsets.all(4.w),
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: kWhiteColor,
+                                                        ),
+                                                        child: SvgPicture.asset(
+                                                          "lib/config/assets/images/diary/weather/sunny.svg",
+                                                          width: 16.w,
+                                                          height: 16.h,
+                                                        ),
+                                                      ),
+                                                      SizedBox(
+                                                        width: 7.w,
+                                                      ),
+                                                      Container(
+                                                        padding:
+                                                            EdgeInsets.all(4.w),
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: kWhiteColor,
+                                                        ),
+                                                        child:
+                                                            SvgPicture.network(
+                                                          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
+                                                          width: 16.w,
+                                                          height: 16.h,
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          Text(
-                                            "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가마바사 \n- 가나다",
-                                            style: kBody1BlackStyle,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20.h, left: 20.w, right: 20.w),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: kGrayColor50,
-                                      borderRadius:
-                                          BorderRadius.circular(20.0.w),
-                                    ),
-                                    child: Padding(
-                                      padding: kPrimaryPadding,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
+                                              SizedBox(
+                                                height: 12.h,
+                                              ),
                                               Text(
-                                                "11월 22일 (화)",
-                                                style: kSubtitle2BlackStyle,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/weather/sunny.svg",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 7.w,
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.network(
-                                                      "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+                                                controller
+                                                    .tempEventSource.values
+                                                    .toList()[index][0]
+                                                    .eventTitle,
+                                                style: kBody1BlackStyle,
+                                              )
                                             ],
                                           ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          Container(
-                                            height: 200.h,
-                                            color: kGrayColor300,
-                                          ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          Text(
-                                            "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가마바사 \n- 가나다",
-                                            style: kBody1BlackStyle,
-                                          )
-                                        ],
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(top: 20.h, left: 20.w),
-                                  child: Text(
-                                    "두번째 주",
-                                    style: kSubtitle1BlackStyle,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20.h, left: 20.w, right: 20.w),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: kGrayColor50,
-                                      borderRadius:
-                                          BorderRadius.circular(20.0.w),
-                                    ),
-                                    child: Padding(
-                                      padding: kPrimaryPadding,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "11월 22일 (화)",
-                                                style: kSubtitle2BlackStyle,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/weather/sunny.svg",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 7.w,
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.network(
-                                                      "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          Text(
-                                            "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가마바사 \n- 가나다",
-                                            style: kBody1BlackStyle,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: 20.h, left: 20.w, right: 20.w),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: kGrayColor50,
-                                      borderRadius:
-                                          BorderRadius.circular(20.0.w),
-                                    ),
-                                    child: Padding(
-                                      padding: kPrimaryPadding,
-                                      child: Column(
-                                        children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                "11월 22일 (화)",
-                                                style: kSubtitle2BlackStyle,
-                                              ),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/weather/sunny.svg",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
-                                                  ),
-                                                  SizedBox(
-                                                    width: 7.w,
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.all(4.w),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                    child: SvgPicture.network(
-                                                      "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          Container(
-                                            height: 200.h,
-                                            color: kGrayColor300,
-                                          ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          Text(
-                                            "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가마바사 \n- 가나다",
-                                            style: kBody1BlackStyle,
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                    // Padding(
+                                    //   padding: EdgeInsets.only(
+                                    //       top: 20.h, left: 20.w, right: 20.w),
+                                    //   child: Container(
+                                    //     decoration: BoxDecoration(
+                                    //       color: kGrayColor50,
+                                    //       borderRadius:
+                                    //           BorderRadius.circular(20.0.w),
+                                    //     ),
+                                    //     child: Padding(
+                                    //       padding: kPrimaryPadding,
+                                    //       child: Column(
+                                    //         children: [
+                                    //           Row(
+                                    //             mainAxisAlignment:
+                                    //                 MainAxisAlignment
+                                    //                     .spaceBetween,
+                                    //             children: [
+                                    //               Text(
+                                    //                 "11월 22일 (화)",
+                                    //                 style: kSubtitle2BlackStyle,
+                                    //               ),
+                                    //               Row(
+                                    //                 children: [
+                                    //                   Container(
+                                    //                     padding:
+                                    //                         EdgeInsets.all(4.w),
+                                    //                     decoration:
+                                    //                         const BoxDecoration(
+                                    //                       shape:
+                                    //                           BoxShape.circle,
+                                    //                       color: kWhiteColor,
+                                    //                     ),
+                                    //                     child: SvgPicture.asset(
+                                    //                       "lib/config/assets/images/diary/weather/sunny.svg",
+                                    //                       width: 16.w,
+                                    //                       height: 16.h,
+                                    //                     ),
+                                    //                   ),
+                                    //                   SizedBox(
+                                    //                     width: 7.w,
+                                    //                   ),
+                                    //                   Container(
+                                    //                     padding:
+                                    //                         EdgeInsets.all(4.w),
+                                    //                     decoration:
+                                    //                         const BoxDecoration(
+                                    //                       shape:
+                                    //                           BoxShape.circle,
+                                    //                       color: kWhiteColor,
+                                    //                     ),
+                                    //                     child:
+                                    //                         SvgPicture.network(
+                                    //                       "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
+                                    //                       width: 16.w,
+                                    //                       height: 16.h,
+                                    //                     ),
+                                    //                   ),
+                                    //                 ],
+                                    //               ),
+                                    //             ],
+                                    //           ),
+                                    //           SizedBox(
+                                    //             height: 12.h,
+                                    //           ),
+                                    //           Container(
+                                    //             height: 200.h,
+                                    //             color: kGrayColor300,
+                                    //           ),
+                                    //           SizedBox(
+                                    //             height: 12.h,
+                                    //           ),
+                                    //           Text(
+                                    //             "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가마바사 \n- 가나다",
+                                    //             style: kBody1BlackStyle,
+                                    //           )
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                  ],
+                                );
+                              },
                             );
                           },
                         ),
@@ -608,5 +464,23 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
         ),
       ),
     );
+  }
+}
+
+class YearMonthModel extends DatePickerModel {
+  YearMonthModel(
+      {required DateTime currentTime,
+      required DateTime maxTime,
+      required DateTime minTime,
+      required LocaleType locale})
+      : super(
+            currentTime: currentTime,
+            maxTime: maxTime,
+            minTime: minTime,
+            locale: locale);
+
+  @override
+  List<int> layoutProportions() {
+    return [1, 1, 0];
   }
 }
