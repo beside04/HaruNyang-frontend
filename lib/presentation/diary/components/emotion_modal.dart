@@ -3,10 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/diary/components/diary_icon_button.dart';
+import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class EmotionModal extends GetView<DiaryViewModel> {
@@ -58,17 +57,17 @@ class EmotionModal extends GetView<DiaryViewModel> {
                         child: ListView.builder(
                           physics: const BouncingScrollPhysics(),
                           scrollDirection: Axis.horizontal,
-                          itemCount: emotionDataList.length,
+                          itemCount: controller.emoticonDataList.length,
                           itemBuilder: (BuildContext context, int i) {
                             return Obx(
-                              () => DiaryIconButton(
-                                name: emotionDataList[i].name,
-                                icon: emotionDataList[i].icon,
-                                selected: controller.emotionStatus.value ==
-                                    Emotion.values[i],
+                              () => EmoticonIconButton(
+                                name: controller.emoticonDataList[i].desc,
+                                icon: controller.emoticonDataList[i].emoticon,
+                                selected: controller.selectedEmotion.value ==
+                                    controller.emoticonDataList[i],
                                 onPressed: () {
-                                  controller.emotionStatus.value =
-                                      Emotion.values[i];
+                                  controller.setSelectedEmoticon(
+                                      controller.emoticonDataList[i]);
                                 },
                               ),
                             );
@@ -78,7 +77,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       Obx(
                         () => Padding(
                           padding: EdgeInsets.only(left: 6.w, top: 184.h),
-                          child: controller.emotionStatus.value == null
+                          child: controller.selectedEmotion.value.emoticon.isEmpty
                               ? Container()
                               : buildSlider(),
                         ),
@@ -86,13 +85,13 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       Obx(
                         () => BottomButton(
                           title: '일기쓰기',
-                          onTap: controller.emotionStatus.value == null
+                          onTap: controller.selectedEmotion.value.emoticon.isEmpty
                               ? null
                               : () {
                                   Get.to(() => WriteDiaryScreen(
                                         date: controller.nowDate.value,
                                         emotion:
-                                            controller.emotionStatus.value!,
+                                            controller.selectedEmotion.value,
                                         weather:
                                             controller.weatherStatus.value!,
                                       ));

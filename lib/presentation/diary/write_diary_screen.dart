@@ -7,16 +7,19 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
+import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   final DateTime date;
-  final Emotion emotion;
+  final EmoticonData emotion;
   final Weather weather;
 
   WriteDiaryScreen({
@@ -95,8 +98,15 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                 DialogButton(
                                   title: "예",
                                   onTap: () {
-                                    Get.back();
-                                    Get.back();
+                                    Get.offAll(() => const HomeScreen());
+                                    Get.to(
+                                      () => DiaryDetailScreen(
+                                        date: date,
+                                        emoticon: emotion,
+                                        diaryContents: controller
+                                            .nicknameEditingController.text,
+                                      ),
+                                    );
                                   },
                                   backgroundColor: kPrimary2Color,
                                   textStyle: kSubtitle1WhiteStyle,
@@ -230,8 +240,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        emotionDataList[emotion.index]
-                                            .writeValue,
+                                        '',
                                         style: kSubtitle1Gray950Style,
                                       ),
                                       SvgPicture.asset(
@@ -282,8 +291,8 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                 shape: BoxShape.circle,
                                 color: kSurfaceLightColor,
                               ),
-                              child: SvgPicture.asset(
-                                emotionDataList[emotion.index].icon,
+                              child: SvgPicture.network(
+                                emotion.emoticon,
                                 width: 24.w,
                                 height: 24.h,
                               ),
