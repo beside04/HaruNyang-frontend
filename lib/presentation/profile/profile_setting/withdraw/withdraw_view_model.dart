@@ -1,4 +1,4 @@
-import 'package:frontend/domain/use_case/withdraw_use_case.dart';
+import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_state.dart';
 import 'package:get/get.dart';
 

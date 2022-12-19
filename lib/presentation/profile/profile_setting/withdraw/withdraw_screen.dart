@@ -6,6 +6,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:get/get.dart';
@@ -17,14 +18,22 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: kBlackColor),
+        backgroundColor: kWhiteColor,
         title: Text(
           '회원 탈퇴',
           style: kHeader2BlackStyle,
         ),
         centerTitle: false,
-        backgroundColor: kBackGroundLightColor,
-        foregroundColor: kBlackColor,
         elevation: 0,
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: const Icon(
+            Icons.arrow_back_ios,
+          ),
+        ),
       ),
       body: Padding(
         padding: kPrimaryPadding,
@@ -34,7 +43,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
           children: [
             Text(
               '탈퇴전 확인하세요!',
-              style: kSubtitle2BlackStyle,
+              style: kSubtitle1BlackStyle,
+            ),
+            SizedBox(
+              height: 74.h,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,14 +59,14 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                       backgroundColor: kPrimaryColor,
                       child: SvgPicture.asset(
                         "lib/config/assets/images/character/onboarding1.svg",
-                        width: 90,
-                        height: 90,
+                        width: 70,
+                        height: 70,
                       ),
                     ),
                   ),
                 ),
                 SizedBox(
-                  height: 80.h,
+                  height: 16.h,
                 ),
                 Container(
                   padding: kPrimaryPadding,
@@ -85,9 +97,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                       style: kBody1BlackStyle,
                     ),
                   ],
-                )
+                ),
               ],
             ),
+            const Spacer(),
             Padding(
               padding: kPrimaryPadding,
               child: Center(
@@ -117,6 +130,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                       title: "아니요",
                                       onTap: () {
                                         Get.back();
+                                        Get.to(() => const ProfileSettingScreen());
                                       },
                                       backgroundColor: kGrayColor100,
                                       textStyle: kSubtitle1Gray600Style,
