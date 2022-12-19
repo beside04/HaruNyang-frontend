@@ -1,18 +1,27 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
+import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 class DiaryDetailViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
   final GetWiseSayingUseCase getWiseSayingUseCase;
+  final FileUploadUseCase fileUploadUseCase;
+
   final int emoticonId;
   final String diaryContents;
+  final CroppedFile? imageFile;
 
   DiaryDetailViewModel({
     required this.getWiseSayingUseCase,
+    required this.fileUploadUseCase,
     required this.emoticonId,
     required this.diaryContents,
+    this.imageFile,
   });
 
   late AnimationController animationController;
@@ -40,8 +49,7 @@ class DiaryDetailViewModel extends GetxController
   @override
   void onInit() {
     super.onInit();
-    //updateTestData();
-
+    diarySave();
     getWiseSayingList(emoticonId, diaryContents);
 
     animationController = AnimationController(
@@ -70,5 +78,32 @@ class DiaryDetailViewModel extends GetxController
     );
 
     _updateIsLoading(false);
+  }
+
+  Future<void> diarySave() async {
+    String file = '';
+    if (imageFile != null) {
+      //이미지 파일이 있다면 이미지 파일 업로드 먼저 실행
+      file = await fileUpload();
+      if (file.isEmpty) {
+        Get.snackbar('알림', '이미지 파일 업로드에 실패했습니다.');
+        return;
+      }
+    }
+    //다이어리 저장
+  }
+
+  Future<String> fileUpload() async {
+    String imageResult = '';
+    Uint8List bytes = await imageFile!.readAsBytes();
+    String fileName = imageFile!.path.split('/').last;
+    final result = await fileUploadUseCase(bytes, fileName);
+    result.when(
+      success: (fileResult) {
+        imageResult = fileResult;
+      },
+      error: (message) {},
+    );
+    return imageResult;
   }
 }

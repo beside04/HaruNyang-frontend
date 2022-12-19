@@ -15,23 +15,26 @@ import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
 class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   final DateTime date;
   final EmoticonData emoticon;
   final String diaryContents;
+  final CroppedFile? imageFile;
 
   const DiaryDetailScreen({
     Key? key,
     required this.date,
     required this.emoticon,
     required this.diaryContents,
+    this.imageFile,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getDiaryDetailBinding(emoticon.id!, diaryContents);
+    getDiaryDetailBinding(emoticon.id!, diaryContents, imageFile);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffE69954),

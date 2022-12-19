@@ -42,7 +42,7 @@ class WriteDiaryViewModel extends GetxController {
 
   Future<void> cropImage() async {
     if (pickedFile.value != null) {
-      var croppedImage = await ImageCropper().cropImage(
+      CroppedFile? croppedImage = await ImageCropper().cropImage(
         sourcePath: pickedFile.value!.path,
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 100,

@@ -105,6 +105,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                         emoticon: emotion,
                                         diaryContents: controller
                                             .nicknameEditingController.text,
+                                        imageFile: controller.croppedFile.value,
                                       ),
                                     );
                                   },

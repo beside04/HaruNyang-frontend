@@ -5,12 +5,14 @@ import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
+import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart';
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
@@ -25,6 +27,7 @@ import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_jo
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 
 final KakaoLoginImpl kakaoLoginImpl = KakaoLoginImpl();
 final AppleLoginImpl appleLoginImpl = AppleLoginImpl();
@@ -33,6 +36,8 @@ final ServerLoginRepositoryImpl serverLoginImpl = ServerLoginRepositoryImpl();
 final OnBoardingRepositoryImpl onBoardingImpl = OnBoardingRepositoryImpl();
 final WiseSayingRepositoryImpl wiseSayingRepositoryImpl =
     WiseSayingRepositoryImpl();
+final FileUploadRepositoryImpl fileUploadRepositoryImpl =
+    FileUploadRepositoryImpl();
 
 //use case
 final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
@@ -62,6 +67,9 @@ final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
 final GetEmoticonUseCase getEmoticonUseCase =
     GetEmoticonUseCase(emoticonRepository: EmoticonRepositoryImpl());
 
+final FileUploadUseCase fileUploadUseCase =
+    FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
+
 void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
@@ -89,11 +97,14 @@ void getWriteDiaryBinding() {
   );
 }
 
-void getDiaryDetailBinding(int emoticonId, String diaryContents) {
+void getDiaryDetailBinding(
+    int emoticonId, String diaryContents, CroppedFile? imageFile) {
   Get.put(DiaryDetailViewModel(
     getWiseSayingUseCase: getWiseSayingUseCase,
     emoticonId: emoticonId,
     diaryContents: diaryContents,
+    imageFile: imageFile,
+    fileUploadUseCase: fileUploadUseCase,
   ));
 }
 
