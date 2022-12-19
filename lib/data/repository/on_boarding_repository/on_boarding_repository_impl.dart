@@ -9,17 +9,21 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
   @override
   Future<Result<MyInformation>> getMyInformation() async {
     if (myInformation != null) {
-      return Result.success(myInformation!);
-    } else {
-      final result = await onBoardingApi.getMyInformation();
-      result.when(
-          success: (info) {
-            myInformation = info.copyWith();
-          },
-          error: (message) {});
-
-      return result;
+      if (myInformation!.nickname != null ||
+          myInformation!.age != null ||
+          myInformation!.email != null) {
+        return Result.success(myInformation!);
+      }
     }
+
+    final result = await onBoardingApi.getMyInformation();
+    result.when(
+        success: (info) {
+          myInformation = info.copyWith();
+        },
+        error: (message) {});
+
+    return result;
   }
 
   @override
@@ -28,11 +32,24 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
     required job,
     required age,
   }) async {
+    if (myInformation != null) {
+      myInformation = myInformation!.copyWith(
+        nickname: nickname,
+        job: job,
+        age: age,
+      );
+    }
+
     return await onBoardingApi.putMyInformation(
       nickname: nickname,
       job: job,
       age: age,
     );
+  }
+
+  @override
+  void clearMyInformation() {
+    myInformation = null;
   }
 }
 

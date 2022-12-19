@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -27,7 +29,17 @@ class AppleLoginUseCase {
     if (appleLoginResult != null) {
       final AuthorizationCredentialAppleID user = appleLoginResult;
 
-      email = user.email;
+      if (user.email != null) {
+        email = user.email;
+      } else {
+        List<String> jwt = user.identityToken?.split('.') ?? [];
+        String payload = jwt[1];
+        payload = base64.normalize(payload);
+
+        final List<int> jsonData = base64.decode(payload);
+        final userInfo = jsonDecode(utf8.decode(jsonData));
+        email = userInfo['email'];
+      }
       socialId = user.userIdentifier;
     }
 

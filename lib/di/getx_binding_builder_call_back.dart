@@ -6,7 +6,9 @@ import 'package:frontend/data/repository/social_login_repository/apple_login_imp
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
 import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart';
+
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
+import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
@@ -14,6 +16,7 @@ import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_c
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
+import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
@@ -25,6 +28,8 @@ import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
+import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
+import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -60,6 +65,13 @@ final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: tokenRepositoryImpl,
 );
 
+final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
+  withdrawRepository: WithdrawRepositoryImpl(),
+  onBoardingUseCase: onBoardingUseCase,
+  kakaoLoginUseCase: kakaoLoginUseCase,
+  appleLoginUseCase: appleLoginUseCase,
+);
+
 final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
   wiseSayingRepository: wiseSayingRepositoryImpl,
 );
@@ -69,6 +81,9 @@ final GetEmoticonUseCase getEmoticonUseCase =
 
 final FileUploadUseCase fileUploadUseCase =
     FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
+final profileViewModel = ProfileViewModel(
+  onBoardingUseCase: onBoardingUseCase,
+);
 
 void getLoginBinding() {
   Get.put(LoginViewModel(
@@ -85,7 +100,6 @@ void getLoginBinding() {
 void getDiaryBinding() {
   Get.put(
     DiaryViewModel(
-      kakaoLoginUseCase: kakaoLoginUseCase,
       getEmoticonUseCase: getEmoticonUseCase,
     ),
   );
@@ -130,9 +144,9 @@ void getOnBoardingNickNameBinding() {
 }
 
 void getProfileBinding() {
-  Get.put(ProfileViewModel(
-    onBoardingUseCase: onBoardingUseCase,
-  ));
+  Get.put(
+    profileViewModel,
+  );
 }
 
 void getEmotionStampBinding() {
@@ -143,6 +157,22 @@ void getHomeViewModelBinding() {
   Get.put(
     HomeViewModel(
       onBoardingUseCase: onBoardingUseCase,
+    ),
+  );
+}
+
+void getWithdrawViewModelBinding() {
+  Get.put(
+    WithdrawViewModel(
+      withdrawUseCase: withDrawUseCase,
+    ),
+  );
+}
+
+void getProfileSettingViewModelBinding() {
+  Get.put(
+    ProfileSettingViewModel(
+      kakaoLoginUseCase: kakaoLoginUseCase,
     ),
   );
 }
