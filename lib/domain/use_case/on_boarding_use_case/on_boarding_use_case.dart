@@ -9,6 +9,10 @@ class OnBoardingUseCase {
     required this.onBoardingRepository,
   });
 
+  void clearMyInformation() {
+    onBoardingRepository.clearMyInformation();
+  }
+
   Future<Result<MyInformation>> getMyInformation() async {
     final result = await onBoardingRepository.getMyInformation();
 
