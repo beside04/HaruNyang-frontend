@@ -10,12 +10,10 @@ import 'package:get/get.dart';
 
 class DiaryViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final KakaoLoginUseCase kakaoLoginUseCase;
   final GetEmoticonUseCase getEmoticonUseCase;
   late AnimationController animationController;
 
   DiaryViewModel({
-    required this.kakaoLoginUseCase,
     required this.getEmoticonUseCase,
   }) {
     getEmoticonData();
@@ -64,10 +62,6 @@ class DiaryViewModel extends GetxController
       const WeatherModal(),
     ];
     update();
-  }
-
-  Future<void> logout() async {
-    await kakaoLoginUseCase.logout();
   }
 
   Future<void> getEmoticonData() async {

@@ -4,14 +4,19 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
+import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:get/get.dart';
 
-class ProfileSettingScreen extends StatelessWidget {
-  const ProfileSettingScreen({Key? key}) : super(key: key);
+class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
+  final bool isKakaoLogin;
+
+  const ProfileSettingScreen({
+    Key? key,
+    required this.isKakaoLogin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +28,7 @@ class ProfileSettingScreen extends StatelessWidget {
             Expanded(
               child: TextButton(
                 onPressed: () async {
-                  await Get.find<DiaryViewModel>().logout();
+                  await controller.logout();
                   Get.offAll(
                     const LoginScreen(),
                   );
@@ -38,7 +43,9 @@ class ProfileSettingScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   Get.to(
-                    () => const WithdrawScreen(),
+                    () => WithdrawScreen(
+                      isKakaoLogin: isKakaoLogin,
+                    ),
                     binding: BindingsBuilder(
                       getWithdrawViewModelBinding,
                     ),

@@ -135,7 +135,14 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 Expanded(
                   child: InkWell(
                     onTap: () {
-                      Get.to(() => const ProfileSettingScreen());
+                      Get.to(
+                        () => ProfileSettingScreen(
+                          isKakaoLogin: state.value.loginType == 'KAKAO',
+                        ),
+                        binding: BindingsBuilder(
+                          getProfileSettingViewModelBinding,
+                        ),
+                      );
                     },
                     child: Container(
                       decoration: const BoxDecoration(

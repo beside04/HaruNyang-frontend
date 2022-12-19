@@ -11,7 +11,12 @@ import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_
 import 'package:get/get.dart';
 
 class WithdrawScreen extends GetView<WithdrawViewModel> {
-  const WithdrawScreen({Key? key}) : super(key: key);
+  final bool isKakaoLogin;
+
+  const WithdrawScreen({
+    Key? key,
+    required this.isKakaoLogin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -144,8 +149,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                     DialogButton(
                                       title: "탈퇴하기",
                                       onTap: () async {
-                                        final result =
-                                            await controller.withdrawUser();
+                                        final result = await controller
+                                            .withdrawUser(isKakaoLogin);
                                         if (result) {
                                           Get.offAll(
                                             () => const WithdrawDoneScreen(),

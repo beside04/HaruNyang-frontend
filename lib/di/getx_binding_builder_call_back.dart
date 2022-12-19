@@ -27,6 +27,7 @@ import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
+import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
@@ -62,8 +63,9 @@ final TokenUseCase tokenUseCase = TokenUseCase(
 
 final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
   withdrawRepository: WithdrawRepositoryImpl(),
-  tokenUseCase: tokenUseCase,
   onBoardingUseCase: onBoardingUseCase,
+  kakaoLoginUseCase: kakaoLoginUseCase,
+  appleLoginUseCase: appleLoginUseCase,
 );
 
 final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
@@ -92,7 +94,6 @@ void getLoginBinding() {
 void getDiaryBinding() {
   Get.put(
     DiaryViewModel(
-      kakaoLoginUseCase: kakaoLoginUseCase,
       getEmoticonUseCase: getEmoticonUseCase,
     ),
   );
@@ -155,6 +156,14 @@ void getWithdrawViewModelBinding() {
   Get.put(
     WithdrawViewModel(
       withdrawUseCase: withDrawUseCase,
+    ),
+  );
+}
+
+void getProfileSettingViewModelBinding() {
+  Get.put(
+    ProfileSettingViewModel(
+      kakaoLoginUseCase: kakaoLoginUseCase,
     ),
   );
 }
