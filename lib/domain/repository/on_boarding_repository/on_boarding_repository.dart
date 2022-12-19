@@ -9,4 +9,6 @@ abstract class OnBoardingRepository {
     required job,
     required age,
   });
+
+  void clearMyInformation();
 }
