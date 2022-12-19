@@ -6,7 +6,6 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:get/get.dart';
@@ -108,9 +107,9 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   () => ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       backgroundColor: kPrimaryColor,
-                      minimumSize: const Size(150, 50),
+                      minimumSize: const Size(double.infinity, 52),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15),
+                        borderRadius: BorderRadius.circular(60),
                       ),
                     ),
                     onPressed: controller.state.value.isAgreeWithdrawTerms
@@ -120,18 +119,21 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                               context: context,
                               builder: (context) {
                                 return DialogComponent(
-                                  title: "회원 탈퇴",
-                                  content: Text(
-                                    "정말 탈퇴 하시겠어요?",
-                                    style: kSubtitle3Gray600Style,
+                                  title: "정말 탈퇴 하시겠어요?",
+                                  content: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30.0),
+                                    child: Text(
+                                      "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
+                                      style: kSubtitle3Gray600Style,
+                                    ),
                                   ),
                                   actionContent: [
                                     DialogButton(
                                       title: "아니요",
                                       onTap: () {
                                         Get.back();
-                                        Get.to(
-                                            () => const ProfileSettingScreen());
+                                        Get.back();
                                       },
                                       backgroundColor: kGrayColor100,
                                       textStyle: kSubtitle1Gray600Style,
@@ -140,7 +142,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                       width: 12.w,
                                     ),
                                     DialogButton(
-                                      title: "예",
+                                      title: "탈퇴하기",
                                       onTap: () async {
                                         final result =
                                             await controller.withdrawUser();
@@ -162,7 +164,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                             );
                           }
                         : null,
-                    child: const Text('회원 탈퇴'),
+                    child: const Text('탈퇴하기'),
                   ),
                 ),
               ),

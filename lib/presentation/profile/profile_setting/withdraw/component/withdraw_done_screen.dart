@@ -62,9 +62,9 @@ class WithdrawDoneScreen extends StatelessWidget {
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
-                    minimumSize: const Size(150, 50),
+                    minimumSize: const Size(double.infinity, 52),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
+                      borderRadius: BorderRadius.circular(60),
                     ),
                   ),
                   onPressed: () {
