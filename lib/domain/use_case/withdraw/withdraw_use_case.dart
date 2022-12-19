@@ -1,5 +1,5 @@
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/repository/withdraw_repository.dart';
+import 'package:frontend/domain/repository/withdraw/withdraw_repository.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 
 class WithdrawUseCase {

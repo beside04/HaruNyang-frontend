@@ -15,15 +15,19 @@ class WithdrawApi {
       response = await dio.delete(
         withdrawUrl,
       );
-      print(response);
-      return const Result.success(true);
+      final int withdrawResult = response.statusCode ?? 0;
+      if (withdrawResult == 200) {
+        return const Result.success(true);
+      } else {
+        return const Result.error('회원 탈퇴가 실패했습니다.');
+      }
     } on DioError catch (e) {
       String errMessage = '';
 
       if (e.response != null) {
         if (e.response!.statusCode != 200) {
           errMessage =
-              'withdraw api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+              '회원탈퇴 api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
         }
       } else {
         errMessage = e.message;

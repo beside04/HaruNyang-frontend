@@ -24,11 +24,9 @@ class WithdrawViewModel extends GetxController {
     final result = await withdrawUseCase.withdrawUser();
     result.when(
       success: (isSuccess) {
-        isSuccessWithdraw = true;
+        isSuccessWithdraw = isSuccess;
       },
-      error: (message) {
-        Get.snackbar('알림', '회원 탈퇴가 실패했습니다.');
-      },
+      error: (message) {},
     );
 
     return isSuccessWithdraw;

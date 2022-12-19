@@ -130,7 +130,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                       title: "아니요",
                                       onTap: () {
                                         Get.back();
-                                        Get.to(() => const ProfileSettingScreen());
+                                        Get.to(
+                                            () => const ProfileSettingScreen());
                                       },
                                       backgroundColor: kGrayColor100,
                                       textStyle: kSubtitle1Gray600Style,
@@ -147,6 +148,9 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                           Get.offAll(
                                             () => const WithdrawDoneScreen(),
                                           );
+                                        } else {
+                                          Get.back();
+                                          Get.snackbar('알림', '회원 탈퇴에 실패했습니다.');
                                         }
                                       },
                                       backgroundColor: kPrimary2Color,
