@@ -1,3 +1,4 @@
+import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
 import 'package:frontend/data/repository/emoticon/emoticon_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
@@ -9,6 +10,7 @@ import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart
 
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
+import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
@@ -43,18 +45,21 @@ final WiseSayingRepositoryImpl wiseSayingRepositoryImpl =
     WiseSayingRepositoryImpl();
 final FileUploadRepositoryImpl fileUploadRepositoryImpl =
     FileUploadRepositoryImpl();
+final diaryRepository = DiaryRepositoryImpl();
 
 //use case
 final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
   socialLoginRepository: kakaoLoginImpl,
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
+  onBoardingUseCase: onBoardingUseCase,
 );
 
 final AppleLoginUseCase appleLoginUseCase = AppleLoginUseCase(
   socialLoginRepository: appleLoginImpl,
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
+  onBoardingUseCase: onBoardingUseCase,
 );
 
 final OnBoardingUseCase onBoardingUseCase = OnBoardingUseCase(
@@ -67,7 +72,6 @@ final TokenUseCase tokenUseCase = TokenUseCase(
 
 final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
   withdrawRepository: WithdrawRepositoryImpl(),
-  onBoardingUseCase: onBoardingUseCase,
   kakaoLoginUseCase: kakaoLoginUseCase,
   appleLoginUseCase: appleLoginUseCase,
 );
@@ -83,6 +87,9 @@ final FileUploadUseCase fileUploadUseCase =
     FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
 final profileViewModel = ProfileViewModel(
   onBoardingUseCase: onBoardingUseCase,
+);
+final saveDiaryUseCase = SaveDiaryUseCase(
+  diaryRepository: diaryRepository,
 );
 
 void getLoginBinding() {
@@ -111,14 +118,22 @@ void getWriteDiaryBinding() {
   );
 }
 
-void getDiaryDetailBinding(
-    int emoticonId, String diaryContents, CroppedFile? imageFile) {
+void getDiaryDetailBinding({
+  required int emoticonId,
+  required String diaryContent,
+  required int emoticonIndex,
+  required String weather,
+  required CroppedFile? imageFile,
+}) {
   Get.put(DiaryDetailViewModel(
-    getWiseSayingUseCase: getWiseSayingUseCase,
     emoticonId: emoticonId,
-    diaryContents: diaryContents,
+    diaryContent: diaryContent,
+    emoticonIndex: emoticonIndex,
+    weather: weather,
     imageFile: imageFile,
+    getWiseSayingUseCase: getWiseSayingUseCase,
     fileUploadUseCase: fileUploadUseCase,
+    saveDiaryUseCase: saveDiaryUseCase,
   ));
 }
 

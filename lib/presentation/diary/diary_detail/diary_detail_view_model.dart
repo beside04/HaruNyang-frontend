@@ -1,7 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
+import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:get/get.dart';
@@ -11,16 +13,22 @@ class DiaryDetailViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
   final GetWiseSayingUseCase getWiseSayingUseCase;
   final FileUploadUseCase fileUploadUseCase;
+  final SaveDiaryUseCase saveDiaryUseCase;
 
   final int emoticonId;
-  final String diaryContents;
+  final String diaryContent;
+  final int emoticonIndex;
+  final String weather;
   final CroppedFile? imageFile;
 
   DiaryDetailViewModel({
+    required this.emoticonId,
+    required this.diaryContent,
+    required this.emoticonIndex,
+    required this.weather,
     required this.getWiseSayingUseCase,
     required this.fileUploadUseCase,
-    required this.emoticonId,
-    required this.diaryContents,
+    required this.saveDiaryUseCase,
     this.imageFile,
   });
 
@@ -49,8 +57,16 @@ class DiaryDetailViewModel extends GetxController
   @override
   void onInit() {
     super.onInit();
-    diarySave();
-    getWiseSayingList(emoticonId, diaryContents);
+    final diaryData = DiaryData(
+      diaryContent: diaryContent,
+      emoticonId: emoticonId,
+      emoticonIndex: emoticonIndex,
+      weather: weather,
+      images: [],
+      wiseSayingIds: [],
+    );
+
+    diarySave(diaryData);
 
     animationController = AnimationController(
       duration: const Duration(seconds: 2),
@@ -65,7 +81,6 @@ class DiaryDetailViewModel extends GetxController
   }
 
   Future<void> getWiseSayingList(int emoticonId, String content) async {
-    _updateIsLoading(true);
     final result = await getWiseSayingUseCase(emoticonId, content);
 
     result.when(
@@ -76,21 +91,34 @@ class DiaryDetailViewModel extends GetxController
         Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
       },
     );
-
-    _updateIsLoading(false);
   }
 
-  Future<void> diarySave() async {
+  Future<void> diarySave(DiaryData diary) async {
     String file = '';
+    _updateIsLoading(true);
+
+    //이미지 파일이 있다면 이미지 파일 업로드 먼저 실행
     if (imageFile != null) {
-      //이미지 파일이 있다면 이미지 파일 업로드 먼저 실행
       file = await fileUpload();
       if (file.isEmpty) {
         Get.snackbar('알림', '이미지 파일 업로드에 실패했습니다.');
-        return;
       }
     }
+
+    //명언 받아오기
+    await getWiseSayingList(emoticonId, diaryContent);
+
     //다이어리 저장
+    await saveDiaryUseCase(
+      diary.copyWith(
+        images: [file],
+        wiseSayingIds: wiseSayingList
+            .where((element) => element.id != null)
+            .map((e) => e.id!)
+            .toList(),
+      ),
+    );
+    _updateIsLoading(false);
   }
 
   Future<String> fileUpload() async {

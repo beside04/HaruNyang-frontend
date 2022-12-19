@@ -77,24 +77,29 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       Obx(
                         () => Padding(
                           padding: EdgeInsets.only(left: 6.w, top: 184.h),
-                          child: controller.selectedEmotion.value.emoticon.isEmpty
-                              ? Container()
-                              : buildSlider(),
+                          child:
+                              controller.selectedEmotion.value.emoticon.isEmpty
+                                  ? Container()
+                                  : buildSlider(),
                         ),
                       ),
                       Obx(
                         () => BottomButton(
                           title: '일기쓰기',
-                          onTap: controller.selectedEmotion.value.emoticon.isEmpty
+                          onTap: controller
+                                  .selectedEmotion.value.emoticon.isEmpty
                               ? null
                               : () {
-                                  Get.to(() => WriteDiaryScreen(
-                                        date: controller.nowDate.value,
-                                        emotion:
-                                            controller.selectedEmotion.value,
-                                        weather:
-                                            controller.weatherStatus.value!,
-                                      ));
+                                  Get.to(
+                                    () => WriteDiaryScreen(
+                                      date: controller.nowDate.value,
+                                      emotion: controller.selectedEmotion.value,
+                                      weather: controller.weatherStatus.value!,
+                                      emoticonIndex:
+                                          (controller.numberValue.value * 10)
+                                              .toInt(),
+                                    ),
+                                  );
                                   // controller.animationController.reverse();
                                   // controller.swapStackChildren2();
                                 },

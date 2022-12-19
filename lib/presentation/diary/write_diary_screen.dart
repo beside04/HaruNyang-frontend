@@ -21,12 +21,14 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   final DateTime date;
   final EmoticonData emotion;
   final Weather weather;
+  final int emoticonIndex;
 
   WriteDiaryScreen({
     Key? key,
     required this.date,
     required this.emotion,
     required this.weather,
+    required this.emoticonIndex,
   }) : super(key: key);
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
@@ -103,8 +105,10 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       () => DiaryDetailScreen(
                                         date: date,
                                         emoticon: emotion,
-                                        diaryContents: controller
+                                        diaryContent: controller
                                             .nicknameEditingController.text,
+                                        emoticonIndex: emoticonIndex,
+                                        weather: weather.name,
                                         imageFile: controller.croppedFile.value,
                                       ),
                                     );

@@ -2,33 +2,27 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
 
 class DiaryApi {
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
-  Future<Result<bool>> saveDiary(
-      String diaryContent,
-      int emoticonId,
-      int emoticonIndex,
-      List<String> images,
-      String weather,
-      List<int> wiseSayingIds) async {
+  Future<Result<bool>> saveDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary';
     var dio = await refreshInterceptor();
 
     try {
       Response response;
       response = await dio.post(diaryUrl, data: {
-        "diary_content": diaryContent,
-        "emotion_id": emoticonId,
-        "emotion_index": emoticonIndex, //감정 강도
-        "images": images,
-        "weather": weather,
-        "wise_saying_ids": wiseSayingIds,
+        "diary_content": diary.diaryContent,
+        "emotion_id": diary.emoticonId,
+        "emotion_index": diary.emoticonIndex, //감정 강도
+        "images": diary.images,
+        "weather": diary.weather,
+        "wise_saying_ids": diary.wiseSayingIds,
       });
 
       final bool resultData = response.data['data'];
-      print(resultData);
       if (resultData) {
         return const Result.success(true);
       } else {
