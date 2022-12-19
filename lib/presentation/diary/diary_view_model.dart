@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
-import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/diary/components/emotion_modal.dart';
 import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/res/constants.dart';
