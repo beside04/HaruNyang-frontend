@@ -35,7 +35,7 @@ class EmotionStampViewModel extends GetxController {
   }
 
   // 월 주차. (단순하게 1일이 1주차 시작).
-  int weekOfMonthForSimple(DateTime date) {
+  static String weekOfMonthForSimple(DateTime date) {
     // 월의 첫번째 날짜.
     DateTime _firstDay = DateTime(date.year, date.month, 1);
 
@@ -51,12 +51,289 @@ class EmotionStampViewModel extends GetxController {
 
     // 주차 계산.
     int _weekOfMonth = (_different / 7 + (isFirstDayMonday ? 1 : 2)).toInt();
-    return _weekOfMonth;
+
+    switch (_weekOfMonth) {
+      case 1:
+        return "첫";
+      case 2:
+        return "두";
+      case 3:
+        return "첫";
+      case 4:
+        return "네";
+      case 5:
+        return "다섯";
+    }
+    return "";
   }
 
   // D-Day 계산.
-  int calculateDaysBetween({required DateTime from, required DateTime to}) {
+  static int calculateDaysBetween(
+      {required DateTime from, required DateTime to}) {
     return (to.difference(from).inHours / 24).round();
+  }
+
+  final mockData = {
+    "data": [
+      {
+        "id": "639ac3891fefd56d312b2fd7",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 10,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [
+          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/4d3381fe-b44c-46df-949a-a665c44d0b08.file?generation=1671434470286103&alt=media"
+        ],
+        "created_at": "2022-12-11T15:49:45",
+        "updated_at": "2022-12-15T15:49:45"
+      },
+      {
+        "id": "639ac45f1fefd56d312b2fdb",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 10,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [
+          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/4d3381fe-b44c-46df-949a-a665c44d0b08.file?generation=1671434470286103&alt=media"
+        ],
+        "created_at": "2022-12-19T15:53:19",
+        "updated_at": "2022-12-15T15:53:19"
+      },
+      {
+        "id": "639ac46e1fefd56d312b2fdc",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 10,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [],
+        "created_at": "2022-12-22T15:53:34",
+        "updated_at": "2022-12-15T15:53:34"
+      },
+      {
+        "id": "639ac6ce1fefd56d312b2fde",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 10,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [],
+        "created_at": "2022-12-27T16:03:42",
+        "updated_at": "2022-12-15T16:03:42"
+      },
+      {
+        "id": "639ac6dd1fefd56d312b2fdf",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 50,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [
+          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/4d3381fe-b44c-46df-949a-a665c44d0b08.file?generation=1671434470286103&alt=media"
+        ],
+        "created_at": "2022-12-15T16:03:57",
+        "updated_at": "2022-12-15T16:03:57"
+      },
+      {
+        "id": "639ac8881fefd56d312b2fe0",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 50,
+        "wise_sayings": [
+          {
+            "id": 968,
+            "author": "익명",
+            "message": "죽음과 삶은 두 개의 한계이다. 두 개의 한계를 넘어선 저편에  하나의 무엇이 있다."
+          }
+        ],
+        "weather": "rainy",
+        "images": [],
+        "created_at": "2022-12-15T16:11:04",
+        "updated_at": "2022-12-15T16:11:04"
+      }
+    ],
+    "status": 200,
+    "code": "D002",
+    "message": "일기 조회 성공"
+  };
+
+  final nextMockData = {
+    "data": [
+      {
+        "id": "639ac3891fefd56d312b2fd7",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 10,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [
+          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/4d3381fe-b44c-46df-949a-a665c44d0b08.file?generation=1671434470286103&alt=media"
+        ],
+        "created_at": "2023-01-11T15:49:45",
+        "updated_at": "2022-12-15T15:49:45"
+      },
+      {
+        "id": "639ac45f1fefd56d312b2fdb",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 10,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [
+          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/4d3381fe-b44c-46df-949a-a665c44d0b08.file?generation=1671434470286103&alt=media"
+        ],
+        "created_at": "2023-01-19T15:53:19",
+        "updated_at": "2022-12-15T15:53:19"
+      },
+      {
+        "id": "639ac6dd1fefd56d312b2fdf",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 50,
+        "wise_sayings": [],
+        "weather": "rainy",
+        "images": [],
+        "created_at": "2023-01-16T16:03:57",
+        "updated_at": "2022-12-15T16:03:57"
+      },
+      {
+        "id": "639ac8881fefd56d312b2fe0",
+        "content": "test",
+        "user_id": 2538859272,
+        "emotion": {
+          "id": 3,
+          "image_url":
+              "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media",
+          "value": "기쁨",
+          "desc": "기쁨"
+        },
+        "emotion_index": 50,
+        "wise_sayings": [
+          {
+            "id": 968,
+            "author": "익명",
+            "message": "죽음과 삶은 두 개의 한계이다. 두 개의 한계를 넘어선 저편에  하나의 무엇이 있다."
+          }
+        ],
+        "weather": "rainy",
+        "images": [
+          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/4d3381fe-b44c-46df[…]65c44d0b08.file?generation=1671434470286103&alt=media"
+        ],
+        "created_at": "2023-01-15T16:11:04",
+        "updated_at": "2022-12-15T16:11:04"
+      }
+    ],
+    "status": 200,
+    "code": "D002",
+    "message": "일기 조회 성공"
+  };
+
+  var data;
+  var addResultList;
+  final RxBool isLoading = false.obs;
+  Map<String, Object> dataResult = {"key_ordered": [], "values": {}}.obs;
+  var focusedStartDate = DateTime.now().obs;
+  var focusedEndDate = DateTime.now().obs;
+
+  void _updateIsLoading(bool currentStatus) {
+    isLoading.value = currentStatus;
+  }
+
+  getListDate(isLeftTap) async {
+    _updateIsLoading(true);
+
+    print(focusedStartDate);
+    print(focusedEndDate);
+
+    dataResult = {"key_ordered": [], "values": {}}.obs;
+
+    isLeftTap ? data = mockData["data"] : data = nextMockData["data"];
+
+    addResultList = data.map((data) {
+      var dateTime = weekOfMonthForSimple(DateTime.parse(data["created_at"]));
+      if (!dataResult["key_ordered"].toString().contains(dateTime)) {
+        (dataResult["key_ordered"] as List).add(dateTime);
+        (dataResult["values"] as Map)[dateTime] = [];
+      }
+
+      (dataResult["values"] as Map)[dateTime].add(data);
+    });
+
+    print(addResultList);
+
+    _updateIsLoading(false);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+
+    getListDate(true);
   }
 
   Map<DateTime, List<TempEvent>> tempEventSource = {
@@ -64,13 +341,6 @@ class EmotionStampViewModel extends GetxController {
       TempEvent(
         eventTitle:
             'rkskekakd sjn kasnkdasnkdnajkndasjkndasjkndsjk jkasdnkjasnjkadn',
-        icon:
-            'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/suprise.svg?alt=media',
-      )
-    ],
-    DateTime.utc(2022, 11, 12): [
-      TempEvent(
-        eventTitle: '가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사',
         icon:
             'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/suprise.svg?alt=media',
       )

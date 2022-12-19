@@ -261,198 +261,218 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                             // controllerTempCount와 비교해서 currentPage와 비교해서
                             // currentPage가 더 크면 1달 추가 그게 아니라면
                             // 1달 감소
+
                             if (controller.controllerTempCount.value <
                                 currentPage) {
                               controller.focusedCalendarDate.value =
                                   Jiffy(controller.focusedCalendarDate.value)
                                       .add(months: 1)
                                       .dateTime;
+
+                              controller.focusedStartDate.value = DateTime(
+                                controller.focusedCalendarDate.value.year,
+                                controller.focusedCalendarDate.value.month,
+                                1,
+                              );
+
+                              controller.focusedEndDate.value = DateTime(
+                                controller.focusedCalendarDate.value.year,
+                                controller.focusedCalendarDate.value.month + 1,
+                                0,
+                              );
+
+                              controller.getListDate(false);
                             } else {
                               controller.focusedCalendarDate.value =
                                   Jiffy(controller.focusedCalendarDate.value)
                                       .subtract(months: 1)
                                       .dateTime;
+
+                              controller.focusedStartDate.value = DateTime(
+                                controller.focusedCalendarDate.value.year,
+                                controller.focusedCalendarDate.value.month,
+                                1,
+                              );
+
+                              controller.focusedEndDate.value = DateTime(
+                                controller.focusedCalendarDate.value.year,
+                                controller.focusedCalendarDate.value.month + 1,
+                                0,
+                              );
+
+                              controller.getListDate(true);
                             }
 
                             controller.controllerTempCount.value = currentPage;
                           },
                           itemBuilder: (context, i) {
-                            return ListView.builder(
-                              itemCount: controller.tempEventSource.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 20.h, left: 20.w),
-                                      child: Text(
-                                        "${controller.weekOfMonthForSimple(controller.tempEventSource.keys.toList()[index])}번째 주",
-                                        style: kSubtitle1BlackStyle,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 20.h, left: 20.w, right: 20.w),
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: kGrayColor50,
-                                          borderRadius:
-                                              BorderRadius.circular(20.0.w),
-                                        ),
-                                        child: Padding(
-                                          padding: kPrimaryPadding,
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    "${DateFormat.MMMEd("ko_KR").format(controller.tempEventSource.keys.toList()[index])}",
-                                                    style: kSubtitle2BlackStyle,
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        padding:
-                                                            EdgeInsets.all(4.w),
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: kWhiteColor,
-                                                        ),
-                                                        child: SvgPicture.asset(
-                                                          "lib/config/assets/images/diary/weather/sunny.svg",
-                                                          width: 16.w,
-                                                          height: 16.h,
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        width: 7.w,
-                                                      ),
-                                                      Container(
-                                                        padding:
-                                                            EdgeInsets.all(4.w),
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: kWhiteColor,
-                                                        ),
-                                                        child:
-                                                            SvgPicture.network(
-                                                          "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
-                                                          width: 16.w,
-                                                          height: 16.h,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 12.h,
-                                              ),
-                                              Text(
-                                                controller
-                                                    .tempEventSource.values
-                                                    .toList()[index][0]
-                                                    .eventTitle,
-                                                style: kBody1BlackStyle,
-                                              )
-                                            ],
+                            return Obx(
+                              () {
+                                if (controller.isLoading.value) {
+                                  return Center(
+                                      child: CircularProgressIndicator());
+                                } else {
+                                  return ListView.builder(
+                                    itemCount: (controller
+                                            .dataResult["key_ordered"] as List)
+                                        .length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                top: 20.h, left: 20.w),
+                                            child: Text(
+                                              "${(controller.dataResult["key_ordered"] as List)[index]}번째 주",
+                                              style: kSubtitle1BlackStyle,
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    ),
-                                    // Padding(
-                                    //   padding: EdgeInsets.only(
-                                    //       top: 20.h, left: 20.w, right: 20.w),
-                                    //   child: Container(
-                                    //     decoration: BoxDecoration(
-                                    //       color: kGrayColor50,
-                                    //       borderRadius:
-                                    //           BorderRadius.circular(20.0.w),
-                                    //     ),
-                                    //     child: Padding(
-                                    //       padding: kPrimaryPadding,
-                                    //       child: Column(
-                                    //         children: [
-                                    //           Row(
-                                    //             mainAxisAlignment:
-                                    //                 MainAxisAlignment
-                                    //                     .spaceBetween,
-                                    //             children: [
-                                    //               Text(
-                                    //                 "11월 22일 (화)",
-                                    //                 style: kSubtitle2BlackStyle,
-                                    //               ),
-                                    //               Row(
-                                    //                 children: [
-                                    //                   Container(
-                                    //                     padding:
-                                    //                         EdgeInsets.all(4.w),
-                                    //                     decoration:
-                                    //                         const BoxDecoration(
-                                    //                       shape:
-                                    //                           BoxShape.circle,
-                                    //                       color: kWhiteColor,
-                                    //                     ),
-                                    //                     child: SvgPicture.asset(
-                                    //                       "lib/config/assets/images/diary/weather/sunny.svg",
-                                    //                       width: 16.w,
-                                    //                       height: 16.h,
-                                    //                     ),
-                                    //                   ),
-                                    //                   SizedBox(
-                                    //                     width: 7.w,
-                                    //                   ),
-                                    //                   Container(
-                                    //                     padding:
-                                    //                         EdgeInsets.all(4.w),
-                                    //                     decoration:
-                                    //                         const BoxDecoration(
-                                    //                       shape:
-                                    //                           BoxShape.circle,
-                                    //                       color: kWhiteColor,
-                                    //                     ),
-                                    //                     child:
-                                    //                         SvgPicture.network(
-                                    //                       "https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/excited.svg?alt=media",
-                                    //                       width: 16.w,
-                                    //                       height: 16.h,
-                                    //                     ),
-                                    //                   ),
-                                    //                 ],
-                                    //               ),
-                                    //             ],
-                                    //           ),
-                                    //           SizedBox(
-                                    //             height: 12.h,
-                                    //           ),
-                                    //           Container(
-                                    //             height: 200.h,
-                                    //             color: kGrayColor300,
-                                    //           ),
-                                    //           SizedBox(
-                                    //             height: 12.h,
-                                    //           ),
-                                    //           Text(
-                                    //             "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가마바사 \n- 가나다",
-                                    //             style: kBody1BlackStyle,
-                                    //           )
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    // ),
-                                  ],
-                                );
+                                          ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            shrinkWrap: true,
+                                            itemCount:
+                                                (controller.dataResult["values"]
+                                                            as Map)[
+                                                        (controller.dataResult[
+                                                                "key_ordered"]
+                                                            as List)[index]]
+                                                    .length,
+                                            itemBuilder:
+                                                (BuildContext context, int i) {
+                                              var itemList = (controller
+                                                      .dataResult["values"]
+                                                  as Map)[(controller
+                                                      .dataResult["key_ordered"]
+                                                  as List)[index]][i];
+                                              return Padding(
+                                                padding: EdgeInsets.only(
+                                                  top: 20.h,
+                                                  left: 20.w,
+                                                  right: 20.w,
+                                                ),
+                                                child: Container(
+                                                  decoration: BoxDecoration(
+                                                    color: kGrayColor50,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            20.0.w),
+                                                  ),
+                                                  child: Padding(
+                                                    padding: kPrimaryPadding,
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          children: [
+                                                            Text(
+                                                              "${DateFormat.MMMEd("ko_KR").format(DateTime.parse(itemList["created_at"]))}",
+                                                              style:
+                                                                  kSubtitle2BlackStyle,
+                                                            ),
+                                                            Row(
+                                                              children: [
+                                                                Container(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(4
+                                                                              .w),
+                                                                  decoration:
+                                                                      const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color:
+                                                                        kWhiteColor,
+                                                                  ),
+                                                                  child:
+                                                                      SvgPicture
+                                                                          .asset(
+                                                                    "lib/config/assets/images/diary/weather/sunny.svg",
+                                                                    width: 16.w,
+                                                                    height:
+                                                                        16.h,
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width: 7.w,
+                                                                ),
+                                                                Container(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(4
+                                                                              .w),
+                                                                  decoration:
+                                                                      const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color:
+                                                                        kWhiteColor,
+                                                                  ),
+                                                                  child: SvgPicture
+                                                                      .network(
+                                                                    itemList[
+                                                                            "emotion"]
+                                                                        [
+                                                                        "image_url"],
+                                                                    width: 16.w,
+                                                                    height:
+                                                                        16.h,
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        SizedBox(
+                                                          height: 12.h,
+                                                        ),
+                                                        itemList["images"]
+                                                                    .length ==
+                                                                0
+                                                            ? Container()
+                                                            : Column(
+                                                                children: [
+                                                                  Center(
+                                                                    child: Image
+                                                                        .network(
+                                                                      "${itemList["images"][0]}",
+                                                                      height:
+                                                                          240.h,
+                                                                      fit: BoxFit
+                                                                          .fitWidth,
+                                                                    ),
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height:
+                                                                        12.h,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                        Text(
+                                                          itemList["content"],
+                                                          style:
+                                                              kBody1BlackStyle,
+                                                        )
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    },
+                                  );
+                                }
                               },
                             );
                           },
