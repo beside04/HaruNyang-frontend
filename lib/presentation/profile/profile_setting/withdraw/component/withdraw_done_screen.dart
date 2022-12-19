@@ -69,7 +69,7 @@ class WithdrawDoneScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     Get.offAll(
-                      const LoginScreen(),
+                      () => const LoginScreen(),
                     );
                   },
                   child: const Text('첫 화면으로'),

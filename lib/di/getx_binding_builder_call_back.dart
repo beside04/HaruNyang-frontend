@@ -63,6 +63,7 @@ final TokenUseCase tokenUseCase = TokenUseCase(
 final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
   withdrawRepository: WithdrawRepositoryImpl(),
   tokenUseCase: tokenUseCase,
+  onBoardingUseCase: onBoardingUseCase,
 );
 
 final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
@@ -71,6 +72,10 @@ final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
 
 final GetEmoticonUseCase getEmoticonUseCase =
     GetEmoticonUseCase(emoticonRepository: EmoticonRepositoryImpl());
+
+final profileViewModel = ProfileViewModel(
+  onBoardingUseCase: onBoardingUseCase,
+);
 
 void getLoginBinding() {
   Get.put(LoginViewModel(
@@ -129,9 +134,9 @@ void getOnBoardingNickNameBinding() {
 }
 
 void getProfileBinding() {
-  Get.put(ProfileViewModel(
-    onBoardingUseCase: onBoardingUseCase,
-  ));
+  Get.put(
+    profileViewModel,
+  );
 }
 
 void getEmotionStampBinding() {

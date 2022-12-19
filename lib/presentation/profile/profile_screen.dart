@@ -14,6 +14,8 @@ class ProfileScreen extends GetView<ProfileViewModel> {
   @override
   Widget build(BuildContext context) {
     getProfileBinding();
+    controller.getMyInformation();
+    final state = controller.state;
 
     return Scaffold(
       body: SafeArea(
@@ -54,61 +56,67 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    Text(
-                      '${controller.nickname}집사, 반갑다냥.',
-                      style: kHeader3BlackStyle,
+                    Obx(
+                      () => Text(
+                        '${state.value.nickname}집사, 반갑다냥.',
+                        style: kHeader3BlackStyle,
+                      ),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
-                      children: [
-                        controller.loginType == "KAKAO"
-                            ? Container(
-                                width: 30.w,
-                                height: 30.h,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffffe818),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                      child: SizedBox(
-                                        width: 15.w,
-                                        child: Image.asset(
-                                          "lib/config/assets/images/login/kakao_logo.png",
+                    Obx(
+                      () => Row(
+                        children: [
+                          state.value.loginType == "KAKAO"
+                              ? Container(
+                                  width: 30.w,
+                                  height: 30.h,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffffe818),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: SizedBox(
+                                          width: 15.w,
+                                          child: Image.asset(
+                                            "lib/config/assets/images/login/kakao_logo.png",
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                width: 30.w,
-                                height: 30.h,
-                                decoration: const BoxDecoration(
-                                  color: kBlackColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                      child: SizedBox(
-                                        width: 30.w,
-                                        child: Image.asset(
-                                          "lib/config/assets/images/login/apple_logo.png",
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  width: 30.w,
+                                  height: 30.h,
+                                  decoration: const BoxDecoration(
+                                    color: kBlackColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: SizedBox(
+                                          width: 30.w,
+                                          child: Image.asset(
+                                            "lib/config/assets/images/login/apple_logo.png",
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                        Text(
-                          " email : ${controller.email}",
-                          style: kSubtitle3BlackStyle,
-                        )
-                      ],
+                          Obx(
+                            () => Text(
+                              " email : ${state.value.email}",
+                              style: kSubtitle3BlackStyle,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 10.h,
