@@ -3,7 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
+import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
+import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:get/get.dart';
@@ -12,8 +14,10 @@ import 'package:image_cropper/image_cropper.dart';
 class DiaryDetailViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
   final GetWiseSayingUseCase getWiseSayingUseCase;
-  final FileUploadUseCase fileUploadUseCase;
   final SaveDiaryUseCase saveDiaryUseCase;
+  final UpdateDiaryUseCase updateDiaryUseCase;
+  final DeleteDiaryUseCase deleteDiaryUseCase;
+  final FileUploadUseCase fileUploadUseCase;
 
   final DiaryData diaryData;
   final CroppedFile? imageFile;
@@ -21,8 +25,10 @@ class DiaryDetailViewModel extends GetxController
 
   DiaryDetailViewModel({
     required this.getWiseSayingUseCase,
-    required this.fileUploadUseCase,
     required this.saveDiaryUseCase,
+    required this.updateDiaryUseCase,
+    required this.deleteDiaryUseCase,
+    required this.fileUploadUseCase,
     required this.diaryData,
     required this.isStamp,
     this.imageFile,
@@ -102,13 +108,24 @@ class DiaryDetailViewModel extends GetxController
     //명언 받아오기
     await getWiseSayingList(diary.emotion.id!, diary.diaryContent);
 
-    //다이어리 저장
-    await saveDiaryUseCase(
-      diary.copyWith(
-        images: [networkImage.value],
-        wiseSayings: wiseSayingList,
-      ),
+    //새로운 diary Data
+    final newDiary = diary.copyWith(
+      images: [networkImage.value],
+      wiseSayings: wiseSayingList,
     );
+
+    if (diary.id != null) {
+      //update 다이어리
+      await updateDiaryUseCase(
+        newDiary,
+      );
+    } else {
+      //save 다이어리
+      await saveDiaryUseCase(
+        newDiary,
+      );
+    }
+
     _updateIsLoading(false);
   }
 

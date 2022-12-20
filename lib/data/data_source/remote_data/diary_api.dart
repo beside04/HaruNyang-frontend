@@ -10,7 +10,6 @@ class DiaryApi {
   Future<Result<bool>> saveDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary';
     var dio = await refreshInterceptor();
-
     try {
       Response response;
       response = await dio.post(diaryUrl, data: {
@@ -51,7 +50,6 @@ class DiaryApi {
   Future<Result<bool>> updateDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary/${diary.id}';
     var dio = await refreshInterceptor();
-
     try {
       Response response;
       response = await dio.put(diaryUrl, data: {
@@ -89,7 +87,6 @@ class DiaryApi {
   Future<Result<bool>> deleteDiary(String diaryId) async {
     String diaryUrl = '$_baseUrl/v1/diary/$diaryId';
     var dio = await refreshInterceptor();
-
     try {
       Response response;
       response = await dio.delete(

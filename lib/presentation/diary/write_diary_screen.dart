@@ -113,19 +113,25 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       () => DiaryDetailScreen(
                                         date: date,
                                         isStamp: false,
-                                        diaryData: DiaryData(
-                                          emotion: emotion,
-                                          diaryContent: controller
-                                              .diaryEditingController.text,
-                                          emoticonIndex: emoticonIndex,
-                                          weather: weather.name,
-                                          images: controller
-                                                      .networkImage.value !=
-                                                  null
-                                              ? [controller.networkImage.value!]
-                                              : [],
-                                          wiseSayings: [],
-                                        ),
+                                        diaryData: diaryData != null
+                                            ? diaryData!.copyWith(
+                                                diaryContent: controller
+                                                    .diaryEditingController
+                                                    .text,
+                                                images: [
+                                                  controller.networkImage.value!
+                                                ],
+                                              )
+                                            : DiaryData(
+                                                emotion: emotion,
+                                                diaryContent: controller
+                                                    .diaryEditingController
+                                                    .text,
+                                                emoticonIndex: emoticonIndex,
+                                                weather: weather.name,
+                                                images: [],
+                                                wiseSayings: [],
+                                              ),
                                         imageFile: controller.croppedFile.value,
                                       ),
                                     );

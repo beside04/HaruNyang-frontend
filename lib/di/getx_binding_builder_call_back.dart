@@ -142,6 +142,8 @@ void getDiaryDetailBinding({
     getWiseSayingUseCase: getWiseSayingUseCase,
     fileUploadUseCase: fileUploadUseCase,
     saveDiaryUseCase: saveDiaryUseCase,
+    updateDiaryUseCase: updateDiaryUseCase,
+    deleteDiaryUseCase: deleteDiaryUseCase,
     diaryData: diaryData,
     imageFile: imageFile,
     isStamp: isStamp,
@@ -178,8 +180,6 @@ void getProfileBinding() {
 void getEmotionStampBinding() {
   Get.put(EmotionStampViewModel(
     getEmotionStampUseCase: getEmotionStampUseCase,
-    updateDiaryUseCase: updateDiaryUseCase,
-    deleteDiaryUseCase: deleteDiaryUseCase,
   ));
 }
 
