@@ -40,7 +40,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   @override
   Widget build(BuildContext context) {
     getDiaryDetailBinding(
-      emoticonId: emoticon.id!,
+      emoticon: emoticon,
       diaryContent: diaryContent,
       emoticonIndex: emoticonIndex,
       weather: weather,
