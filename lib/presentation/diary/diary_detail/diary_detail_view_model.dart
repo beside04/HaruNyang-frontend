@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
@@ -15,14 +16,14 @@ class DiaryDetailViewModel extends GetxController
   final FileUploadUseCase fileUploadUseCase;
   final SaveDiaryUseCase saveDiaryUseCase;
 
-  final int emoticonId;
+  final EmoticonData emotion;
   final String diaryContent;
   final int emoticonIndex;
   final String weather;
   final CroppedFile? imageFile;
 
   DiaryDetailViewModel({
-    required this.emoticonId,
+    required this.emotion,
     required this.diaryContent,
     required this.emoticonIndex,
     required this.weather,
@@ -59,11 +60,11 @@ class DiaryDetailViewModel extends GetxController
     super.onInit();
     final diaryData = DiaryData(
       diaryContent: diaryContent,
-      emoticonId: emoticonId,
+      emotion: emotion,
       emoticonIndex: emoticonIndex,
       weather: weather,
       images: [],
-      wiseSayingIds: [],
+      wiseSayings: [],
     );
 
     diarySave(diaryData);
@@ -106,16 +107,13 @@ class DiaryDetailViewModel extends GetxController
     }
 
     //명언 받아오기
-    await getWiseSayingList(emoticonId, diaryContent);
+    await getWiseSayingList(emotion.id!, diaryContent);
 
     //다이어리 저장
     await saveDiaryUseCase(
       diary.copyWith(
         images: [file],
-        wiseSayingIds: wiseSayingList
-            .where((element) => element.id != null)
-            .map((e) => e.id!)
-            .toList(),
+        wiseSayings: wiseSayingList,
       ),
     );
     _updateIsLoading(false);

@@ -15,11 +15,14 @@ class DiaryApi {
       Response response;
       response = await dio.post(diaryUrl, data: {
         "diary_content": diary.diaryContent,
-        "emotion_id": diary.emoticonId,
+        "emotion_id": diary.emotion.id,
         "emotion_index": diary.emoticonIndex, //감정 강도
         "images": diary.images,
         "weather": diary.weather,
-        "wise_saying_ids": diary.wiseSayingIds,
+        "wise_saying_ids": diary.wiseSayings
+            .where((element) => element.id != null)
+            .map((e) => e.id)
+            .toList(),
       });
 
       final bool resultData = response.data['data'];
