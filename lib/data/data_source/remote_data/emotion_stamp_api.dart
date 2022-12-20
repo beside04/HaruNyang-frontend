@@ -12,8 +12,7 @@ class EmotionStampApi {
     var dio = await refreshInterceptor();
 
     try {
-      //String emoticonStampUrl = '$_baseUrl/v1/diary?from=$from&to=$to';
-      String emoticonStampUrl = '$_baseUrl/v1/diary?from=2022-12-01&to=2022-12-31';
+      String emoticonStampUrl = '$_baseUrl/v1/diary?from=$from&to=$to';
       Response response;
       response = await dio.get(
         emoticonStampUrl,
@@ -22,9 +21,8 @@ class EmotionStampApi {
       if (response.data['status'] == 200) {
         final Iterable emotionStampIterable = response.data['data'];
 
-        final List<DiaryData> emotionStampList = emotionStampIterable
-            .map((e) => DiaryData.fromJson(e))
-            .toList();
+        final List<DiaryData> emotionStampList =
+            emotionStampIterable.map((e) => DiaryData.fromJson(e)).toList();
 
         return Result.success(emotionStampList);
       } else {

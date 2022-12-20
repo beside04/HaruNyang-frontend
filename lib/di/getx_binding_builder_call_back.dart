@@ -12,7 +12,9 @@ import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
+import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
+import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
@@ -98,6 +100,12 @@ final profileViewModel = ProfileViewModel(
 final saveDiaryUseCase = SaveDiaryUseCase(
   diaryRepository: diaryRepository,
 );
+final updateDiaryUseCase = UpdateDiaryUseCase(
+  diaryRepository: diaryRepository,
+);
+final deleteDiaryUseCase = DeleteDiaryUseCase(
+  diaryRepository: diaryRepository,
+);
 
 void getLoginBinding() {
   Get.put(LoginViewModel(
@@ -174,6 +182,8 @@ void getProfileBinding() {
 void getEmotionStampBinding() {
   Get.put(EmotionStampViewModel(
     getEmotionStampUseCase: getEmotionStampUseCase,
+    updateDiaryUseCase: updateDiaryUseCase,
+    deleteDiaryUseCase: deleteDiaryUseCase,
   ));
 }
 

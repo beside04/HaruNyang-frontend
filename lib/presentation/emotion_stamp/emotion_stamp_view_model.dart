@@ -1,4 +1,6 @@
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
+import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -15,9 +17,13 @@ class TempEvent {
 
 class EmotionStampViewModel extends GetxController {
   final GetEmotionStampUseCase getEmotionStampUseCase;
+  final UpdateDiaryUseCase updateDiaryUseCase;
+  final DeleteDiaryUseCase deleteDiaryUseCase;
 
   EmotionStampViewModel({
     required this.getEmotionStampUseCase,
+    required this.updateDiaryUseCase,
+    required this.deleteDiaryUseCase,
   });
 
   var focusedCalendarDate = DateTime.now().obs;
