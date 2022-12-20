@@ -17,7 +17,9 @@ import 'package:jiffy/jiffy.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class EmotionStampScreen extends GetView<EmotionStampViewModel> {
-  const EmotionStampScreen({super.key});
+  const EmotionStampScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +145,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                 calendarBuilders: CalendarBuilders(
                                   markerBuilder: (context, day, events) {
                                     return InkWell(
-                                      onTap: () {
+                                      onTap: () async {
                                         controller.selectedCalendarDate.value =
                                             day;
                                         controller.focusedCalendarDate.value =

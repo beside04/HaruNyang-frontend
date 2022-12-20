@@ -118,9 +118,14 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                 diaryContent: controller
                                                     .diaryEditingController
                                                     .text,
-                                                images: [
-                                                  controller.networkImage.value!
-                                                ],
+                                                images: controller.networkImage
+                                                            .value !=
+                                                        null
+                                                    ? [
+                                                        controller
+                                                            .networkImage.value!
+                                                      ]
+                                                    : [],
                                               )
                                             : DiaryData(
                                                 emotion: emotion,

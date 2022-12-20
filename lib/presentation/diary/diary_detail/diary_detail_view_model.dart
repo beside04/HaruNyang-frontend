@@ -125,7 +125,6 @@ class DiaryDetailViewModel extends GetxController
         newDiary,
       );
     }
-
     _updateIsLoading(false);
   }
 
@@ -146,7 +145,7 @@ class DiaryDetailViewModel extends GetxController
   Future<void> deleteDiary() async {
     final result = await deleteDiaryUseCase(diaryData.id!);
     result.when(
-      success: (fileResult) {},
+      success: (result) {},
       error: (message) {},
     );
   }
