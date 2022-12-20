@@ -64,7 +64,7 @@ class DiaryDetailViewModel extends GetxController
       emoticonIndex: emoticonIndex,
       weather: weather,
       images: [],
-      wiseSayingIds: [],
+      wiseSayings: [],
     );
 
     diarySave(diaryData);
@@ -113,10 +113,7 @@ class DiaryDetailViewModel extends GetxController
     await saveDiaryUseCase(
       diary.copyWith(
         images: [file],
-        wiseSayingIds: wiseSayingList
-            .where((element) => element.id != null)
-            .map((e) => e.id!)
-            .toList(),
+        wiseSayings: wiseSayingList,
       ),
     );
     _updateIsLoading(false);

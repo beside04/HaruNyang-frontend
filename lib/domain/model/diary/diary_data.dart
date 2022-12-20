@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
+import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 
 part 'diary_data.freezed.dart';
 
@@ -14,7 +15,7 @@ class DiaryData with _$DiaryData {
     @JsonKey(name: 'emotion_index') required int emoticonIndex,
     required List<String> images,
     required String weather,
-    @JsonKey(name: 'wise_sayings') required List<int> wiseSayingIds,
+    @JsonKey(name: 'wise_sayings') required List<WiseSayingData> wiseSayings,
     @Default('') @JsonKey(name: 'created_at') String createTime,
     @Default('') @JsonKey(name: 'updated_at') String updateTime,
   }) = _DiaryData;

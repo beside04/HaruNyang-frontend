@@ -1,4 +1,4 @@
-import 'package:frontend/domain/model/emotion_stamp/emotion_stamp_data.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -82,7 +82,7 @@ class EmotionStampViewModel extends GetxController {
     return (to.difference(from).inHours / 24).round();
   }
 
-  List<EmotionStampData> emotionStampList = [];
+  List<DiaryData> emotionStampList = [];
 
   // final mockData = {
   //   "data": [
@@ -306,6 +306,7 @@ class EmotionStampViewModel extends GetxController {
 
   // ignore: prefer_typing_uninitialized_variables
   var data;
+
   // ignore: prefer_typing_uninitialized_variables
   var addResultList;
   final RxBool isLoading = false.obs;
@@ -333,13 +334,16 @@ class EmotionStampViewModel extends GetxController {
     );
   }
 
-  getListDate(List<EmotionStampData> result) async {
+  getListDate(List<DiaryData> result) async {
     _updateIsLoading(true);
 
     dataResult = {"key_ordered": [], "values": {}}.obs;
 
     addResultList = result.map((data) {
-      var dateTime = weekOfMonthForSimple(DateTime.parse(data.createdAt!));
+      var dateTime = (data.createTime.isNotEmpty)
+          ? weekOfMonthForSimple(DateTime.parse(data.createTime))
+          : '';
+
       if (!dataResult["key_ordered"].toString().contains(dateTime)) {
         (dataResult["key_ordered"] as List).add(dateTime);
         (dataResult["values"] as Map)[dateTime] = [];

@@ -19,7 +19,10 @@ class DiaryApi {
         "emotion_index": diary.emoticonIndex, //감정 강도
         "images": diary.images,
         "weather": diary.weather,
-        "wise_saying_ids": diary.wiseSayingIds,
+        "wise_saying_ids": diary.wiseSayings
+            .where((element) => element.id != null)
+            .map((e) => e.id)
+            .toList(),
       });
 
       final bool resultData = response.data['data'];
