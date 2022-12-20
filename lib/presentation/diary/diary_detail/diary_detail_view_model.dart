@@ -95,6 +95,8 @@ class DiaryDetailViewModel extends GetxController
       if (networkImage.isEmpty) {
         Get.snackbar('알림', '이미지 파일 업로드에 실패했습니다.');
       }
+    } else if (diaryData.images.isNotEmpty) {
+      networkImage.value = diaryData.images.first;
     }
 
     //명언 받아오기

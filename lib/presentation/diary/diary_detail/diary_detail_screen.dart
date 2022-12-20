@@ -70,6 +70,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                 weather: Weather.values[0],
                                 emotion: diaryData.emotion,
                                 emoticonIndex: diaryData.emoticonIndex,
+                                diaryData: diaryData,
                               ),
                             );
                           },

@@ -23,6 +23,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   final EmoticonData emotion;
   final Weather weather;
   final int emoticonIndex;
+  final DiaryData? diaryData;
 
   WriteDiaryScreen({
     Key? key,
@@ -30,6 +31,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
     required this.emotion,
     required this.weather,
     required this.emoticonIndex,
+    this.diaryData,
   }) : super(key: key);
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
@@ -37,6 +39,11 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   @override
   Widget build(BuildContext context) {
     getWriteDiaryBinding();
+
+    if (diaryData != null) {
+      controller.setDiaryData(diaryData!);
+    }
+
     return WillPopScope(
       onWillPop: () async {
         showDialog(
@@ -84,7 +91,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
           actions: [
             Obx(
               () => TextButton(
-                onPressed: controller.nicknameValue.value.isEmpty
+                onPressed: controller.diaryValue.value.isEmpty
                     ? null
                     : () {
                         showDialog(
@@ -109,10 +116,14 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                         diaryData: DiaryData(
                                           emotion: emotion,
                                           diaryContent: controller
-                                              .nicknameEditingController.text,
+                                              .diaryEditingController.text,
                                           emoticonIndex: emoticonIndex,
                                           weather: weather.name,
-                                          images: [],
+                                          images: controller
+                                                      .networkImage.value !=
+                                                  null
+                                              ? [controller.networkImage.value!]
+                                              : [],
                                           wiseSayings: [],
                                         ),
                                         imageFile: controller.croppedFile.value,
@@ -129,7 +140,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                       },
                 child: Text(
                   '등록',
-                  style: controller.nicknameValue.value.isEmpty
+                  style: controller.diaryValue.value.isEmpty
                       ? kSubtitle3Gray300Style
                       : kSubtitle3Primary250Style,
                 ),
@@ -316,7 +327,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                         maxLines: null,
                         name: 'name',
                         style: kSubtitle4BlackStyle,
-                        controller: controller.nicknameEditingController,
+                        controller: controller.diaryEditingController,
                         keyboardType: TextInputType.multiline,
                         textAlignVertical: TextAlignVertical.center,
                         decoration: InputDecoration(
@@ -367,19 +378,19 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                       ),
                       Obx(
                         () => (controller.croppedFile.value != null ||
-                                controller.pickedFile.value != null)
+                                controller.pickedFile.value != null ||
+                                controller.networkImage.value != null)
                             ? Center(
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal: 20.0.w,
                                   ),
-                                  child: controller.croppedFile.value != null
+                                  child: controller.networkImage.value != null
                                       ? Stack(
                                           children: [
-                                            Image.file(
+                                            Image.network(
+                                              controller.networkImage.value!,
                                               fit: BoxFit.cover,
-                                              File(controller
-                                                  .croppedFile.value!.path),
                                             ),
                                             Positioned(
                                               right: 0,
@@ -408,7 +419,43 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                             ),
                                           ],
                                         )
-                                      : const SizedBox.shrink(),
+                                      : controller.croppedFile.value != null
+                                          ? Stack(
+                                              children: [
+                                                Image.file(
+                                                  fit: BoxFit.cover,
+                                                  File(controller
+                                                      .croppedFile.value!.path),
+                                                ),
+                                                Positioned(
+                                                  right: 0,
+                                                  top: 0,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      controller.clear();
+                                                    },
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              6),
+                                                      decoration: BoxDecoration(
+                                                        color: kWhiteColor
+                                                            .withOpacity(.6),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      height: 24.h,
+                                                      width: 24.w,
+                                                      child: const Icon(
+                                                        Icons.close,
+                                                        size: 12,
+                                                        color: kBlackColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : const SizedBox.shrink(),
                                 ),
                               )
                             : Container(),
