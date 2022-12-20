@@ -1,5 +1,6 @@
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
 import 'package:frontend/data/repository/emoticon/emoticon_repository_impl.dart';
+import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
@@ -12,6 +13,7 @@ import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
+import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
@@ -82,6 +84,10 @@ final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
 
 final GetEmoticonUseCase getEmoticonUseCase =
     GetEmoticonUseCase(emoticonRepository: EmoticonRepositoryImpl());
+
+final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
+  emotionStampRepository: EmotionStampRepositoryImpl(),
+);
 
 final FileUploadUseCase fileUploadUseCase =
     FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
@@ -165,7 +171,9 @@ void getProfileBinding() {
 }
 
 void getEmotionStampBinding() {
-  Get.put(EmotionStampViewModel());
+  Get.put(EmotionStampViewModel(
+    getEmotionStampUseCase: getEmotionStampUseCase,
+  ));
 }
 
 void getHomeViewModelBinding() {
