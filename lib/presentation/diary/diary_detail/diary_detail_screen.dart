@@ -15,23 +15,37 @@ import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
 class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   final DateTime date;
+  final String weather;
+  final String diaryContent;
   final EmoticonData emoticon;
-  final String diaryContents;
+  final int emoticonIndex;
+
+  final CroppedFile? imageFile;
 
   const DiaryDetailScreen({
     Key? key,
     required this.date,
     required this.emoticon,
-    required this.diaryContents,
+    required this.diaryContent,
+    required this.emoticonIndex,
+    required this.weather,
+    this.imageFile,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getDiaryDetailBinding(emoticon.id!, diaryContents);
+    getDiaryDetailBinding(
+      emoticonId: emoticon.id!,
+      diaryContent: diaryContent,
+      emoticonIndex: emoticonIndex,
+      weather: weather,
+      imageFile: imageFile,
+    );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffE69954),
@@ -59,13 +73,9 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                             Get.to(
                               () => WriteDiaryScreen(
                                 date: date,
-                                emotion: EmoticonData(
-                                  emoticon:
-                                      'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media',
-                                  value: '기쁨',
-                                  desc: '기쁨',
-                                ),
                                 weather: Weather.values[0],
+                                emotion: emoticon,
+                                emoticonIndex: emoticonIndex,
                               ),
                             );
                           },
@@ -263,7 +273,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                           height: 12.h,
                         ),
                         Text(
-                          diaryContents,
+                          diaryContent,
                           style: kBody1BlackStyle,
                         )
                       ],
