@@ -124,8 +124,9 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                     ),
                                     DialogButton(
                                       title: "예",
-                                      onTap: () {
+                                      onTap: () async {
                                         Get.back();
+                                        await controller.deleteDiary();
                                         showDialog(
                                           barrierDismissible: true,
                                           context: context,

@@ -142,4 +142,12 @@ class DiaryDetailViewModel extends GetxController
     );
     return imageResult;
   }
+
+  Future<void> deleteDiary() async {
+    final result = await deleteDiaryUseCase(diaryData.id!);
+    result.when(
+      success: (fileResult) {},
+      error: (message) {},
+    );
+  }
 }
