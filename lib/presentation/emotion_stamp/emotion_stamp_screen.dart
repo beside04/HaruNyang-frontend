@@ -7,7 +7,6 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
@@ -157,21 +156,8 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                             : Get.to(
                                                 () => DiaryDetailScreen(
                                                   date: day,
-                                                  emoticon: EmoticonData(
-                                                    id: events[0].emotion.id,
-                                                    emoticon: events[0]
-                                                        .emotion
-                                                        .emoticon,
-                                                    value:
-                                                        events[0].emotion.value,
-                                                    desc:
-                                                        events[0].emotion.desc,
-                                                  ),
-                                                  diaryContent:
-                                                      events[0].diaryContent,
-                                                  emoticonIndex:
-                                                      events[0].emoticonIndex,
-                                                  weather: events[0].weather,
+                                                  isStamp: true,
+                                                  diaryData: events[0],
                                                 ),
                                               );
                                       },

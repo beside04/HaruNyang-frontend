@@ -11,7 +11,7 @@ import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart
 
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
-import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
@@ -134,21 +134,17 @@ void getWriteDiaryBinding() {
 }
 
 void getDiaryDetailBinding({
-  required EmoticonData emoticon,
-  required String diaryContent,
-  required int emoticonIndex,
-  required String weather,
+  required DiaryData diaryData,
+  required bool isStamp,
   required CroppedFile? imageFile,
 }) {
   Get.put(DiaryDetailViewModel(
-    emotion: emoticon,
-    diaryContent: diaryContent,
-    emoticonIndex: emoticonIndex,
-    weather: weather,
-    imageFile: imageFile,
     getWiseSayingUseCase: getWiseSayingUseCase,
     fileUploadUseCase: fileUploadUseCase,
     saveDiaryUseCase: saveDiaryUseCase,
+    diaryData: diaryData,
+    imageFile: imageFile,
+    isStamp: isStamp,
   ));
 }
 

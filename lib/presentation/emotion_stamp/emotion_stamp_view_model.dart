@@ -16,6 +16,14 @@ class EmotionStampViewModel extends GetxController {
     required this.deleteDiaryUseCase,
   });
 
+  @override
+  void onInit() {
+    super.onInit();
+
+    getMonthStartEndData();
+    getEmotionStampList();
+  }
+
   var focusedCalendarDate = DateTime.now().obs;
   var selectedCalendarDate = DateTime.now().obs;
   final nowDate = DateTime.now().obs;
@@ -96,14 +104,13 @@ class EmotionStampViewModel extends GetxController {
     result.when(
       success: (result) {
         parsingListDate(result);
-        _updateIsLoading(false);
       },
       error: (message) {
-        _updateIsLoading(false);
-
         Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
       },
     );
+
+    _updateIsLoading(false);
   }
 
   parsingListDate(List<DiaryData> result) async {
@@ -140,13 +147,5 @@ class EmotionStampViewModel extends GetxController {
       focusedCalendarDate.value.month + 1,
       0,
     );
-  }
-
-  @override
-  void onInit() {
-    super.onInit();
-
-    getMonthStartEndData();
-    getEmotionStampList();
   }
 }

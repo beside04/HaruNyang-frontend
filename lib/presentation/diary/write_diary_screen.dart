@@ -8,6 +8,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
@@ -104,11 +105,16 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                     Get.to(
                                       () => DiaryDetailScreen(
                                         date: date,
-                                        emoticon: emotion,
-                                        diaryContent: controller
-                                            .nicknameEditingController.text,
-                                        emoticonIndex: emoticonIndex,
-                                        weather: weather.name,
+                                        isStamp: false,
+                                        diaryData: DiaryData(
+                                          emotion: emotion,
+                                          diaryContent: controller
+                                              .nicknameEditingController.text,
+                                          emoticonIndex: emoticonIndex,
+                                          weather: weather.name,
+                                          images: [],
+                                          wiseSayings: [],
+                                        ),
                                         imageFile: controller.croppedFile.value,
                                       ),
                                     );
