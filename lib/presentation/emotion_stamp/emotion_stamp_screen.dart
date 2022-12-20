@@ -8,6 +8,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -55,6 +56,8 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                 showTitleActions: true,
                 onConfirm: (date) {
                   controller.focusedCalendarDate.value = date;
+                  controller.getMonthStartEndData();
+                  controller.getEmotionStampList();
                 },
                 locale: LocaleType.ko,
               );
@@ -105,82 +108,82 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                   },
                   child: controller.isCalendar.value
                       ? Obx(
-                          () => TableCalendar<TempEvent>(
-                            onPageChanged: (day) {
-                              controller.focusedCalendarDate.value = day;
-                            },
-                            rowHeight: 70,
-                            focusedDay: controller.focusedCalendarDate.value,
-                            firstDay: DateTime(1900, 1),
-                            lastDay: DateTime(2199, 12),
-                            calendarFormat: CalendarFormat.month,
-                            weekendDays: const [DateTime.sunday, 6],
-                            startingDayOfWeek: StartingDayOfWeek.monday,
-                            locale: 'ko-KR',
-                            daysOfWeekHeight: 30,
-                            headerVisible: false,
-                            eventLoader: (DateTime day) {
-                              return controller.tempEventSource[day] ?? [];
-                            },
-                            calendarStyle: const CalendarStyle(
-                              cellPadding: EdgeInsets.only(top: 5),
-                              cellAlignment: Alignment.bottomCenter,
-                              isTodayHighlighted: true,
-                              outsideDaysVisible: false,
-                            ),
-                            calendarBuilders: CalendarBuilders(
-                              markerBuilder: (context, day, events) {
-                                return InkWell(
-                                  onTap: () {
-                                    controller.selectedCalendarDate.value = day;
-                                    controller.focusedCalendarDate.value = day;
+                          () {
+                            if (controller.isLoading.value) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            } else {
+                              return TableCalendar<DiaryData>(
+                                onPageChanged: (day) {
+                                  controller.focusedCalendarDate.value = day;
+                                  controller.getMonthStartEndData();
+                                  controller.getEmotionStampList();
+                                },
+                                rowHeight: 70,
+                                focusedDay:
+                                    controller.focusedCalendarDate.value,
+                                firstDay: DateTime(1900, 1),
+                                lastDay: DateTime(2199, 12),
+                                calendarFormat: CalendarFormat.month,
+                                weekendDays: const [DateTime.sunday, 6],
+                                startingDayOfWeek: StartingDayOfWeek.monday,
+                                locale: 'ko-KR',
+                                daysOfWeekHeight: 30,
+                                headerVisible: false,
+                                eventLoader: (DateTime day) {
+                                  return controller
+                                          .diaryCalendarDataList[day] ??
+                                      [];
+                                },
+                                calendarStyle: const CalendarStyle(
+                                  cellPadding: EdgeInsets.only(top: 5),
+                                  cellAlignment: Alignment.bottomCenter,
+                                  isTodayHighlighted: true,
+                                  outsideDaysVisible: false,
+                                ),
+                                calendarBuilders: CalendarBuilders(
+                                  markerBuilder: (context, day, events) {
+                                    return InkWell(
+                                      onTap: () {
+                                        controller.selectedCalendarDate.value =
+                                            day;
+                                        controller.focusedCalendarDate.value =
+                                            day;
 
-                                    events.isEmpty
-                                        ? Get.to(() => EmptyDiaryScreen(
-                                              date: day,
-                                            ))
-                                        : Get.to(
-                                            () => DiaryDetailScreen(
-                                              date: day,
-                                              emoticon: EmoticonData(
-                                                id: 3,
-                                                emoticon:
-                                                    'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media',
-                                                value: '기쁨',
-                                                desc: '기쁨',
-                                              ),
-                                              diaryContent: '',
-                                              emoticonIndex: 3,
-                                              weather: '',
-                                            ),
-                                          );
-                                  },
-                                  child: Center(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(
-                                        top: 10,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          events.isEmpty
-                                              ? Container(
-                                                  padding: EdgeInsets.all(14.w),
-                                                  decoration: BoxDecoration(
-                                                    border:
-                                                        controller.isToday(day)
-                                                            ? Border.all(
-                                                                width: 1,
-                                                                color:
-                                                                    kPrimaryColor,
-                                                              )
-                                                            : null,
-                                                    shape: BoxShape.circle,
-                                                    color: kGrayColor100,
+                                        events.isEmpty
+                                            ? Get.to(() => EmptyDiaryScreen(
+                                                  date: day,
+                                                ))
+                                            : Get.to(
+                                                () => DiaryDetailScreen(
+                                                  date: day,
+                                                  emoticon: EmoticonData(
+                                                    id: events[0].emotion.id,
+                                                    emoticon: events[0]
+                                                        .emotion
+                                                        .emoticon,
+                                                    value:
+                                                        events[0].emotion.value,
+                                                    desc:
+                                                        events[0].emotion.desc,
                                                   ),
-                                                )
-                                              : Stack(
-                                                  children: [
-                                                    Container(
+                                                  diaryContent:
+                                                      events[0].diaryContent,
+                                                  emoticonIndex:
+                                                      events[0].emoticonIndex,
+                                                  weather: events[0].weather,
+                                                ),
+                                              );
+                                      },
+                                      child: Center(
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                            top: 10,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              events.isEmpty
+                                                  ? Container(
                                                       padding:
                                                           EdgeInsets.all(14.w),
                                                       decoration: BoxDecoration(
@@ -195,66 +198,95 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                                         shape: BoxShape.circle,
                                                         color: kGrayColor100,
                                                       ),
-                                                    ),
-                                                    Positioned.fill(
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child:
-                                                            SvgPicture.network(
-                                                          events[0].icon,
-                                                          width: 20.w,
-                                                          height: 20.h,
+                                                    )
+                                                  : Stack(
+                                                      children: [
+                                                        Container(
+                                                          padding:
+                                                              EdgeInsets.all(
+                                                                  14.w),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            border: controller
+                                                                    .isToday(
+                                                                        day)
+                                                                ? Border.all(
+                                                                    width: 1,
+                                                                    color:
+                                                                        kPrimaryColor,
+                                                                  )
+                                                                : null,
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color:
+                                                                kGrayColor100,
+                                                          ),
                                                         ),
-                                                      ),
+                                                        Positioned.fill(
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: SvgPicture
+                                                                .network(
+                                                              events[0]
+                                                                  .emotion
+                                                                  .emoticon,
+                                                              width: 20.w,
+                                                              height: 20.h,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                        ],
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                );
-                              },
-                              prioritizedBuilder: (context, day, events) {
-                                return controller.isDateClicked(day)
-                                    ? Padding(
-                                        padding: EdgeInsets.only(
-                                          bottom: 5.0.h,
-                                        ),
-                                        child: Container(
-                                          width: 20.w,
-                                          height: 20.h,
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: kPrimaryColor,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              DateFormat('dd').format(day),
-                                              style: kCaption1WhiteStyle,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    : controller.isToday(day)
+                                    );
+                                  },
+                                  prioritizedBuilder: (context, day, events) {
+                                    return controller.isDateClicked(day)
                                         ? Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              DateFormat('dd').format(day),
-                                              style: kCaption1PrimaryStyle,
+                                            padding: EdgeInsets.only(
+                                              bottom: 5.0.h,
+                                            ),
+                                            child: Container(
+                                              width: 20.w,
+                                              height: 20.h,
+                                              decoration: const BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: kPrimaryColor,
+                                              ),
+                                              child: Center(
+                                                child: Text(
+                                                  DateFormat('dd').format(day),
+                                                  style: kCaption1WhiteStyle,
+                                                ),
+                                              ),
                                             ),
                                           )
-                                        : Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                              DateFormat('dd').format(day),
-                                              style: kCaption1BlackStyle,
-                                            ),
-                                          );
-                              },
-                            ),
-                          ),
+                                        : controller.isToday(day)
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  DateFormat('dd').format(day),
+                                                  style: kCaption1PrimaryStyle,
+                                                ),
+                                              )
+                                            : Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(
+                                                  DateFormat('dd').format(day),
+                                                  style: kCaption1BlackStyle,
+                                                ),
+                                              );
+                                  },
+                                ),
+                              );
+                            }
+                          },
                         )
                       : PageView.builder(
                           controller: PageController(
@@ -271,17 +303,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                       .add(months: 1)
                                       .dateTime;
 
-                              controller.focusedStartDate.value = DateTime(
-                                controller.focusedCalendarDate.value.year,
-                                controller.focusedCalendarDate.value.month,
-                                1,
-                              );
-
-                              controller.focusedEndDate.value = DateTime(
-                                controller.focusedCalendarDate.value.year,
-                                controller.focusedCalendarDate.value.month + 1,
-                                0,
-                              );
+                              controller.getMonthStartEndData();
                               controller.getEmotionStampList();
                             } else {
                               controller.focusedCalendarDate.value =
@@ -289,18 +311,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                       .subtract(months: 1)
                                       .dateTime;
 
-                              controller.focusedStartDate.value = DateTime(
-                                controller.focusedCalendarDate.value.year,
-                                controller.focusedCalendarDate.value.month,
-                                1,
-                              );
-
-                              controller.focusedEndDate.value = DateTime(
-                                controller.focusedCalendarDate.value.year,
-                                controller.focusedCalendarDate.value.month + 1,
-                                0,
-                              );
-
+                              controller.getMonthStartEndData();
                               controller.getEmotionStampList();
                             }
 
@@ -419,7 +430,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                                                     DateFormat.MMMEd(
                                                                             "ko_KR")
                                                                         .format(
-                                                                            DateTime.parse(itemList.createdAt)),
+                                                                            DateTime.parse(itemList.createTime)),
                                                                     style:
                                                                         kSubtitle2BlackStyle,
                                                                   ),
@@ -502,7 +513,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                                                     ),
                                                               Text(
                                                                 itemList
-                                                                    .content,
+                                                                    .diaryContent,
                                                                 style:
                                                                     kBody1BlackStyle,
                                                               )

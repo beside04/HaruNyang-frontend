@@ -3,16 +3,6 @@ import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diar
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class TempEvent {
-  final String eventTitle;
-  final String icon;
-
-  TempEvent({
-    required this.eventTitle,
-    required this.icon,
-  });
-}
-
 class EmotionStampViewModel extends GetxController {
   final GetEmotionStampUseCase getEmotionStampUseCase;
 
@@ -26,10 +16,13 @@ class EmotionStampViewModel extends GetxController {
   final isCalendar = true.obs;
   final currentPageCount = 250.obs;
   final itemPageCount = 500.obs;
-
   final controllerTempCount = 0.obs;
 
-  // final pageController
+  final RxBool isLoading = false.obs;
+  Map<DateTime, List<DiaryData>> diaryCalendarDataList = {};
+  Map<String, Object> dataResult = {"key_ordered": [], "values": {}}.obs;
+  var focusedStartDate = DateTime.now().obs;
+  var focusedEndDate = DateTime.now().obs;
 
   bool isToday(day) {
     return day.day == nowDate.value.day &&
@@ -82,21 +75,13 @@ class EmotionStampViewModel extends GetxController {
     return (to.difference(from).inHours / 24).round();
   }
 
-  List<DiaryData> emotionStampList = [];
-
-  var data;
-  // ignore: prefer_typing_uninitialized_variables
-  var addResultList;
-  final RxBool isLoading = false.obs;
-  Map<String, Object> dataResult = {"key_ordered": [], "values": {}}.obs;
-  var focusedStartDate = DateTime.now().obs;
-  var focusedEndDate = DateTime.now().obs;
-
   void _updateIsLoading(bool currentStatus) {
     isLoading.value = currentStatus;
   }
 
   Future<void> getEmotionStampList() async {
+    _updateIsLoading(true);
+
     final result = await getEmotionStampUseCase(
       DateFormat('yyyy-MM-dd').format(focusedStartDate.value),
       DateFormat('yyyy-MM-dd').format(focusedEndDate.value),
@@ -104,23 +89,29 @@ class EmotionStampViewModel extends GetxController {
 
     result.when(
       success: (result) {
-        getListDate(result);
+        parsingListDate(result);
+        _updateIsLoading(false);
       },
       error: (message) {
+        _updateIsLoading(false);
+
         Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
       },
     );
   }
 
-  getListDate(List<DiaryData> result) async {
-    _updateIsLoading(true);
-
+  parsingListDate(List<DiaryData> result) async {
     dataResult = {"key_ordered": [], "values": {}}.obs;
+    diaryCalendarDataList = {};
 
-    addResultList = result.map((data) {
-      var dateTime = (data.createTime.isNotEmpty)
-          ? weekOfMonthForSimple(DateTime.parse(data.createTime))
-          : '';
+    for (var data in result) {
+      diaryCalendarDataList[DateTime(
+        DateTime.parse(data.createTime).year,
+        DateTime.parse(data.createTime).month,
+        DateTime.parse(data.createTime).day,
+      ).toUtc().add(const Duration(hours: 9))] = [data];
+
+      var dateTime = weekOfMonthForSimple(DateTime.parse(data.createTime));
 
       if (!dataResult["key_ordered"].toString().contains(dateTime)) {
         (dataResult["key_ordered"] as List).add(dateTime);
@@ -128,62 +119,28 @@ class EmotionStampViewModel extends GetxController {
       }
 
       (dataResult["values"] as Map)[dateTime].add(data);
-    });
+    }
+  }
 
-    print(addResultList);
+  getMonthStartEndData() {
+    focusedStartDate.value = DateTime(
+      focusedCalendarDate.value.year,
+      focusedCalendarDate.value.month,
+      1,
+    );
 
-    _updateIsLoading(false);
+    focusedEndDate.value = DateTime(
+      focusedCalendarDate.value.year,
+      focusedCalendarDate.value.month + 1,
+      0,
+    );
   }
 
   @override
   void onInit() {
     super.onInit();
+
+    getMonthStartEndData();
     getEmotionStampList();
   }
-
-  Map<DateTime, List<TempEvent>> tempEventSource = {
-    DateTime.utc(2022, 11, 4): [
-      TempEvent(
-        eventTitle:
-            'rkskekakd sjn kasnkdasnkdnajkndasjkndasjkndsjk jkasdnkjasnjkadn',
-        icon:
-            'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/suprise.svg?alt=media',
-      )
-    ],
-    DateTime.utc(2022, 11, 20): [
-      TempEvent(
-        eventTitle: 'test',
-        icon:
-            'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/suprise.svg?alt=media',
-      )
-    ],
-    DateTime.utc(2022, 11, 21): [
-      TempEvent(
-        eventTitle: 'test1',
-        icon:
-            'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/suprise.svg?alt=media',
-      )
-    ],
-    DateTime.utc(2022, 11, 22): [
-      TempEvent(
-        eventTitle: 'test2',
-        icon:
-            'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/suprise.svg?alt=media',
-      )
-    ],
-    DateTime.utc(2022, 11, 26): [
-      TempEvent(
-        eventTitle: 'test3',
-        icon:
-            'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/suprise.svg?alt=media',
-      )
-    ],
-    DateTime.utc(2022, 11, 28): [
-      TempEvent(
-        eventTitle: 'test4',
-        icon:
-            'https://firebasestorage.googleapis.com/v0/b/dark-room-84532.appspot.com/o/happy.svg?alt=media',
-      )
-    ],
-  };
 }
