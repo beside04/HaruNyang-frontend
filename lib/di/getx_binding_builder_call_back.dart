@@ -107,6 +107,7 @@ void getLoginBinding() {
   ));
   Get.put(MainViewModel(
     tokenUseCase: tokenUseCase,
+    onBoardingUseCase: onBoardingUseCase,
   ));
   Get.put(NotificationController());
 }
@@ -179,9 +180,7 @@ void getEmotionStampBinding() {
 
 void getHomeViewModelBinding() {
   Get.put(
-    HomeViewModel(
-      onBoardingUseCase: onBoardingUseCase,
-    ),
+    HomeViewModel(),
   );
 }
 

@@ -27,6 +27,7 @@ void main() async {
   KakaoSdk.init(nativeAppKey: appkey);
   getLoginBinding();
   await Get.find<MainViewModel>().getAccessToken();
+  await Get.find<MainViewModel>().getMyInformation();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {

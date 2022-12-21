@@ -6,6 +6,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
@@ -17,118 +18,108 @@ class ProfileScreen extends GetView<ProfileViewModel> {
   @override
   Widget build(BuildContext context) {
     getProfileBinding();
-    controller.getMyInformation();
-    final state = controller.state;
 
     return Scaffold(
       backgroundColor: const Color(0xffedebe8),
       body: SafeArea(
         child: ListView(
           children: [
-            GetBuilder<ProfileViewModel>(builder: (controller) {
-              return Container(
-                color: kWhiteColor,
-                child: Padding(
-                  padding: kPrimarySidePadding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20.h,
+            Container(
+              color: kWhiteColor,
+              child: Padding(
+                padding: kPrimarySidePadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Container(
+                      width: 60.w,
+                      height: 60.h,
+                      decoration: BoxDecoration(
+                        color: kPrimary2Color,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          width: 0.5,
+                          color: kGrayColor150,
+                        ),
                       ),
-                      Container(
-                        width: 60.w,
-                        height: 60.h,
-                        decoration: BoxDecoration(
-                          color: kPrimary2Color,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            width: 0.5,
-                            color: kGrayColor150,
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0.w),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            "lib/config/assets/images/character/onboarding1.svg",
+                            width: 40.w,
+                            height: 40.h,
                           ),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0.w),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              "lib/config/assets/images/character/onboarding1.svg",
-                              width: 40.w,
-                              height: 40.h,
-                            ),
-                          ),
-                        ),
                       ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      Obx(
-                        () => Text(
-                          '${state.value.nickname}님 반가워요!',
-                          style: kHeader2BlackStyle,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Obx(
-                        () => Row(
-                          children: [
-                            state.value.loginType == "KAKAO"
-                                ? Container(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xffffe818),
-                                      shape: BoxShape.circle,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Text(
+                      '${Get.find<MainViewModel>().nickname}님 반가워요!',
+                      style: kHeader2BlackStyle,
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Row(
+                      children: [
+                        Get.find<MainViewModel>().loginType == "KAKAO"
+                            ? Container(
+                                width: 20.w,
+                                height: 20.h,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xffffe818),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Image.asset(
+                                        "lib/config/assets/images/login/kakao_logo.png",
+                                        width: 10.w,
+                                        height: 10.h,
+                                      ),
                                     ),
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: Image.asset(
-                                            "lib/config/assets/images/login/kakao_logo.png",
-                                            width: 10.w,
-                                            height: 10.h,
-                                          ),
-                                        ),
-                                      ],
+                                  ],
+                                ),
+                              )
+                            : Container(
+                                width: 20.w,
+                                height: 20.h,
+                                decoration: const BoxDecoration(
+                                  color: kBlackColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Center(
+                                      child: Image.asset(
+                                        "lib/config/assets/images/login/apple_logo.png",
+                                        width: 20.w,
+                                        height: 20.h,
+                                      ),
                                     ),
-                                  )
-                                : Container(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    decoration: const BoxDecoration(
-                                      color: kBlackColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: Image.asset(
-                                            "lib/config/assets/images/login/apple_logo.png",
-                                            width: 10.w,
-                                            height: 10.h,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                            Obx(
-                              () => Text(
-                                " ${state.value.email}",
-                                style: kBody2Gray400Style,
+                                  ],
+                                ),
                               ),
-                            )
-                          ],
+                        Text(
+                          " ${Get.find<MainViewModel>().email}",
+                          style: kBody2Gray400Style,
                         ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                  ],
                 ),
-              );
-            }),
+              ),
+            ),
             Container(
               width: MediaQuery.of(context).size.width,
               height: 1.h,
@@ -143,7 +134,8 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               onPressed: () {
                 Get.to(
                   () => ProfileSettingScreen(
-                    isKakaoLogin: state.value.loginType == 'KAKAO',
+                    isKakaoLogin:
+                        Get.find<MainViewModel>().loginType == 'KAKAO',
                   ),
                   binding: BindingsBuilder(
                     getProfileSettingViewModelBinding,

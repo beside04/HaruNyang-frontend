@@ -10,10 +10,6 @@ class ProfileViewModel extends GetxController {
     required this.onBoardingUseCase,
   });
 
-  final Rx<ProfileState> _state = ProfileState().obs;
-
-  Rx<ProfileState> get state => _state;
-
   final pushMessageValue = true.obs;
   final lightModeValue = true.obs;
 
@@ -23,25 +19,5 @@ class ProfileViewModel extends GetxController {
 
   toggleLightModeValue() {
     lightModeValue.value = !lightModeValue.value;
-  }
-
-  Future<void> getMyInformation() async {
-    final getMyInformation = await onBoardingUseCase.getMyInformation();
-
-    getMyInformation.when(
-      success: (successData) async {
-        _state.value = _state.value.copyWith(
-          nickname: successData.nickname,
-          job: successData.job,
-          age: successData.age,
-          loginType: successData.loginType,
-          email: successData.email,
-        );
-        return Result.success(successData);
-      },
-      error: (message) {
-        return Result.error(message);
-      },
-    );
   }
 }
