@@ -1,6 +1,4 @@
-import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
-import 'package:frontend/presentation/profile/profile_state.dart';
 import 'package:get/get.dart';
 
 class ProfileViewModel extends GetxController {

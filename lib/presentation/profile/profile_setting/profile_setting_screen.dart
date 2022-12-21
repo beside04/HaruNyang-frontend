@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
@@ -14,13 +12,11 @@ import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
   final bool isKakaoLogin;
@@ -128,8 +124,6 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       var key = _fbKey.currentState!;
                                       if (key.saveAndValidate()) {
                                         FocusScope.of(context).unfocus();
-
-                                        print(controller.nicknameValue.value);
 
                                         await controller.putMyInformation(
                                           nickname:
@@ -246,8 +240,6 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       var key = _fbKey.currentState!;
                                       if (key.saveAndValidate()) {
                                         FocusScope.of(context).unfocus();
-
-                                        print(controller.ageValue.value);
 
                                         await controller.putMyInformation(
                                           nickname: Get.find<MainViewModel>()

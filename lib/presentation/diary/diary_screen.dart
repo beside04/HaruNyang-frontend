@@ -5,7 +5,6 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
-import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
