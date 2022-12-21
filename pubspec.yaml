@@ -65,6 +65,7 @@ dependencies:
   animations: ^2.0.7
   jiffy: ^5.0.0
   http_parser: ^4.0.2
+  flutter_switch: ^0.3.2
 
 dev_dependencies:
   flutter_test:
@@ -97,6 +98,7 @@ flutter:
     - lib/config/assets/images/diary/write_diary/
     - lib/config/assets/images/home/dark_mode/
     - lib/config/assets/images/home/light_mode/
+    - lib/config/assets/images/profile/
     - .env
   #   - images/a_dot_ham.jpeg
 

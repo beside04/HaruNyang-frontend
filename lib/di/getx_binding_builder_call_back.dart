@@ -197,6 +197,7 @@ void getProfileSettingViewModelBinding() {
   Get.put(
     ProfileSettingViewModel(
       kakaoLoginUseCase: kakaoLoginUseCase,
+      appleLoginUseCase: appleLoginUseCase,
     ),
   );
 }

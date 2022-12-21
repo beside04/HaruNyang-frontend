@@ -14,6 +14,17 @@ class ProfileViewModel extends GetxController {
 
   Rx<ProfileState> get state => _state;
 
+  final pushMessageValue = true.obs;
+  final lightModeValue = true.obs;
+
+  togglePushMessageValue() {
+    pushMessageValue.value = !pushMessageValue.value;
+  }
+
+  toggleLightModeValue() {
+    lightModeValue.value = !lightModeValue.value;
+  }
+
   Future<void> getMyInformation() async {
     final getMyInformation = await onBoardingUseCase.getMyInformation();
 
