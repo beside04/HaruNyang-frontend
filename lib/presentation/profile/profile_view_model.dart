@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:get/get.dart';
 
@@ -17,5 +18,8 @@ class ProfileViewModel extends GetxController {
 
   toggleLightModeValue() {
     lightModeValue.value = !lightModeValue.value;
+    lightModeValue.value
+        ? Get.changeTheme(ThemeData.light())
+        : Get.changeTheme(ThemeData.dark());
   }
 }

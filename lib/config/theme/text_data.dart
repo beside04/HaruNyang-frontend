@@ -30,6 +30,14 @@ TextStyle kHeader2BlackStyle = TextStyle(
   height: 1.3333.sp,
 );
 
+TextStyle kHeader2WhiteStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 24.sp,
+  color: kWhiteColor,
+  fontWeight: FontWeight.w700,
+  height: 1.3333.sp,
+);
+
 //Header3 Style
 TextStyle kHeader3BlackStyle = TextStyle(
   fontFamily: pretendard,

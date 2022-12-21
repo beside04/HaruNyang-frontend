@@ -9,16 +9,18 @@ class ProfileButton extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.onPressed,
+    this.isLightMode = true,
   });
 
   final Widget icon;
   final String title;
   final VoidCallback? onPressed;
+  final bool isLightMode;
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: kWhiteColor,
+      color: isLightMode ? kWhiteColor : kBackGroundDarkColor,
       child: InkWell(
         onTap: onPressed,
         child: Container(
@@ -27,7 +29,14 @@ class ProfileButton extends StatelessWidget {
             padding: kPrimaryPadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text(title, style: kSubtitle2BlackStyle), icon],
+              children: [
+                Text(
+                  title,
+                  style:
+                      isLightMode ? kSubtitle2BlackStyle : kSubtitle2WhiteStyle,
+                ),
+                icon
+              ],
             ),
           ),
         ),
