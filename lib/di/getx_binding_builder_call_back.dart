@@ -30,7 +30,7 @@ import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dar
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
@@ -159,7 +159,7 @@ void getOnBoardingJobBinding() {
 }
 
 void getOnBoardingBirthBinding() {
-  Get.put(OnBoardingBirthViewModel());
+  Get.put(OnBoardingAgeViewModel());
 }
 
 void getOnBoardingNickNameBinding() {
@@ -197,6 +197,7 @@ void getProfileSettingViewModelBinding() {
     ProfileSettingViewModel(
       kakaoLoginUseCase: kakaoLoginUseCase,
       appleLoginUseCase: appleLoginUseCase,
+      onBoardingUseCase: onBoardingUseCase,
     ),
   );
 }

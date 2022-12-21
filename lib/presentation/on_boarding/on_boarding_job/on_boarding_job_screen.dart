@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
@@ -66,7 +67,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                           GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: controller.jobList.length,
+                            itemCount: jobList.length,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 3,
@@ -74,8 +75,8 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                             ),
                             itemBuilder: (BuildContext context, int i) {
                               return Obx(() => JobButton(
-                                    job: controller.jobList[i].name,
-                                    icon: controller.jobList[i].icon,
+                                    job: jobList[i].name,
+                                    icon: jobList[i].icon,
                                     selected: controller.jobStatus.value ==
                                         Job.values[i],
                                     onPressed: () {
@@ -91,25 +92,31 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                   ],
                 ),
               ),
-              BottomButton(
-                title: '끝',
-                onTap: () async {
-                  var key = _fbKey.currentState!;
-                  if (key.saveAndValidate()) {
-                    FocusScope.of(context).unfocus();
+              Obx(
+                () => BottomButton(
+                  title: '끝',
+                  onTap: controller.jobStatus.value == null
+                      ? null
+                      : () async {
+                          var key = _fbKey.currentState!;
+                          if (key.saveAndValidate()) {
+                            FocusScope.of(context).unfocus();
 
-                    controller.putMyInformation(
-                      nickname: nickname,
-                      job: controller.jobStatus.value.name,
-                      age: birth,
-                    );
+                            await controller.putMyInformation(
+                              nickname: nickname,
+                              job: controller.jobStatus.value!.name,
+                              age: birth,
+                            );
 
-                    Get.to(
-                      () => const OnBoardingFinishScreen(),
-                      transition: Transition.cupertino,
-                    );
-                  }
-                },
+                            await Get.find<MainViewModel>().getMyInformation();
+
+                            Get.to(
+                              () => const OnBoardingFinishScreen(),
+                              transition: Transition.cupertino,
+                            );
+                          }
+                        },
+                ),
               ),
             ],
           ),

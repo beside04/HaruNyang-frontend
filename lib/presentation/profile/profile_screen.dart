@@ -59,59 +59,66 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     SizedBox(
                       height: 12.h,
                     ),
-                    Text(
-                      '${Get.find<MainViewModel>().nickname}님 반가워요!',
-                      style: kHeader2BlackStyle,
+                    Obx(
+                      () => Text(
+                        '${Get.find<MainViewModel>().state.value.nickname}님 반가워요!',
+                        style: kHeader2BlackStyle,
+                      ),
                     ),
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
-                      children: [
-                        Get.find<MainViewModel>().loginType == "KAKAO"
-                            ? Container(
-                                width: 20.w,
-                                height: 20.h,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffffe818),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                      child: Image.asset(
-                                        "lib/config/assets/images/login/kakao_logo.png",
-                                        width: 10.w,
-                                        height: 10.h,
+                    Obx(
+                      () => Row(
+                        children: [
+                          Get.find<MainViewModel>().state.value.loginType ==
+                                  "KAKAO"
+                              ? Container(
+                                  width: 20.w,
+                                  height: 20.h,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffffe818),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: Image.asset(
+                                          "lib/config/assets/images/login/kakao_logo.png",
+                                          width: 10.w,
+                                          height: 10.h,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                width: 20.w,
-                                height: 20.h,
-                                decoration: const BoxDecoration(
-                                  color: kBlackColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                      child: Image.asset(
-                                        "lib/config/assets/images/login/apple_logo.png",
-                                        width: 20.w,
-                                        height: 20.h,
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  width: 20.w,
+                                  height: 20.h,
+                                  decoration: const BoxDecoration(
+                                    color: kBlackColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: Image.asset(
+                                          "lib/config/assets/images/login/apple_logo.png",
+                                          width: 20.w,
+                                          height: 20.h,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                        Text(
-                          " ${Get.find<MainViewModel>().email}",
-                          style: kBody2Gray400Style,
-                        ),
-                      ],
+                          Obx(
+                            () => Text(
+                              " ${Get.find<MainViewModel>().state.value.email}",
+                              style: kBody2Gray400Style,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     SizedBox(
                       height: 10.h,
@@ -135,7 +142,8 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 Get.to(
                   () => ProfileSettingScreen(
                     isKakaoLogin:
-                        Get.find<MainViewModel>().loginType == 'KAKAO',
+                        Get.find<MainViewModel>().state.value.loginType ==
+                            'KAKAO',
                   ),
                   binding: BindingsBuilder(
                     getProfileSettingViewModelBinding,

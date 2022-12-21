@@ -4,6 +4,8 @@ import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_ca
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:get/get.dart';
 
+import 'presentation/profile/profile_state.dart';
+
 class MainViewModel extends GetxController {
   final TokenUseCase tokenUseCase;
   final OnBoardingUseCase onBoardingUseCase;
@@ -13,32 +15,33 @@ class MainViewModel extends GetxController {
     required this.onBoardingUseCase,
   });
 
-  String? token;
-  String? job;
-  String? age;
-  String? nickname;
-  String? loginType;
-  String? email;
+  final Rx<ProfileState> _state = ProfileState().obs;
 
-  Future<void> getAccessToken() async {
-    token = await tokenUseCase.getAccessToken();
-  }
+  Rx<ProfileState> get state => _state;
+
+  String? token;
 
   Future<Result<MyInformation>> getMyInformation() async {
     final getMyInformation = await onBoardingUseCase.getMyInformation();
 
     return getMyInformation.when(
       success: (successData) async {
-        job = successData.job;
-        age = successData.age;
-        nickname = successData.nickname;
-        loginType = successData.loginType;
-        email = successData.email;
+        _state.value = state.value.copyWith(
+          job: successData.job,
+          age: successData.age,
+          nickname: successData.nickname,
+          loginType: successData.loginType,
+          email: successData.email,
+        );
         return Result.success(successData);
       },
       error: (message) {
         return Result.error(message);
       },
     );
+  }
+
+  Future<void> getAccessToken() async {
+    token = await tokenUseCase.getAccessToken();
   }
 }

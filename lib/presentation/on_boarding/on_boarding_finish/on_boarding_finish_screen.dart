@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
@@ -74,7 +75,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
               ),
               BottomButton(
                 title: '시작하기',
-                onTap: () {
+                onTap: () async {
                   Get.offAll(
                     () => const HomeScreen(),
                     transition: Transition.cupertino,

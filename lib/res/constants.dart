@@ -1,4 +1,5 @@
 import 'package:frontend/domain/model/diary/weather_data.dart';
+import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 enum Job {
   student,
@@ -70,5 +71,38 @@ List<WeatherData> weatherDataList = [
     name: "번개",
     icon: 'lib/config/assets/images/diary/weather/thunder.svg',
     value: 'thunder',
+  ),
+];
+
+List<JobData> jobList = [
+  JobData(
+    name: "학생",
+    icon: '🧑‍🎓',
+    value: 'student',
+  ),
+  JobData(
+    name: "직장인",
+    icon: '🧑‍💼',
+    value: 'officeWorkers',
+  ),
+  JobData(
+    name: "취준생",
+    icon: '🧑‍💻',
+    value: 'jobSeeker',
+  ),
+  JobData(
+    name: "프리랜서",
+    icon: '🧙',
+    value: 'freelancer',
+  ),
+  JobData(
+    name: "휴식중",
+    icon: '🏝',
+    value: 'rest',
+  ),
+  JobData(
+    name: "기타",
+    icon: '🎸',
+    value: 'etc',
   ),
 ];
