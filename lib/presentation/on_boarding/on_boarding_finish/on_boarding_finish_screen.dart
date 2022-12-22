@@ -74,7 +74,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
               ),
               BottomButton(
                 title: '시작하기',
-                onTap: () {
+                onTap: () async {
                   Get.offAll(
                     () => const HomeScreen(),
                     transition: Transition.cupertino,

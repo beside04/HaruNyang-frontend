@@ -6,18 +6,18 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_birth/on_boarding_birth_viewmodel.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 
-class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
+class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
   final String nickname;
 
-  OnBoardingBirthScreen({
+  OnBoardingAgeScreen({
     Key? key,
     required this.nickname,
   }) : super(key: key);
@@ -63,10 +63,10 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
                           SizedBox(
                             height: 20.h,
                           ),
-                          FormBuilderTextField(
-                            controller: controller.birthEditingController,
-                            style: kSubtitle4BlackStyle,
-                            onTap: () async {
+                          AgeTextField(
+                            textEditingController:
+                                controller.ageEditingController,
+                            onTap: () {
                               DatePicker.showDatePicker(
                                 context,
                                 showTitleActions: true,
@@ -79,46 +79,23 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
                                 locale: LocaleType.ko,
                               );
                             },
-                            readOnly: true,
-                            name: 'birth',
-                            keyboardType: TextInputType.text,
-                            decoration: InputDecoration(
-                              helperText: "",
-                              counterText: "",
-                              hintText: 'YYYY/MM/DD 입력',
-                              hintStyle: kSubtitle3Gray300Style,
-                              contentPadding: const EdgeInsets.only(
-                                top: 14,
-                                right: 14,
-                                bottom: 14,
-                                left: 16,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              suffixIcon: Obx(
-                                () => controller.birthValue.value.isEmpty
-                                    ? Visibility(
-                                        visible: false,
-                                        child: Container(),
-                                      )
-                                    : GestureDetector(
-                                        child: const Icon(
-                                          Icons.cancel,
-                                          color: kGrayColor200,
-                                          size: 20,
-                                        ),
-                                        onTap: () => controller
-                                            .birthEditingController
-                                            .clear(),
+                            suffixIcon: Obx(
+                              () => controller.ageValue.value.isEmpty
+                                  ? Visibility(
+                                      visible: false,
+                                      child: Container(),
+                                    )
+                                  : GestureDetector(
+                                      child: const Icon(
+                                        Icons.cancel,
+                                        color: kGrayColor200,
+                                        size: 20,
                                       ),
-                              ),
+                                      onTap: () => controller
+                                          .ageEditingController
+                                          .clear(),
+                                    ),
                             ),
-                            validator: FormBuilderValidators.compose([
-                              FormBuilderValidators.required(
-                                errorText: '생년월일을 입력해주세요.',
-                              ),
-                            ]),
                           ),
                           SizedBox(
                             height: 178.h,
@@ -141,7 +118,7 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
               Obx(
                 () => BottomButton(
                   title: '다음',
-                  onTap: controller.birthValue.value.isEmpty
+                  onTap: controller.ageValue.value.isEmpty
                       ? null
                       : () {
                           var key = _fbKey.currentState!;
@@ -151,7 +128,7 @@ class OnBoardingBirthScreen extends GetView<OnBoardingBirthViewModel> {
                             Get.to(
                               () => OnBoardingJobScreen(
                                 nickname: nickname,
-                                birth: controller.birthValue.value,
+                                birth: controller.ageValue.value,
                               ),
                               transition: Transition.cupertino,
                             );

@@ -1,6 +1,5 @@
-import 'package:frontend/core/result.dart';
+import 'package:flutter/material.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
-import 'package:frontend/presentation/profile/profile_state.dart';
 import 'package:get/get.dart';
 
 class ProfileViewModel extends GetxController {
@@ -10,27 +9,17 @@ class ProfileViewModel extends GetxController {
     required this.onBoardingUseCase,
   });
 
-  final Rx<ProfileState> _state = ProfileState().obs;
+  final pushMessageValue = true.obs;
+  final lightModeValue = true.obs;
 
-  Rx<ProfileState> get state => _state;
+  togglePushMessageValue() {
+    pushMessageValue.value = !pushMessageValue.value;
+  }
 
-  Future<void> getMyInformation() async {
-    final getMyInformation = await onBoardingUseCase.getMyInformation();
-
-    getMyInformation.when(
-      success: (successData) async {
-        _state.value = _state.value.copyWith(
-          nickname: successData.nickname,
-          job: successData.job,
-          age: successData.age,
-          loginType: successData.loginType,
-          email: successData.email,
-        );
-        return Result.success(successData);
-      },
-      error: (message) {
-        return Result.error(message);
-      },
-    );
+  toggleLightModeValue() {
+    lightModeValue.value = !lightModeValue.value;
+    lightModeValue.value
+        ? Get.changeTheme(ThemeData.light())
+        : Get.changeTheme(ThemeData.dark());
   }
 }
