@@ -1,21 +1,26 @@
-import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
+import 'package:flutter/widgets.dart';
+import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/diary/diary_screen.dart';
+import 'package:frontend/presentation/emotion_stamp/emotion_stamp_screen.dart';
+import 'package:frontend/presentation/profile/profile_screen.dart';
 import 'package:get/get.dart';
 
 class HomeViewModel extends GetxController {
-  final OnBoardingUseCase onBoardingUseCase;
-
-  HomeViewModel({
-    required this.onBoardingUseCase,
-  }) {
-    fetchData();
+  @override
+  void onInit() {
+    super.onInit();
+    Get.find<MainViewModel>().getMyInformation();
   }
 
-  Future<void> fetchData() async {
-    //토큰 확인
-    await getMyInformation();
+  RxInt selectedIndex = 0.obs;
+
+  void onItemTapped(int index) {
+    selectedIndex.value = index;
   }
 
-  Future<void> getMyInformation() async {
-    await onBoardingUseCase.getMyInformation();
-  }
+  List<Widget> widgetList = const [
+    EmotionStampScreen(),
+    DiaryScreen(),
+    ProfileScreen(),
+  ];
 }

@@ -45,27 +45,37 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              '탈퇴전 확인하세요!',
-              style: kSubtitle1BlackStyle,
-            ),
             SizedBox(
-              height: 74.h,
+              height: 20.h,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Center(
                   child: SizedBox(
-                    width: 100.w,
-                    height: 100.h,
+                    width: 120.w,
+                    height: 120.h,
                     child: CircleAvatar(
-                      backgroundColor: kPrimaryColor,
+                      backgroundColor: kPrimary2Color,
                       child: SvgPicture.asset(
-                        "lib/config/assets/images/character/onboarding1.svg",
-                        width: 70,
-                        height: 70,
+                        "lib/config/assets/images/character/sad1.svg",
+                        width: 100.w,
+                        height: 100.h,
                       ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                InkWell(
+                  onTap: () {
+                    Get.to(const WithdrawDoneScreen());
+                  },
+                  child: Center(
+                    child: Text(
+                      '탈퇴 전 확인하세요!',
+                      style: kHeader2BlackStyle,
                     ),
                   ),
                 ),
@@ -74,33 +84,51 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                 ),
                 Container(
                   padding: kPrimaryPadding,
+                  width: double.infinity,
                   decoration: const BoxDecoration(
                     color: kSecondaryColor,
                   ),
                   child: Text(
-                    '가입 시 수집한 개인정보(이메일)를 포함하여 작성한 일기, 기분, 감정캘린더, 발급받은 감정리포트가 영구적으로 삭제되며, 다시는 복구할 수 없습니다.',
+                    '가입 시 수집한 개인정보(이메일)를 포함하여 작성한\n 일기, 기분, 감정캘린더, 발급받은 감정리포트가\n 영구적으로 삭제되며, 다시는 복구할 수 없습니다.',
                     style: kBody2BlackStyle,
                     textAlign: TextAlign.center,
                   ),
                 ),
-                Row(
-                  children: [
-                    Obx(
-                      () => Checkbox(
-                        activeColor: kPrimaryColor,
-                        value: controller.state.value.isAgreeWithdrawTerms,
-                        onChanged: (value) {
-                          if (value != null) {
-                            controller.changeWithdrawTerms(value);
-                          }
-                        },
+                SizedBox(
+                  height: 10.h,
+                ),
+                GestureDetector(
+                  onTap: () {
+                    controller.changeWithdrawTerms(
+                        !controller.state.value.isAgreeWithdrawTerms);
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Obx(
+                        () => SizedBox(
+                          width: 20.w,
+                          height: 20.h,
+                          child: Checkbox(
+                            activeColor: kPrimaryColor,
+                            value: controller.state.value.isAgreeWithdrawTerms,
+                            onChanged: (value) {
+                              if (value != null) {
+                                controller.changeWithdrawTerms(value);
+                              }
+                            },
+                          ),
+                        ),
                       ),
-                    ),
-                    Text(
-                      '안내사항을 확인하였으며 이에 동의합니다.',
-                      style: kBody1BlackStyle,
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.all(8.0.w),
+                        child: Text(
+                          '안내사항을 확인하였으며 이에 동의합니다.',
+                          style: kBody1BlackStyle,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
