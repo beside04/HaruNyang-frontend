@@ -11,6 +11,7 @@ import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
@@ -107,12 +108,12 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                 DialogButton(
                                   title: "예",
                                   onTap: () {
-                                    Get.offAll(
-                                      () => const HomeScreen(),
-                                      arguments: {
-                                        'date': date,
-                                        'isStamp': false,
-                                        'diaryData': diaryData != null
+                                    Get.offAll(() => const HomeScreen());
+                                    Get.to(
+                                      () => DiaryDetailScreen(
+                                        date: date,
+                                        isStamp: false,
+                                        diaryData: diaryData != null
                                             ? diaryData!.copyWith(
                                                 diaryContent: controller
                                                     .diaryEditingController
@@ -136,41 +137,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                 images: [],
                                                 wiseSayings: [],
                                               ),
-                                        'imageFile':
-                                            controller.croppedFile.value,
-                                      },
+                                        imageFile: controller.croppedFile.value,
+                                      ),
                                     );
-                                    // Get.to(
-                                    //   () => DiaryDetailScreen(
-                                    //     date: date,
-                                    //     isStamp: false,
-                                    //     diaryData: diaryData != null
-                                    //         ? diaryData!.copyWith(
-                                    //             diaryContent: controller
-                                    //                 .diaryEditingController
-                                    //                 .text,
-                                    //             images: controller.networkImage
-                                    //                         .value !=
-                                    //                     null
-                                    //                 ? [
-                                    //                     controller
-                                    //                         .networkImage.value!
-                                    //                   ]
-                                    //                 : [],
-                                    //           )
-                                    //         : DiaryData(
-                                    //             emotion: emotion,
-                                    //             diaryContent: controller
-                                    //                 .diaryEditingController
-                                    //                 .text,
-                                    //             emoticonIndex: emoticonIndex,
-                                    //             weather: weather.name,
-                                    //             images: [],
-                                    //             wiseSayings: [],
-                                    //           ),
-                                    //     imageFile: controller.croppedFile.value,
-                                    //   ),
-                                    // );
                                   },
                                   backgroundColor: kPrimary2Color,
                                   textStyle: kSubtitle1WhiteStyle,
