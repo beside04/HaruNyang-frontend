@@ -3,6 +3,7 @@ import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/login_state.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
@@ -199,6 +200,8 @@ class LoginViewModel extends GetxController {
     await loginResult.when(
       success: (accessToken) async {
         result = true;
+        await Get.find<EmotionStampViewModel>().getMonthStartEndData();
+        await Get.find<EmotionStampViewModel>().getEmotionStampList();
       },
       error: (message) {
         Get.snackbar('알림', '로그인이 실패했습니다.');
