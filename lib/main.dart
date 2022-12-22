@@ -47,7 +47,6 @@ class MyApp extends GetView<MainViewModel> {
         return GetMaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
-          darkTheme: ThemeData.dark(),
           theme: ThemeData(
             scaffoldBackgroundColor: kWhiteColor,
             textSelectionTheme: const TextSelectionThemeData(
