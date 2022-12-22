@@ -5,6 +5,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_screen.dart';
 import 'package:frontend/presentation/profile/profile_screen.dart';
@@ -25,9 +26,31 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
 
     // 탭의 위치로 이동하는 코드
-    Get.arguments == null
-        ? _selectedIndex = 0
-        : _selectedIndex = Get.arguments['index'];
+    if (Get.arguments == null) {
+      _selectedIndex = 0;
+    } else if (Get.arguments['index'] != null) {
+      _selectedIndex = Get.arguments['index'];
+    } else if (Get.arguments['diaryData'] != null) {
+      _selectedIndex = 0;
+      final date = Get.arguments['date'];
+      final isStamp = Get.arguments['isStamp'];
+      final diaryData = Get.arguments['diaryData'];
+      final imageFile = Get.arguments['imageFile'];
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) async {
+          bool result = await Get.to(
+            () => DiaryDetailScreen(
+              date: date,
+              isStamp: isStamp,
+              diaryData: diaryData,
+              imageFile: imageFile,
+            ),
+          );
+          _onItemTapped(0);
+          print(result);
+        },
+      );
+    }
   }
 
   int _selectedIndex = 0;

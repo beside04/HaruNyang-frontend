@@ -15,7 +15,6 @@ class EmotionStampViewModel extends GetxController {
     super.onInit();
 
     getMonthStartEndData();
-    getEmotionStampList();
   }
 
   var focusedCalendarDate = DateTime.now().obs;
