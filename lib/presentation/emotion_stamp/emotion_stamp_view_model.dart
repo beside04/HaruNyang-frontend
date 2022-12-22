@@ -20,7 +20,6 @@ class EmotionStampViewModel extends GetxController {
 
   var focusedCalendarDate = DateTime.now().obs;
   var selectedCalendarDate = DateTime.now().obs;
-  final nowDate = DateTime.now().obs;
   final isCalendar = true.obs;
   final currentPageCount = 250.obs;
   final itemPageCount = 500.obs;
@@ -33,9 +32,15 @@ class EmotionStampViewModel extends GetxController {
   var focusedEndDate = DateTime.now().obs;
 
   bool isToday(day) {
-    return day.day == nowDate.value.day &&
-        day.month == nowDate.value.month &&
-        day.year == nowDate.value.year;
+    return day.day == DateTime.now().day &&
+        day.month == DateTime.now().month &&
+        day.year == DateTime.now().year;
+  }
+
+  bool isDay(day) {
+    var nowDate = DateTime.now();
+
+    return (nowDate.isAfter(day) || isToday(day));
   }
 
   bool isDateClicked(day) {

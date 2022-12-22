@@ -7,12 +7,12 @@ class DialogComponent extends StatelessWidget {
   const DialogComponent({
     super.key,
     required this.title,
-    required this.content,
+    this.content,
     required this.actionContent,
   });
 
   final String title;
-  final Widget content;
+  final Widget? content;
   final List<Widget> actionContent;
 
   @override
@@ -31,7 +31,7 @@ class DialogComponent extends StatelessWidget {
       title: Center(
         child: Text(
           title.tr,
-          style: kHeader2BlackStyle,
+          style: kHeader3BlackStyle,
         ),
       ),
       content: Column(

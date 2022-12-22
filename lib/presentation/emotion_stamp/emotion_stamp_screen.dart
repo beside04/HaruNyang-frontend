@@ -8,6 +8,8 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/presentation/components/dialog_button.dart';
+import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -149,17 +151,41 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                         controller.focusedCalendarDate.value =
                                             day;
 
-                                        events.isEmpty
-                                            ? Get.to(() => EmptyDiaryScreen(
-                                                  date: day,
-                                                ))
-                                            : Get.to(
-                                                () => DiaryDetailScreen(
-                                                  date: day,
-                                                  isStamp: true,
-                                                  diaryData: events[0],
-                                                ),
+                                        if (controller.isDay(day)) {
+                                          events.isEmpty
+                                              ? Get.to(() => EmptyDiaryScreen(
+                                                    date: day,
+                                                  ))
+                                              : Get.to(
+                                                  () => DiaryDetailScreen(
+                                                    date: day,
+                                                    isStamp: true,
+                                                    diaryData: events[0],
+                                                  ),
+                                                );
+                                        } else {
+                                          showDialog(
+                                            barrierDismissible: true,
+                                            context: context,
+                                            builder: (ctx) {
+                                              return DialogComponent(
+                                                title: "미래 일기는 쓸 수 없어요",
+                                                actionContent: [
+                                                  DialogButton(
+                                                    title: "확인",
+                                                    onTap: () {
+                                                      Get.back();
+                                                    },
+                                                    backgroundColor:
+                                                        kPrimary2Color,
+                                                    textStyle:
+                                                        kSubtitle1WhiteStyle,
+                                                  ),
+                                                ],
                                               );
+                                            },
+                                          );
+                                        }
                                       },
                                       child: Center(
                                         child: Container(
