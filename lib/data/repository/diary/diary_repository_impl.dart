@@ -10,4 +10,14 @@ class DiaryRepositoryImpl implements DiaryRepository {
   Future<Result<bool>> saveDiary(DiaryData diary) async {
     return await _dataSource.saveDiary(diary);
   }
+
+  @override
+  Future<Result<bool>> updateDiary(DiaryData diary) async {
+    return await _dataSource.updateDiary(diary);
+  }
+
+  @override
+  Future<Result<bool>> deleteDiary(String diaryId) async {
+    return await _dataSource.deleteDiary(diaryId);
+  }
 }
