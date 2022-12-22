@@ -13,6 +13,7 @@ import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -472,24 +473,32 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                                                             7.w,
                                                                       ),
                                                                       Container(
-                                                                        padding:
-                                                                            EdgeInsets.all(4.w),
+                                                                        padding: EdgeInsets.symmetric(
+                                                                            vertical:
+                                                                                4.h,
+                                                                            horizontal: 8.w),
                                                                         decoration:
-                                                                            const BoxDecoration(
-                                                                          shape:
-                                                                              BoxShape.circle,
+                                                                            BoxDecoration(
                                                                           color:
                                                                               kWhiteColor,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(100.0.w),
                                                                         ),
-                                                                        child: SvgPicture
-                                                                            .network(
-                                                                          itemList
-                                                                              .emotion
-                                                                              .emoticon,
-                                                                          width:
-                                                                              16.w,
-                                                                          height:
-                                                                              16.h,
+                                                                        child:
+                                                                            Row(
+                                                                          children: [
+                                                                            SvgPicture.network(
+                                                                              itemList.emotion.emoticon,
+                                                                              width: 16.w,
+                                                                              height: 16.h,
+                                                                            ),
+                                                                            SizedBox(
+                                                                              width: 6.w,
+                                                                            ),
+                                                                            getEmotionTextWidget(
+                                                                              itemList.emoticonIndex,
+                                                                            ),
+                                                                          ],
                                                                         ),
                                                                       ),
                                                                     ],
@@ -509,8 +518,6 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                                                                           child:
                                                                               Image.network(
                                                                             "${itemList.images[0]}",
-                                                                            height:
-                                                                                240.h,
                                                                             width:
                                                                                 double.infinity,
                                                                             fit:

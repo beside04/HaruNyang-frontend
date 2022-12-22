@@ -223,33 +223,6 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                 SizedBox(
                   height: 6.h,
                 ),
-                if (controller.networkImage.value.isNotEmpty)
-                  Column(
-                    children: [
-                      Padding(
-                        padding: kPrimarySidePadding,
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: kWhiteColor,
-                            borderRadius: BorderRadius.circular(16.0),
-                          ),
-                          child: Padding(
-                            padding: kPrimaryPadding,
-                            child: Image.network(
-                              controller.networkImage.value,
-                              height: 240.h,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        height: 6.h,
-                      ),
-                    ],
-                  ),
                 Padding(
                   padding: kPrimarySidePadding,
                   child: Container(
@@ -260,34 +233,46 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                     child: Padding(
                       padding: kPrimaryPadding,
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Row(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(4.w),
+                                padding: EdgeInsets.all(6.w),
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: kSurfaceLightColor,
                                 ),
                                 child: SvgPicture.asset(
                                   "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
-                                  width: 16.w,
-                                  height: 16.h,
+                                  width: 24.w,
+                                  height: 24.h,
                                 ),
                               ),
                               SizedBox(
                                 width: 7.w,
                               ),
                               Container(
-                                padding: EdgeInsets.all(4.w),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 6.h, horizontal: 12.w),
+                                decoration: BoxDecoration(
                                   color: kSurfaceLightColor,
+                                  borderRadius: BorderRadius.circular(100.0.w),
                                 ),
-                                child: SvgPicture.network(
-                                  diaryData.emotion.emoticon,
-                                  width: 16.w,
-                                  height: 16.h,
+                                child: Row(
+                                  children: [
+                                    SvgPicture.network(
+                                      diaryData.emotion.emoticon,
+                                      width: 24.w,
+                                      height: 24.h,
+                                    ),
+                                    SizedBox(
+                                      width: 8.w,
+                                    ),
+                                    getEmotionTextWidget(
+                                      diaryData.emoticonIndex,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
@@ -295,6 +280,22 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                           SizedBox(
                             height: 12.h,
                           ),
+                          controller.networkImage.value.isNotEmpty
+                              ? Column(
+                                  children: [
+                                    Center(
+                                      child: Image.network(
+                                        controller.networkImage.value,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 12.h,
+                                    ),
+                                  ],
+                                )
+                              : Container(),
                           Text(
                             diaryData.diaryContent,
                             style: kBody1BlackStyle,

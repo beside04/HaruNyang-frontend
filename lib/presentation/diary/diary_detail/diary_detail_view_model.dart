@@ -59,26 +59,12 @@ class DiaryDetailViewModel extends GetxController
   final RxBool isLoading = false.obs;
   final RxBool isBookmark = false.obs;
 
-  Future<void> updateTestData() async {
-    _updateIsLoading(true);
-    await Future.delayed(
-      const Duration(seconds: 3),
-    );
-    _updateIsLoading(false);
-  }
-
   void _updateIsLoading(bool currentStatus) {
     isLoading.value = currentStatus;
   }
 
   void toggleBookmark() {
     isBookmark.value = !isBookmark.value;
-  }
-
-  @override
-  void onClose() {
-    animationController.dispose();
-    super.dispose();
   }
 
   Future<void> getWiseSayingList(int emoticonId, String content) async {
@@ -128,6 +114,10 @@ class DiaryDetailViewModel extends GetxController
     }
     await Get.find<EmotionStampViewModel>().getMonthStartEndData();
     await Get.find<EmotionStampViewModel>().getEmotionStampList();
+
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
     _updateIsLoading(false);
   }
 

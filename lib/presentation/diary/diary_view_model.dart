@@ -22,7 +22,9 @@ class DiaryViewModel extends GetxController
 
   // final emotionStatus = Rx<Emotion?>(null);
   final nowDate = DateTime.now().obs;
-  final numberValue = 2.0.obs;
+  final emotionNumberValue = 2.0.obs;
+  final emotionTextValue = '조금?'.obs;
+
   final RxList<EmoticonData> emoticonDataList = <EmoticonData>[].obs;
   final Rx<EmoticonData> selectedEmotion =
       EmoticonData(emoticon: '', value: '', desc: '').obs;
@@ -61,6 +63,20 @@ class DiaryViewModel extends GetxController
       const WeatherModal(),
     ];
     update();
+  }
+
+  getEmotionValue() {
+    if (emotionNumberValue.value < 2.0) {
+      emotionTextValue.value = '전혀';
+    } else if (emotionNumberValue.value < 4.0) {
+      emotionTextValue.value = '조금?';
+    } else if (emotionNumberValue.value < 6.0) {
+      emotionTextValue.value = '그럭저럭';
+    } else if (emotionNumberValue.value < 8.0) {
+      emotionTextValue.value = '맞아!';
+    } else {
+      emotionTextValue.value = '진짜 엄청 대박!!';
+    }
   }
 
   Future<void> getEmoticonData() async {

@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/domain/model/diary/weather_data.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
@@ -106,3 +108,17 @@ List<JobData> jobList = [
     value: 'etc',
   ),
 ];
+
+Widget getEmotionTextWidget(value) {
+  if (value < 20.0) {
+    return Text("전혀", style: kBody1BlackStyle);
+  } else if (value < 40.0) {
+    return Text("조금?", style: kBody1BlackStyle);
+  } else if (value < 60.0) {
+    return Text("그럭저럭", style: kBody1BlackStyle);
+  } else if (value < 80.0) {
+    return Text("맞아!", style: kBody1BlackStyle);
+  } else {
+    return Text("진짜 엄청 대박!!", style: kBody1BlackStyle);
+  }
+}

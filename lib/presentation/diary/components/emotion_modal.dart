@@ -96,12 +96,11 @@ class EmotionModal extends GetView<DiaryViewModel> {
                                       emotion: controller.selectedEmotion.value,
                                       weather: controller.weatherStatus.value!,
                                       emoticonIndex:
-                                          (controller.numberValue.value * 10)
+                                          (controller.emotionNumberValue.value *
+                                                  10)
                                               .toInt(),
                                     ),
                                   );
-                                  // controller.animationController.reverse();
-                                  // controller.swapStackChildren2();
                                 },
                         ),
                       )
@@ -117,55 +116,38 @@ class EmotionModal extends GetView<DiaryViewModel> {
   }
 
   Widget buildSlider() {
-    return Obx(() => Column(
-          children: [
-            controller.numberValue.value < 2.0
-                ? Text(
-                    "전혀",
-                    style: kSubtitle3BlackStyle,
-                  )
-                : controller.numberValue.value < 4.0
-                    ? Text(
-                        "조금?",
-                        style: kSubtitle3BlackStyle,
-                      )
-                    : controller.numberValue.value < 6.0
-                        ? Text(
-                            "그럭저럭",
-                            style: kSubtitle3BlackStyle,
-                          )
-                        : controller.numberValue.value < 8.0
-                            ? Text(
-                                "맞아!",
-                                style: kSubtitle3BlackStyle,
-                              )
-                            : Text(
-                                "진짜 엄청 대박!!",
-                                style: kSubtitle3BlackStyle,
-                              ),
-            SliderTheme(
-              data: const SliderThemeData(
-                trackHeight: 6,
-                activeTickMarkColor: Colors.transparent,
-                inactiveTickMarkColor: Colors.transparent,
-                inactiveTrackColor: kGrayColor100,
-                thumbColor: kWhiteColor,
-                activeTrackColor: kPrimaryColor,
-                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12),
-              ),
-              child: Obx(
-                () => Slider(
-                  value: controller.numberValue.value,
-                  min: 0,
-                  max: 10,
-                  divisions: 10,
-                  onChanged: (value) {
-                    controller.numberValue.value = value;
-                  },
-                ),
+    return Obx(
+      () => Column(
+        children: [
+          Text(
+            controller.emotionTextValue.value,
+            style: kSubtitle3BlackStyle,
+          ),
+          SliderTheme(
+            data: const SliderThemeData(
+              trackHeight: 6,
+              activeTickMarkColor: Colors.transparent,
+              inactiveTickMarkColor: Colors.transparent,
+              inactiveTrackColor: kGrayColor100,
+              thumbColor: kWhiteColor,
+              activeTrackColor: kPrimaryColor,
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12),
+            ),
+            child: Obx(
+              () => Slider(
+                value: controller.emotionNumberValue.value,
+                min: 0,
+                max: 10,
+                divisions: 10,
+                onChanged: (value) {
+                  controller.emotionNumberValue.value = value;
+                  controller.getEmotionValue();
+                },
               ),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

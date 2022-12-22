@@ -319,15 +319,24 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                               width: 12.w,
                             ),
                             Container(
-                              padding: const EdgeInsets.all(6),
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 6.h, horizontal: 12.w),
+                              decoration: BoxDecoration(
                                 color: kSurfaceLightColor,
+                                borderRadius: BorderRadius.circular(100.0.w),
                               ),
-                              child: SvgPicture.network(
-                                emotion.emoticon,
-                                width: 24.w,
-                                height: 24.h,
+                              child: Row(
+                                children: [
+                                  SvgPicture.network(
+                                    emotion.emoticon,
+                                    width: 24.w,
+                                    height: 24.h,
+                                  ),
+                                  SizedBox(
+                                    width: 8.w,
+                                  ),
+                                  getEmotionTextWidget(emoticonIndex),
+                                ],
                               ),
                             ),
                           ],
