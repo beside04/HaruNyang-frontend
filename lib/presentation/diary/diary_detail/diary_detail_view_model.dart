@@ -8,6 +8,7 @@ import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
+import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -125,6 +126,8 @@ class DiaryDetailViewModel extends GetxController
         newDiary,
       );
     }
+    await Get.find<EmotionStampViewModel>().getMonthStartEndData();
+    await Get.find<EmotionStampViewModel>().getEmotionStampList();
     _updateIsLoading(false);
   }
 
@@ -145,7 +148,10 @@ class DiaryDetailViewModel extends GetxController
   Future<void> deleteDiary() async {
     final result = await deleteDiaryUseCase(diaryData.id!);
     result.when(
-      success: (result) {},
+      success: (result) async {
+        await Get.find<EmotionStampViewModel>().getMonthStartEndData();
+        await Get.find<EmotionStampViewModel>().getEmotionStampList();
+      },
       error: (message) {},
     );
   }
