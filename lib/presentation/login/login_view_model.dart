@@ -200,8 +200,8 @@ class LoginViewModel extends GetxController {
     await loginResult.when(
       success: (accessToken) async {
         result = true;
-        await Get.find<EmotionStampViewModel>().getMonthStartEndData();
-        await Get.find<EmotionStampViewModel>().getEmotionStampList();
+        // await Get.find<EmotionStampViewModel>().getMonthStartEndData();
+        // await Get.find<EmotionStampViewModel>().getEmotionStampList();
       },
       error: (message) {
         Get.snackbar('알림', '로그인이 실패했습니다.');
