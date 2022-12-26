@@ -63,16 +63,21 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                       children: [
                         InkWell(
                           onTap: () async {
-                            Get.back();
-                            Get.to(
-                              () => WriteDiaryScreen(
-                                date: date,
-                                weather: Weather.values[0],
-                                emotion: diaryData.emotion,
-                                emoticonIndex: diaryData.emoticonIndex,
-                                diaryData: diaryData,
-                              ),
-                            );
+                            if (controller.diary.value != null) {
+                              Get.back();
+                              Get.to(
+                                () => Obx(
+                                  () => WriteDiaryScreen(
+                                    date: date,
+                                    weather: Weather.values[0],
+                                    emotion: controller.diary.value!.emotion,
+                                    emoticonIndex:
+                                        controller.diary.value!.emoticonIndex,
+                                    diaryData: controller.diary.value!,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           child: Container(
                             height: 52.h,
@@ -140,8 +145,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                 DialogButton(
                                                   title: "확인",
                                                   onTap: () {
-                                                    Get.offAll(() =>
-                                                        const HomeScreen());
+                                                    Get.offAll(
+                                                      () => const HomeScreen(),
+                                                      binding: BindingsBuilder(
+                                                        getHomeViewModelBinding,
+                                                      ),
+                                                    );
                                                   },
                                                   backgroundColor:
                                                       kPrimary2Color,
@@ -335,8 +344,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                               child: Padding(
                                 padding: kPrimaryPadding,
                                 child: ListView.builder(
-                                  physics:
-                                      const NeverScrollableScrollPhysics(),
+                                  physics: const NeverScrollableScrollPhysics(),
                                   scrollDirection: Axis.horizontal,
                                   itemCount: 3,
                                   itemBuilder: (BuildContext context, int i) {
@@ -400,8 +408,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                 curve: Curves.fastLinearToSlowEaseIn,
                                 child: FadeInAnimation(
                                   curve: Curves.fastLinearToSlowEaseIn,
-                                  duration:
-                                      const Duration(milliseconds: 2500),
+                                  duration: const Duration(milliseconds: 2500),
                                   child: Container(
                                     margin: EdgeInsets.only(bottom: 12.h),
                                     decoration: BoxDecoration(
@@ -411,8 +418,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                       ),
                                       boxShadow: [
                                         BoxShadow(
-                                          color:
-                                              Colors.black.withOpacity(0.1),
+                                          color: Colors.black.withOpacity(0.1),
                                           blurRadius: 40,
                                           spreadRadius: 10,
                                         ),
@@ -459,9 +465,8 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                               controller
                                                                   .toggleBookmark();
                                                             },
-                                                            child: const Icon(
-                                                                Icons
-                                                                    .bookmark_border),
+                                                            child: const Icon(Icons
+                                                                .bookmark_border),
                                                           )
                                                         : GestureDetector(
                                                             onTap: () {

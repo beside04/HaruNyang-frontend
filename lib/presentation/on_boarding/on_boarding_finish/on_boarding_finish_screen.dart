@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/black_points.dart';
@@ -21,6 +22,9 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
         Get.offAll(
           () => const HomeScreen(),
           transition: Transition.cupertino,
+          binding: BindingsBuilder(
+            getHomeViewModelBinding,
+          ),
         );
         return false;
       },
@@ -78,6 +82,9 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                   Get.offAll(
                     () => const HomeScreen(),
                     transition: Transition.cupertino,
+                    binding: BindingsBuilder(
+                      getHomeViewModelBinding,
+                    ),
                   );
                 },
               ),

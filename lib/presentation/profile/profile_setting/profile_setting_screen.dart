@@ -402,6 +402,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                     : await controller.appleLogout();
                 Get.offAll(
                   const LoginScreen(),
+                  binding: BindingsBuilder(
+                    getLoginBinding,
+                  ),
                 );
               },
             ),

@@ -103,7 +103,6 @@ class EmotionStampViewModel extends GetxController {
         Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
       },
     );
-
     _updateIsLoading(false);
   }
 

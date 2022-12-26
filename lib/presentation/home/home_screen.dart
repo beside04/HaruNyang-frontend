@@ -5,15 +5,31 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/components/dialog_button.dart';
+import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends GetView<HomeViewModel> {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final HomeViewModel controller;
+
+  @override
+  void initState() {
+    Get.delete<HomeViewModel>();
+    controller = getHomeViewModelBinding();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    getHomeViewModelBinding();
     return WillPopScope(
       onWillPop: () async {
         bool backResult = GlobalUtils.onBackPressed();
@@ -80,7 +96,37 @@ class HomeScreen extends GetView<HomeViewModel> {
             currentIndex: controller.selectedIndex.value,
             unselectedItemColor: kBlackColor,
             selectedItemColor: kBlackColor,
-            onTap: controller.onItemTapped,
+            onTap: (index) async {
+              final result = await controller.onItemTapped(index);
+              if (!result) {
+                showDialog(
+                  barrierDismissible: true,
+                  context: context,
+                  builder: (context) {
+                    return DialogComponent(
+                      title: "알림",
+                      content: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Text(
+                          "일기는 하루에 한번만 작성 할 수 있어요.",
+                          style: kSubtitle3Gray600Style,
+                        ),
+                      ),
+                      actionContent: [
+                        DialogButton(
+                          title: "확인",
+                          onTap: () {
+                            Get.back();
+                          },
+                          backgroundColor: kPrimary2Color,
+                          textStyle: kSubtitle1WhiteStyle,
+                        ),
+                      ],
+                    );
+                  },
+                );
+              }
+            },
           ),
           body: controller.widgetList[controller.selectedIndex.value],
         ),
