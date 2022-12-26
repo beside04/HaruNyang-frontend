@@ -6,6 +6,7 @@ import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
+import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 
 class EmotionModal extends GetView<DiaryViewModel> {
@@ -89,8 +90,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
                           onTap: controller
                                   .selectedEmotion.value.emoticon.isEmpty
                               ? null
-                              : () {
-                                  Get.to(
+                              : () async {
+                                  await Get.to(
                                     () => WriteDiaryScreen(
                                       date: controller.nowDate.value,
                                       emotion: controller.selectedEmotion.value,

@@ -121,7 +121,6 @@ void getLoginBinding() {
     appleLoginUseCase: appleLoginUseCase,
     onBoardingUseCase: onBoardingUseCase,
   ));
-
 }
 
 void getDiaryBinding() {

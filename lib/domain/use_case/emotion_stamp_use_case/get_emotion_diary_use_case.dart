@@ -1,12 +1,10 @@
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/repository/emotion_stamp/emotion_stamp_repository.dart';
+import 'package:intl/intl.dart';
 
 class GetEmotionStampUseCase {
   final EmotionStampRepository emotionStampRepository;
-  late Function(List<DiaryData>)? _callback;
-  late String _defaultStartDate;
-  late String _defaultEndDate;
 
   GetEmotionStampUseCase({
     required this.emotionStampRepository,
@@ -15,33 +13,36 @@ class GetEmotionStampUseCase {
   Future<Result<List<DiaryData>>> call(String from, String to) async {
     final result = await emotionStampRepository.getEmotionStamp(from, to);
     result.when(
-        success: (result) {
-          if (_callback != null) {
-            _callback!(result);
-          }
-        },
-        error: (message) {});
+      success: (result) {},
+      error: (message) {},
+    );
     return result;
   }
 
-  void registerCallback(Function(List<DiaryData>) func) {
-    _callback = func;
+  Future<Result<List<DiaryData>>> getTodayDiary() async {
+    DateTime today = DateTime.now();
+    DateTime tomorrow = today.add(const Duration(days: 1));
+
+    String start = DateFormat('yyyy-MM-dd').format(today);
+    String end = DateFormat('yyyy-MM-dd').format(tomorrow);
+
+    final result = await emotionStampRepository.getEmotionStamp(start, end);
+
+    return result;
   }
 
-  void setDefaultDate(String start, String end) {
-    _defaultStartDate = start;
-    _defaultEndDate = end;
-  }
-
-  Future<void> getEmoticonStampByDefault() async {
-    final result = await emotionStampRepository.getEmotionStamp(
-        _defaultStartDate, _defaultEndDate);
+  Future<bool> hasTodayDiary() async {
+    bool returnValue = false;
+    final result = await getTodayDiary();
     result.when(
-        success: (result) {
-          if (_callback != null) {
-            _callback!(result);
-          }
-        },
-        error: (message) {});
+      success: (data) {
+        if (data.isNotEmpty) {
+          returnValue = true;
+        }
+      },
+      error: (message) {},
+    );
+
+    return returnValue;
   }
 }

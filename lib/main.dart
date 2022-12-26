@@ -47,6 +47,10 @@ class MyApp extends GetView<MainViewModel> {
         return GetMaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
+          initialRoute: '/',
+          getPages: [
+            GetPage(name: '/home', page: () => const HomeScreen()),
+          ],
           theme: ThemeData(
             scaffoldBackgroundColor: kWhiteColor,
             textSelectionTheme: const TextSelectionThemeData(

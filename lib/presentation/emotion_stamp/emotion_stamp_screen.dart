@@ -36,7 +36,6 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kWhiteColor,
