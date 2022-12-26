@@ -19,13 +19,26 @@ import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class EmotionStampScreen extends GetView<EmotionStampViewModel> {
+class EmotionStampScreen extends StatefulWidget {
   const EmotionStampScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    getEmotionStampBinding();
+  State<EmotionStampScreen> createState() => _EmotionStampScreenState();
+}
 
+class _EmotionStampScreenState extends State<EmotionStampScreen> {
+  late final EmotionStampViewModel controller;
+
+  @override
+  void initState() {
+    Get.delete<EmotionStampViewModel>();
+    controller = getEmotionStampBinding();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kWhiteColor,

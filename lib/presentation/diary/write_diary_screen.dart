@@ -108,7 +108,12 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                 DialogButton(
                                   title: "예",
                                   onTap: () {
-                                    Get.offAll(() => const HomeScreen());
+                                    Get.offAll(
+                                      () => const HomeScreen(),
+                                      binding: BindingsBuilder(
+                                        getHomeViewModelBinding,
+                                      ),
+                                    );
                                     Get.to(
                                       () => DiaryDetailScreen(
                                         date: date,

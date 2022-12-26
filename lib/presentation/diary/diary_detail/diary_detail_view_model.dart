@@ -6,6 +6,7 @@ import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
+import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -15,6 +16,7 @@ import 'package:image_cropper/image_cropper.dart';
 class DiaryDetailViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
   final GetWiseSayingUseCase getWiseSayingUseCase;
+  final GetEmotionStampUseCase getEmotionStampUseCase;
   final SaveDiaryUseCase saveDiaryUseCase;
   final UpdateDiaryUseCase updateDiaryUseCase;
   final DeleteDiaryUseCase deleteDiaryUseCase;
@@ -26,6 +28,7 @@ class DiaryDetailViewModel extends GetxController
 
   DiaryDetailViewModel({
     required this.getWiseSayingUseCase,
+    required this.getEmotionStampUseCase,
     required this.saveDiaryUseCase,
     required this.updateDiaryUseCase,
     required this.deleteDiaryUseCase,
@@ -39,8 +42,10 @@ class DiaryDetailViewModel extends GetxController
   void onInit() {
     super.onInit();
     networkImage.value = '';
+    setDiary(diaryData);
+
     if (!isStamp) {
-      diarySave(diaryData);
+      diarySave(diary.value!);
     } else {
       wiseSayingList.value = diaryData.wiseSayings;
       networkImage.value = diaryData.images.first;
@@ -58,6 +63,19 @@ class DiaryDetailViewModel extends GetxController
   RxString networkImage = ''.obs;
   final RxBool isLoading = false.obs;
   final RxBool isBookmark = false.obs;
+  final Rxn<DiaryData?> diary = Rxn<DiaryData?>();
+
+  Future<void> updateTestData() async {
+    _updateIsLoading(true);
+    await Future.delayed(
+      const Duration(seconds: 3),
+    );
+    _updateIsLoading(false);
+  }
+
+  void setDiary(DiaryData newDiary) {
+    diary.value = newDiary.copyWith();
+  }
 
   void _updateIsLoading(bool currentStatus) {
     isLoading.value = currentStatus;
@@ -111,6 +129,18 @@ class DiaryDetailViewModel extends GetxController
       await saveDiaryUseCase(
         newDiary,
       );
+      await Get.find<EmotionStampViewModel>().getMonthStartEndData();
+      await Get.find<EmotionStampViewModel>().getEmotionStampList();
+
+      final todayDiary = await getEmotionStampUseCase.getTodayDiary();
+      todayDiary.when(
+        success: (diary) {
+          if (diary.isNotEmpty) {
+            setDiary(diary.first);
+          }
+        },
+        error: (message) {},
+      );
     }
     await Get.find<EmotionStampViewModel>().getMonthStartEndData();
     await Get.find<EmotionStampViewModel>().getEmotionStampList();
@@ -136,13 +166,14 @@ class DiaryDetailViewModel extends GetxController
   }
 
   Future<void> deleteDiary() async {
-    final result = await deleteDiaryUseCase(diaryData.id!);
-    result.when(
-      success: (result) async {
-        await Get.find<EmotionStampViewModel>().getMonthStartEndData();
-        await Get.find<EmotionStampViewModel>().getEmotionStampList();
-      },
-      error: (message) {},
-    );
+    if (diary.value != null) {
+      final result = await deleteDiaryUseCase(diary.value!.id!);
+      result.when(
+        success: (result) async {
+          //await getEmotionStampUseCase.getEmoticonStampByDefault();
+        },
+        error: (message) {},
+      );
+    }
   }
 }

@@ -25,7 +25,7 @@ void main() async {
   // runApp() 호출 전 Flutter SDK 초기화
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
   KakaoSdk.init(nativeAppKey: appkey);
-  getLoginBinding();
+  getMainBinding();
   await Get.find<MainViewModel>().getAccessToken();
 
   //FirebaseCrashlytics
@@ -47,6 +47,10 @@ class MyApp extends GetView<MainViewModel> {
         return GetMaterialApp(
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
+          initialRoute: '/',
+          getPages: [
+            GetPage(name: '/home', page: () => const HomeScreen()),
+          ],
           theme: ThemeData(
             scaffoldBackgroundColor: kWhiteColor,
             textSelectionTheme: const TextSelectionThemeData(
@@ -67,6 +71,13 @@ class MyApp extends GetView<MainViewModel> {
           home: Get.find<MainViewModel>().token == null
               ? const LoginScreen()
               : const HomeScreen(),
+          initialBinding: Get.find<MainViewModel>().token == null
+              ? BindingsBuilder(
+                  getLoginBinding,
+                )
+              : BindingsBuilder(
+                  getHomeViewModelBinding,
+                ),
         );
       },
     );

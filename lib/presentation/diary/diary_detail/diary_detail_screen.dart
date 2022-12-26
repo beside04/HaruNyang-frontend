@@ -63,16 +63,21 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                       children: [
                         InkWell(
                           onTap: () async {
-                            Get.back();
-                            Get.to(
-                              () => WriteDiaryScreen(
-                                date: date,
-                                weather: Weather.values[0],
-                                emotion: diaryData.emotion,
-                                emoticonIndex: diaryData.emoticonIndex,
-                                diaryData: diaryData,
-                              ),
-                            );
+                            if (controller.diary.value != null) {
+                              Get.back();
+                              Get.to(
+                                () => Obx(
+                                  () => WriteDiaryScreen(
+                                    date: date,
+                                    weather: Weather.values[0],
+                                    emotion: controller.diary.value!.emotion,
+                                    emoticonIndex:
+                                        controller.diary.value!.emoticonIndex,
+                                    diaryData: controller.diary.value!,
+                                  ),
+                                ),
+                              );
+                            }
                           },
                           child: Container(
                             height: 52.h,
@@ -140,8 +145,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                 DialogButton(
                                                   title: "확인",
                                                   onTap: () {
-                                                    Get.offAll(() =>
-                                                        const HomeScreen());
+                                                    Get.offAll(
+                                                      () => const HomeScreen(),
+                                                      binding: BindingsBuilder(
+                                                        getHomeViewModelBinding,
+                                                      ),
+                                                    );
                                                   },
                                                   backgroundColor:
                                                       kPrimary2Color,

@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:get/get.dart';
@@ -87,6 +88,9 @@ class WithdrawDoneScreen extends StatelessWidget {
                 onTap: () {
                   Get.offAll(
                     () => const LoginScreen(),
+                    binding: BindingsBuilder(
+                      getLoginBinding,
+                    ),
                   );
                 }),
           ],

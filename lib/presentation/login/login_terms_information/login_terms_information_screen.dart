@@ -105,6 +105,9 @@ class LoginTermsInformationScreen
                       () => const LoginScreen(
                         isSignup: true,
                       ),
+                      binding: BindingsBuilder(
+                        getLoginBinding,
+                      ),
                     );
                   }
                 },
