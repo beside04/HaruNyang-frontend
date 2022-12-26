@@ -21,8 +21,15 @@ class HomeViewModel extends GetxController {
 
   RxInt selectedIndex = 0.obs;
 
-  void onItemTapped(int index) {
+  Future<bool> onItemTapped(int index) async {
+    if (index == 1) {
+      final result = await getEmotionStampUseCase.hasTodayDiary();
+      if (result) {
+        return false;
+      }
+    }
     selectedIndex.value = index;
+    return true;
   }
 
   List<Widget> widgetList = const [
