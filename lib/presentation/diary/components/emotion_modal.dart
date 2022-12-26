@@ -6,7 +6,6 @@ import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
-import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 
 class EmotionModal extends GetView<DiaryViewModel> {
@@ -14,159 +13,126 @@ class EmotionModal extends GetView<DiaryViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-      animation: controller.animationController,
-      builder: (BuildContext context, Widget? child) {
-        return Transform.scale(
-          scale: controller.animationController.value < 0.8
-              ? 0.9
-              : controller.animationController.value,
-          child: Transform.translate(
-            offset: Offset(
-              0.0,
-              -30 + controller.animationController.value * 30,
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Obx(
+        () => SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: controller.selectedEmotion.value.emoticon.isEmpty ||
+                  controller.isEmotionModal.value
+              ? 276.h
+              : 371.h,
+          child: Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40),
+                topRight: Radius.circular(40),
+              ),
+              color: kWhiteColor,
             ),
-            child: Opacity(
-              opacity: controller.animationController.value < 0.1
-                  ? 0.5
-                  : controller.animationController.value,
-              child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(40),
-                      topRight: Radius.circular(40),
-                    ),
-                    color: kWhiteColor,
-                  ),
-                  child: Stack(
+            child: Stack(
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(left: 28.w, top: 28.h),
+                  child: Row(
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 28.w, top: 28.h),
-                        child: Row(
-                          children: [
-                            Text(
-                              "기분",
-                              style: kHeader3BlackStyle,
-                            ),
-                          ],
-                        ),
+                      Text(
+                        "기분",
+                        style: kHeader3BlackStyle,
                       ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 6.w, top: 75.h),
-                        child: ListView.builder(
-                          physics: const BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
-                          itemCount: controller.emoticonDataList.length,
-                          itemBuilder: (BuildContext context, int i) {
-                            return Obx(
-                              () => EmoticonIconButton(
-                                name: controller.emoticonDataList[i].desc,
-                                icon: controller.emoticonDataList[i].emoticon,
-                                selected: controller.selectedEmotion.value ==
-                                    controller.emoticonDataList[i],
-                                onPressed: () {
-                                  controller.setSelectedEmoticon(
-                                      controller.emoticonDataList[i]);
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                      Obx(
-                        () => Padding(
-                          padding: EdgeInsets.only(left: 6.w, top: 184.h),
-                          child:
-                              controller.selectedEmotion.value.emoticon.isEmpty
-                                  ? Container()
-                                  : buildSlider(),
-                        ),
-                      ),
-                      Obx(
-                        () => BottomButton(
-                          title: '일기쓰기',
-                          onTap: controller
-                                  .selectedEmotion.value.emoticon.isEmpty
-                              ? null
-                              : () async {
-                                  await Get.to(
-                                    () => WriteDiaryScreen(
-                                      date: controller.nowDate.value,
-                                      emotion: controller.selectedEmotion.value,
-                                      weather: controller.weatherStatus.value!,
-                                      emoticonIndex:
-                                          (controller.numberValue.value * 10)
-                                              .toInt(),
-                                    ),
-                                  );
-                                  // controller.animationController.reverse();
-                                  // controller.swapStackChildren2();
-                                },
-                        ),
-                      )
                     ],
                   ),
                 ),
-              ),
+                Padding(
+                  padding: EdgeInsets.only(left: 6.w, top: 75.h),
+                  child: ListView.builder(
+                    physics: const BouncingScrollPhysics(),
+                    scrollDirection: Axis.horizontal,
+                    itemCount: controller.emoticonDataList.length,
+                    itemBuilder: (BuildContext context, int i) {
+                      return Obx(
+                        () => EmoticonIconButton(
+                          name: controller.emoticonDataList[i].desc,
+                          icon: controller.emoticonDataList[i].emoticon,
+                          selected: controller.selectedEmotion.value ==
+                              controller.emoticonDataList[i],
+                          onPressed: () {
+                            controller.setSelectedEmoticon(
+                                controller.emoticonDataList[i]);
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                Obx(
+                  () => Padding(
+                    padding: EdgeInsets.only(left: 6.w, top: 184.h),
+                    child: controller.selectedEmotion.value.emoticon.isEmpty
+                        ? Container()
+                        : buildSlider(),
+                  ),
+                ),
+                Obx(
+                  () => BottomButton(
+                    title: '일기쓰기',
+                    onTap: controller.selectedEmotion.value.emoticon.isEmpty
+                        ? null
+                        : () {
+                            Get.to(
+                              () => WriteDiaryScreen(
+                                date: controller.nowDate.value,
+                                emotion: controller.selectedEmotion.value,
+                                weather: controller.weatherStatus.value!,
+                                emoticonIndex:
+                                    (controller.emotionNumberValue.value * 10)
+                                        .toInt(),
+                              ),
+                            );
+                          },
+                  ),
+                )
+              ],
             ),
           ),
-        );
-      },
+        ),
+      ),
     );
   }
 
   Widget buildSlider() {
-    return Obx(() => Column(
-          children: [
-            controller.numberValue.value < 2.0
-                ? Text(
-                    "전혀",
-                    style: kSubtitle3BlackStyle,
-                  )
-                : controller.numberValue.value < 4.0
-                    ? Text(
-                        "조금?",
-                        style: kSubtitle3BlackStyle,
-                      )
-                    : controller.numberValue.value < 6.0
-                        ? Text(
-                            "그럭저럭",
-                            style: kSubtitle3BlackStyle,
-                          )
-                        : controller.numberValue.value < 8.0
-                            ? Text(
-                                "맞아!",
-                                style: kSubtitle3BlackStyle,
-                              )
-                            : Text(
-                                "진짜 엄청 대박!!",
-                                style: kSubtitle3BlackStyle,
-                              ),
-            SliderTheme(
-              data: const SliderThemeData(
-                trackHeight: 6,
-                activeTickMarkColor: Colors.transparent,
-                inactiveTickMarkColor: Colors.transparent,
-                inactiveTrackColor: kGrayColor100,
-                thumbColor: kWhiteColor,
-                activeTrackColor: kPrimaryColor,
-                thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12),
-              ),
-              child: Obx(
-                () => Slider(
-                  value: controller.numberValue.value,
-                  min: 0,
-                  max: 10,
-                  divisions: 10,
-                  onChanged: (value) {
-                    controller.numberValue.value = value;
-                  },
-                ),
+    return Obx(
+      () => Column(
+        children: [
+          Text(
+            controller.emotionTextValue.value,
+            style: kSubtitle3BlackStyle,
+          ),
+          SliderTheme(
+            data: const SliderThemeData(
+              trackHeight: 6,
+              activeTickMarkColor: Colors.transparent,
+              inactiveTickMarkColor: Colors.transparent,
+              inactiveTrackColor: kGrayColor100,
+              thumbColor: kWhiteColor,
+              activeTrackColor: kPrimaryColor,
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12),
+            ),
+            child: Obx(
+              () => Slider(
+                value: controller.emotionNumberValue.value,
+                min: 0,
+                max: 10,
+                divisions: 10,
+                onChanged: (value) {
+                  controller.emotionNumberValue.value = value;
+                  controller.getEmotionValue();
+                },
               ),
             ),
-          ],
-        ));
+          ),
+        ],
+      ),
+    );
   }
 }

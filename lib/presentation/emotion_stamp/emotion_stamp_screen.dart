@@ -8,9 +8,12 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/presentation/components/dialog_button.dart';
+import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -162,17 +165,41 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                         controller.focusedCalendarDate.value =
                                             day;
 
-                                        events.isEmpty
-                                            ? Get.to(() => EmptyDiaryScreen(
-                                                  date: day,
-                                                ))
-                                            : Get.to(
-                                                () => DiaryDetailScreen(
-                                                  date: day,
-                                                  isStamp: true,
-                                                  diaryData: events[0],
-                                                ),
+                                        if (controller.isDay(day)) {
+                                          events.isEmpty
+                                              ? Get.to(() => EmptyDiaryScreen(
+                                                    date: day,
+                                                  ))
+                                              : Get.to(
+                                                  () => DiaryDetailScreen(
+                                                    date: day,
+                                                    isStamp: true,
+                                                    diaryData: events[0],
+                                                  ),
+                                                );
+                                        } else {
+                                          showDialog(
+                                            barrierDismissible: true,
+                                            context: context,
+                                            builder: (ctx) {
+                                              return DialogComponent(
+                                                title: "미래 일기는 쓸 수 없어요",
+                                                actionContent: [
+                                                  DialogButton(
+                                                    title: "확인",
+                                                    onTap: () {
+                                                      Get.back();
+                                                    },
+                                                    backgroundColor:
+                                                        kPrimary2Color,
+                                                    textStyle:
+                                                        kSubtitle1WhiteStyle,
+                                                  ),
+                                                ],
                                               );
+                                            },
+                                          );
+                                        }
                                       },
                                       child: Center(
                                         child: Container(
@@ -324,19 +351,17 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                       child: CircularProgressIndicator());
                                 } else {
                                   return ListView.builder(
-                                    itemCount: (controller
-                                                    .dataResult["key_ordered"]
-                                                as List)
+                                    itemCount: (controller.diaryListDataList[
+                                                "key_ordered"] as List)
                                             .isEmpty
                                         ? 1
-                                        : (controller.dataResult["key_ordered"]
-                                                as List)
+                                        : (controller.diaryListDataList[
+                                                "key_ordered"] as List)
                                             .length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return (controller
-                                                      .dataResult["key_ordered"]
-                                                  as List)
+                                      return (controller.diaryListDataList[
+                                                  "key_ordered"] as List)
                                               .isEmpty
                                           ? Column(
                                               children: [
@@ -364,166 +389,195 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                 ),
                                               ],
                                             )
-                                          : Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      top: 20.h, left: 20.w),
-                                                  child: Text(
-                                                    "${(controller.dataResult["key_ordered"] as List)[index]}번째 주",
-                                                    style: kSubtitle1BlackStyle,
+                                          : GestureDetector(
+                                              onTap: () {
+                                                List<
+                                                    dynamic> itemList = ((controller
+                                                            .diaryListDataList[
+                                                        "values"]
+                                                    as Map)[(controller
+                                                            .diaryListDataList[
+                                                        "key_ordered"]
+                                                    as List)[index]]);
+
+                                                Get.to(
+                                                  () => DiaryDetailScreen(
+                                                    date: DateTime.parse(
+                                                        itemList[0].createTime),
+                                                    isStamp: true,
+                                                    diaryData:
+                                                        List<DiaryData>.from(
+                                                            itemList)[0],
                                                   ),
-                                                ),
-                                                ListView.builder(
-                                                  physics:
-                                                      const NeverScrollableScrollPhysics(),
-                                                  shrinkWrap: true,
-                                                  itemCount: (controller
-                                                                  .dataResult[
+                                                );
+                                              },
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        top: 20.h, left: 20.w),
+                                                    child: Text(
+                                                      "${(controller.diaryListDataList["key_ordered"] as List)[index]}번째 주",
+                                                      style:
+                                                          kSubtitle1BlackStyle,
+                                                    ),
+                                                  ),
+                                                  ListView.builder(
+                                                    physics:
+                                                        const NeverScrollableScrollPhysics(),
+                                                    shrinkWrap: true,
+                                                    itemCount: (controller
+                                                                    .diaryListDataList[
+                                                                "values"]
+                                                            as Map)[(controller
+                                                                    .diaryListDataList[
+                                                                "key_ordered"]
+                                                            as List)[index]]
+                                                        .length,
+                                                    itemBuilder:
+                                                        (BuildContext context,
+                                                            int i) {
+                                                      var itemList = (controller
+                                                                  .diaryListDataList[
                                                               "values"]
                                                           as Map)[(controller
-                                                                  .dataResult[
+                                                                  .diaryListDataList[
                                                               "key_ordered"]
-                                                          as List)[index]]
-                                                      .length,
-                                                  itemBuilder:
-                                                      (BuildContext context,
-                                                          int i) {
-                                                    var itemList = (controller
-                                                                .dataResult[
-                                                            "values"] as Map)[
-                                                        (controller.dataResult[
-                                                                "key_ordered"]
-                                                            as List)[index]][i];
-                                                    return Padding(
-                                                      padding: EdgeInsets.only(
-                                                        top: 20.h,
-                                                        left: 20.w,
-                                                        right: 20.w,
-                                                      ),
-                                                      child: Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: kGrayColor50,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      20.0.w),
+                                                          as List)[index]][i];
+                                                      return Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          top: 20.h,
+                                                          left: 20.w,
+                                                          right: 20.w,
                                                         ),
-                                                        child: Padding(
-                                                          padding:
-                                                              kPrimaryPadding,
-                                                          child: Column(
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    DateFormat.MMMEd(
-                                                                            "ko_KR")
-                                                                        .format(
-                                                                            DateTime.parse(itemList.createTime)),
-                                                                    style:
-                                                                        kSubtitle2BlackStyle,
-                                                                  ),
-                                                                  Row(
-                                                                    children: [
-                                                                      Container(
-                                                                        padding:
-                                                                            EdgeInsets.all(4.w),
-                                                                        decoration:
-                                                                            const BoxDecoration(
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                          color:
-                                                                              kWhiteColor,
-                                                                        ),
-                                                                        child: SvgPicture
-                                                                            .asset(
-                                                                          "lib/config/assets/images/diary/weather/sunny.svg",
-                                                                          width:
-                                                                              16.w,
-                                                                          height:
-                                                                              16.h,
-                                                                        ),
-                                                                      ),
-                                                                      SizedBox(
-                                                                        width:
-                                                                            7.w,
-                                                                      ),
-                                                                      Container(
-                                                                        padding:
-                                                                            EdgeInsets.all(4.w),
-                                                                        decoration:
-                                                                            const BoxDecoration(
-                                                                          shape:
-                                                                              BoxShape.circle,
-                                                                          color:
-                                                                              kWhiteColor,
-                                                                        ),
-                                                                        child: SvgPicture
-                                                                            .network(
-                                                                          itemList
-                                                                              .emotion
-                                                                              .emoticon,
-                                                                          width:
-                                                                              16.w,
-                                                                          height:
-                                                                              16.h,
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                              SizedBox(
-                                                                height: 12.h,
-                                                              ),
-                                                              itemList.images[
-                                                                          0] ==
-                                                                      ""
-                                                                  ? Container()
-                                                                  : Column(
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: kGrayColor50,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20.0.w),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                kPrimaryPadding,
+                                                            child: Column(
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      DateFormat.MMMEd(
+                                                                              "ko_KR")
+                                                                          .format(
+                                                                              DateTime.parse(itemList.createTime)),
+                                                                      style:
+                                                                          kSubtitle2BlackStyle,
+                                                                    ),
+                                                                    Row(
                                                                       children: [
-                                                                        Center(
+                                                                        Container(
+                                                                          padding:
+                                                                              EdgeInsets.all(4.w),
+                                                                          decoration:
+                                                                              const BoxDecoration(
+                                                                            shape:
+                                                                                BoxShape.circle,
+                                                                            color:
+                                                                                kWhiteColor,
+                                                                          ),
                                                                           child:
-                                                                              Image.network(
-                                                                            "${itemList.images[0]}",
-                                                                            height:
-                                                                                240.h,
+                                                                              SvgPicture.asset(
+                                                                            "lib/config/assets/images/diary/weather/sunny.svg",
                                                                             width:
-                                                                                double.infinity,
-                                                                            fit:
-                                                                                BoxFit.cover,
+                                                                                16.w,
+                                                                            height:
+                                                                                16.h,
                                                                           ),
                                                                         ),
                                                                         SizedBox(
-                                                                          height:
-                                                                              12.h,
+                                                                          width:
+                                                                              7.w,
+                                                                        ),
+                                                                        Container(
+                                                                          padding: EdgeInsets.symmetric(
+                                                                              vertical: 4.h,
+                                                                              horizontal: 8.w),
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                kWhiteColor,
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(100.0.w),
+                                                                          ),
+                                                                          child:
+                                                                              Row(
+                                                                            children: [
+                                                                              SvgPicture.network(
+                                                                                itemList.emotion.emoticon,
+                                                                                width: 16.w,
+                                                                                height: 16.h,
+                                                                              ),
+                                                                              SizedBox(
+                                                                                width: 6.w,
+                                                                              ),
+                                                                              getEmotionTextWidget(
+                                                                                itemList.emoticonIndex,
+                                                                              ),
+                                                                            ],
+                                                                          ),
                                                                         ),
                                                                       ],
                                                                     ),
-                                                              Text(
-                                                                itemList
-                                                                    .diaryContent,
-                                                                style:
-                                                                    kBody1BlackStyle,
-                                                              )
-                                                            ],
+                                                                  ],
+                                                                ),
+                                                                SizedBox(
+                                                                  height: 12.h,
+                                                                ),
+                                                                itemList.images[
+                                                                            0] ==
+                                                                        ""
+                                                                    ? Container()
+                                                                    : Column(
+                                                                        children: [
+                                                                          Center(
+                                                                            child:
+                                                                                Image.network(
+                                                                              "${itemList.images[0]}",
+                                                                              width: double.infinity,
+                                                                              fit: BoxFit.cover,
+                                                                            ),
+                                                                          ),
+                                                                          SizedBox(
+                                                                            height:
+                                                                                12.h,
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                Text(
+                                                                  itemList
+                                                                      .diaryContent,
+                                                                  style:
+                                                                      kBody1BlackStyle,
+                                                                )
+                                                              ],
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
-                                              ],
+                                                      );
+                                                    },
+                                                  ),
+                                                ],
+                                              ),
                                             );
                                     },
                                   );

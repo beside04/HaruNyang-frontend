@@ -20,7 +20,6 @@ class EmotionStampViewModel extends GetxController {
 
   var focusedCalendarDate = DateTime.now().obs;
   var selectedCalendarDate = DateTime.now().obs;
-  final nowDate = DateTime.now().obs;
   final isCalendar = true.obs;
   final currentPageCount = 250.obs;
   final itemPageCount = 500.obs;
@@ -28,14 +27,20 @@ class EmotionStampViewModel extends GetxController {
 
   final RxBool isLoading = false.obs;
   Map<DateTime, List<DiaryData>> diaryCalendarDataList = {};
-  Map<String, Object> dataResult = {"key_ordered": [], "values": {}}.obs;
+  Map<String, Object> diaryListDataList = {"key_ordered": [], "values": {}}.obs;
   var focusedStartDate = DateTime.now().obs;
   var focusedEndDate = DateTime.now().obs;
 
   bool isToday(day) {
-    return day.day == nowDate.value.day &&
-        day.month == nowDate.value.month &&
-        day.year == nowDate.value.year;
+    return day.day == DateTime.now().day &&
+        day.month == DateTime.now().month &&
+        day.year == DateTime.now().year;
+  }
+
+  bool isDay(day) {
+    var nowDate = DateTime.now();
+
+    return (nowDate.isAfter(day) || isToday(day));
   }
 
   bool isDateClicked(day) {
@@ -107,7 +112,7 @@ class EmotionStampViewModel extends GetxController {
   }
 
   parsingListDate(List<DiaryData> result) async {
-    dataResult = {"key_ordered": [], "values": {}}.obs;
+    diaryListDataList = {"key_ordered": [], "values": {}}.obs;
     diaryCalendarDataList = {};
 
     for (var data in result) {
@@ -119,12 +124,12 @@ class EmotionStampViewModel extends GetxController {
 
       var dateTime = weekOfMonthForSimple(DateTime.parse(data.createTime));
 
-      if (!dataResult["key_ordered"].toString().contains(dateTime)) {
-        (dataResult["key_ordered"] as List).add(dateTime);
-        (dataResult["values"] as Map)[dateTime] = [];
+      if (!diaryListDataList["key_ordered"].toString().contains(dateTime)) {
+        (diaryListDataList["key_ordered"] as List).add(dateTime);
+        (diaryListDataList["values"] as Map)[dateTime] = [];
       }
 
-      (dataResult["values"] as Map)[dateTime].add(data);
+      (diaryListDataList["values"] as Map)[dateTime].add(data);
     }
   }
 

@@ -85,12 +85,6 @@ class DiaryDetailViewModel extends GetxController
     isBookmark.value = !isBookmark.value;
   }
 
-  @override
-  void onClose() {
-    animationController.dispose();
-    super.dispose();
-  }
-
   Future<void> getWiseSayingList(int emoticonId, String content) async {
     final result = await getWiseSayingUseCase(emoticonId, content);
 
@@ -148,7 +142,12 @@ class DiaryDetailViewModel extends GetxController
         error: (message) {},
       );
     }
+    await Get.find<EmotionStampViewModel>().getMonthStartEndData();
+    await Get.find<EmotionStampViewModel>().getEmotionStampList();
 
+    await Future.delayed(
+      const Duration(seconds: 1),
+    );
     _updateIsLoading(false);
   }
 
