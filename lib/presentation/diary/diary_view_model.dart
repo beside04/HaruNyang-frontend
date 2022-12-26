@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
+import 'package:frontend/presentation/diary/components/diary_picture.dart';
 import 'package:frontend/presentation/diary/components/emotion_modal.dart';
 import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/res/constants.dart';
@@ -22,6 +23,7 @@ class DiaryViewModel extends GetxController
 
   // final emotionStatus = Rx<Emotion?>(null);
   final nowDate = DateTime.now().obs;
+  final isEmotionModal = true.obs;
   final emotionNumberValue = 2.0.obs;
   final emotionTextValue = '조금?'.obs;
 
@@ -45,12 +47,15 @@ class DiaryViewModel extends GetxController
   }
 
   List<Widget> stackChildren = <Widget>[
+    const DiaryPicture(),
     const EmotionModal(),
     const WeatherModal(),
   ];
 
   void swapStackChildren() {
+    isEmotionModal.value = false;
     stackChildren = [
+      const DiaryPicture(),
       const WeatherModal(),
       const EmotionModal(),
     ];
@@ -58,7 +63,9 @@ class DiaryViewModel extends GetxController
   }
 
   void swapStackChildren2() {
+    isEmotionModal.value = true;
     stackChildren = [
+      const DiaryPicture(),
       const EmotionModal(),
       const WeatherModal(),
     ];

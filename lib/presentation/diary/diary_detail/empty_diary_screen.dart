@@ -5,7 +5,8 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
+import 'package:frontend/presentation/diary/past_diary_screen.dart';
+import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -69,10 +70,10 @@ class EmptyDiaryScreen extends StatelessWidget {
             BottomButton(
               title: '일기쓰기',
               onTap: () {
-                Get.offAll(
-                  () => const HomeScreen(),
-                  arguments: {'index': 1},
-                );
+                Get.delete<DiaryViewModel>();
+                Get.to(() => PastDiaryTestScreen(
+                      date: date,
+                    ));
               },
             )
           ],

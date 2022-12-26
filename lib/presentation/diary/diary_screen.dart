@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/diary/components/diary_app_bar.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class DiaryScreen extends GetView<DiaryViewModel> {
   const DiaryScreen({super.key});
@@ -16,6 +15,9 @@ class DiaryScreen extends GetView<DiaryViewModel> {
     getDiaryBinding();
 
     return Scaffold(
+      appBar: DiaryAppBar(
+        date: DateTime.now(),
+      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -29,16 +31,6 @@ class DiaryScreen extends GetView<DiaryViewModel> {
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: 24.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 24.w),
-                child: Text(
-                  DateFormat('MM월 dd일').format(controller.nowDate.value),
-                  style: kSubtitle2BlackStyle,
-                ),
-              ),
               SizedBox(
                 height: 8.h,
               ),
@@ -56,30 +48,29 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 24.w),
-                child: Row(
-                  children: [
-                    Text(
-                      "오늘 날씨 어때요?",
-                      style: kHeader1BlackStyle,
+                  padding: EdgeInsets.only(left: 24.w),
+                  child: Obx(
+                    () => Row(
+                      children: [
+                        controller.isEmotionModal.value
+                            ? Text(
+                                "오늘 날씨 어때요?",
+                                style: kHeader1BlackStyle,
+                              )
+                            : Text(
+                                "오늘 기분 어때요?",
+                                style: kHeader1BlackStyle,
+                              ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 20.h,
-              ),
-              Center(
-                child: SvgPicture.asset(
-                  "lib/config/assets/images/character/onboarding1.svg",
-                  width: 232.w,
-                  height: 232.h,
-                ),
-              ),
+                  )),
+              SizedBox(height: 20.h),
               GetBuilder<DiaryViewModel>(builder: (context) {
                 return Expanded(
                   child: Stack(
-                    children: controller.stackChildren,
+                    children: [
+                      ...controller.stackChildren,
+                    ],
                   ),
                 );
               }),
