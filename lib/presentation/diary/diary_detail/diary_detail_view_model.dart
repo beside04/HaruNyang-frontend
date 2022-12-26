@@ -6,15 +6,16 @@ import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
+import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
-import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 class DiaryDetailViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
   final GetWiseSayingUseCase getWiseSayingUseCase;
+  final GetEmotionStampUseCase getEmotionStampUseCase;
   final SaveDiaryUseCase saveDiaryUseCase;
   final UpdateDiaryUseCase updateDiaryUseCase;
   final DeleteDiaryUseCase deleteDiaryUseCase;
@@ -26,6 +27,7 @@ class DiaryDetailViewModel extends GetxController
 
   DiaryDetailViewModel({
     required this.getWiseSayingUseCase,
+    required this.getEmotionStampUseCase,
     required this.saveDiaryUseCase,
     required this.updateDiaryUseCase,
     required this.deleteDiaryUseCase,
@@ -126,8 +128,7 @@ class DiaryDetailViewModel extends GetxController
         newDiary,
       );
     }
-    await Get.find<EmotionStampViewModel>().getMonthStartEndData();
-    await Get.find<EmotionStampViewModel>().getEmotionStampList();
+    getEmotionStampUseCase.getEmoticonStampByDefault();
     _updateIsLoading(false);
   }
 
@@ -149,8 +150,7 @@ class DiaryDetailViewModel extends GetxController
     final result = await deleteDiaryUseCase(diaryData.id!);
     result.when(
       success: (result) async {
-        await Get.find<EmotionStampViewModel>().getMonthStartEndData();
-        await Get.find<EmotionStampViewModel>().getEmotionStampList();
+        getEmotionStampUseCase.getEmoticonStampByDefault();
       },
       error: (message) {},
     );

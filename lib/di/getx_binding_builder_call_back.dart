@@ -107,17 +107,21 @@ final deleteDiaryUseCase = DeleteDiaryUseCase(
   diaryRepository: diaryRepository,
 );
 
+void getMainBinding() {
+  Get.put(MainViewModel(
+    tokenUseCase: tokenUseCase,
+    onBoardingUseCase: onBoardingUseCase,
+  ));
+  Get.put(NotificationController());
+}
+
 void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
     appleLoginUseCase: appleLoginUseCase,
     onBoardingUseCase: onBoardingUseCase,
   ));
-  Get.put(MainViewModel(
-    tokenUseCase: tokenUseCase,
-    onBoardingUseCase: onBoardingUseCase,
-  ));
-  Get.put(NotificationController());
+
 }
 
 void getDiaryBinding() {
@@ -148,6 +152,7 @@ void getDiaryDetailBinding({
     diaryData: diaryData,
     imageFile: imageFile,
     isStamp: isStamp,
+    getEmotionStampUseCase: getEmotionStampUseCase,
   ));
 }
 
@@ -178,15 +183,17 @@ void getProfileBinding() {
   );
 }
 
-void getEmotionStampBinding() {
-  Get.put(EmotionStampViewModel(
+EmotionStampViewModel getEmotionStampBinding() {
+  return Get.put(EmotionStampViewModel(
     getEmotionStampUseCase: getEmotionStampUseCase,
   ));
 }
 
-void getHomeViewModelBinding() {
-  Get.put(
-    HomeViewModel(),
+HomeViewModel getHomeViewModelBinding() {
+  return Get.put(
+    HomeViewModel(
+      getEmotionStampUseCase: getEmotionStampUseCase,
+    ),
   );
 }
 

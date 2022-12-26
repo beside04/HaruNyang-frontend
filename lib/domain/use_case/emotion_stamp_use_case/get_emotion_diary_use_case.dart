@@ -4,12 +4,44 @@ import 'package:frontend/domain/repository/emotion_stamp/emotion_stamp_repositor
 
 class GetEmotionStampUseCase {
   final EmotionStampRepository emotionStampRepository;
+  late Function(List<DiaryData>)? _callback;
+  late String _defaultStartDate;
+  late String _defaultEndDate;
 
   GetEmotionStampUseCase({
     required this.emotionStampRepository,
   });
 
   Future<Result<List<DiaryData>>> call(String from, String to) async {
-    return emotionStampRepository.getEmotionStamp(from, to);
+    final result = await emotionStampRepository.getEmotionStamp(from, to);
+    result.when(
+        success: (result) {
+          if (_callback != null) {
+            _callback!(result);
+          }
+        },
+        error: (message) {});
+    return result;
+  }
+
+  void registerCallback(Function(List<DiaryData>) func) {
+    _callback = func;
+  }
+
+  void setDefaultDate(String start, String end) {
+    _defaultStartDate = start;
+    _defaultEndDate = end;
+  }
+
+  Future<void> getEmoticonStampByDefault() async {
+    final result = await emotionStampRepository.getEmotionStamp(
+        _defaultStartDate, _defaultEndDate);
+    result.when(
+        success: (result) {
+          if (_callback != null) {
+            _callback!(result);
+          }
+        },
+        error: (message) {});
   }
 }

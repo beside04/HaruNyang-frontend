@@ -8,12 +8,26 @@ import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 
-class HomeScreen extends GetView<HomeViewModel> {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  late final HomeViewModel controller;
+
+  @override
+  void initState() {
+    Get.delete<HomeViewModel>();
+    controller = getHomeViewModelBinding();
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    getHomeViewModelBinding();
     return WillPopScope(
       onWillPop: () async {
         bool backResult = GlobalUtils.onBackPressed();

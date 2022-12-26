@@ -1,9 +1,9 @@
 import 'package:frontend/core/result.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
-import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/login_state.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
@@ -57,9 +57,7 @@ class LoginViewModel extends GetxController {
                 );
               } else {
                 //온보딩 완료했으면 Home 화면으로 이동
-                Get.offAll(
-                  () => const HomeScreen(),
-                );
+                goHome();
               }
             },
             error: (message) {},
@@ -112,9 +110,7 @@ class LoginViewModel extends GetxController {
                 );
               } else {
                 //온보딩 완료했으면 Home 화면으로 이동
-                Get.offAll(
-                  () => const HomeScreen(),
-                );
+                goHome();
               }
             },
             error: (message) {},
@@ -180,9 +176,7 @@ class LoginViewModel extends GetxController {
               );
             } else {
               //온보딩 완료했으면 Home 화면으로 이동
-              Get.offAll(
-                () => const HomeScreen(),
-              );
+              goHome();
             }
           },
           error: (message) {},
@@ -221,6 +215,15 @@ class LoginViewModel extends GetxController {
       error: (message) {
         return Result.error(message);
       },
+    );
+  }
+
+  void goHome() {
+    Get.offAll(
+      () => const HomeScreen(),
+      binding: BindingsBuilder(
+        getHomeViewModelBinding,
+      ),
     );
   }
 }

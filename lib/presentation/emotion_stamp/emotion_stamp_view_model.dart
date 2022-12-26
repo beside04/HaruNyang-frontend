@@ -14,6 +14,7 @@ class EmotionStampViewModel extends GetxController {
   void onInit() {
     super.onInit();
 
+    getEmotionStampUseCase.registerCallback(parsingListDate);
     getMonthStartEndData();
     getEmotionStampList();
   }
@@ -90,18 +91,9 @@ class EmotionStampViewModel extends GetxController {
   Future<void> getEmotionStampList() async {
     _updateIsLoading(true);
 
-    final result = await getEmotionStampUseCase(
+    await getEmotionStampUseCase(
       DateFormat('yyyy-MM-dd').format(focusedStartDate.value),
       DateFormat('yyyy-MM-dd').format(focusedEndDate.value),
-    );
-
-    result.when(
-      success: (result) {
-        parsingListDate(result);
-      },
-      error: (message) {
-        Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
-      },
     );
 
     _updateIsLoading(false);
@@ -141,5 +133,9 @@ class EmotionStampViewModel extends GetxController {
       focusedCalendarDate.value.month + 1,
       0,
     );
+
+    getEmotionStampUseCase.setDefaultDate(
+        DateFormat('yyyy-MM-dd').format(focusedStartDate.value),
+        DateFormat('yyyy-MM-dd').format(focusedEndDate.value));
   }
 }

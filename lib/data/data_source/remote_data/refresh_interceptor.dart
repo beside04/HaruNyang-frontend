@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:get/get.dart';
@@ -45,7 +46,12 @@ Future<Dio> refreshInterceptor() async {
 
           // 로그인 만료 dialog 발생 후 로그인 페이지로 이동
 
-          Get.offAll(() => const LoginScreen());
+          Get.offAll(
+            () => const LoginScreen(),
+            binding: BindingsBuilder(
+              getLoginBinding,
+            ),
+          );
           Get.snackbar('알림', '세션이 만료되었습니다.');
         }
 

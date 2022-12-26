@@ -72,6 +72,9 @@ class EmptyDiaryScreen extends StatelessWidget {
                 Get.offAll(
                   () => const HomeScreen(),
                   arguments: {'index': 1},
+                  binding: BindingsBuilder(
+                    getHomeViewModelBinding,
+                  ),
                 );
               },
             )
