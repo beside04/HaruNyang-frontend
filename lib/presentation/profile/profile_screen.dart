@@ -7,7 +7,9 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/profile/book_mark/book_mark_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
+import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
@@ -170,7 +172,9 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   color: kGrayColor250,
                 ),
                 title: '북마크 목록',
-                onPressed: null,
+                onPressed: () {
+                  Get.to(() => const BookMarkScreen());
+                },
                 isLightMode: controller.lightModeValue.value,
               ),
               Container(
@@ -246,7 +250,9 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   color: kGrayColor250,
                 ),
                 title: '공지사항',
-                onPressed: null,
+                onPressed: () {
+                  Get.to(() => const NoticeScreen());
+                },
                 isLightMode: controller.lightModeValue.value,
               ),
               Container(
