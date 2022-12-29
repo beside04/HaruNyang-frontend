@@ -94,8 +94,8 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                                     child: Stack(
                                       children: [
                                         Center(
-                                          child: Image.asset(
-                                            "lib/config/assets/images/login/kakao_logo.png",
+                                          child: SvgPicture.asset(
+                                            'lib/config/assets/images/login/kakao_logo.svg',
                                             width: 10.w,
                                             height: 10.h,
                                           ),
@@ -113,10 +113,10 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                                     child: Stack(
                                       children: [
                                         Center(
-                                          child: Image.asset(
-                                            "lib/config/assets/images/login/apple_logo.png",
-                                            width: 20.w,
-                                            height: 20.h,
+                                          child: SvgPicture.asset(
+                                            'lib/config/assets/images/login/apple_logo.svg',
+                                            width: 10.w,
+                                            height: 10.h,
                                           ),
                                         ),
                                       ],

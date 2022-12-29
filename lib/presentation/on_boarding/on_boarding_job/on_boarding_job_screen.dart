@@ -5,7 +5,7 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/on_boarding/components/black_points.dart';
+import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_finish/on_boarding_finish_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
@@ -39,7 +39,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const BlackPoints(
+                    const OnBoardingStepper(
                       blackNumber: 3,
                     ),
                     Padding(
@@ -51,14 +51,14 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                             height: 40.h,
                           ),
                           Text(
-                            nickname,
+                            "어떤 일을",
                             style: kHeader2BlackStyle,
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
                           Text(
-                            "지금 어떤 일을 하고 있어?",
+                            "하고 계세요?",
                             style: kHeader2BlackStyle,
                           ),
                           SizedBox(
@@ -94,7 +94,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
               ),
               Obx(
                 () => BottomButton(
-                  title: '끝',
+                  title: '다음',
                   onTap: controller.jobStatus.value == null
                       ? null
                       : () async {

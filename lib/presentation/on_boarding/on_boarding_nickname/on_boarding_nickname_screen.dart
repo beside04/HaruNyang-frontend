@@ -8,7 +8,7 @@ import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
-import 'package:frontend/presentation/on_boarding/components/black_points.dart';
+import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
 import 'package:get/get.dart';
@@ -39,7 +39,7 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                 Center(
                   child: ListView(
                     children: [
-                      const BlackPoints(
+                      const OnBoardingStepper(
                         blackNumber: 1,
                       ),
                       Padding(
@@ -51,14 +51,14 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                               height: 40.h,
                             ),
                             Text(
-                              "안녕 나는 하루냥이야",
+                              "안녕하세요, 저는 하루냥이에요",
                               style: kHeader2BlackStyle,
                             ),
                             SizedBox(
                               height: 4.h,
                             ),
                             Text(
-                              "널 뭐라고 부르면 좋을까?",
+                              "이름이 뭐에요?",
                               style: kHeader2BlackStyle,
                             ),
                             SizedBox(
@@ -89,16 +89,14 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                               () => controller.isOnKeyboard.value
                                   ? Container()
                                   : SizedBox(
-                                      height: 178.h,
+                                      height: 126.h,
                                     ),
                             ),
                             Center(
-                              child: SizedBox(
-                                width: 240.w,
-                                height: 240.h,
-                                child: SvgPicture.asset(
-                                  "lib/config/assets/images/character/onboarding1.svg",
-                                ),
+                              child: SvgPicture.asset(
+                                "lib/config/assets/images/character/onboarding1.svg",
+                                width: 300.w,
+                                height: 300.h,
                               ),
                             ),
                           ],

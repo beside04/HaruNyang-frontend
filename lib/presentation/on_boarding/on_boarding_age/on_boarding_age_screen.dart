@@ -8,7 +8,7 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/on_boarding/components/black_points.dart';
+import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
 import 'package:get/get.dart';
@@ -38,7 +38,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const BlackPoints(
+                    const OnBoardingStepper(
                       blackNumber: 2,
                     ),
                     Padding(
@@ -50,18 +50,11 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                             height: 40.h,
                           ),
                           Text(
-                            nickname,
+                            "몇 살이에요?",
                             style: kHeader2BlackStyle,
                           ),
                           SizedBox(
-                            height: 4.h,
-                          ),
-                          Text(
-                            "나이는 어떻게 돼?",
-                            style: kHeader2BlackStyle,
-                          ),
-                          SizedBox(
-                            height: 20.h,
+                            height: 40.h,
                           ),
                           AgeTextField(
                             textEditingController:
@@ -98,15 +91,13 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                             ),
                           ),
                           SizedBox(
-                            height: 178.h,
+                            height: 158.h,
                           ),
                           Center(
-                            child: SizedBox(
-                              width: 240.w,
-                              height: 240.h,
-                              child: SvgPicture.asset(
-                                "lib/config/assets/images/character/onboarding2.svg",
-                              ),
+                            child: SvgPicture.asset(
+                              "lib/config/assets/images/character/weather2.svg",
+                              width: 300.w,
+                              height: 300.h,
                             ),
                           ),
                         ],
