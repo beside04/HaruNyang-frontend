@@ -180,6 +180,14 @@ TextStyle kBody1Gray600Style = TextStyle(
   height: 1.4285.sp,
 );
 
+TextStyle kBody1Primary2Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kPrimary2Color,
+  fontWeight: FontWeight.w400,
+  height: 1.4285.sp,
+);
+
 //Body2 Style
 TextStyle kBody2BlackStyle = TextStyle(
   fontFamily: pretendard,

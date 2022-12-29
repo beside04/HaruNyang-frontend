@@ -90,7 +90,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   ),
                   child: Text(
                     '가입 시 수집한 개인정보(이메일)를 포함하여 작성한\n 일기, 기분, 감정캘린더, 발급받은 감정리포트가\n 영구적으로 삭제되며, 다시는 복구할 수 없습니다.',
-                    style: kBody2BlackStyle,
+                    style: kBody2Gray400Style,
                     textAlign: TextAlign.center,
                   ),
                 ),
