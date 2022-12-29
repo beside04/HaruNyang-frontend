@@ -12,6 +12,8 @@ import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
+import 'package:frontend/presentation/profile/terms/privacy_policy_screen.dart';
+import 'package:frontend/presentation/profile/terms/terms_of_service_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends GetView<ProfileViewModel> {
@@ -265,8 +267,13 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   Icons.navigate_next,
                   color: kGrayColor250,
                 ),
-                title: '이용약관',
-                onPressed: null,
+                title: '서비스 이용약관',
+                onPressed: () {
+                  Get.to(
+                    () => const TermsOfServiceScreen(),
+                    transition: Transition.downToUp,
+                  );
+                },
                 isLightMode: controller.lightModeValue.value,
               ),
               Container(
@@ -280,7 +287,12 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   color: kGrayColor250,
                 ),
                 title: '개인정보 취급방침',
-                onPressed: null,
+                onPressed: () {
+                  Get.to(
+                    () => const PrivacyPolicyScreen(),
+                    transition: Transition.downToUp,
+                  );
+                },
                 isLightMode: controller.lightModeValue.value,
               ),
             ],

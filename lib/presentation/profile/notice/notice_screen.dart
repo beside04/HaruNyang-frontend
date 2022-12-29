@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/profile/components/notice_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_detail_screen.dart';
 import 'package:frontend/presentation/profile/notice/notice_view_model.dart';
@@ -15,7 +14,6 @@ class NoticeScreen extends GetView<NoticeViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    getBookMarkViewModelBinding();
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: kBlackColor),

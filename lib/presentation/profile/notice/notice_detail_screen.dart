@@ -22,7 +22,6 @@ class NoticeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getBookMarkViewModelBinding();
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: kBlackColor),
