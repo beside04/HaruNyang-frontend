@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:get/get.dart';
 
@@ -35,7 +34,7 @@ class TermCheckBox extends GetView<LoginTermsInformationViewModel> {
                   activeColor: kPrimaryColor,
                   value: termValue,
                   onChanged: (value) {
-                    if (value != null) onTap;
+                    if (value != null) onTap();
                   },
                 ),
               ),

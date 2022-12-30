@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {
   const TermsOfServiceScreen({
@@ -39,7 +36,7 @@ class TermsOfServiceScreen extends StatelessWidget {
         child: Scrollbar(
           thumbVisibility: true,
           thickness: 4.0,
-          radius: Radius.circular(8.0),
+          radius: const Radius.circular(8.0),
           child: Markdown(
             data: '''
 ## 제 1 장 총칙

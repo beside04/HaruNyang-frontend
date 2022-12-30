@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/diary/components/emotion_modal.dart';
 import 'package:frontend/presentation/diary/components/past_diary_app_bar.dart';
+import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +26,7 @@ class PastDiaryTestScreen extends GetView<DiaryViewModel> {
       onWillPop: () async {
         controller.isEmotionModal.value
             ? Get.back()
-            : controller.swapStackChildren2();
+            : controller.popUpEmotionModal();
         return false;
       },
       child: Scaffold(
@@ -79,7 +82,18 @@ class PastDiaryTestScreen extends GetView<DiaryViewModel> {
                   return Expanded(
                     child: Stack(
                       children: [
-                        ...controller.stackChildren,
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: SvgPicture.asset(
+                            controller.isEmotionModal.value
+                                ? "lib/config/assets/images/character/weather1.svg"
+                                : "lib/config/assets/images/character/weather2.svg",
+                            width: 300.w,
+                            height: 300.h,
+                          ),
+                        ),
+                        const WeatherModal(),
+                        const EmotionModal(),
                       ],
                     ),
                   );

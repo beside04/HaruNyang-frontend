@@ -39,7 +39,7 @@ class PastDiaryAppBar extends GetView<DiaryViewModel>
               )
             : IconButton(
                 onPressed: () {
-                  controller.swapStackChildren2();
+                  controller.popUpEmotionModal();
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,

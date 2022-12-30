@@ -1,4 +1,3 @@
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
@@ -47,9 +46,6 @@ class LoginTermsInformationViewModel extends GetxController {
     Get.offAll(
       () => const LoginScreen(
         isSignup: true,
-      ),
-      binding: BindingsBuilder(
-        getLoginBinding,
       ),
     );
   }

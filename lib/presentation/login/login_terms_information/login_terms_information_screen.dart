@@ -6,7 +6,6 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/login/components/term_check_box.dart';
-import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/profile/terms/marketing_consent_screen.dart';
 import 'package:frontend/presentation/profile/terms/privacy_policy_screen.dart';
