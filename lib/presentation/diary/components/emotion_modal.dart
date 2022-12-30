@@ -13,86 +13,90 @@ class EmotionModal extends GetView<DiaryViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Obx(
-        () => SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: controller.selectedEmotion.value.emoticon.isEmpty ||
-                  controller.isEmotionModal.value
-              ? 276.h
-              : 371.h,
-          child: Container(
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
+    return Obx(
+      () => AnimatedPositioned(
+        duration: const Duration(milliseconds: 200),
+        bottom: controller.isEmotionModal.value ? -276 : 0,
+        child: Obx(
+          () => AnimatedContainer(
+            duration: const Duration(milliseconds: 200),
+            width: MediaQuery.of(context).size.width,
+            height: controller.selectedEmotion.value.emoticon.isEmpty ||
+                    controller.isEmotionModal.value
+                ? 276.h
+                : 375.h,
+            child: Container(
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                color: kWhiteColor,
               ),
-              color: kWhiteColor,
-            ),
-            child: Stack(
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 28.w, top: 28.h),
-                  child: Row(
-                    children: [
-                      Text(
-                        "기분",
-                        style: kHeader3BlackStyle,
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 6.w, top: 75.h),
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: controller.emoticonDataList.length,
-                    itemBuilder: (BuildContext context, int i) {
-                      return Obx(
-                        () => EmoticonIconButton(
-                          name: controller.emoticonDataList[i].desc,
-                          icon: controller.emoticonDataList[i].emoticon,
-                          selected: controller.selectedEmotion.value ==
-                              controller.emoticonDataList[i],
-                          onPressed: () {
-                            controller.setSelectedEmoticon(
-                                controller.emoticonDataList[i]);
-                          },
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(left: 28.w, top: 28.h),
+                    child: Row(
+                      children: [
+                        Text(
+                          "기분",
+                          style: kHeader3BlackStyle,
                         ),
-                      );
-                    },
+                      ],
+                    ),
                   ),
-                ),
-                Obx(
-                  () => Padding(
-                    padding: EdgeInsets.only(left: 6.w, top: 184.h),
-                    child: controller.selectedEmotion.value.emoticon.isEmpty
-                        ? Container()
-                        : buildSlider(),
+                  Padding(
+                    padding: EdgeInsets.only(left: 6.w, top: 75.h),
+                    child: ListView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: controller.emoticonDataList.length,
+                      itemBuilder: (BuildContext context, int i) {
+                        return Obx(
+                          () => EmoticonIconButton(
+                            name: controller.emoticonDataList[i].desc,
+                            icon: controller.emoticonDataList[i].emoticon,
+                            selected: controller.selectedEmotion.value ==
+                                controller.emoticonDataList[i],
+                            onPressed: () {
+                              controller.setSelectedEmoticon(
+                                  controller.emoticonDataList[i]);
+                            },
+                          ),
+                        );
+                      },
+                    ),
                   ),
-                ),
-                Obx(
-                  () => BottomButton(
-                    title: '일기쓰기',
-                    onTap: controller.selectedEmotion.value.emoticon.isEmpty
-                        ? null
-                        : () {
-                            Get.to(
-                              () => WriteDiaryScreen(
-                                date: controller.nowDate.value,
-                                emotion: controller.selectedEmotion.value,
-                                weather: controller.weatherStatus.value!,
-                                emoticonIndex:
-                                    (controller.emotionNumberValue.value * 10)
-                                        .toInt(),
-                              ),
-                            );
-                          },
+                  Obx(
+                    () => Padding(
+                      padding: EdgeInsets.only(left: 6.w, top: 201.h),
+                      child: controller.selectedEmotion.value.emoticon.isEmpty
+                          ? Container()
+                          : buildSlider(),
+                    ),
                   ),
-                )
-              ],
+                  Obx(
+                    () => BottomButton(
+                      title: '일기쓰기',
+                      onTap: controller.selectedEmotion.value.emoticon.isEmpty
+                          ? null
+                          : () {
+                              Get.to(
+                                () => WriteDiaryScreen(
+                                  date: controller.nowDate.value,
+                                  emotion: controller.selectedEmotion.value,
+                                  weather: controller.weatherStatus.value!,
+                                  emoticonIndex:
+                                      (controller.emotionNumberValue.value * 10)
+                                          .toInt(),
+                                ),
+                              );
+                            },
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

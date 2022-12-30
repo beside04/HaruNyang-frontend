@@ -66,7 +66,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
                   onTap: controller.weatherStatus.value == null
                       ? null
                       : () {
-                          controller.swapStackChildren();
+                          controller.popDownEmotionModal();
                         },
                 ),
               ),

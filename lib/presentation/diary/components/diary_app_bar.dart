@@ -30,7 +30,7 @@ class DiaryAppBar extends GetView<DiaryViewModel>
             ? null
             : IconButton(
                 onPressed: () {
-                  controller.swapStackChildren2();
+                  controller.popUpEmotionModal();
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,

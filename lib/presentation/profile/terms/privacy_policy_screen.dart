@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
   const PrivacyPolicyScreen({
@@ -39,7 +36,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
         child: Scrollbar(
           thumbVisibility: true,
           thickness: 4.0,
-          radius: Radius.circular(8.0),
+          radius: const Radius.circular(8.0),
           child: Markdown(
             data: '''
 <하루냥>은 개인정보보호법에 따라 이용자의 개인정보 보호 및 권익을 보호하고 개인정보와 관련한 이용자의 고충을 원활하게 처리할 수 있도록 다음과 같은 처리방침을 두고 있습니다. 하루냥은 개인정보처리방침을 개정하는 경우 애플리케이션 내 공지를 통하여 공지할 것입니다.
