@@ -31,6 +31,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffedebe8),
       appBar: AppBar(
         iconTheme: const IconThemeData(color: kBlackColor),
         backgroundColor: kWhiteColor,
@@ -365,28 +366,6 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 1.h,
-              color: kGrayColor100,
-            ),
-            ProfileButton(
-              icon: const Icon(
-                Icons.navigate_next,
-                color: kGrayColor250,
-              ),
-              title: '회원탈퇴',
-              onPressed: () {
-                Get.to(
-                  () => WithdrawScreen(
-                    isKakaoLogin: isKakaoLogin,
-                  ),
-                  binding: BindingsBuilder(
-                    getWithdrawViewModelBinding,
-                  ),
-                );
-              },
-            ),
-            Container(
-              width: MediaQuery.of(context).size.width,
               height: 12.h,
               color: const Color(0xffedebe8),
             ),
@@ -407,6 +386,25 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                   ),
                 );
               },
+            ),
+            GestureDetector(
+              onTap: () {
+                Get.to(
+                  () => WithdrawScreen(
+                    isKakaoLogin: isKakaoLogin,
+                  ),
+                  binding: BindingsBuilder(
+                    getWithdrawViewModelBinding,
+                  ),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(
+                  '회원탈퇴',
+                  style: kSubtitle2Gray300UnderlineStyle,
+                ),
+              ),
             ),
           ],
         ),

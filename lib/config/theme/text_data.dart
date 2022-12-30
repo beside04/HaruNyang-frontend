@@ -105,6 +105,23 @@ TextStyle kSubtitle2Primary2Style = TextStyle(
   height: 1.375.sp,
 );
 
+TextStyle kSubtitle2Gray300Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor300,
+  fontWeight: FontWeight.w600,
+  height: 1.375.sp,
+);
+
+TextStyle kSubtitle2Gray300UnderlineStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor300,
+  fontWeight: FontWeight.w600,
+  height: 1.375.sp,
+  decoration: TextDecoration.underline,
+);
+
 //Subtitle3 Style
 TextStyle kSubtitle3BlackStyle = TextStyle(
   fontFamily: pretendard,
@@ -176,6 +193,14 @@ TextStyle kBody1Gray600Style = TextStyle(
   fontFamily: pretendard,
   fontSize: 14.sp,
   color: kGrayColor600,
+  fontWeight: FontWeight.w400,
+  height: 1.4285.sp,
+);
+
+TextStyle kBody1Primary2Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kPrimary2Color,
   fontWeight: FontWeight.w400,
   height: 1.4285.sp,
 );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 
 import '../../../config/theme/text_data.dart';
@@ -15,35 +16,25 @@ class AppleLoginWidget extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 15.0.w),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(60.w),
           color: kBlackColor,
         ),
         width: 360.w,
         height: 56.h,
-        child: Stack(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                left: 95.0.w,
-                top: 10.h,
-              ),
-              child: SizedBox(
-                width: 51.w,
-                height: 35.h,
-                child: Image.asset(
-                  'lib/config/assets/images/login/apple_logo.png',
-                ),
-              ),
+            SvgPicture.asset(
+              'lib/config/assets/images/login/apple_logo.svg',
+              width: 13.w,
+              height: 16.h,
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 138.0.w,
-                top: 18.h,
-              ),
-              child: Text(
-                "애플로 로그인",
-                style: kSubtitle1WhiteStyle,
-              ),
+            SizedBox(
+              width: 7.w,
+            ),
+            Text(
+              "애플로 시작하기",
+              style: kSubtitle2WhiteStyle,
             ),
           ],
         ),

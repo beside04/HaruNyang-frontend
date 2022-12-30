@@ -35,6 +35,7 @@ import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
+import 'package:frontend/presentation/profile/book_mark/book_mark_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
@@ -211,5 +212,11 @@ void getProfileSettingViewModelBinding() {
       appleLoginUseCase: appleLoginUseCase,
       onBoardingUseCase: onBoardingUseCase,
     ),
+  );
+}
+
+void getBookMarkViewModelBinding() {
+  Get.put(
+    BookMarkViewModel(),
   );
 }

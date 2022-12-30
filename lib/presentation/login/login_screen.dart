@@ -36,15 +36,12 @@ class LoginScreen extends GetView<LoginViewModel> {
             Padding(
               padding: EdgeInsets.only(
                 top: 165.h,
-                left: 56.w,
               ),
               child: Center(
-                child: SizedBox(
+                child: SvgPicture.asset(
+                  "lib/config/assets/images/character/weather1.svg",
                   width: 280.w,
                   height: 280.h,
-                  child: SvgPicture.asset(
-                    "lib/config/assets/images/character/onboarding2.svg",
-                  ),
                 ),
               ),
             ),
@@ -79,37 +76,6 @@ class LoginScreen extends GetView<LoginViewModel> {
                   ),
             SizedBox(
               height: 20.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: 17.w,
-              ),
-              child: Text.rich(
-                TextSpan(
-                  text: '로그인시 하루냥의 ',
-                  style: kSubtitle2BlackStyle,
-                  children: const [
-                    TextSpan(
-                      text: '이용약관',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '과 ',
-                    ),
-                    TextSpan(
-                      text: '개인정보 보호 정책',
-                      style: TextStyle(
-                        decoration: TextDecoration.underline,
-                      ),
-                    ),
-                    TextSpan(
-                      text: '을 \n이미 확인했음을 간주하고 진행됩니다.',
-                    ),
-                  ],
-                ),
-              ),
             ),
           ],
         ),

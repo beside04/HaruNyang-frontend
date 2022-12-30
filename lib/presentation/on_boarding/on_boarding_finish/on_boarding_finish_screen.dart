@@ -6,7 +6,7 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
-import 'package:frontend/presentation/on_boarding/components/black_points.dart';
+import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_finish/on_boarding_finish_viewmodel.dart';
 import 'package:get/get.dart';
 
@@ -36,7 +36,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const BlackPoints(
+                    const OnBoardingStepper(
                       blackNumber: 4,
                     ),
                     Padding(
@@ -59,15 +59,13 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                             style: kHeader2BlackStyle,
                           ),
                           SizedBox(
-                            height: 210.h,
+                            height: 158.h,
                           ),
                           Center(
-                            child: SizedBox(
-                              width: 240.w,
-                              height: 240.h,
-                              child: SvgPicture.asset(
-                                "lib/config/assets/images/character/onboarding3.svg",
-                              ),
+                            child: SvgPicture.asset(
+                              "lib/config/assets/images/character/onboarding3.svg",
+                              width: 340.w,
+                              height: 340.h,
                             ),
                           ),
                         ],

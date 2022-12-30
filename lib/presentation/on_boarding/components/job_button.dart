@@ -37,26 +37,12 @@ class JobButton extends StatelessWidget {
             child: Stack(
               children: [
                 Center(
-                  child: Text(
+                  child: SvgPicture.asset(
                     icon,
-                    style: TextStyle(
-                      fontSize: 40.sp,
-                    ),
+                    height: 52.h,
+                    width: 52.w,
                   ),
                 ),
-                selected
-                    ? Positioned(
-                        bottom: 10.h,
-                        right: 2.w,
-                        child: SizedBox(
-                          width: 16.w,
-                          height: 16.h,
-                          child: SvgPicture.asset(
-                            "lib/config/assets/images/on_boarding/check.svg",
-                          ),
-                        ),
-                      )
-                    : Container(),
               ],
             ),
           ),

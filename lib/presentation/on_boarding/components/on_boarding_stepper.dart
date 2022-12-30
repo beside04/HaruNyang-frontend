@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 
-class BlackPoints extends StatelessWidget {
-  const BlackPoints({
+class OnBoardingStepper extends StatelessWidget {
+  const OnBoardingStepper({
     super.key,
     required this.blackNumber,
   });
@@ -18,7 +18,7 @@ class BlackPoints extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 1 ? kBlackColor : kGrayColor200,
+              color: blackNumber >= 1 ? kPrimary2Color : kGrayColor200,
             ),
           ),
         ),
@@ -26,7 +26,7 @@ class BlackPoints extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 2 ? kBlackColor : kGrayColor200,
+              color: blackNumber >= 2 ? kPrimary2Color : kGrayColor200,
             ),
           ),
         ),
@@ -34,7 +34,7 @@ class BlackPoints extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 3 ? kBlackColor : kGrayColor200,
+              color: blackNumber >= 3 ? kPrimary2Color : kGrayColor200,
             ),
           ),
         ),
@@ -42,7 +42,7 @@ class BlackPoints extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 4 ? kBlackColor : kGrayColor200,
+              color: blackNumber >= 4 ? kPrimary2Color : kGrayColor200,
             ),
           ),
         ),

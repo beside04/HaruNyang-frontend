@@ -79,32 +79,32 @@ List<WeatherData> weatherDataList = [
 List<JobData> jobList = [
   JobData(
     name: "학생",
-    icon: '🧑‍🎓',
+    icon: 'lib/config/assets/images/on_boarding/student.svg',
     value: 'student',
   ),
   JobData(
     name: "직장인",
-    icon: '🧑‍💼',
+    icon: 'lib/config/assets/images/on_boarding/office_workers.svg',
     value: 'officeWorkers',
   ),
   JobData(
     name: "취준생",
-    icon: '🧑‍💻',
+    icon: 'lib/config/assets/images/on_boarding/job_seeker.svg',
     value: 'jobSeeker',
   ),
   JobData(
     name: "프리랜서",
-    icon: '🧙',
+    icon: 'lib/config/assets/images/on_boarding/freelancer.svg',
     value: 'freelancer',
   ),
   JobData(
     name: "휴식중",
-    icon: '🏝',
+    icon: 'lib/config/assets/images/on_boarding/rest.svg',
     value: 'rest',
   ),
   JobData(
     name: "기타",
-    icon: '🎸',
+    icon: 'lib/config/assets/images/on_boarding/etc.svg',
     value: 'etc',
   ),
 ];
