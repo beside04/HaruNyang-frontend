@@ -83,7 +83,9 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                         ),
                       ),
                       const WeatherModal(),
-                      const EmotionModal(),
+                      EmotionModal(
+                        date: DateTime.now(),
+                      ),
                     ],
                   ),
                 );
