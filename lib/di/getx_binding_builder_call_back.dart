@@ -1,3 +1,4 @@
+import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
 import 'package:frontend/data/repository/emoticon/emoticon_repository_impl.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
@@ -12,6 +13,7 @@ import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
@@ -52,6 +54,7 @@ final WiseSayingRepositoryImpl wiseSayingRepositoryImpl =
 final FileUploadRepositoryImpl fileUploadRepositoryImpl =
     FileUploadRepositoryImpl();
 final diaryRepository = DiaryRepositoryImpl();
+final bookmarkRepository = BookmarkRepositoryImpl();
 
 //use case
 final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
@@ -106,6 +109,10 @@ final updateDiaryUseCase = UpdateDiaryUseCase(
 );
 final deleteDiaryUseCase = DeleteDiaryUseCase(
   diaryRepository: diaryRepository,
+);
+
+final bookmarkUseCase = BookmarkUseCase(
+  bookmarkRepository: bookmarkRepository,
 );
 
 void getMainBinding() {
@@ -217,6 +224,8 @@ void getProfileSettingViewModelBinding() {
 
 void getBookMarkViewModelBinding() {
   Get.put(
-    BookMarkViewModel(),
+    BookMarkViewModel(
+      bookmarkUseCase: bookmarkUseCase,
+    ),
   );
 }
