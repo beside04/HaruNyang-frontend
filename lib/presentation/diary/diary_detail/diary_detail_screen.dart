@@ -39,6 +39,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
       diaryData: diaryData,
       isStamp: isStamp,
       imageFile: imageFile,
+      date: date,
     );
     return Scaffold(
       appBar: AppBar(

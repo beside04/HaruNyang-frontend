@@ -5,24 +5,33 @@ import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 
 class DiaryApi {
+  final RefreshInterceptor interceptor;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+
+  DiaryApi({
+    required this.interceptor,
+  });
 
   Future<Result<bool>> saveDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary';
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
     try {
       Response response;
-      response = await dio.post(diaryUrl, data: {
-        "diary_content": diary.diaryContent,
-        "emotion_id": diary.emotion.id,
-        "emotion_index": diary.emoticonIndex, //감정 강도
-        "images": diary.images,
-        "weather": diary.weather,
-        "wise_saying_ids": diary.wiseSayings
-            .where((element) => element.id != null)
-            .map((e) => e.id)
-            .toList(),
-      });
+      response = await dio.post(
+        diaryUrl,
+        data: {
+          "diary_content": diary.diaryContent,
+          "emotion_id": diary.emotion.id,
+          "emotion_index": diary.emoticonIndex, //감정 강도
+          "images": diary.images,
+          "weather": diary.weather,
+          "wise_saying_ids": diary.wiseSayings
+              .where((element) => element.id != null)
+              .map((e) => e.id)
+              .toList(),
+          "written_at": diary.createTime,
+        },
+      );
 
       final bool resultData = response.data['data'];
       if (resultData) {
@@ -49,7 +58,7 @@ class DiaryApi {
 
   Future<Result<bool>> updateDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary/${diary.id}';
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
     try {
       Response response;
       response = await dio.put(diaryUrl, data: {
@@ -86,7 +95,7 @@ class DiaryApi {
 
   Future<Result<bool>> deleteDiary(String diaryId) async {
     String diaryUrl = '$_baseUrl/v1/diary/$diaryId';
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
     try {
       Response response;
       response = await dio.delete(

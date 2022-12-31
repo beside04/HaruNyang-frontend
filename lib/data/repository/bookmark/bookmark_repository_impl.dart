@@ -4,20 +4,24 @@ import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
 import 'package:frontend/domain/repository/bookmark/bookmark_repository.dart';
 
 class BookmarkRepositoryImpl implements BookmarkRepository {
-  final BookmarkApi _dataSource = BookmarkApi();
+  final BookmarkApi bookmarkApi;
+
+  BookmarkRepositoryImpl({
+    required this.bookmarkApi,
+  });
 
   @override
   Future<Result<bool>> saveBookmark(int wiseSayingId) async {
-    return await _dataSource.saveBookmark(wiseSayingId);
+    return await bookmarkApi.saveBookmark(wiseSayingId);
   }
 
   @override
   Future<Result<BookmarkData>> getBookmark(int page, int limit) async {
-    return await _dataSource.getBookmark(page, limit);
+    return await bookmarkApi.getBookmark(page, limit);
   }
 
   @override
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {
-    return await _dataSource.deleteBookmark(bookmarkId);
+    return await bookmarkApi.deleteBookmark(bookmarkId);
   }
 }

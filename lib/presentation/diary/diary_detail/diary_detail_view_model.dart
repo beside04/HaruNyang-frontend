@@ -12,6 +12,7 @@ import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_us
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
+import 'package:intl/intl.dart';
 
 class DiaryDetailViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -25,6 +26,7 @@ class DiaryDetailViewModel extends GetxController
   final DiaryData diaryData;
   final CroppedFile? imageFile;
   final bool isStamp;
+  final DateTime date;
 
   DiaryDetailViewModel({
     required this.getWiseSayingUseCase,
@@ -35,6 +37,7 @@ class DiaryDetailViewModel extends GetxController
     required this.fileUploadUseCase,
     required this.diaryData,
     required this.isStamp,
+    required this.date,
     this.imageFile,
   });
 
@@ -117,6 +120,7 @@ class DiaryDetailViewModel extends GetxController
     final newDiary = diary.copyWith(
       images: [networkImage.value],
       wiseSayings: wiseSayingList,
+      createTime: DateFormat('yyyy-MM-dd').format(date),
     );
 
     if (diary.id != null) {

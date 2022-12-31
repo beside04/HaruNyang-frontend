@@ -5,12 +5,17 @@ import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/my_information.dart';
 
 class OnBoardingApi {
+  final RefreshInterceptor interceptor;
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+
+  OnBoardingApi({
+    required this.interceptor,
+  });
 
   Future<Result<MyInformation>> getMyInformation() async {
     String myInformationUrl = '$baseUrl/v1/me';
 
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
 
     try {
       Response response;
@@ -44,7 +49,7 @@ class OnBoardingApi {
   }) async {
     String myInformationUrl = '$baseUrl/v1/members';
 
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
 
     try {
       Response response;

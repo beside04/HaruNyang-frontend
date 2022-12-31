@@ -5,11 +5,16 @@ import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 
 class WiseSayingApi {
+  final RefreshInterceptor interceptor;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+
+  WiseSayingApi({
+    required this.interceptor,
+  });
 
   Future<Result<List<WiseSayingData>>> getWiseSaying(
       int emoticonId, String content) async {
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
 
     try {
       String emoticonUrl = '$_baseUrl/v1/emotion/$emoticonId/wisesaying';

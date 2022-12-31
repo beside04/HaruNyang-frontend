@@ -5,11 +5,16 @@ import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
 
 class BookmarkApi {
+  final RefreshInterceptor interceptor;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+
+  BookmarkApi({
+    required this.interceptor,
+  });
 
   Future<Result<bool>> saveBookmark(int wiseSayingId) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
     try {
       Response response;
       response = await dio.post(bookmarkUrl, data: {
@@ -41,7 +46,7 @@ class BookmarkApi {
 
   Future<Result<BookmarkData>> getBookmark(int page, int limit) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
     try {
       Response response;
       response = await dio.get(
@@ -74,7 +79,7 @@ class BookmarkApi {
 
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark/$bookmarkId';
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
     try {
       Response response;
       response = await dio.delete(

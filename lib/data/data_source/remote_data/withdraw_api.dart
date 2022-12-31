@@ -4,11 +4,16 @@ import 'package:frontend/core/result.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 
 class WithdrawApi {
+  final RefreshInterceptor interceptor;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+
+  WithdrawApi({
+    required this.interceptor,
+  });
 
   Future<Result<bool>> withdrawUser() async {
     String withdrawUrl = '$_baseUrl/v1/withdraw';
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
 
     try {
       Response response;
