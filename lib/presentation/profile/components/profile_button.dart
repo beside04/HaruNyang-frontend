@@ -32,8 +32,7 @@ class ProfileButton extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style:
-                      isLightMode ? kSubtitle2BlackStyle : kSubtitle2WhiteStyle,
+                  style: isLightMode ? kHeader5BlackStyle : kHeader5WhiteStyle,
                 ),
                 icon
               ],

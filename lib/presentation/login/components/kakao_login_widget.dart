@@ -33,7 +33,7 @@ class KakaoLoginWidget extends StatelessWidget {
             ),
             Text(
               "카카오로 시작하기",
-              style: kSubtitle2BlackStyle,
+              style: kHeader5BlackStyle,
             ),
           ],
         ),

@@ -24,8 +24,6 @@ class LoginTermsInformationScreen
 
     return Scaffold(
       appBar: AppBar(
-          iconTheme: const IconThemeData(color: kBlackColor),
-          backgroundColor: kWhiteColor,
           title: Text(
             "약관정보",
             style: kHeader3BlackStyle,
@@ -37,7 +35,6 @@ class LoginTermsInformationScreen
             },
             icon: Icon(
               Icons.arrow_back_ios,
-              color: kBlackColor,
               size: 20.w,
             ),
           )),
@@ -94,7 +91,7 @@ class LoginTermsInformationScreen
                         padding: EdgeInsets.all(8.w),
                         child: Text(
                           '전체 동의하기',
-                          style: kSubtitle4BlackStyle,
+                          style: kSubtitle1BlackStyle,
                         ),
                       ),
                     ],

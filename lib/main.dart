@@ -5,6 +5,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
@@ -51,23 +52,8 @@ class MyApp extends GetView<MainViewModel> {
           getPages: [
             GetPage(name: '/home', page: () => const HomeScreen()),
           ],
-          theme: ThemeData(
-            scaffoldBackgroundColor: kWhiteColor,
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: kSuccessColor,
-            ),
-            primarySwatch: Colors.blue,
-            inputDecorationTheme: const InputDecorationTheme(
-              filled: true,
-              fillColor: kGrayColor50,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: kGrayColor150),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: kGrayColor950),
-              ),
-            ),
-          ),
+          darkTheme: darkMode,
+          theme: lightMode,
           home: Get.find<MainViewModel>().token == null
               ? const LoginScreen()
               : const HomeScreen(),

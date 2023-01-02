@@ -36,7 +36,7 @@ class BottomButton extends StatelessWidget {
             onPressed: onTap,
             child: Text(
               title,
-              style: kSubtitle2WhiteStyle,
+              style: kHeader5WhiteStyle,
             ),
           ),
         ),

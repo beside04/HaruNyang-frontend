@@ -23,9 +23,7 @@ class EmptyDiaryScreen extends StatelessWidget {
     getWriteDiaryBinding();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
         elevation: 0,
-        centerTitle: true,
         title: Text(
           DateFormat('MM월 dd일').format(date),
           style: kHeader3BlackStyle,
@@ -62,7 +60,7 @@ class EmptyDiaryScreen extends StatelessWidget {
                   ),
                   Text(
                     "작성한 일기가 없어요",
-                    style: kSubtitle2BlackStyle,
+                    style: kHeader5BlackStyle,
                   )
                 ],
               ),

@@ -41,9 +41,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
         elevation: 0,
-        centerTitle: true,
         actions: [
           Obx(
             () => IconButton(
@@ -53,7 +51,6 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
               icon: controller.isCalendar.value
                   ? const Icon(Icons.list)
                   : const Icon(Icons.calendar_month_outlined),
-              color: kBlackColor,
             ),
           )
         ],
@@ -193,7 +190,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                     backgroundColor:
                                                         kPrimary2Color,
                                                     textStyle:
-                                                        kSubtitle1WhiteStyle,
+                                                        kHeader4WhiteStyle,
                                                   ),
                                                 ],
                                               );
@@ -286,7 +283,9 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                               child: Center(
                                                 child: Text(
                                                   DateFormat('dd').format(day),
-                                                  style: kCaption1WhiteStyle,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .caption,
                                                 ),
                                               ),
                                             ),
@@ -297,7 +296,11 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                     const EdgeInsets.all(8.0),
                                                 child: Text(
                                                   DateFormat('dd').format(day),
-                                                  style: kCaption1PrimaryStyle,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .caption!
+                                                      .copyWith(
+                                                          color: kPrimaryColor),
                                                 ),
                                               )
                                             : Padding(
@@ -305,7 +308,9 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                     const EdgeInsets.all(8.0),
                                                 child: Text(
                                                   DateFormat('dd').format(day),
-                                                  style: kCaption1BlackStyle,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .caption,
                                                 ),
                                               );
                                   },
@@ -382,8 +387,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                     ),
                                                     Text(
                                                       "작성한 일기가 없어요",
-                                                      style:
-                                                          kSubtitle2BlackStyle,
+                                                      style: kHeader5BlackStyle,
                                                     )
                                                   ],
                                                 ),
@@ -420,8 +424,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                         top: 20.h, left: 20.w),
                                                     child: Text(
                                                       "${(controller.diaryListDataList["key_ordered"] as List)[index]}번째 주",
-                                                      style:
-                                                          kSubtitle1BlackStyle,
+                                                      style: kHeader4BlackStyle,
                                                     ),
                                                   ),
                                                   ListView.builder(
@@ -481,7 +484,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                                           .format(
                                                                               DateTime.parse(itemList.createTime)),
                                                                       style:
-                                                                          kSubtitle2BlackStyle,
+                                                                          kHeader5BlackStyle,
                                                                     ),
                                                                     Row(
                                                                       children: [

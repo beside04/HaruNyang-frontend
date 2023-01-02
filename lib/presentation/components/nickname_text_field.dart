@@ -17,7 +17,7 @@ class NicknameTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'name',
-      style: kSubtitle4BlackStyle,
+      style: kSubtitle1BlackStyle,
       controller: textEditingController,
       keyboardType: TextInputType.text,
       textAlignVertical: TextAlignVertical.center,
@@ -25,7 +25,7 @@ class NicknameTextField extends StatelessWidget {
         helperText: "",
         counterText: "",
         hintText: '이름',
-        hintStyle: kSubtitle3Gray300Style,
+        hintStyle: kHeader6Gray300Style,
         contentPadding: const EdgeInsets.only(
           top: 14,
           right: 14,

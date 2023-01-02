@@ -51,7 +51,7 @@ class JobButton extends StatelessWidget {
           ),
           Text(
             job,
-            style: kSubtitle4BlackStyle,
+            style: kSubtitle1BlackStyle,
           )
         ],
       ),

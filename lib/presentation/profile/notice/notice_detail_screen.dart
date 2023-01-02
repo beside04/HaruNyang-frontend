@@ -24,7 +24,6 @@ class NoticeDetailScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           title,
           style: kHeader3BlackStyle,
@@ -73,7 +72,7 @@ class NoticeDetailScreen extends StatelessWidget {
                   ),
                   Text(
                     title,
-                    style: kSubtitle3BlackStyle,
+                    style: kHeader6BlackStyle,
                   ),
                   SizedBox(
                     height: 9.h,

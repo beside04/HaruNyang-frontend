@@ -22,17 +22,18 @@ class ProfileScreen extends GetView<ProfileViewModel> {
   @override
   Widget build(BuildContext context) {
     getProfileBinding();
+    final mainViewController = Get.find<MainViewModel>();
 
     return Obx(
       () => Scaffold(
-        backgroundColor: controller.lightModeValue.value
+        backgroundColor: mainViewController.lightModeValue.value
             ? const Color(0xffedebe8)
             : kBackGroundDarkColor,
         body: SafeArea(
           child: ListView(
             children: [
               Container(
-                color: controller.lightModeValue.value
+                color: mainViewController.lightModeValue.value
                     ? kWhiteColor
                     : kBackGroundDarkColor,
                 child: Padding(
@@ -71,7 +72,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                       Obx(
                         () => Text(
                           '${Get.find<MainViewModel>().state.value.nickname}님 반가워요!',
-                          style: controller.lightModeValue.value
+                          style: mainViewController.lightModeValue.value
                               ? kHeader2BlackStyle
                               : kHeader2WhiteStyle,
                         ),
@@ -161,7 +162,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     ),
                   );
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -177,7 +178,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 onPressed: () {
                   Get.to(() => const BookMarkScreen());
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -192,15 +193,15 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     activeColor: kPrimary2Color,
                     inactiveColor: kGrayColor250,
                     toggleSize: 28.0.w,
-                    value: controller.pushMessageValue.value,
+                    value: mainViewController.pushMessageValue.value,
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
-                      controller.togglePushMessageValue();
+                      mainViewController.togglePushMessageValue();
                     },
                   ),
                   title: '푸시 메세지 설정',
                   onPressed: null,
-                  isLightMode: controller.lightModeValue.value,
+                  isLightMode: mainViewController.lightModeValue.value,
                 ),
               ),
               Container(
@@ -216,10 +217,10 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     activeColor: kPrimary2Color,
                     inactiveColor: kGrayColor250,
                     toggleSize: 28.0.w,
-                    value: controller.lightModeValue.value,
+                    value: mainViewController.lightModeValue.value,
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
-                      controller.toggleLightModeValue();
+                      mainViewController.toggleLightModeValue();
                     },
                     activeIcon: Center(
                       child: SvgPicture.asset(
@@ -238,7 +239,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   ),
                   title: '라이트 다크모드 전환',
                   onPressed: null,
-                  isLightMode: controller.lightModeValue.value,
+                  isLightMode: mainViewController.lightModeValue.value,
                 ),
               ),
               Container(
@@ -255,7 +256,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 onPressed: () {
                   Get.to(() => const NoticeScreen());
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -274,7 +275,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     transition: Transition.downToUp,
                   );
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -293,7 +294,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     transition: Transition.downToUp,
                   );
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
             ],
           ),

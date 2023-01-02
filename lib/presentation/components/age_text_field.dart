@@ -19,7 +19,7 @@ class AgeTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       controller: textEditingController,
-      style: kSubtitle4BlackStyle,
+      style: kSubtitle1BlackStyle,
       onTap: onTap,
       readOnly: true,
       name: 'age',
@@ -28,7 +28,7 @@ class AgeTextField extends StatelessWidget {
         helperText: "",
         counterText: "",
         hintText: 'YYYY-MM-DD 입력',
-        hintStyle: kSubtitle3Gray300Style,
+        hintStyle: kHeader6Gray300Style,
         contentPadding: const EdgeInsets.only(
           top: 14,
           right: 14,

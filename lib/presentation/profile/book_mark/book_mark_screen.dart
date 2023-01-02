@@ -18,13 +18,10 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
     getBookMarkViewModelBinding();
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           '북마크',
           style: kHeader3BlackStyle,
         ),
-        centerTitle: true,
         elevation: 0.5,
         leading: IconButton(
           onPressed: () {
@@ -74,7 +71,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                 Text(
                                   DateFormat('yyyy.MM.dd')
                                       .format(DateTime(2022, 12, 15)),
-                                  style: kSubtitle4BlackStyle,
+                                  style: kSubtitle1BlackStyle,
                                 )
                               ],
                             ),
@@ -151,7 +148,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                 Text(
                                   DateFormat('yyyy.MM.dd')
                                       .format(DateTime(2022, 12, 15)),
-                                  style: kSubtitle4BlackStyle,
+                                  style: kSubtitle1BlackStyle,
                                 )
                               ],
                             ),
@@ -228,7 +225,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                 Text(
                                   DateFormat('yyyy.MM.dd')
                                       .format(DateTime(2022, 12, 15)),
-                                  style: kSubtitle4BlackStyle,
+                                  style: kSubtitle1BlackStyle,
                                 )
                               ],
                             ),

@@ -74,7 +74,7 @@ class WithdrawDoneScreen extends StatelessWidget {
                           ),
                           Text(
                             '하상욱',
-                            style: kSubtitle4BlackStyle,
+                            style: kSubtitle1BlackStyle,
                           )
                         ],
                       ),

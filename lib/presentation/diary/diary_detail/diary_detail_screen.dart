@@ -93,7 +93,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                             child: Center(
                               child: Text(
                                 "일기 수정",
-                                style: kSubtitle2Primary2Style,
+                                style: kHeader5Primary2Style,
                               ),
                             ),
                           ),
@@ -112,7 +112,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                   title: "삭제 하실래요?",
                                   content: Text(
                                     "삭제 후 일기를 복원 할 수 없어요",
-                                    style: kSubtitle3Gray600Style,
+                                    style: kHeader6Gray600Style,
                                   ),
                                   actionContent: [
                                     DialogButton(
@@ -121,7 +121,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                         Get.back();
                                       },
                                       backgroundColor: kGrayColor100,
-                                      textStyle: kSubtitle1Gray600Style,
+                                      textStyle: kHeader4Gray600Style,
                                     ),
                                     SizedBox(
                                       width: 12.w,
@@ -139,7 +139,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                               title: "삭제 완료",
                                               content: Text(
                                                 "일기를 삭제했어요.",
-                                                style: kSubtitle3Gray600Style,
+                                                style: kHeader6Gray600Style,
                                               ),
                                               actionContent: [
                                                 DialogButton(
@@ -154,8 +154,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                   },
                                                   backgroundColor:
                                                       kPrimary2Color,
-                                                  textStyle:
-                                                      kSubtitle1WhiteStyle,
+                                                  textStyle: kHeader4WhiteStyle,
                                                 ),
                                               ],
                                             );
@@ -163,7 +162,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                         );
                                       },
                                       backgroundColor: kPrimary2Color,
-                                      textStyle: kSubtitle1WhiteStyle,
+                                      textStyle: kHeader4WhiteStyle,
                                     ),
                                   ],
                                 );
@@ -184,7 +183,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                             child: Center(
                               child: Text(
                                 "일기 삭제",
-                                style: kSubtitle2Primary2Style,
+                                style: kHeader5Primary2Style,
                               ),
                             ),
                           ),
@@ -454,7 +453,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                       Text(
                                                         "하루냥",
                                                         style:
-                                                            kSubtitle1BlackStyle,
+                                                            kHeader4BlackStyle,
                                                       )
                                                     ],
                                                   ),

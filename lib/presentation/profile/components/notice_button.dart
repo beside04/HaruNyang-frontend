@@ -49,7 +49,7 @@ class NoticeButton extends StatelessWidget {
                       children: [
                         Text(
                           title,
-                          style: kSubtitle3BlackStyle,
+                          style: kHeader6BlackStyle,
                           overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(width: 12.0.w),

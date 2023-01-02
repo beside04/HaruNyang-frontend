@@ -110,7 +110,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
         children: [
           Text(
             controller.emotionTextValue.value,
-            style: kSubtitle3BlackStyle,
+            style: kHeader6BlackStyle,
           ),
           SliderTheme(
             data: const SliderThemeData(

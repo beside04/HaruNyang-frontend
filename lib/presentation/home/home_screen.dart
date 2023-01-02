@@ -109,7 +109,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
                           "일기는 하루에 한번만 작성 할 수 있어요.",
-                          style: kSubtitle3Gray600Style,
+                          style: kHeader6Gray600Style,
                         ),
                       ),
                       actionContent: [
@@ -119,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.back();
                           },
                           backgroundColor: kPrimary2Color,
-                          textStyle: kSubtitle1WhiteStyle,
+                          textStyle: kHeader4WhiteStyle,
                         ),
                       ],
                     );

@@ -22,13 +22,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           '회원 탈퇴',
           style: kHeader2BlackStyle,
         ),
-        centerTitle: false,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -158,7 +155,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         horizontal: 30.0),
                                     child: Text(
                                       "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
-                                      style: kSubtitle3Gray600Style,
+                                      style: kHeader6Gray600Style,
                                     ),
                                   ),
                                   actionContent: [
@@ -169,7 +166,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         Get.back();
                                       },
                                       backgroundColor: kGrayColor100,
-                                      textStyle: kSubtitle1Gray600Style,
+                                      textStyle: kHeader4Gray600Style,
                                     ),
                                     SizedBox(
                                       width: 12.w,
@@ -189,7 +186,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         }
                                       },
                                       backgroundColor: kPrimary2Color,
-                                      textStyle: kSubtitle1WhiteStyle,
+                                      textStyle: kHeader4WhiteStyle,
                                     ),
                                   ],
                                 );

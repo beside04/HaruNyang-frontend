@@ -95,9 +95,7 @@ final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
 
 final FileUploadUseCase fileUploadUseCase =
     FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
-final profileViewModel = ProfileViewModel(
-  onBoardingUseCase: onBoardingUseCase,
-);
+final profileViewModel = ProfileViewModel();
 final saveDiaryUseCase = SaveDiaryUseCase(
   diaryRepository: diaryRepository,
 );

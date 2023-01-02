@@ -47,8 +47,16 @@ TextStyle kHeader3BlackStyle = TextStyle(
   height: 1.4.sp,
 );
 
-//Subtitle1 Style
-TextStyle kSubtitle1BlackStyle = TextStyle(
+TextStyle kHeader3WhiteStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 20.sp,
+  color: kWhiteColor,
+  fontWeight: FontWeight.w700,
+  height: 1.4.sp,
+);
+
+//Header4 Style
+TextStyle kHeader4BlackStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 18.sp,
   color: kBlackColor,
@@ -56,7 +64,7 @@ TextStyle kSubtitle1BlackStyle = TextStyle(
   height: 1.3333.sp,
 );
 
-TextStyle kSubtitle1Gray950Style = TextStyle(
+TextStyle kHeader4Gray950Style = TextStyle(
   fontFamily: pretendard,
   fontSize: 18.sp,
   color: kGrayColor950,
@@ -64,7 +72,7 @@ TextStyle kSubtitle1Gray950Style = TextStyle(
   height: 1.3333.sp,
 );
 
-TextStyle kSubtitle1Gray600Style = TextStyle(
+TextStyle kHeader4Gray600Style = TextStyle(
   fontFamily: pretendard,
   fontSize: 18.sp,
   color: kGrayColor600,
@@ -72,7 +80,7 @@ TextStyle kSubtitle1Gray600Style = TextStyle(
   height: 1.3333.sp,
 );
 
-TextStyle kSubtitle1WhiteStyle = TextStyle(
+TextStyle kHeader4WhiteStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 18.sp,
   color: kWhiteColor,
@@ -80,8 +88,8 @@ TextStyle kSubtitle1WhiteStyle = TextStyle(
   height: 1.3333.sp,
 );
 
-//Subtitle2 Style
-TextStyle kSubtitle2BlackStyle = TextStyle(
+//Header5 Style
+TextStyle kHeader5BlackStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kBlackColor,
@@ -89,7 +97,7 @@ TextStyle kSubtitle2BlackStyle = TextStyle(
   height: 1.375.sp,
 );
 
-TextStyle kSubtitle2WhiteStyle = TextStyle(
+TextStyle kHeader5WhiteStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kWhiteColor,
@@ -97,7 +105,7 @@ TextStyle kSubtitle2WhiteStyle = TextStyle(
   height: 1.375.sp,
 );
 
-TextStyle kSubtitle2Primary2Style = TextStyle(
+TextStyle kHeader5Primary2Style = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kPrimary2Color,
@@ -105,7 +113,7 @@ TextStyle kSubtitle2Primary2Style = TextStyle(
   height: 1.375.sp,
 );
 
-TextStyle kSubtitle2Gray300Style = TextStyle(
+TextStyle kHeader5Gray300Style = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kGrayColor300,
@@ -113,7 +121,7 @@ TextStyle kSubtitle2Gray300Style = TextStyle(
   height: 1.375.sp,
 );
 
-TextStyle kSubtitle2Gray300UnderlineStyle = TextStyle(
+TextStyle kHeader5Gray300UnderlineStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kGrayColor300,
@@ -122,8 +130,8 @@ TextStyle kSubtitle2Gray300UnderlineStyle = TextStyle(
   decoration: TextDecoration.underline,
 );
 
-//Subtitle3 Style
-TextStyle kSubtitle3BlackStyle = TextStyle(
+//Header6 Style
+TextStyle kHeader6BlackStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kBlackColor,
@@ -131,39 +139,7 @@ TextStyle kSubtitle3BlackStyle = TextStyle(
   height: 1.375.sp,
 );
 
-TextStyle kSubtitle3Gray600Style = TextStyle(
-  fontFamily: pretendard,
-  fontSize: 16.sp,
-  color: kGrayColor600,
-  fontWeight: FontWeight.w500,
-  height: 1.375.sp,
-);
-
-TextStyle kSubtitle3Gray300Style = TextStyle(
-  fontFamily: pretendard,
-  fontSize: 16.sp,
-  color: kGrayColor300,
-  fontWeight: FontWeight.w500,
-  height: 1.375.sp,
-);
-
-TextStyle kSubtitle3Gray250Style = TextStyle(
-  fontFamily: pretendard,
-  fontSize: 16.sp,
-  color: kGrayColor250,
-  fontWeight: FontWeight.w500,
-  height: 1.375.sp,
-);
-
-TextStyle kSubtitle3Primary250Style = TextStyle(
-  fontFamily: pretendard,
-  fontSize: 16.sp,
-  color: kPrimaryColor,
-  fontWeight: FontWeight.w500,
-  height: 1.375.sp,
-);
-
-TextStyle kSubtitle3White300Style = TextStyle(
+TextStyle kHeader6WhiteStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 16.sp,
   color: kWhiteColor,
@@ -171,11 +147,59 @@ TextStyle kSubtitle3White300Style = TextStyle(
   height: 1.375.sp,
 );
 
-//Subtitle4 Style
-TextStyle kSubtitle4BlackStyle = TextStyle(
+TextStyle kHeader6Gray600Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor600,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+TextStyle kHeader6Gray300Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor300,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+TextStyle kHeader6Gray250Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kGrayColor250,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+TextStyle kHeader6Primary250Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kPrimaryColor,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+TextStyle kHeader6White300Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 16.sp,
+  color: kWhiteColor,
+  fontWeight: FontWeight.w500,
+  height: 1.375.sp,
+);
+
+//Subtitle1 Style
+TextStyle kSubtitle1BlackStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 14.sp,
   color: kBlackColor,
+  fontWeight: FontWeight.w600,
+  height: 1.4285.sp,
+);
+
+TextStyle kSubtitle1WhiteStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kWhiteColor,
   fontWeight: FontWeight.w600,
   height: 1.4285.sp,
 );
@@ -185,6 +209,14 @@ TextStyle kBody1BlackStyle = TextStyle(
   fontFamily: pretendard,
   fontSize: 14.sp,
   color: kBlackColor,
+  fontWeight: FontWeight.w400,
+  height: 1.4285.sp,
+);
+
+TextStyle kBody1WhiteStyle = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kWhiteColor,
   fontWeight: FontWeight.w400,
   height: 1.4285.sp,
 );
@@ -241,7 +273,7 @@ TextStyle kBody2WhiteStyle = TextStyle(
 //Caption1 Style
 TextStyle kCaption1BlackStyle = TextStyle(
   fontFamily: pretendard,
-  fontSize: 12.sp,
+  fontSize: 10.sp,
   color: kBlackColor,
   fontWeight: FontWeight.w600,
   height: 1.2.sp,
@@ -249,7 +281,7 @@ TextStyle kCaption1BlackStyle = TextStyle(
 
 TextStyle kCaption1WhiteStyle = TextStyle(
   fontFamily: pretendard,
-  fontSize: 12.sp,
+  fontSize: 10.sp,
   color: kWhiteColor,
   fontWeight: FontWeight.w600,
   height: 1.2.sp,
@@ -257,18 +289,9 @@ TextStyle kCaption1WhiteStyle = TextStyle(
 
 TextStyle kCaption1PrimaryStyle = TextStyle(
   fontFamily: pretendard,
-  fontSize: 12.sp,
+  fontSize: 10.sp,
   color: kPrimaryColor,
   fontWeight: FontWeight.w600,
-  height: 1.2.sp,
-);
-
-//Caption2 Style
-TextStyle kCaption2BlackStyle = TextStyle(
-  fontFamily: pretendard,
-  fontSize: 10.sp,
-  color: kBlackColor,
-  fontWeight: FontWeight.w500,
   height: 1.2.sp,
 );
 

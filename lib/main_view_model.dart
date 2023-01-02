@@ -1,3 +1,4 @@
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
@@ -20,6 +21,8 @@ class MainViewModel extends GetxController {
   Rx<ProfileState> get state => _state;
 
   String? token;
+  final pushMessageValue = true.obs;
+  final lightModeValue = true.obs;
 
   Future<Result<MyInformation>> getMyInformation() async {
     final getMyInformation = await onBoardingUseCase.getMyInformation();
@@ -43,5 +46,16 @@ class MainViewModel extends GetxController {
 
   Future<void> getAccessToken() async {
     token = await tokenUseCase.getAccessToken();
+  }
+
+  togglePushMessageValue() {
+    pushMessageValue.value = !pushMessageValue.value;
+  }
+
+  toggleLightModeValue() {
+    lightModeValue.value = !lightModeValue.value;
+    lightModeValue.value
+        ? Get.changeTheme(lightMode)
+        : Get.changeTheme(darkMode);
   }
 }

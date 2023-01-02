@@ -13,8 +13,6 @@ class PrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           "개인정보 처리방침",
           style: kHeader3BlackStyle,
@@ -205,7 +203,7 @@ Copyright © 하루냥. All rights reserved.
 ''',
             styleSheet: MarkdownStyleSheet(
               h2: kHeader3BlackStyle,
-              h3: kSubtitle1BlackStyle,
+              h3: kHeader4BlackStyle,
               p: kBody1BlackStyle,
             ),
           ),

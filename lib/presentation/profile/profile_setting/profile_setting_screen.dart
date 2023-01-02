@@ -33,13 +33,10 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
     return Scaffold(
       backgroundColor: const Color(0xffedebe8),
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           '내 정보 관리',
           style: kHeader3BlackStyle,
         ),
-        centerTitle: false,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -89,7 +86,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "닉네임 변경",
-                              style: kSubtitle1BlackStyle,
+                              style: kHeader4BlackStyle,
                             ),
                           ),
                           Padding(
@@ -190,7 +187,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "날짜 변경",
-                              style: kSubtitle1BlackStyle,
+                              style: kHeader4BlackStyle,
                             ),
                           ),
                           Padding(
@@ -305,7 +302,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           padding: EdgeInsets.only(left: 24.0.w),
                           child: Text(
                             "직업 변경",
-                            style: kSubtitle1BlackStyle,
+                            style: kHeader4BlackStyle,
                           ),
                         ),
                         Padding(
@@ -402,7 +399,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
                   '회원탈퇴',
-                  style: kSubtitle2Gray300UnderlineStyle,
+                  style: kHeader5Gray300UnderlineStyle,
                 ),
               ),
             ),
