@@ -18,36 +18,16 @@ class EmotionStampViewModel extends GetxController {
     getEmotionStampList();
   }
 
-  var focusedCalendarDate = DateTime.now().obs;
-  var selectedCalendarDate = DateTime.now().obs;
+  Rx<DateTime> focusedCalendarDate = DateTime.now().obs;
   final isCalendar = true.obs;
-  final currentPageCount = 250.obs;
   final itemPageCount = 500.obs;
-  final controllerTempCount = 0.obs;
+
 
   final RxBool isLoading = false.obs;
   Map<DateTime, List<DiaryData>> diaryCalendarDataList = {};
   Map<String, Object> diaryListDataList = {"key_ordered": [], "values": {}}.obs;
   var focusedStartDate = DateTime.now().obs;
   var focusedEndDate = DateTime.now().obs;
-
-  bool isToday(day) {
-    return day.day == DateTime.now().day &&
-        day.month == DateTime.now().month &&
-        day.year == DateTime.now().year;
-  }
-
-  bool isDay(day) {
-    var nowDate = DateTime.now();
-
-    return (nowDate.isAfter(day) || isToday(day));
-  }
-
-  bool isDateClicked(day) {
-    return day.day == selectedCalendarDate.value.day &&
-        day.month == selectedCalendarDate.value.month &&
-        day.year == selectedCalendarDate.value.year;
-  }
 
   // 월 주차. (단순하게 1일이 1주차 시작).
   static String weekOfMonthForSimple(DateTime date) {
@@ -149,5 +129,15 @@ class EmotionStampViewModel extends GetxController {
       focusedCalendarDate.value.month + 1,
       0,
     );
+  }
+
+  void onPageChanged(DateTime day) {
+    focusedCalendarDate.value = day;
+    getMonthStartEndData();
+    getEmotionStampList();
+  }
+
+  void setFocusDay(DateTime day) {
+    focusedCalendarDate.value = day;
   }
 }

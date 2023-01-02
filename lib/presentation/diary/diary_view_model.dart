@@ -14,6 +14,18 @@ class DiaryViewModel extends GetxController
     getEmoticonData();
   }
 
+  @override
+  void onInit() {
+    print('diary viewmodel on init');
+    super.onInit();
+  }
+
+  @override
+  void dispose() {
+    print('diary viewmodel dispose');
+    super.dispose();
+  }
+
   final weatherStatus = Rx<Weather?>(null);
 
   // final emotionStatus = Rx<Emotion?>(null);
@@ -55,14 +67,14 @@ class DiaryViewModel extends GetxController
     result.when(
       success: (data) async {
         emoticonDataList.value = data;
-        for (final emoticon in data) {
-          await precachePicture(
-              NetworkPicture(
-                SvgPicture.svgByteDecoderBuilder,
-                emoticon.emoticon,
-              ),
-              null);
-        }
+        // for (final emoticon in data) {
+        //   await precachePicture(
+        //       NetworkPicture(
+        //         SvgPicture.svgByteDecoderBuilder,
+        //         emoticon.emoticon,
+        //       ),
+        //       null);
+        // }
       },
       error: (message) {
         Get.snackbar('알림', message);
