@@ -12,21 +12,21 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:get/get.dart';
 
-DateFormat format = DateFormat('yyyy.MM.dd');
+DateFormat format = DateFormat('yyyy-MM-dd');
 
 class EmotionCalendarWidget extends StatefulWidget {
   const EmotionCalendarWidget({
     Key? key,
     required this.onPageChanged,
     required this.focusedDate,
-    required this.diaryCalendarDataList,
     required this.onSetFocusDay,
+    required this.diaryDataList,
   }) : super(key: key);
 
-  final Map<DateTime, List<DiaryData>> diaryCalendarDataList;
   final DateTime focusedDate;
   final Function(DateTime) onPageChanged;
   final Function(DateTime) onSetFocusDay;
+  final List<DiaryData> diaryDataList;
 
   @override
   State<EmotionCalendarWidget> createState() => _EmotionCalendarWidgetState();
@@ -50,7 +50,10 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
       daysOfWeekHeight: 30,
       headerVisible: false,
       eventLoader: (DateTime day) {
-        return widget.diaryCalendarDataList[day] ?? [];
+        return widget.diaryDataList
+            .where((element) => element.writtenAt == format.format(day))
+            .toList();
+
       },
       calendarStyle: const CalendarStyle(
         cellPadding: EdgeInsets.only(top: 5),

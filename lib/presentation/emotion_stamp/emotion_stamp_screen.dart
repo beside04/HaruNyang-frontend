@@ -122,9 +122,8 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                   onPageChanged: controller.onPageChanged,
                                   focusedDate:
                                       controller.focusedCalendarDate.value,
-                                  diaryCalendarDataList:
-                                      controller.diaryCalendarDataList,
                                   onSetFocusDay: controller.setFocusDay,
+                                  diaryDataList: controller.diaryDataList,
                                 );
                               },
                             )
@@ -133,9 +132,8 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                 return EmotionListWidget(
                                   focusedDate:
                                       controller.focusedCalendarDate.value,
-                                  onSetFocusDay: controller.setFocusDay,
-                                  diaryListDataList:
-                                      controller.diaryListDataList,
+                                  onPageChanged: controller.onPageChanged,
+                                  diaryDataList: controller.diaryDataList,
                                 );
                               },
                             ),

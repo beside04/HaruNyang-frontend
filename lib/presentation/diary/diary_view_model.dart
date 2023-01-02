@@ -1,4 +1,3 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/res/constants.dart';
@@ -12,18 +11,6 @@ class DiaryViewModel extends GetxController
     required this.getEmoticonUseCase,
   }) {
     getEmoticonData();
-  }
-
-  @override
-  void onInit() {
-    print('diary viewmodel on init');
-    super.onInit();
-  }
-
-  @override
-  void dispose() {
-    print('diary viewmodel dispose');
-    super.dispose();
   }
 
   final weatherStatus = Rx<Weather?>(null);

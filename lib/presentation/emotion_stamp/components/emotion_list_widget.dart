@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
-import 'package:frontend/res/constants.dart';
+import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
 
 class EmotionListWidget extends StatefulWidget {
   const EmotionListWidget({
     Key? key,
     required this.focusedDate,
-    required this.onSetFocusDay,
-    required this.diaryListDataList,
+    required this.onPageChanged,
+    //required this.diaryListDataList,
+    required this.diaryDataList,
   }) : super(key: key);
 
   final DateTime focusedDate;
-  final Function(DateTime) onSetFocusDay;
-  final Map<String, Object> diaryListDataList;
+  final Function(DateTime) onPageChanged;
+
+  //final Map<String, Object> diaryListDataList;
+  final List<DiaryData> diaryDataList;
 
   @override
   State<EmotionListWidget> createState() => _EmotionListWidgetState();
@@ -30,9 +30,11 @@ class EmotionListWidget extends StatefulWidget {
 class _EmotionListWidgetState extends State<EmotionListWidget> {
   int currentPageCount = 250;
   int controllerTempCount = 0;
+  Map<String, bool> weekName = {};
 
   @override
   Widget build(BuildContext context) {
+    weekName = {};
     return PageView.builder(
       controller: PageController(initialPage: currentPageCount),
       onPageChanged: (currentPage) {
@@ -42,9 +44,9 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
 
         if (controllerTempCount < currentPage) {
           widget
-              .onSetFocusDay(Jiffy(widget.focusedDate).add(months: 1).dateTime);
+              .onPageChanged(Jiffy(widget.focusedDate).add(months: 1).dateTime);
         } else {
-          widget.onSetFocusDay(
+          widget.onPageChanged(
               Jiffy(widget.focusedDate).subtract(months: 1).dateTime);
         }
 
@@ -52,11 +54,13 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
       },
       itemBuilder: (context, i) {
         return ListView.builder(
-          itemCount: (widget.diaryListDataList["key_ordered"] as List).isEmpty
-              ? 1
-              : (widget.diaryListDataList["key_ordered"] as List).length,
+          itemCount:
+              widget.diaryDataList.isEmpty ? 1 : widget.diaryDataList.length,
           itemBuilder: (BuildContext context, int index) {
-            return (widget.diaryListDataList["key_ordered"] as List).isEmpty
+            String dateTime = weekOfMonthForSimple(
+                DateTime.parse(widget.diaryDataList[index].writtenAt));
+
+            return widget.diaryDataList.isEmpty
                 ? Column(
                     children: [
                       Column(
@@ -84,148 +88,65 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                   )
                 : GestureDetector(
                     onTap: () {
-                      List<dynamic> itemList =
-                          ((widget.diaryListDataList["values"] as Map)[
-                              (widget.diaryListDataList["key_ordered"]
-                                  as List)[index]]);
-
-                      //Get.delete<DiaryDetailViewModel>();
-
                       Get.to(
                         () => DiaryDetailScreen(
-                          date: DateTime.parse(itemList[0].writtenAt),
+                          date: DateTime.parse(
+                              widget.diaryDataList[index].writtenAt),
                           isStamp: true,
-                          diaryData: List<DiaryData>.from(itemList)[0],
+                          diaryData: widget.diaryDataList[index],
                         ),
                       );
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(top: 20.h, left: 20.w),
-                          child: Text(
-                            "${(widget.diaryListDataList["key_ordered"] as List)[index]}번째 주",
-                            style: kSubtitle1BlackStyle,
+                        if (!isUsedWeekName(dateTime))
+                          Padding(
+                            padding: EdgeInsets.only(top: 20.h, left: 20.w),
+                            child: Text(
+                              "$dateTime번째 주",
+                              style: kSubtitle1BlackStyle,
+                            ),
                           ),
-                        ),
-                        ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount:
-                              (widget.diaryListDataList["values"] as Map)[
-                                      (widget.diaryListDataList["key_ordered"]
-                                          as List)[index]]
-                                  .length,
-                          itemBuilder: (BuildContext context, int i) {
-                            var itemList =
-                                (widget.diaryListDataList["values"] as Map)[
-                                    (widget.diaryListDataList["key_ordered"]
-                                        as List)[index]][i];
-                            return Padding(
-                              padding: EdgeInsets.only(
-                                top: 20.h,
-                                left: 20.w,
-                                right: 20.w,
-                              ),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: kGrayColor50,
-                                  borderRadius: BorderRadius.circular(20.0.w),
-                                ),
-                                child: Padding(
-                                  padding: kPrimaryPadding,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            DateFormat.MMMEd("ko_KR").format(
-                                                DateTime.parse(
-                                                    itemList.writtenAt)),
-                                            style: kSubtitle2BlackStyle,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.all(4.w),
-                                                decoration: const BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  color: kWhiteColor,
-                                                ),
-                                                child: SvgPicture.asset(
-                                                  "lib/config/assets/images/diary/weather/sunny.svg",
-                                                  width: 16.w,
-                                                  height: 16.h,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: 7.w,
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.symmetric(
-                                                    vertical: 4.h,
-                                                    horizontal: 8.w),
-                                                decoration: BoxDecoration(
-                                                  color: kWhiteColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          100.0.w),
-                                                ),
-                                                child: Row(
-                                                  children: [
-                                                    SvgPicture.network(
-                                                      itemList.emotion.emoticon,
-                                                      width: 16.w,
-                                                      height: 16.h,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 6.w,
-                                                    ),
-                                                    getEmotionTextWidget(
-                                                      itemList.emoticonIndex,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 12.h,
-                                      ),
-                                      itemList.images[0] == ""
-                                          ? Container()
-                                          : Column(
-                                              children: [
-                                                Center(
-                                                  child: Image.network(
-                                                    "${itemList.images[0]}",
-                                                    width: double.infinity,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 12.h,
-                                                ),
-                                              ],
-                                            ),
-                                      Text(
-                                        itemList.diaryContent,
-                                        style: kBody1BlackStyle,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: 20.h,
+                            left: 20.w,
+                            right: 20.w,
+                          ),
+                          child: EmotionCardDiaryWidget(
+                            diaryData: widget.diaryDataList[index],
+                          ),
+                        )
+                        // ListView.builder(
+                        //   physics: const NeverScrollableScrollPhysics(),
+                        //   shrinkWrap: true,
+                        //   itemCount: widget.diaryDataList.length,
+                        //   // widget.diaryDataList
+                        //   //     .where((element) => element.writtenAt ==)
+                        //   //     .toList()
+                        //   //     .length,
+                        //   // (widget.diaryListDataList["values"] as Map)[
+                        //   //         (widget.diaryListDataList["key_ordered"]
+                        //   //             as List)[index]]
+                        //   //     .length,
+                        //   itemBuilder: (BuildContext context, int i) {
+                        //     // var itemList =
+                        //     // (widget.diaryListDataList["values"] as Map)[
+                        //     // (widget.diaryListDataList["key_ordered"]
+                        //     // as List)[index]][i];
+                        //     return Padding(
+                        //       padding: EdgeInsets.only(
+                        //         top: 20.h,
+                        //         left: 20.w,
+                        //         right: 20.w,
+                        //       ),
+                        //       child: EmotionCardWidget(
+                        //         diaryData: widget.diaryDataList[index],
+                        //       ),
+                        //     );
+                        //   },
+                        // ),
                       ],
                     ),
                   );
@@ -233,5 +154,52 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
         );
       },
     );
+  }
+
+  // 월 주차. (단순하게 1일이 1주차 시작).
+  String weekOfMonthForSimple(DateTime date) {
+    // 월의 첫번째 날짜.
+    DateTime firstDay = DateTime(date.year, date.month, 1);
+
+    // 월중에 첫번째 월요일인 날짜.
+    DateTime firstMonday = firstDay
+        .add(Duration(days: (DateTime.monday + 7 - firstDay.weekday) % 7));
+
+    // 첫번째 날짜와 첫번째 월요일인 날짜가 동일한지 판단.
+    // 동일할 경우: 1, 동일하지 않은 경우: 2 를 마지막에 더한다.
+    final bool isFirstDayMonday = firstDay == firstMonday;
+
+    final different = calculateDaysBetween(from: firstMonday, to: date);
+
+    // 주차 계산.
+    int weekOfMonth = (different / 7 + (isFirstDayMonday ? 1 : 2)).toInt();
+
+    switch (weekOfMonth) {
+      case 1:
+        return "첫";
+      case 2:
+        return "두";
+      case 3:
+        return "세";
+      case 4:
+        return "네";
+      case 5:
+        return "다섯";
+    }
+    return "";
+  }
+
+  bool isUsedWeekName(String week) {
+    if (!weekName.containsKey(week)) {
+      weekName[week] = true;
+    } else if (weekName[week] == true) {
+      return true;
+    }
+    return false;
+  }
+
+  // D-Day 계산.
+  int calculateDaysBetween({required DateTime from, required DateTime to}) {
+    return (to.difference(from).inHours / 24).round();
   }
 }
