@@ -41,12 +41,8 @@ class DiaryApi {
       }
     } on DioError catch (e) {
       String errMessage = '';
-
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              '일기 작성 api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
-        }
+        errMessage = '일기 작성에 실패했습니다. ${e.response!.data['message']}';
       } else {
         errMessage = e.message;
       }

@@ -30,7 +30,9 @@ class RefreshInterceptor {
       return handler.next(options);
     }, onError: (error, handler) async {
       // 인증 오류가 발생했을 경우: AccessToken의 만료
-      if (error.type.runtimeType == DioErrorType) {
+      if (error.type.runtimeType == DioErrorType &&
+          error.response!.statusCode == 401) {
+        //if (error.type.runtimeType == DioErrorType) {
         // 기기에 저장된 AccessToken과 RefreshToken 로드
         final accessToken = await tokenUseCase.getAccessToken();
         final refreshToken = await tokenUseCase.getRefreshToken();
@@ -90,7 +92,6 @@ class RefreshInterceptor {
         // API 복사본으로 재요청
         return handler.resolve(clonedRequest);
       }
-
       return handler.next(error);
     }));
 

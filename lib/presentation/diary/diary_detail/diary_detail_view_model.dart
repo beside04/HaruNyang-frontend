@@ -130,9 +130,17 @@ class DiaryDetailViewModel extends GetxController
       );
     } else {
       //save 다이어리
-      await saveDiaryUseCase(
-        newDiary,
+      final saveDiaryResult = await saveDiaryUseCase(newDiary);
+      saveDiaryResult.when(
+        success: (data) {},
+        error: (message) {
+          Get.snackbar(
+            '알림',
+            message,
+          );
+        },
       );
+
       await Get.find<EmotionStampViewModel>().getMonthStartEndData();
       await Get.find<EmotionStampViewModel>().getEmotionStampList();
 
