@@ -13,15 +13,16 @@ class EmotionListWidget extends StatefulWidget {
     Key? key,
     required this.focusedDate,
     required this.onPageChanged,
-    //required this.diaryListDataList,
     required this.diaryDataList,
+    required this.controllerTempCount,
+    required this.setControllerTempCount,
   }) : super(key: key);
 
   final DateTime focusedDate;
   final Function(DateTime) onPageChanged;
-
-  //final Map<String, Object> diaryListDataList;
+  final Function(int) setControllerTempCount;
   final List<DiaryData> diaryDataList;
+  final int controllerTempCount;
 
   @override
   State<EmotionListWidget> createState() => _EmotionListWidgetState();
@@ -29,7 +30,6 @@ class EmotionListWidget extends StatefulWidget {
 
 class _EmotionListWidgetState extends State<EmotionListWidget> {
   int currentPageCount = 250;
-  int controllerTempCount = 0;
   Map<String, bool> weekName = {};
 
   @override
@@ -41,8 +41,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
         // controllerTempCount와 비교해서 currentPage와 비교해서
         // currentPage가 더 크면 1달 추가 그게 아니라면
         // 1달 감소
-
-        if (controllerTempCount < currentPage) {
+        if (widget.controllerTempCount < currentPage) {
           widget
               .onPageChanged(Jiffy(widget.focusedDate).add(months: 1).dateTime);
         } else {
@@ -50,15 +49,18 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
               Jiffy(widget.focusedDate).subtract(months: 1).dateTime);
         }
 
-        controllerTempCount = currentPage;
+        widget.setControllerTempCount(currentPage);
       },
       itemBuilder: (context, i) {
         return ListView.builder(
           itemCount:
               widget.diaryDataList.isEmpty ? 1 : widget.diaryDataList.length,
           itemBuilder: (BuildContext context, int index) {
-            String dateTime = weekOfMonthForSimple(
-                DateTime.parse(widget.diaryDataList[index].writtenAt));
+            String dateTime = '';
+            if (widget.diaryDataList.isNotEmpty) {
+              dateTime = weekOfMonthForSimple(
+                  DateTime.parse(widget.diaryDataList[index].writtenAt));
+            }
 
             return widget.diaryDataList.isEmpty
                 ? Column(
@@ -118,35 +120,6 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                             diaryData: widget.diaryDataList[index],
                           ),
                         )
-                        // ListView.builder(
-                        //   physics: const NeverScrollableScrollPhysics(),
-                        //   shrinkWrap: true,
-                        //   itemCount: widget.diaryDataList.length,
-                        //   // widget.diaryDataList
-                        //   //     .where((element) => element.writtenAt ==)
-                        //   //     .toList()
-                        //   //     .length,
-                        //   // (widget.diaryListDataList["values"] as Map)[
-                        //   //         (widget.diaryListDataList["key_ordered"]
-                        //   //             as List)[index]]
-                        //   //     .length,
-                        //   itemBuilder: (BuildContext context, int i) {
-                        //     // var itemList =
-                        //     // (widget.diaryListDataList["values"] as Map)[
-                        //     // (widget.diaryListDataList["key_ordered"]
-                        //     // as List)[index]][i];
-                        //     return Padding(
-                        //       padding: EdgeInsets.only(
-                        //         top: 20.h,
-                        //         left: 20.w,
-                        //         right: 20.w,
-                        //       ),
-                        //       child: EmotionCardWidget(
-                        //         diaryData: widget.diaryDataList[index],
-                        //       ),
-                        //     );
-                        //   },
-                        // ),
                       ],
                     ),
                   );

@@ -134,6 +134,10 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                       controller.focusedCalendarDate.value,
                                   onPageChanged: controller.onPageChanged,
                                   diaryDataList: controller.diaryDataList,
+                                  controllerTempCount:
+                                      controller.controllerTempCount.value,
+                                  setControllerTempCount:
+                                      controller.setControllerTempCount,
                                 );
                               },
                             ),

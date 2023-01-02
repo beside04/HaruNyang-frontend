@@ -20,6 +20,8 @@ class EmotionStampViewModel extends GetxController {
 
   final RxBool isCalendar = true.obs;
   final RxBool isLoading = false.obs;
+  Rx<int> controllerTempCount = 0.obs;
+
   Rx<DateTime> focusedCalendarDate = DateTime.now().obs;
   RxList<DiaryData> diaryDataList = <DiaryData>[].obs;
 
@@ -46,7 +48,6 @@ class EmotionStampViewModel extends GetxController {
         });
 
         diaryDataList.value = result;
-        //parsingListDate(result);
       },
       error: (message) {
         Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
@@ -54,25 +55,6 @@ class EmotionStampViewModel extends GetxController {
     );
     _updateIsLoading(false);
   }
-
-  // void parsingListDate(List<DiaryData> result) async {
-  //   diaryListDataList = {"key_ordered": [], "values": {}}.obs;
-  //
-  //   result.sort((a, b) {
-  //     return b.writtenAt.compareTo(a.writtenAt);
-  //   });
-  //
-  //   for (var data in result) {
-  //     var dateTime = weekOfMonthForSimple(DateTime.parse(data.writtenAt));
-  //
-  //     if (!diaryListDataList["key_ordered"].toString().contains(dateTime)) {
-  //       (diaryListDataList["key_ordered"] as List).add(dateTime);
-  //       (diaryListDataList["values"] as Map)[dateTime] = [];
-  //     }
-  //
-  //     (diaryListDataList["values"] as Map)[dateTime].add(data);
-  //   }
-  // }
 
   void getMonthStartEndData() {
     focusedStartDate.value = DateTime(
@@ -96,5 +78,9 @@ class EmotionStampViewModel extends GetxController {
 
   void setFocusDay(DateTime day) {
     focusedCalendarDate.value = day;
+  }
+
+  void setControllerTempCount(int value) {
+    controllerTempCount.value = value;
   }
 }
