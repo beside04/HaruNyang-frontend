@@ -12,6 +12,7 @@ import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
@@ -114,6 +115,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                         getHomeViewModelBinding,
                                       ),
                                     );
+                                    Get.delete<DiaryDetailViewModel>();
                                     Get.to(
                                       () => DiaryDetailScreen(
                                         date: date,

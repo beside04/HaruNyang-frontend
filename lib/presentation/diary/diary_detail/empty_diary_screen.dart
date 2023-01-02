@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/past_diary_screen.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
@@ -20,7 +19,6 @@ class EmptyDiaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getWriteDiaryBinding();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kWhiteColor,

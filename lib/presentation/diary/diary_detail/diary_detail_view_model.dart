@@ -70,14 +70,6 @@ class DiaryDetailViewModel extends GetxController
   final RxBool isBookmark = false.obs;
   final Rxn<DiaryData?> diary = Rxn<DiaryData?>();
 
-  Future<void> updateTestData() async {
-    _updateIsLoading(true);
-    await Future.delayed(
-      const Duration(seconds: 3),
-    );
-    _updateIsLoading(false);
-  }
-
   void setDiary(DiaryData newDiary) {
     diary.value = newDiary.copyWith();
   }
@@ -157,9 +149,6 @@ class DiaryDetailViewModel extends GetxController
       );
     }
 
-    await Future.delayed(
-      const Duration(seconds: 1),
-    );
     _updateIsLoading(false);
   }
 
