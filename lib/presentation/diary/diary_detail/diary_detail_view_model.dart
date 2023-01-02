@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
@@ -14,8 +13,7 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
-class DiaryDetailViewModel extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class DiaryDetailViewModel extends GetxController {
   final GetWiseSayingUseCase getWiseSayingUseCase;
   final GetEmotionStampUseCase getEmotionStampUseCase;
   final SaveDiaryUseCase saveDiaryUseCase;
@@ -55,15 +53,8 @@ class DiaryDetailViewModel extends GetxController
         networkImage.value = diaryData.images.first;
       }
     }
-
-    animationController = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    )..repeat();
   }
 
-  late AnimationController animationController;
-  final List<double> delays = [-0.9, -0.6, -0.3];
   RxList<WiseSayingData> wiseSayingList = <WiseSayingData>[].obs;
   RxString networkImage = ''.obs;
   final RxBool isLoading = false.obs;
@@ -126,7 +117,13 @@ class DiaryDetailViewModel extends GetxController
       //save 다이어리
       final saveDiaryResult = await saveDiaryUseCase(newDiary);
       saveDiaryResult.when(
-        success: (data) {},
+        success: (diaryId) {
+          setDiary(
+            diary.copyWith(
+              id: diaryId,
+            ),
+          );
+        },
         error: (message) {
           Get.snackbar(
             '알림',
@@ -135,18 +132,9 @@ class DiaryDetailViewModel extends GetxController
         },
       );
 
+      //Diary Stamp 업데이트
       await Get.find<EmotionStampViewModel>().getMonthStartEndData();
       await Get.find<EmotionStampViewModel>().getEmotionStampList();
-
-      final todayDiary = await getEmotionStampUseCase.getTodayDiary();
-      todayDiary.when(
-        success: (diary) {
-          if (diary.isNotEmpty) {
-            setDiary(diary.first);
-          }
-        },
-        error: (message) {},
-      );
     }
 
     _updateIsLoading(false);

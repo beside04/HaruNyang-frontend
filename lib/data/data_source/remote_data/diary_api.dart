@@ -12,7 +12,7 @@ class DiaryApi {
     required this.interceptor,
   });
 
-  Future<Result<bool>> saveDiary(DiaryData diary) async {
+  Future<Result<String>> saveDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary';
     var dio = await interceptor.refreshInterceptor();
     try {
@@ -33,12 +33,8 @@ class DiaryApi {
         },
       );
 
-      final bool resultData = response.data['data'];
-      if (resultData) {
-        return const Result.success(true);
-      } else {
-        return const Result.error('일기 작성이 실패 했습니다.');
-      }
+      final String diaryId = response.data['data'];
+      return Result.success(diaryId);
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {

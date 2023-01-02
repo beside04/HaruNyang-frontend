@@ -9,7 +9,7 @@ class SaveDiaryUseCase {
     required this.diaryRepository,
   });
 
-  Future<Result<bool>> call(DiaryData diary) async {
+  Future<Result<String>> call(DiaryData diary) async {
     return await diaryRepository.saveDiary(diary);
   }
 }

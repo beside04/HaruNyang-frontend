@@ -5,11 +5,11 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/core/utils/delay_tween_animation.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/diary/components/diary_loading_widget.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -333,67 +333,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                 Obx(
                   () {
                     if (controller.isLoading.value) {
-                      return Column(
-                        children: [
-                          Center(
-                            child: Container(
-                              width: 108.w,
-                              height: 52.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.0.w),
-                                color: kWhiteColor,
-                              ),
-                              child: Padding(
-                                padding: kPrimaryPadding,
-                                child: ListView.builder(
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 3,
-                                  itemBuilder: (BuildContext context, int i) {
-                                    return FadeTransition(
-                                      opacity: DelayTween(
-                                              begin: 0.0,
-                                              end: 1.0,
-                                              delay: controller.delays[i])
-                                          .animate(
-                                              controller.animationController),
-                                      child: Row(
-                                        children: [
-                                          SizedBox(
-                                            width: 12.w,
-                                            child: Container(
-                                              decoration: const BoxDecoration(
-                                                color: kBlackColor,
-                                                shape: BoxShape.circle,
-                                              ),
-                                            ),
-                                          ),
-                                          i == 2
-                                              ? Container()
-                                              : SizedBox(
-                                                  width: 14.w,
-                                                ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 40.0.h),
-                            child: SvgPicture.asset(
-                              "lib/config/assets/images/character/onboarding2.svg",
-                              width: 350.w,
-                              height: 350.h,
-                            ),
-                          ),
-                        ],
-                      );
+                      return const DiaryLoadingWidget();
                     } else {
                       return AnimationLimiter(
                         child: ListView.builder(

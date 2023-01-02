@@ -11,7 +11,7 @@ class DiaryRepositoryImpl implements DiaryRepository {
   });
 
   @override
-  Future<Result<bool>> saveDiary(DiaryData diary) async {
+  Future<Result<String>> saveDiary(DiaryData diary) async {
     return await diaryApi.saveDiary(diary);
   }
 

@@ -5,7 +5,6 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/past_diary_screen.dart';
-import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -68,7 +67,7 @@ class EmptyDiaryScreen extends StatelessWidget {
             BottomButton(
               title: '일기쓰기',
               onTap: () {
-                Get.delete<DiaryViewModel>();
+                //Get.delete<DiaryViewModel>();
                 Get.to(() => PastDiaryTestScreen(
                       date: date,
                     ));

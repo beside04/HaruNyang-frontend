@@ -73,7 +73,7 @@ class EmotionStampViewModel extends GetxController {
       case 2:
         return "두";
       case 3:
-        return "첫";
+        return "세";
       case 4:
         return "네";
       case 5:
@@ -114,6 +114,10 @@ class EmotionStampViewModel extends GetxController {
   parsingListDate(List<DiaryData> result) async {
     diaryListDataList = {"key_ordered": [], "values": {}}.obs;
     diaryCalendarDataList = {};
+
+    result.sort((a, b) {
+      return b.writtenAt.compareTo(a.writtenAt);
+    });
 
     for (var data in result) {
       diaryCalendarDataList[DateTime(

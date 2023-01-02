@@ -11,7 +11,6 @@ import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:frontend/res/constants.dart';
@@ -167,7 +166,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                             day;
 
                                         if (controller.isDay(day)) {
-                                          Get.delete<DiaryDetailViewModel>();
+                                          //Get.delete<DiaryDetailViewModel>();
 
                                           events.isEmpty
                                               ? Get.to(() => EmptyDiaryScreen(
@@ -403,8 +402,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                         "key_ordered"]
                                                     as List)[index]]);
 
-                                                Get.delete<
-                                                    DiaryDetailViewModel>();
+                                                //Get.delete<DiaryDetailViewModel>();
 
                                                 Get.to(
                                                   () => DiaryDetailScreen(
