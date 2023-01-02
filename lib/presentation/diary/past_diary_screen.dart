@@ -93,7 +93,9 @@ class PastDiaryTestScreen extends GetView<DiaryViewModel> {
                           ),
                         ),
                         const WeatherModal(),
-                        const EmotionModal(),
+                        EmotionModal(
+                          date: date,
+                        ),
                       ],
                     ),
                   );

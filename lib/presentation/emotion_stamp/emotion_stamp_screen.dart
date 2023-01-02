@@ -403,7 +403,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                 Get.to(
                                                   () => DiaryDetailScreen(
                                                     date: DateTime.parse(
-                                                        itemList[0].createTime),
+                                                        itemList[0].writtenAt),
                                                     isStamp: true,
                                                     diaryData:
                                                         List<DiaryData>.from(
@@ -479,7 +479,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                                       DateFormat.MMMEd(
                                                                               "ko_KR")
                                                                           .format(
-                                                                              DateTime.parse(itemList.createTime)),
+                                                                              DateTime.parse(itemList.writtenAt)),
                                                                       style:
                                                                           kSubtitle2BlackStyle,
                                                                     ),
@@ -543,9 +543,8 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                                 SizedBox(
                                                                   height: 12.h,
                                                                 ),
-                                                                itemList.images[
-                                                                            0] ==
-                                                                        ""
+                                                                itemList.images
+                                                                        .isEmpty
                                                                     ? Container()
                                                                     : Column(
                                                                         children: [

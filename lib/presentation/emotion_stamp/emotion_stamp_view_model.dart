@@ -117,12 +117,12 @@ class EmotionStampViewModel extends GetxController {
 
     for (var data in result) {
       diaryCalendarDataList[DateTime(
-        DateTime.parse(data.createTime).year,
-        DateTime.parse(data.createTime).month,
-        DateTime.parse(data.createTime).day,
+        DateTime.parse(data.writtenAt).year,
+        DateTime.parse(data.writtenAt).month,
+        DateTime.parse(data.writtenAt).day,
       ).toUtc().add(const Duration(hours: 9))] = [data];
 
-      var dateTime = weekOfMonthForSimple(DateTime.parse(data.createTime));
+      var dateTime = weekOfMonthForSimple(DateTime.parse(data.writtenAt));
 
       if (!diaryListDataList["key_ordered"].toString().contains(dateTime)) {
         (diaryListDataList["key_ordered"] as List).add(dateTime);

@@ -51,7 +51,9 @@ class DiaryDetailViewModel extends GetxController
       diarySave(diary.value!);
     } else {
       wiseSayingList.value = diaryData.wiseSayings;
-      networkImage.value = diaryData.images.first;
+      if (diaryData.images.isNotEmpty) {
+        networkImage.value = diaryData.images.first;
+      }
     }
 
     animationController = AnimationController(
@@ -154,8 +156,6 @@ class DiaryDetailViewModel extends GetxController
         error: (message) {},
       );
     }
-    await Get.find<EmotionStampViewModel>().getMonthStartEndData();
-    await Get.find<EmotionStampViewModel>().getEmotionStampList();
 
     await Future.delayed(
       const Duration(seconds: 1),
