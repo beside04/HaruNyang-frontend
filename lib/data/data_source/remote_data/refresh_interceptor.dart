@@ -30,15 +30,14 @@ class RefreshInterceptor {
       return handler.next(options);
     }, onError: (error, handler) async {
       // 인증 오류가 발생했을 경우: AccessToken의 만료
-      if (error.type.runtimeType == DioErrorType &&
-          error.response!.statusCode == 401) {
-        //if (error.type.runtimeType == DioErrorType) {
+      if (error.type.runtimeType == DioErrorType && error.response == null) {
         // 기기에 저장된 AccessToken과 RefreshToken 로드
         final accessToken = await tokenUseCase.getAccessToken();
         final refreshToken = await tokenUseCase.getRefreshToken();
 
         // 토큰 갱신 요청을 담당할 dio 객체 구현 후 그에 따른 interceptor 정의
         var refreshDio = Dio();
+
         refreshDio.interceptors.clear();
 
         refreshDio.interceptors
@@ -75,7 +74,7 @@ class RefreshInterceptor {
 
         // 기기에 저장된 AccessToken과 RefreshToken 갱신
         await tokenUseCase.setAccessToken(newAccessToken);
-        await tokenUseCase.setRefreshToken(newRefreshToken);
+        await tokenUseCase.setAccessToken(newRefreshToken);
 
         // AccessToken의 만료로 수행하지 못했던 API 요청에 담겼던 AccessToken 갱신
         error.requestOptions.headers['Authorization'] =

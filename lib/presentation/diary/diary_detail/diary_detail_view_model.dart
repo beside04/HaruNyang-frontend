@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
+import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
@@ -20,6 +21,7 @@ class DiaryDetailViewModel extends GetxController {
   final UpdateDiaryUseCase updateDiaryUseCase;
   final DeleteDiaryUseCase deleteDiaryUseCase;
   final FileUploadUseCase fileUploadUseCase;
+  final BookmarkUseCase bookmarkUseCase;
 
   final DiaryData diaryData;
   final CroppedFile? imageFile;
@@ -33,6 +35,7 @@ class DiaryDetailViewModel extends GetxController {
     required this.updateDiaryUseCase,
     required this.deleteDiaryUseCase,
     required this.fileUploadUseCase,
+    required this.bookmarkUseCase,
     required this.diaryData,
     required this.isStamp,
     required this.date,
@@ -58,7 +61,6 @@ class DiaryDetailViewModel extends GetxController {
   RxList<WiseSayingData> wiseSayingList = <WiseSayingData>[].obs;
   RxString networkImage = ''.obs;
   final RxBool isLoading = false.obs;
-  final RxBool isBookmark = false.obs;
   final Rxn<DiaryData?> diary = Rxn<DiaryData?>();
 
   void setDiary(DiaryData newDiary) {
@@ -69,8 +71,22 @@ class DiaryDetailViewModel extends GetxController {
     isLoading.value = currentStatus;
   }
 
-  void toggleBookmark() {
-    isBookmark.value = !isBookmark.value;
+  void toggleBookmark(WiseSayingData wiseSayingData) {
+    final index = wiseSayingList.indexOf(wiseSayingData);
+
+    wiseSayingList[index] = wiseSayingData.copyWith(
+      isBookmarked: !wiseSayingData.isBookmarked,
+    );
+
+    if (wiseSayingList[index].isBookmarked) {
+      if (wiseSayingList[index].id != null) {
+        bookmarkUseCase.saveBookmark(wiseSayingList[index].id!);
+      }
+    } else {
+      if (wiseSayingList[index].id != null) {
+        bookmarkUseCase.deleteBookmark(wiseSayingList[index].id!);
+      }
+    }
   }
 
   Future<void> getWiseSayingList(int emoticonId, String content) async {

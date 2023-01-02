@@ -204,6 +204,7 @@ void getDiaryDetailBinding({
     isStamp: isStamp,
     date: date,
     getEmotionStampUseCase: getEmotionStampUseCase,
+    bookmarkUseCase: bookmarkUseCase,
   ));
 }
 

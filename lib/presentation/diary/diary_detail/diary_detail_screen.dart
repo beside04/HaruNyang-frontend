@@ -401,25 +401,31 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                   ),
                                                   Obx(
                                                     () => controller
-                                                            .isBookmark.value
+                                                            .wiseSayingList[
+                                                                index]
+                                                            .isBookmarked
                                                         ? GestureDetector(
                                                             onTap: () {
-                                                              controller
-                                                                  .toggleBookmark();
-                                                            },
-                                                            child: const Icon(Icons
-                                                                .bookmark_border),
-                                                          )
-                                                        : GestureDetector(
-                                                            onTap: () {
-                                                              controller
-                                                                  .toggleBookmark();
+                                                              controller.toggleBookmark(
+                                                                  controller
+                                                                          .wiseSayingList[
+                                                                      index]);
                                                             },
                                                             child: const Icon(
                                                               Icons.bookmark,
                                                               color:
                                                                   kPrimaryColor,
                                                             ),
+                                                          )
+                                                        : GestureDetector(
+                                                            onTap: () {
+                                                              controller.toggleBookmark(
+                                                                  controller
+                                                                          .wiseSayingList[
+                                                                      index]);
+                                                            },
+                                                            child: const Icon(Icons
+                                                                .bookmark_border),
                                                           ),
                                                   )
                                                 ],
