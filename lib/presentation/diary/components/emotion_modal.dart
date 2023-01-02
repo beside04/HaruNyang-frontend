@@ -26,12 +26,12 @@ class EmotionModal extends GetView<DiaryViewModel> {
                 ? 276.h
                 : 375.h,
             child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
                 ),
-                color: kWhiteColor,
+                color: Theme.of(context).colorScheme.primary,
               ),
               child: Stack(
                 children: [
@@ -41,7 +41,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       children: [
                         Text(
                           "기분",
-                          style: kHeader3BlackStyle,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                       ],
                     ),
@@ -73,7 +73,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       padding: EdgeInsets.only(left: 6.w, top: 201.h),
                       child: controller.selectedEmotion.value.emoticon.isEmpty
                           ? Container()
-                          : buildSlider(),
+                          : buildSlider(context),
                     ),
                   ),
                   Obx(
@@ -104,13 +104,13 @@ class EmotionModal extends GetView<DiaryViewModel> {
     );
   }
 
-  Widget buildSlider() {
+  Widget buildSlider(context) {
     return Obx(
       () => Column(
         children: [
           Text(
             controller.emotionTextValue.value,
-            style: kHeader6BlackStyle,
+            style: Theme.of(context).textTheme.headline6,
           ),
           SliderTheme(
             data: const SliderThemeData(

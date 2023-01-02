@@ -52,7 +52,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                           shape: BoxShape.circle,
                           border: Border.all(
                             width: 0.5,
-                            color: kGrayColor150,
+                            color: kGrayColor100,
                           ),
                         ),
                         child: Padding(

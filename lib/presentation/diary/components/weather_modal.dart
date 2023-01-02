@@ -19,12 +19,12 @@ class WeatherModal extends GetView<DiaryViewModel> {
         width: MediaQuery.of(context).size.width,
         height: 276.h,
         child: Container(
-          decoration: const BoxDecoration(
-            borderRadius: BorderRadius.only(
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(40),
               topRight: Radius.circular(40),
             ),
-            color: kWhiteColor,
+            color: Theme.of(context).colorScheme.primary,
           ),
           child: Stack(
             children: [
@@ -34,7 +34,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
                   children: [
                     Text(
                       "날씨",
-                      style: kHeader3BlackStyle,
+                      style: Theme.of(context).textTheme.headline3,
                     ),
                   ],
                 ),

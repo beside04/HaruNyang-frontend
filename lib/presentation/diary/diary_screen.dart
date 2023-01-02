@@ -22,13 +22,7 @@ class DiaryScreen extends GetView<DiaryViewModel> {
         date: DateTime.now(),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xffE69954), Color(0xffE4A469), Color(0xffE4A86F)],
-          ),
-        ),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -44,7 +38,7 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                     Obx(
                       () => Text(
                         "${Get.find<MainViewModel>().state.value.nickname}님",
-                        style: kHeader1BlackStyle,
+                        style: Theme.of(context).textTheme.headline1,
                       ),
                     ),
                   ],
@@ -58,11 +52,11 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                         controller.isEmotionModal.value
                             ? Text(
                                 "오늘 날씨 어때요?",
-                                style: kHeader1BlackStyle,
+                                style: Theme.of(context).textTheme.headline1,
                               )
                             : Text(
                                 "오늘 기분 어때요?",
-                                style: kHeader1BlackStyle,
+                                style: Theme.of(context).textTheme.headline1,
                               ),
                       ],
                     ),

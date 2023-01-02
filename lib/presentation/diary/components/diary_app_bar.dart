@@ -19,12 +19,11 @@ class DiaryAppBar extends GetView<DiaryViewModel>
   Widget build(BuildContext context) {
     return Obx(
       () => AppBar(
-        backgroundColor: const Color(0xffE69954),
         elevation: 0,
         centerTitle: true,
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         leading: controller.isEmotionModal.value
             ? null
@@ -34,7 +33,6 @@ class DiaryAppBar extends GetView<DiaryViewModel>
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,
-                  color: kBlackColor,
                   size: 20.w,
                 ),
               ),

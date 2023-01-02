@@ -31,7 +31,7 @@ class JobButton extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(
                 width: selected ? 2 : 0.5,
-                color: selected ? kPrimaryColor : kGrayColor150,
+                color: selected ? kPrimaryColor : kGrayColor100,
               ),
             ),
             child: Stack(
