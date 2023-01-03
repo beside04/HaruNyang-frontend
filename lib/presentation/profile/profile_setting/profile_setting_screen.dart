@@ -82,7 +82,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "닉네임 변경",
-                              style: kHeader4BlackStyle,
+                              style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
                           Padding(
@@ -178,7 +178,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "날짜 변경",
-                              style: kHeader4BlackStyle,
+                              style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
                           Padding(
@@ -288,7 +288,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           padding: EdgeInsets.only(left: 24.0.w),
                           child: Text(
                             "직업 변경",
-                            style: kHeader4BlackStyle,
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
                         Padding(

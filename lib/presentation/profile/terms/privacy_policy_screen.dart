@@ -202,7 +202,7 @@ Firebase Crashlytics (Google Inc.)
 Copyright © 하루냥. All rights reserved.
 ''',
             styleSheet: MarkdownStyleSheet(
-              h2: Theme.of(context).textTheme.headline2,
+              h2: Theme.of(context).textTheme.headline3,
               h3: Theme.of(context).textTheme.headline4,
               p: Theme.of(context).textTheme.bodyText1,
             ),

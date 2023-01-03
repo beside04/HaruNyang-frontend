@@ -52,7 +52,7 @@ class JobButton extends StatelessWidget {
           ),
           Text(
             job,
-            style: kSubtitle1BlackStyle,
+            style: Theme.of(context).textTheme.subtitle1,
           )
         ],
       ),

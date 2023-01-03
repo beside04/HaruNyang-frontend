@@ -26,7 +26,7 @@ class NoticeDetailScreen extends StatelessWidget {
         iconTheme: const IconThemeData(color: kBlackColor),
         title: Text(
           title,
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         centerTitle: true,
         elevation: 0.5,
@@ -72,7 +72,7 @@ class NoticeDetailScreen extends StatelessWidget {
                   ),
                   Text(
                     title,
-                    style: kHeader6BlackStyle,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(
                     height: 9.h,
@@ -86,7 +86,7 @@ class NoticeDetailScreen extends StatelessWidget {
                   ),
                   Text(
                     content,
-                    style: kBody1BlackStyle,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
               ),
