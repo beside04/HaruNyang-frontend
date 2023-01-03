@@ -114,6 +114,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                         getHomeViewModelBinding,
                                       ),
                                     );
+                                    //Get.delete<DiaryDetailViewModel>();
                                     Get.to(
                                       () => DiaryDetailScreen(
                                         date: date,

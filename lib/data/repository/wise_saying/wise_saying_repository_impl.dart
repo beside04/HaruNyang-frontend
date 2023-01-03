@@ -4,7 +4,11 @@ import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/repository/wise_saying/wise_saying_repository.dart';
 
 class WiseSayingRepositoryImpl implements WiseSayingRepository {
-  final WiseSayingApi wiseSayingApi = WiseSayingApi();
+  final WiseSayingApi wiseSayingApi;
+
+  WiseSayingRepositoryImpl({
+    required this.wiseSayingApi,
+  });
 
   @override
   Future<Result<List<WiseSayingData>>> getWiseSaying(

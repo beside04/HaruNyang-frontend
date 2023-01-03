@@ -4,7 +4,11 @@ import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 
 class OnBoardingRepositoryImpl implements OnBoardingRepository {
-  final OnBoardingApi onBoardingApi = OnBoardingApi();
+  final OnBoardingApi onBoardingApi;
+
+  OnBoardingRepositoryImpl({
+    required this.onBoardingApi,
+  });
 
   @override
   Future<Result<MyInformation>> getMyInformation() async {

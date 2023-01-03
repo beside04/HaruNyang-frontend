@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
-import 'package:frontend/presentation/diary/components/emotion_modal.dart';
-import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
@@ -20,7 +16,6 @@ class DiaryViewModel extends GetxController
   final weatherStatus = Rx<Weather?>(null);
 
   // final emotionStatus = Rx<Emotion?>(null);
-  final nowDate = DateTime.now().obs;
   final isEmotionModal = true.obs;
   final emotionNumberValue = 6.0.obs;
   final emotionTextValue = '맞아!'.obs;
@@ -59,14 +54,14 @@ class DiaryViewModel extends GetxController
     result.when(
       success: (data) async {
         emoticonDataList.value = data;
-        for (final emoticon in data) {
-          await precachePicture(
-              NetworkPicture(
-                SvgPicture.svgByteDecoderBuilder,
-                emoticon.emoticon,
-              ),
-              null);
-        }
+        // for (final emoticon in data) {
+        //   await precachePicture(
+        //       NetworkPicture(
+        //         SvgPicture.svgByteDecoderBuilder,
+        //         emoticon.emoticon,
+        //       ),
+        //       null);
+        // }
       },
       error: (message) {
         Get.snackbar('알림', message);

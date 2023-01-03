@@ -5,11 +5,16 @@ import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 
 class EmotionStampApi {
+  final RefreshInterceptor interceptor;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+
+  EmotionStampApi({
+    required this.interceptor,
+  });
 
   Future<Result<List<DiaryData>>> getEmotionStamp(
       String from, String to) async {
-    var dio = await refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor();
 
     try {
       String emoticonStampUrl = '$_baseUrl/v1/diary?from=$from&to=$to';
