@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';

@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/domain/model/diary/weather_data.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
