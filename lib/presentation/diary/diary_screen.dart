@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
@@ -22,7 +23,18 @@ class DiaryScreen extends GetView<DiaryViewModel> {
         date: DateTime.now(),
       ),
       body: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: Get.find<MainViewModel>().themeMode.value == ThemeMode.light
+                ? [
+                    const Color(0xffffac60),
+                    const Color(0xffffc793),
+                  ]
+                : [kGrayColor950, kGrayColor950],
+          ),
+        ),
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,

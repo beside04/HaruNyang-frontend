@@ -80,7 +80,7 @@ ThemeData darkMode = ThemeData(
   ),
   colorScheme: const ColorScheme(
     primary: kGrayColor950,
-      secondary: kGrayColor800,
+    secondary: kGrayColor850,
     brightness: Brightness.dark,
     onPrimary: kGrayColor900,
     onSecondary: kGrayColor800,

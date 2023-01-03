@@ -20,7 +20,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
       appBar: AppBar(
         title: Text(
           '북마크',
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         elevation: 0.5,
         leading: IconButton(
@@ -42,13 +42,13 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
               padding: const EdgeInsets.only(top: 12, left: 20, right: 20),
               child: Container(
                 decoration: BoxDecoration(
-                  // color: kWhiteColor,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.all(
                     Radius.circular(16.w),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      // color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(0.1),
                       blurRadius: 40,
                       spreadRadius: 10,
                     ),
@@ -71,7 +71,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                 Text(
                                   DateFormat('yyyy.MM.dd')
                                       .format(DateTime(2022, 12, 15)),
-                                  style: kSubtitle1BlackStyle,
+                                  style: Theme.of(context).textTheme.subtitle1,
                                 )
                               ],
                             ),
@@ -81,7 +81,9 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                       onTap: () {
                                         controller.toggleBookmark();
                                       },
-                                      child: const Icon(Icons.bookmark_border),
+                                      child: const Icon(
+                                        Icons.bookmark_border,
+                                      ),
                                     )
                                   : GestureDetector(
                                       onTap: () {
@@ -89,7 +91,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                       },
                                       child: const Icon(
                                         Icons.bookmark,
-                                        // color: kPrimaryColor,
+                                        color: kPrimaryColor,
                                       ),
                                     ),
                             )
@@ -100,13 +102,13 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                         ),
                         Text(
                           "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사",
-                          style: kBody1BlackStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
                             "이름",
-                            style: kBody2BlackStyle,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         )
                       ],
@@ -119,13 +121,13 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
               padding: const EdgeInsets.only(top: 12, left: 20, right: 20),
               child: Container(
                 decoration: BoxDecoration(
-                  // color: kWhiteColor,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.all(
                     Radius.circular(16.w),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      // color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(0.1),
                       blurRadius: 40,
                       spreadRadius: 10,
                     ),
@@ -148,7 +150,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                 Text(
                                   DateFormat('yyyy.MM.dd')
                                       .format(DateTime(2022, 12, 15)),
-                                  style: kSubtitle1BlackStyle,
+                                  style: Theme.of(context).textTheme.subtitle1,
                                 )
                               ],
                             ),
@@ -158,7 +160,9 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                       onTap: () {
                                         controller.toggleBookmark();
                                       },
-                                      child: const Icon(Icons.bookmark_border),
+                                      child: const Icon(
+                                        Icons.bookmark_border,
+                                      ),
                                     )
                                   : GestureDetector(
                                       onTap: () {
@@ -166,7 +170,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                       },
                                       child: const Icon(
                                         Icons.bookmark,
-                                        // color: kPrimaryColor,
+                                        color: kPrimaryColor,
                                       ),
                                     ),
                             )
@@ -177,13 +181,13 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                         ),
                         Text(
                           "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사",
-                          style: kBody1BlackStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
                             "이름",
-                            style: kBody2BlackStyle,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         )
                       ],
@@ -196,13 +200,13 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
               padding: const EdgeInsets.only(top: 12, left: 20, right: 20),
               child: Container(
                 decoration: BoxDecoration(
-                  // color: kWhiteColor,
+                  color: Theme.of(context).colorScheme.background,
                   borderRadius: BorderRadius.all(
                     Radius.circular(16.w),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      // color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withOpacity(0.1),
                       blurRadius: 40,
                       spreadRadius: 10,
                     ),
@@ -225,7 +229,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                 Text(
                                   DateFormat('yyyy.MM.dd')
                                       .format(DateTime(2022, 12, 15)),
-                                  style: kSubtitle1BlackStyle,
+                                  style: Theme.of(context).textTheme.subtitle1,
                                 )
                               ],
                             ),
@@ -235,7 +239,9 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                       onTap: () {
                                         controller.toggleBookmark();
                                       },
-                                      child: const Icon(Icons.bookmark_border),
+                                      child: const Icon(
+                                        Icons.bookmark_border,
+                                      ),
                                     )
                                   : GestureDetector(
                                       onTap: () {
@@ -243,7 +249,7 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                                       },
                                       child: const Icon(
                                         Icons.bookmark,
-                                        // color: kPrimaryColor,
+                                        color: kPrimaryColor,
                                       ),
                                     ),
                             )
@@ -254,13 +260,13 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                         ),
                         Text(
                           "가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사",
-                          style: kBody1BlackStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                         Align(
                           alignment: Alignment.centerRight,
                           child: Text(
                             "이름",
-                            style: kBody2BlackStyle,
+                            style: Theme.of(context).textTheme.bodyText2,
                           ),
                         )
                       ],

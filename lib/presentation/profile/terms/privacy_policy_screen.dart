@@ -15,7 +15,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "개인정보 처리방침",
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         elevation: 0,
         actions: [
@@ -202,9 +202,9 @@ Firebase Crashlytics (Google Inc.)
 Copyright © 하루냥. All rights reserved.
 ''',
             styleSheet: MarkdownStyleSheet(
-              h2: kHeader3BlackStyle,
-              h3: kHeader4BlackStyle,
-              p: kBody1BlackStyle,
+              h2: Theme.of(context).textTheme.headline3,
+              h3: Theme.of(context).textTheme.headline4,
+              p: Theme.of(context).textTheme.bodyText1,
             ),
           ),
         ),

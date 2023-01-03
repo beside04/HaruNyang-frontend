@@ -24,7 +24,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
               topLeft: Radius.circular(40),
               topRight: Radius.circular(40),
             ),
-            color: Theme.of(context).colorScheme.primary,
+            color: Theme.of(context).colorScheme.secondary,
           ),
           child: Stack(
             children: [
