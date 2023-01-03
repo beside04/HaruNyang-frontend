@@ -68,11 +68,11 @@ class PastDiaryTestScreen extends GetView<DiaryViewModel> {
                           controller.isEmotionModal.value
                               ? Text(
                                   "오늘 날씨 어때요?",
-                                  style: kHeader1BlackStyle,
+                                  style: Theme.of(context).textTheme.headline1,
                                 )
                               : Text(
                                   "오늘 기분 어때요?",
-                                  style: kHeader1BlackStyle,
+                                  style: Theme.of(context).textTheme.headline1,
                                 ),
                         ],
                       ),

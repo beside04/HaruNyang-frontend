@@ -42,28 +42,33 @@ class MyApp extends GetView<MainViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MainViewModel>();
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {
-        return GetMaterialApp(
-          title: 'Flutter Demo',
-          debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          getPages: [
-            GetPage(name: '/home', page: () => const HomeScreen()),
-          ],
-          darkTheme: darkMode,
-          theme: lightMode,
-          home: Get.find<MainViewModel>().token == null
-              ? const LoginScreen()
-              : const HomeScreen(),
-          initialBinding: Get.find<MainViewModel>().token == null
-              ? BindingsBuilder(
-                  getLoginBinding,
-                )
-              : BindingsBuilder(
-                  getHomeViewModelBinding,
-                ),
+        return Obx(
+          () => GetMaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            initialRoute: '/',
+            getPages: [
+              GetPage(name: '/home', page: () => const HomeScreen()),
+            ],
+            themeMode: controller.themeMode.value,
+            darkTheme: darkMode,
+            theme: lightMode,
+            home: Get.find<MainViewModel>().token == null
+                ? const LoginScreen()
+                : const HomeScreen(),
+            initialBinding: Get.find<MainViewModel>().token == null
+                ? BindingsBuilder(
+                    getLoginBinding,
+                  )
+                : BindingsBuilder(
+                    getHomeViewModelBinding,
+                  ),
+          ),
         );
       },
     );

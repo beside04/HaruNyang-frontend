@@ -26,16 +26,16 @@ class ProfileScreen extends GetView<ProfileViewModel> {
 
     return Obx(
       () => Scaffold(
-        backgroundColor: mainViewController.lightModeValue.value
-            ? const Color(0xffedebe8)
-            : kBackGroundDarkColor,
+        // backgroundColor: mainViewController.lightModeValue.value
+        //     ? const Color(0xffedebe8)
+        //     : kBackGroundDarkColor,
         body: SafeArea(
           child: ListView(
             children: [
               Container(
-                color: mainViewController.lightModeValue.value
-                    ? kWhiteColor
-                    : kBackGroundDarkColor,
+                // color: mainViewController.lightModeValue.value
+                //     ? kWhiteColor
+                //     : kBackGroundDarkColor,
                 child: Padding(
                   padding: kPrimarySidePadding,
                   child: Column(
@@ -50,10 +50,10 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                         decoration: BoxDecoration(
                           color: kPrimary2Color,
                           shape: BoxShape.circle,
-                          border: Border.all(
-                            width: 0.5,
-                            color: kGrayColor100,
-                          ),
+                          border:
+                              Border.all(width: 0.5, color: Colors.transparent
+                                  //color: kGrayColor100,
+                                  ),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(10.0.w),
@@ -72,9 +72,10 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                       Obx(
                         () => Text(
                           '${Get.find<MainViewModel>().state.value.nickname}님 반가워요!',
-                          style: mainViewController.lightModeValue.value
-                              ? kHeader2BlackStyle
-                              : kHeader2WhiteStyle,
+                          style: Theme.of(context).textTheme.headline2,
+                          // style: mainViewController.lightModeValue.value
+                          //     ? kHeader2BlackStyle
+                          //     : kHeader2WhiteStyle,
                         ),
                       ),
                       SizedBox(
@@ -108,7 +109,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                                     width: 20.w,
                                     height: 20.h,
                                     decoration: const BoxDecoration(
-                                      color: kBlackColor,
+                                      //color: kBlackColor,
                                       shape: BoxShape.circle,
                                     ),
                                     child: Stack(
@@ -139,15 +140,10 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   ),
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
-              ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  //color: kGrayColor250,
                 ),
                 title: '내 정보 관리',
                 onPressed: () {
@@ -164,15 +160,14 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 },
                 isLightMode: mainViewController.lightModeValue.value,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 12.h,
-                color: const Color(0xffedebe8),
+              Divider(
+                thickness: 12.h,
+                color: Theme.of(context).colorScheme.surface,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '북마크 목록',
                 onPressed: () {
@@ -180,17 +175,12 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 },
                 isLightMode: mainViewController.lightModeValue.value,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
-              ),
               Obx(
                 () => ProfileButton(
                   icon: FlutterSwitch(
                     width: 52.0.w,
                     height: 32.0.h,
-                    activeColor: kPrimary2Color,
+                    activeColor: Theme.of(context).primaryColor,
                     inactiveColor: kGrayColor250,
                     toggleSize: 28.0.w,
                     value: mainViewController.pushMessageValue.value,
@@ -204,23 +194,18 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   isLightMode: mainViewController.lightModeValue.value,
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
-              ),
               Obx(
                 () => ProfileButton(
                   icon: FlutterSwitch(
                     width: 52.0.w,
                     height: 32.0.h,
-                    activeColor: kPrimary2Color,
+                    activeColor: Theme.of(context).primaryColor,
                     inactiveColor: kGrayColor250,
                     toggleSize: 28.0.w,
-                    value: mainViewController.lightModeValue.value,
+                    value: mainViewController.isLightMode.value,
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
-                      mainViewController.toggleLightModeValue();
+                      mainViewController.toggleTheme();
                     },
                     activeIcon: Center(
                       child: SvgPicture.asset(
@@ -242,15 +227,14 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   isLightMode: mainViewController.lightModeValue.value,
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 12.h,
-                color: const Color(0xffedebe8),
+              Divider(
+                thickness: 12.h,
+                color: Theme.of(context).colorScheme.surface,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '공지사항',
                 onPressed: () {
@@ -258,15 +242,14 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 },
                 isLightMode: mainViewController.lightModeValue.value,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 12.h,
-                color: const Color(0xffedebe8),
+              Divider(
+                thickness: 12.h,
+                color: Theme.of(context).colorScheme.surface,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '서비스 이용약관',
                 onPressed: () {
@@ -277,15 +260,10 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 },
                 isLightMode: mainViewController.lightModeValue.value,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
-              ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '개인정보 취급방침',
                 onPressed: () {

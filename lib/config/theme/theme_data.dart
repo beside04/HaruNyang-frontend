@@ -6,6 +6,16 @@ ThemeData lightMode = ThemeData(
   scaffoldBackgroundColor: kWhiteColor,
   bottomAppBarColor: Color(0xfff6f5f4),
   primaryColor: kPrimaryColor,
+  unselectedWidgetColor: kGrayColor400,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    // backgroundColor: const Color(0xfff6f5f4),
+    unselectedItemColor: kGrayColor400,
+    selectedItemColor: kBlackColor,
+    selectedLabelStyle: kBody2BlackStyle,
+    unselectedLabelStyle: kBody2BlackStyle,
+    selectedIconTheme: IconThemeData(color: kBlackColor),
+    unselectedIconTheme: IconThemeData(color: kGrayColor400),
+  ),
   colorScheme: const ColorScheme(
     primary: kWhiteColor,
     secondary: Color(0xfff6f5f4),
@@ -29,7 +39,7 @@ ThemeData lightMode = ThemeData(
       color: kBlackColor,
     ),
   ),
-  primarySwatch: Colors.blue,
+  //primarySwatch: Colors.blue,
   textTheme: TextTheme(
     headline1: kHeader1BlackStyle,
     headline2: kHeader2BlackStyle,
@@ -58,9 +68,19 @@ ThemeData darkMode = ThemeData(
   scaffoldBackgroundColor: kGrayColor950,
   bottomAppBarColor: kGrayColor950,
   primaryColor: kPrimaryColor,
+  unselectedWidgetColor: kGrayColor600,
+  bottomNavigationBarTheme: BottomNavigationBarThemeData(
+    // backgroundColor: const Color(0xfff6f5f4),
+    unselectedItemColor: kGrayColor600,
+    selectedItemColor: kWhiteColor,
+    selectedLabelStyle: kBody2WhiteStyle,
+    unselectedLabelStyle: kBody2WhiteStyle,
+    selectedIconTheme: IconThemeData(color: kWhiteColor),
+    unselectedIconTheme: IconThemeData(color: kGrayColor600),
+  ),
   colorScheme: const ColorScheme(
-    primary: kGrayColor900,
-    secondary: kGrayColor800,
+    primary: kGrayColor950,
+      secondary: kGrayColor800,
     brightness: Brightness.dark,
     onPrimary: kGrayColor900,
     onSecondary: kGrayColor800,
@@ -71,9 +91,9 @@ ThemeData darkMode = ThemeData(
     surface: kGrayColor700,
     onSurface: kGrayColor900,
   ),
-  textSelectionTheme: const TextSelectionThemeData(
-    cursorColor: kSuccessColor,
-  ),
+  // textSelectionTheme: const TextSelectionThemeData(
+  //   cursorColor: kSuccessColor,
+  // ),
   appBarTheme: const AppBarTheme(
     centerTitle: true,
     backgroundColor: kGrayColor950,
@@ -82,7 +102,6 @@ ThemeData darkMode = ThemeData(
     ),
   ),
   brightness: Brightness.dark,
-  primarySwatch: Colors.blue,
   textTheme: TextTheme(
     headline1: kHeader1WhiteStyle,
     headline2: kHeader2WhiteStyle,
@@ -90,7 +109,7 @@ ThemeData darkMode = ThemeData(
     headline4: kHeader4WhiteStyle,
     headline5: kHeader5WhiteStyle,
     headline6: kHeader6WhiteStyle,
-    subtitle1: kSubtitle1BlackStyle,
+    subtitle1: kSubtitle1WhiteStyle,
     bodyText1: kBody1WhiteStyle,
     bodyText2: kBody2WhiteStyle,
     caption: kCaption1WhiteStyle,

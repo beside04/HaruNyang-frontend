@@ -22,9 +22,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: Text(
           '회원 탈퇴',
-          style: kHeader2BlackStyle,
+          style: Theme.of(context).textTheme.headline2,
         ),
         elevation: 0,
         leading: IconButton(
@@ -72,7 +73,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   child: Center(
                     child: Text(
                       '탈퇴 전 확인하세요!',
-                      style: kHeader2BlackStyle,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
                   ),
                 ),
@@ -82,12 +83,13 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                 Container(
                   padding: kPrimaryPadding,
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: kSecondaryColor,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                   child: Text(
                     '가입 시 수집한 개인정보(이메일)를 포함하여 작성한\n 일기, 기분, 감정캘린더, 발급받은 감정리포트가\n 영구적으로 삭제되며, 다시는 복구할 수 없습니다.',
-                    style: kBody2Gray400Style,
+                    //style: kBody2Gray400Style,
+                    style: Theme.of(context).textTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -121,7 +123,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                         padding: EdgeInsets.all(8.0.w),
                         child: Text(
                           '안내사항을 확인하였으며 이에 동의합니다.',
-                          style: kBody1BlackStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ),
                     ],
@@ -136,6 +138,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                 child: Obx(
                   () => ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      disabledBackgroundColor:
+                          Theme.of(context).unselectedWidgetColor,
                       backgroundColor: kPrimaryColor,
                       minimumSize: const Size(double.infinity, 52),
                       shape: RoundedRectangleBorder(
@@ -155,7 +159,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         horizontal: 30.0),
                                     child: Text(
                                       "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
-                                      style: kHeader6Gray600Style,
+                                      //style: kHeader6Gray600Style,
+                                      style: Theme.of(context).textTheme.bodyText1,
                                     ),
                                   ),
                                   actionContent: [
@@ -165,8 +170,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         Get.back();
                                         Get.back();
                                       },
-                                      backgroundColor: kGrayColor100,
-                                      textStyle: kHeader4Gray600Style,
+                                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                                      textStyle: kHeader4WhiteStyle,
                                     ),
                                     SizedBox(
                                       width: 12.w,
@@ -194,7 +199,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                             );
                           }
                         : null,
-                    child: const Text('탈퇴하기'),
+                    child: Text(
+                      '탈퇴하기',
+                      style: kHeader6WhiteStyle,
+                    ),
                   ),
                 ),
               ),

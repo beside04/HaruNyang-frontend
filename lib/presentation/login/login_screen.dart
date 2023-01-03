@@ -51,7 +51,7 @@ class LoginScreen extends GetView<LoginViewModel> {
             Center(
               child: Text(
                 "하루냥과 함께해볼까요?",
-                style: kHeader1BlackStyle,
+                style: Theme.of(context).textTheme.headline1,
               ),
             ),
             SizedBox(

@@ -28,7 +28,8 @@ class BottomButton extends StatelessWidget {
           height: 48.h,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: kPrimaryColor,
+              disabledBackgroundColor: Theme.of(context).unselectedWidgetColor,
+              backgroundColor: Theme.of(context).primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(60),
               ),

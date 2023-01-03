@@ -90,7 +90,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   ),
                   const Icon(
                     Icons.keyboard_arrow_down,
-                    color: kBlackColor,
+                    //color: kBlackColor,
                   )
                 ],
               ),
@@ -187,20 +187,17 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                   title: "미래 일기는 쓸 수 없어요",
                                                   actionContent: [
                                                     DialogButton(
-                                                      title: "확인",
-                                                      onTap: () {
-                                                        Get.back();
-                                                      },
-                                                      backgroundColor:
-                                                          kPrimary2Color,
-                                                      textStyle: Theme.of(
-                                                              context)
-                                                          .textTheme
-                                                          .headline4!
-                                                          .copyWith(
-                                                              color:
-                                                                  kWhiteColor),
-                                                    ),
+                                                        title: "확인",
+                                                        onTap: () {
+                                                          Get.back();
+                                                        },
+                                                        backgroundColor:
+                                                            Theme.of(context)
+                                                                .primaryColor,
+                                                        textStyle:
+                                                            Theme.of(context)
+                                                                .textTheme
+                                                                .headline4!),
                                                   ],
                                                 );
                                               },

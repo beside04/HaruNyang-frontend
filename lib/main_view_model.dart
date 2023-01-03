@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/my_information.dart';
@@ -23,6 +24,17 @@ class MainViewModel extends GetxController {
   String? token;
   final pushMessageValue = true.obs;
   final lightModeValue = true.obs;
+  Rx<ThemeMode> themeMode = ThemeMode.light.obs;
+
+  Rx<bool> get isLightMode => (themeMode.value == ThemeMode.light).obs;
+
+  void toggleTheme() {
+    if (themeMode.value == ThemeMode.dark) {
+      themeMode.value = ThemeMode.light;
+    } else {
+      themeMode.value = ThemeMode.dark;
+    }
+  }
 
   Future<Result<MyInformation>> getMyInformation() async {
     final getMyInformation = await onBoardingUseCase.getMyInformation();
@@ -52,10 +64,10 @@ class MainViewModel extends GetxController {
     pushMessageValue.value = !pushMessageValue.value;
   }
 
-  toggleLightModeValue() {
-    lightModeValue.value = !lightModeValue.value;
-    lightModeValue.value
-        ? Get.changeTheme(lightMode)
-        : Get.changeTheme(darkMode);
-  }
+// toggleLightModeValue() {
+//   lightModeValue.value = !lightModeValue.value;
+//   lightModeValue.value
+//       ? Get.changeTheme(lightMode)
+//       : Get.changeTheme(darkMode);
+// }
 }

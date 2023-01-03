@@ -24,9 +24,10 @@ class LoginTermsInformationScreen
 
     return Scaffold(
       appBar: AppBar(
+          centerTitle: false,
           title: Text(
             "약관정보",
-            style: kHeader3BlackStyle,
+            style: Theme.of(context).textTheme.headline3,
           ),
           elevation: 0.5,
           leading: IconButton(
@@ -54,12 +55,12 @@ class LoginTermsInformationScreen
                   padding: kPrimaryPadding,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: kGrayColor100,
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: BorderRadius.circular(12.0.w),
                   ),
                   child: Text(
                     '하루냥의 서비스 약관이에요. \n 필수 약관을 동의하셔야 이용할 수 있어요',
-                    style: kBody2Gray400Style,
+                    style: Theme.of(context).textTheme.bodyText1,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -91,7 +92,7 @@ class LoginTermsInformationScreen
                         padding: EdgeInsets.all(8.w),
                         child: Text(
                           '전체 동의하기',
-                          style: kSubtitle1BlackStyle,
+                          style: Theme.of(context).textTheme.subtitle1,
                         ),
                       ),
                     ],
@@ -116,7 +117,7 @@ class LoginTermsInformationScreen
                         ),
                         Text(
                           '서비스 이용약관',
-                          style: kBody1BlackStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ],
                     ),
@@ -143,7 +144,7 @@ class LoginTermsInformationScreen
                         ),
                         Text(
                           '개인정보 처리방침',
-                          style: kBody1BlackStyle,
+                          style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ],
                     ),
@@ -164,7 +165,7 @@ class LoginTermsInformationScreen
                     termValue: controller.isMarketingConsentAgree.value,
                     termTitle: Text(
                       '(선택) 마케팅 정보 수신 동의',
-                      style: kBody1BlackStyle,
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
                     onTap: controller.toggleMarketingConsentCheck,
                     termOnTap: () {
