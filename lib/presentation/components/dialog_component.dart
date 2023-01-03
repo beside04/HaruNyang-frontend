@@ -31,7 +31,6 @@ class DialogComponent extends StatelessWidget {
       title: Center(
         child: Text(
           title.tr,
-          //style: kHeader3BlackStyle,
           style: Theme.of(context)
               .textTheme
               .headline3!,

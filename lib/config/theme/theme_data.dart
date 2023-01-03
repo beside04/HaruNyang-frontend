@@ -27,6 +27,7 @@ ThemeData lightMode = ThemeData(
     onBackground: kWhiteColor,
     surface: kGrayColor100,
     onSurface: kWhiteColor,
+    inverseSurface: kBlackColor,
   ),
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: kSuccessColor,
@@ -47,6 +48,7 @@ ThemeData lightMode = ThemeData(
     headline5: kHeader5BlackStyle,
     headline6: kHeader6BlackStyle,
     subtitle1: kSubtitle1BlackStyle,
+    subtitle2: kSubtitle2Gray400Style,
     bodyText1: kBody1BlackStyle,
     bodyText2: kBody2BlackStyle,
     caption: kCaption1BlackStyle,
@@ -78,7 +80,7 @@ ThemeData darkMode = ThemeData(
   ),
   colorScheme: const ColorScheme(
     primary: kGrayColor950,
-    secondary: kGrayColor800,
+    secondary: kGrayColor850,
     brightness: Brightness.dark,
     onPrimary: kGrayColor900,
     onSecondary: kGrayColor800,
@@ -88,6 +90,7 @@ ThemeData darkMode = ThemeData(
     onBackground: kGrayColor900,
     surface: kGrayColor700,
     onSurface: kGrayColor900,
+    inverseSurface: kWhiteColor,
   ),
   appBarTheme: const AppBarTheme(
     centerTitle: true,
@@ -105,6 +108,7 @@ ThemeData darkMode = ThemeData(
     headline5: kHeader5WhiteStyle,
     headline6: kHeader6WhiteStyle,
     subtitle1: kSubtitle1WhiteStyle,
+    subtitle2: kSubtitle2Gray600Style,
     bodyText1: kBody1WhiteStyle,
     bodyText2: kBody2WhiteStyle,
     caption: kCaption1WhiteStyle,

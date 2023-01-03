@@ -29,9 +29,7 @@ class AgeTextField extends StatelessWidget {
         helperText: "",
         counterText: "",
         hintText: 'YYYY-MM-DD 입력',
-        hintStyle: Theme.of(context).textTheme.headline6!.copyWith(
-          color: kGrayColor300,
-        ),
+        hintStyle: Theme.of(context).textTheme.subtitle2,
         contentPadding: const EdgeInsets.only(
           top: 14,
           right: 14,

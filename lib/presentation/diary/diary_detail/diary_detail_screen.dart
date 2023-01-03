@@ -278,8 +278,8 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                       width: 8.w,
                                     ),
                                     getEmotionTextWidget(
-                                      diaryData.emoticonIndex,
-                                    ),
+                                        diaryData.emoticonIndex,
+                                        Theme.of(context).textTheme.bodyText1!),
                                   ],
                                 ),
                               ),

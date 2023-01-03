@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/diary/past_diary_screen.dart';
-import 'package:frontend/presentation/diary/diary_view_model.dart';
+import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -26,17 +23,7 @@ class EmptyDiaryScreen extends StatelessWidget {
         elevation: 0,
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: kHeader3BlackStyle,
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            color: kBlackColor,
-            size: 20.w,
-          ),
+          style: Theme.of(context).textTheme.headline3,
         ),
       ),
       body: SafeArea(
@@ -60,7 +47,7 @@ class EmptyDiaryScreen extends StatelessWidget {
                   ),
                   Text(
                     "작성한 일기가 없어요",
-                    style: kHeader5BlackStyle,
+                    style: Theme.of(context).textTheme.headline5,
                   )
                 ],
               ),
@@ -68,8 +55,7 @@ class EmptyDiaryScreen extends StatelessWidget {
             BottomButton(
               title: '일기쓰기',
               onTap: () {
-                Get.delete<DiaryViewModel>();
-                Get.to(() => PastDiaryTestScreen(
+                Get.to(() => DiaryScreen(
                       date: date,
                     ));
               },

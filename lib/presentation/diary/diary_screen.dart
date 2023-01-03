@@ -12,15 +12,23 @@ import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
 
 class DiaryScreen extends GetView<DiaryViewModel> {
-  const DiaryScreen({super.key});
+  final DateTime? date;
+
+  const DiaryScreen({
+    super.key,
+    this.date,
+  });
 
   @override
   Widget build(BuildContext context) {
     getDiaryBinding();
 
+    if (date != null) {
+      controller.nowDate.value = date!;
+    }
     return Scaffold(
       appBar: DiaryAppBar(
-        date: DateTime.now(),
+        date: date != null ? date! : DateTime.now(),
       ),
       body: Container(
         decoration: BoxDecoration(

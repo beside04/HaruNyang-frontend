@@ -564,6 +564,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                                                                                 ),
                                                                                 getEmotionTextWidget(
                                                                                   itemList.emoticonIndex,
+                                                                                  Theme.of(context).textTheme.bodyText1!,
                                                                                 ),
                                                                               ],
                                                                             ),

@@ -204,6 +204,23 @@ TextStyle kSubtitle1WhiteStyle = TextStyle(
   height: 1.4285.sp,
 );
 
+
+TextStyle kSubtitle2Gray600Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kGrayColor600,
+  fontWeight: FontWeight.w600,
+  height: 1.4285.sp,
+);
+
+TextStyle kSubtitle2Gray400Style = TextStyle(
+  fontFamily: pretendard,
+  fontSize: 14.sp,
+  color: kGrayColor400,
+  fontWeight: FontWeight.w600,
+  height: 1.4285.sp,
+);
+
 //Body1 Style
 TextStyle kBody1BlackStyle = TextStyle(
   fontFamily: pretendard,

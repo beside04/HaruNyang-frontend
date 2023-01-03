@@ -109,14 +109,14 @@ List<JobData> jobList = [
   ),
 ];
 
-Widget getEmotionTextWidget(value) {
+Widget getEmotionTextWidget(int value,TextStyle style) {
   if (value < 20.0) {
-    return Text("조금", style: kBody1BlackStyle);
+    return Text("조금", style: style);
   } else if (value < 50.0) {
-    return Text("그럭저럭", style: kBody1BlackStyle);
+    return Text("그럭저럭", style: style);
   } else if (value < 70.0) {
-    return Text("맞아!", style: kBody1BlackStyle);
+    return Text("맞아!", style: style);
   } else {
-    return Text("진짜 엄청 대박!!", style: kBody1BlackStyle);
+    return Text("진짜 엄청 대박!!", style: style);
   }
 }

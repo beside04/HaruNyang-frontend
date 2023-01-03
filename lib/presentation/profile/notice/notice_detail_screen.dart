@@ -23,21 +23,12 @@ class NoticeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
         title: Text(
           title,
           style: Theme.of(context).textTheme.headline3,
         ),
         centerTitle: true,
         elevation: 0.5,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
-        ),
       ),
       body: SafeArea(
         child: ListView(
