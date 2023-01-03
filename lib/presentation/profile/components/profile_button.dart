@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 
 class ProfileButton extends StatelessWidget {
   const ProfileButton({
@@ -20,24 +18,22 @@ class ProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: isLightMode ? kWhiteColor : kBackGroundDarkColor,
+      // color: isLightMode ? kWhiteColor : kBackGroundDarkColor,
+      color: Theme.of(context).colorScheme.primary,
       child: InkWell(
         onTap: onPressed,
-        child: Container(
-          color: Colors.transparent,
-          child: Padding(
-            padding: kPrimaryPadding,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  title,
-                  style:
-                      isLightMode ? kSubtitle2BlackStyle : kSubtitle2WhiteStyle,
-                ),
-                icon
-              ],
-            ),
+        child: Padding(
+          padding: kPrimaryPadding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headline5,
+                //style: isLightMode ? kHeader5BlackStyle : kHeader5WhiteStyle,
+              ),
+              icon
+            ],
           ),
         ),
       ),

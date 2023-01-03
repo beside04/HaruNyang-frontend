@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     _controller = AnimationController(vsync: this);
 
-    Future.delayed(const Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 3), () {
       Get.offAll(
         () => Get.find<MainViewModel>().token == null
             ? const LoginScreen()

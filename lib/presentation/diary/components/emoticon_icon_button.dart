@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 
 class EmoticonIconButton extends StatelessWidget {
   const EmoticonIconButton({
@@ -36,18 +35,12 @@ class EmoticonIconButton extends StatelessWidget {
                   decoration: BoxDecoration(
                     border: Border.all(
                       width: selected ? 2 : 0.5,
-                      color: selected ? kPrimaryColor : kSecondaryColor,
+                      color: selected
+                          ? kPrimaryColor
+                          : Theme.of(context).colorScheme.surface,
                     ),
                     shape: BoxShape.circle,
-                    color: kSurfaceLightColor,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: kSecondaryColor,
-                        spreadRadius: 0,
-                        blurRadius: 3,
-                        offset: Offset(0, 4),
-                      ),
-                    ],
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                   child: SvgPicture.network(
                     icon,
@@ -55,24 +48,13 @@ class EmoticonIconButton extends StatelessWidget {
                     height: 40.h,
                   ),
                 ),
-                selected
-                    ? Positioned(
-                        bottom: 2.h,
-                        right: 2.w,
-                        child: SvgPicture.asset(
-                          "lib/config/assets/images/on_boarding/check.svg",
-                          width: 16.w,
-                          height: 16.h,
-                        ),
-                      )
-                    : Container(),
               ],
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
                 name,
-                style: kBody1Gray600Style,
+                style: Theme.of(context).textTheme.bodyText1,
               ),
             ),
           ],

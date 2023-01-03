@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
@@ -9,12 +8,7 @@ import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:get/get.dart';
 
 class EmotionModal extends GetView<DiaryViewModel> {
-  final DateTime date;
-
-  const EmotionModal({
-    Key? key,
-    required this.date,
-  }) : super(key: key);
+  const EmotionModal({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +25,12 @@ class EmotionModal extends GetView<DiaryViewModel> {
                 ? 276.h
                 : 375.h,
             child: Container(
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
                 ),
-                color: kWhiteColor,
+                color: Theme.of(context).colorScheme.secondary,
               ),
               child: Stack(
                 children: [
@@ -46,7 +40,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       children: [
                         Text(
                           "기분",
-                          style: kHeader3BlackStyle,
+                          style: Theme.of(context).textTheme.headline3,
                         ),
                       ],
                     ),
@@ -78,7 +72,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       padding: EdgeInsets.only(left: 6.w, top: 201.h),
                       child: controller.selectedEmotion.value.emoticon.isEmpty
                           ? Container()
-                          : buildSlider(),
+                          : buildSlider(context),
                     ),
                   ),
                   Obx(
@@ -89,7 +83,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                           : () {
                               Get.to(
                                 () => WriteDiaryScreen(
-                                  date: date,
+                                  date: controller.nowDate.value,
                                   emotion: controller.selectedEmotion.value,
                                   weather: controller.weatherStatus.value!,
                                   emoticonIndex:
@@ -109,13 +103,13 @@ class EmotionModal extends GetView<DiaryViewModel> {
     );
   }
 
-  Widget buildSlider() {
+  Widget buildSlider(context) {
     return Obx(
       () => Column(
         children: [
           Text(
             controller.emotionTextValue.value,
-            style: kSubtitle3BlackStyle,
+            style: Theme.of(context).textTheme.headline6,
           ),
           SliderTheme(
             data: const SliderThemeData(

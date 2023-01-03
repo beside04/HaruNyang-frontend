@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -52,14 +51,14 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                           ),
                           Text(
                             "어떤 일을",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
                           Text(
                             "하고 계세요?",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 40.h,

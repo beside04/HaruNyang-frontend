@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,12 +19,15 @@ class DiaryAppBar extends GetView<DiaryViewModel>
   Widget build(BuildContext context) {
     return Obx(
       () => AppBar(
-        backgroundColor: const Color(0xffE69954),
         elevation: 0,
         centerTitle: true,
+        backgroundColor:
+            Get.find<MainViewModel>().themeMode.value == ThemeMode.light
+                ? const Color(0xffffac60)
+                : kGrayColor950,
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         leading: controller.isEmotionModal.value
             ? null
@@ -34,7 +37,6 @@ class DiaryAppBar extends GetView<DiaryViewModel>
                 },
                 icon: Icon(
                   Icons.arrow_back_ios,
-                  color: kBlackColor,
                   size: 20.w,
                 ),
               ),

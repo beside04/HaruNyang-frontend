@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -52,14 +51,14 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                             ),
                             Text(
                               "안녕하세요, 저는 하루냥이에요",
-                              style: kHeader2BlackStyle,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(
                               height: 4.h,
                             ),
                             Text(
                               "이름이 뭐에요?",
-                              style: kHeader2BlackStyle,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(
                               height: 20.h,

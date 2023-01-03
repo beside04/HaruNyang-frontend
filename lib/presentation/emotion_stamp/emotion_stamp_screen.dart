@@ -2,8 +2,6 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_list_widget.dart';
@@ -33,9 +31,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kWhiteColor,
         elevation: 0,
-        centerTitle: true,
         actions: [
           Obx(
             () => IconButton(
@@ -45,7 +41,6 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
               icon: controller.isCalendar.value
                   ? const Icon(Icons.list)
                   : const Icon(Icons.calendar_month_outlined),
-              color: kBlackColor,
             ),
           )
         ],
@@ -78,14 +73,14 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   Text(
                     DateFormat('yyyy년 MM월')
                         .format(controller.focusedCalendarDate.value),
-                    style: kHeader3BlackStyle,
+                    style: Theme.of(context).textTheme.headline3,
                   ),
                   SizedBox(
                     width: 6.w,
                   ),
                   const Icon(
                     Icons.keyboard_arrow_down,
-                    color: kBlackColor,
+                    //color: kBlackColor,
                   )
                 ],
               ),
@@ -96,9 +91,6 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            SizedBox(
-              height: 20.h,
-            ),
             Obx(
               () => Expanded(
                 child: PageTransitionSwitcher(

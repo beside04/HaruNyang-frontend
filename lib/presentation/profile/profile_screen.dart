@@ -22,131 +22,123 @@ class ProfileScreen extends GetView<ProfileViewModel> {
   @override
   Widget build(BuildContext context) {
     getProfileBinding();
+    final mainViewController = Get.find<MainViewModel>();
 
     return Obx(
       () => Scaffold(
-        backgroundColor: controller.lightModeValue.value
-            ? const Color(0xffedebe8)
-            : kBackGroundDarkColor,
+        // backgroundColor: mainViewController.lightModeValue.value
+        //     ? const Color(0xffedebe8)
+        //     : kBackGroundDarkColor,
         body: SafeArea(
           child: ListView(
             children: [
-              Container(
-                color: controller.lightModeValue.value
-                    ? kWhiteColor
-                    : kBackGroundDarkColor,
-                child: Padding(
-                  padding: kPrimarySidePadding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20.h,
+              Padding(
+                padding: kPrimarySidePadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Container(
+                      width: 60.w,
+                      height: 60.h,
+                      decoration: BoxDecoration(
+                        color: kPrimary2Color,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(width: 0.5, color: Colors.transparent
+                                //color: kGrayColor100,
+                                ),
                       ),
-                      Container(
-                        width: 60.w,
-                        height: 60.h,
-                        decoration: BoxDecoration(
-                          color: kPrimary2Color,
-                          shape: BoxShape.circle,
-                          border: Border.all(
-                            width: 0.5,
-                            color: kGrayColor150,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(10.0.w),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              "lib/config/assets/images/character/onboarding1.svg",
-                              width: 40.w,
-                              height: 40.h,
-                            ),
+                      child: Padding(
+                        padding: EdgeInsets.all(10.0.w),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            "lib/config/assets/images/character/onboarding1.svg",
+                            width: 40.w,
+                            height: 40.h,
                           ),
                         ),
                       ),
-                      SizedBox(
-                        height: 12.h,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Obx(
+                      () => Text(
+                        '${Get.find<MainViewModel>().state.value.nickname}님 반가워요!',
+                        style: Theme.of(context).textTheme.headline2,
+                        // style: mainViewController.lightModeValue.value
+                        //     ? kHeader2BlackStyle
+                        //     : kHeader2WhiteStyle,
                       ),
-                      Obx(
-                        () => Text(
-                          '${Get.find<MainViewModel>().state.value.nickname}님 반가워요!',
-                          style: controller.lightModeValue.value
-                              ? kHeader2BlackStyle
-                              : kHeader2WhiteStyle,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      Obx(
-                        () => Row(
-                          children: [
-                            Get.find<MainViewModel>().state.value.loginType ==
-                                    "KAKAO"
-                                ? Container(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xffffe818),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: SvgPicture.asset(
-                                            'lib/config/assets/images/login/kakao_logo.svg',
-                                            width: 10.w,
-                                            height: 10.h,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : Container(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    decoration: const BoxDecoration(
-                                      color: kBlackColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: SvgPicture.asset(
-                                            'lib/config/assets/images/login/apple_logo.svg',
-                                            width: 10.w,
-                                            height: 10.h,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Obx(
+                      () => Row(
+                        children: [
+                          Get.find<MainViewModel>().state.value.loginType ==
+                                  "KAKAO"
+                              ? Container(
+                                  width: 20.w,
+                                  height: 20.h,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffffe818),
+                                    shape: BoxShape.circle,
                                   ),
-                            Obx(
-                              () => Text(
-                                " ${Get.find<MainViewModel>().state.value.email}",
-                                style: kBody2Gray400Style,
-                              ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: SvgPicture.asset(
+                                          'lib/config/assets/images/login/kakao_logo.svg',
+                                          width: 10.w,
+                                          height: 10.h,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  width: 20.w,
+                                  height: 20.h,
+                                  decoration: const BoxDecoration(
+                                    //color: kBlackColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: SvgPicture.asset(
+                                          'lib/config/assets/images/login/apple_logo.svg',
+                                          width: 10.w,
+                                          height: 10.h,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                          Obx(
+                            () => Text(
+                              " ${Get.find<MainViewModel>().state.value.email}",
+                              style: kBody2Gray400Style,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                    ],
-                  ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                  ],
                 ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  //color: kGrayColor250,
                 ),
                 title: '내 정보 관리',
                 onPressed: () {
@@ -161,65 +153,54 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     ),
                   );
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 12.h,
-                color: const Color(0xffedebe8),
+              Divider(
+                thickness: 12.h,
+                color: Theme.of(context).colorScheme.surface,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '북마크 목록',
                 onPressed: () {
                   Get.to(() => const BookMarkScreen());
                 },
-                isLightMode: controller.lightModeValue.value,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
               Obx(
                 () => ProfileButton(
                   icon: FlutterSwitch(
                     width: 52.0.w,
                     height: 32.0.h,
-                    activeColor: kPrimary2Color,
+                    activeColor: Theme.of(context).primaryColor,
                     inactiveColor: kGrayColor250,
                     toggleSize: 28.0.w,
-                    value: controller.pushMessageValue.value,
+                    value: mainViewController.pushMessageValue.value,
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
-                      controller.togglePushMessageValue();
+                      mainViewController.togglePushMessageValue();
                     },
                   ),
                   title: '푸시 메세지 설정',
                   onPressed: null,
-                  isLightMode: controller.lightModeValue.value,
+                  isLightMode: mainViewController.lightModeValue.value,
                 ),
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
               ),
               Obx(
                 () => ProfileButton(
                   icon: FlutterSwitch(
                     width: 52.0.w,
                     height: 32.0.h,
-                    activeColor: kPrimary2Color,
+                    activeColor: Theme.of(context).primaryColor,
                     inactiveColor: kGrayColor250,
                     toggleSize: 28.0.w,
-                    value: controller.lightModeValue.value,
+                    value: mainViewController.isLightMode.value,
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
-                      controller.toggleLightModeValue();
+                      mainViewController.toggleTheme();
                     },
                     activeIcon: Center(
                       child: SvgPicture.asset(
@@ -238,34 +219,32 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   ),
                   title: '라이트 다크모드 전환',
                   onPressed: null,
-                  isLightMode: controller.lightModeValue.value,
+                  isLightMode: mainViewController.lightModeValue.value,
                 ),
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 12.h,
-                color: const Color(0xffedebe8),
+              Divider(
+                thickness: 12.h,
+                color: Theme.of(context).colorScheme.surface,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '공지사항',
                 onPressed: () {
                   Get.to(() => const NoticeScreen());
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 12.h,
-                color: const Color(0xffedebe8),
+              Divider(
+                thickness: 12.h,
+                color: Theme.of(context).colorScheme.surface,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '서비스 이용약관',
                 onPressed: () {
@@ -274,17 +253,12 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     transition: Transition.downToUp,
                   );
                 },
-                isLightMode: controller.lightModeValue.value,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 1.h,
-                color: kGrayColor100,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
               ProfileButton(
                 icon: const Icon(
                   Icons.navigate_next,
-                  color: kGrayColor250,
+                  // color: kGrayColor250,
                 ),
                 title: '개인정보 취급방침',
                 onPressed: () {
@@ -293,7 +267,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                     transition: Transition.downToUp,
                   );
                 },
-                isLightMode: controller.lightModeValue.value,
+                isLightMode: mainViewController.lightModeValue.value,
               ),
             ],
           ),

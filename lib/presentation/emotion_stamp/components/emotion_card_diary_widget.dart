@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:intl/intl.dart';
@@ -20,7 +19,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: kGrayColor50,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(20.0.w),
       ),
       child: Padding(
@@ -34,15 +33,15 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                 Text(
                   DateFormat.MMMEd("ko_KR")
                       .format(DateTime.parse(diaryData.writtenAt)),
-                  style: kSubtitle2BlackStyle,
+                  style: Theme.of(context).textTheme.headline5,
                 ),
                 Row(
                   children: [
                     Container(
                       padding: EdgeInsets.all(4.w),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: kWhiteColor,
+                        color: Theme.of(context).colorScheme.surface,
                       ),
                       child: SvgPicture.asset(
                         "lib/config/assets/images/diary/weather/sunny.svg",
@@ -57,7 +56,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
                       decoration: BoxDecoration(
-                        color: kWhiteColor,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(100.0.w),
                       ),
                       child: Row(
@@ -72,6 +71,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                           ),
                           getEmotionTextWidget(
                             diaryData.emoticonIndex,
+                            Theme.of(context).textTheme.bodyText1!,
                           ),
                         ],
                       ),
@@ -101,7 +101,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                   ),
             Text(
               diaryData.diaryContent,
-              style: kBody1BlackStyle,
+              style: Theme.of(context).textTheme.bodyText1,
             )
           ],
         ),

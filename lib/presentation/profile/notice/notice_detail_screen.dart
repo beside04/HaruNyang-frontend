@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class NoticeDetailScreen extends StatelessWidget {
@@ -23,22 +22,12 @@ class NoticeDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           title,
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         centerTitle: true,
         elevation: 0.5,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
-        ),
       ),
       body: SafeArea(
         child: ListView(
@@ -73,7 +62,7 @@ class NoticeDetailScreen extends StatelessWidget {
                   ),
                   Text(
                     title,
-                    style: kSubtitle3BlackStyle,
+                    style: Theme.of(context).textTheme.headline6,
                   ),
                   SizedBox(
                     height: 9.h,
@@ -87,7 +76,7 @@ class NoticeDetailScreen extends StatelessWidget {
                   ),
                   Text(
                     content,
-                    style: kBody1BlackStyle,
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],
               ),

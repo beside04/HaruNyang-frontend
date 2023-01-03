@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
@@ -31,15 +30,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffedebe8),
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           '내 정보 관리',
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
-        centerTitle: false,
         elevation: 0,
         leading: IconButton(
           onPressed: () {
@@ -53,15 +48,13 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
       body: SafeArea(
         child: ListView(
           children: [
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 12.h,
-              color: const Color(0xffedebe8),
+            Divider(
+              thickness: 12.h,
+              color: Theme.of(context).colorScheme.surface,
             ),
             ProfileButton(
               icon: const Icon(
                 Icons.navigate_next,
-                color: kGrayColor250,
               ),
               title: '닉네임 수정',
               onPressed: () {
@@ -89,7 +82,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "닉네임 변경",
-                              style: kSubtitle1BlackStyle,
+                              style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
                           Padding(
@@ -106,7 +99,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     : GestureDetector(
                                         child: const Icon(
                                           Icons.cancel,
-                                          color: kGrayColor200,
+                                          // color: kGrayColor200,
                                           size: 20,
                                         ),
                                         onTap: () => controller
@@ -154,15 +147,10 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 );
               },
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 1.h,
-              color: kGrayColor100,
-            ),
             ProfileButton(
               icon: const Icon(
                 Icons.navigate_next,
-                color: kGrayColor250,
+                // color: kGrayColor250,
               ),
               title: '나이 수정',
               onPressed: () {
@@ -190,7 +178,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "날짜 변경",
-                              style: kSubtitle1BlackStyle,
+                              style: Theme.of(context).textTheme.headline4,
                             ),
                           ),
                           Padding(
@@ -222,7 +210,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     : GestureDetector(
                                         child: const Icon(
                                           Icons.cancel,
-                                          color: kGrayColor200,
+                                          // color: kGrayColor200,
                                           size: 20,
                                         ),
                                         onTap: () => controller
@@ -269,15 +257,10 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 );
               },
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 1.h,
-              color: kGrayColor100,
-            ),
             ProfileButton(
               icon: const Icon(
                 Icons.navigate_next,
-                color: kGrayColor250,
+                // color: kGrayColor250,
               ),
               title: '직업 수정',
               onPressed: () {
@@ -305,7 +288,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           padding: EdgeInsets.only(left: 24.0.w),
                           child: Text(
                             "직업 변경",
-                            style: kSubtitle1BlackStyle,
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
                         Padding(
@@ -364,15 +347,14 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 );
               },
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 12.h,
-              color: const Color(0xffedebe8),
+            Divider(
+              thickness: 12.h,
+              color: Theme.of(context).colorScheme.surface,
             ),
             ProfileButton(
               icon: const Icon(
                 Icons.navigate_next,
-                color: kGrayColor250,
+                // color: kGrayColor250,
               ),
               title: '로그아웃',
               onPressed: () async {
@@ -402,7 +384,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 padding: const EdgeInsets.all(20.0),
                 child: Text(
                   '회원탈퇴',
-                  style: kSubtitle2Gray300UnderlineStyle,
+                  style: kHeader5Gray300UnderlineStyle,
                 ),
               ),
             ),

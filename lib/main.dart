@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -41,34 +41,24 @@ class MyApp extends GetView<MainViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<MainViewModel>();
+
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {
-        return GetMaterialApp(
-          title: 'Flutter Demo',
-          debugShowCheckedModeBanner: false,
-          initialRoute: '/',
-          getPages: [
-            GetPage(name: '/home', page: () => const HomeScreen()),
-          ],
-          theme: ThemeData(
-            scaffoldBackgroundColor: kWhiteColor,
-            textSelectionTheme: const TextSelectionThemeData(
-              cursorColor: kSuccessColor,
-            ),
-            primarySwatch: Colors.blue,
-            inputDecorationTheme: const InputDecorationTheme(
-              filled: true,
-              fillColor: kGrayColor50,
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: kGrayColor150),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: kGrayColor950),
-              ),
-            ),
+        return Obx(
+          () => GetMaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            initialRoute: '/',
+            getPages: [
+              GetPage(name: '/home', page: () => const HomeScreen()),
+            ],
+            themeMode: controller.themeMode.value,
+            darkTheme: darkMode,
+            theme: lightMode,
+            home: const SplashScreen(),
           ),
-          home: const SplashScreen()
         );
       },
     );

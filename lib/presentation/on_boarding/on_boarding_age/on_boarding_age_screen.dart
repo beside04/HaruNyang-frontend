@@ -4,7 +4,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -51,7 +50,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           ),
                           Text(
                             "몇 살이에요?",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 40.h,
@@ -115,7 +114,6 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           var key = _fbKey.currentState!;
                           if (key.saveAndValidate()) {
                             FocusScope.of(context).unfocus();
-
                             Get.to(
                               () => OnBoardingJobScreen(
                                 nickname: nickname,

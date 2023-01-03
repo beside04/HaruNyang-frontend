@@ -16,11 +16,9 @@ class NoticeScreen extends GetView<NoticeViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(color: kBlackColor),
-        backgroundColor: kWhiteColor,
         title: Text(
           '공지사항',
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         centerTitle: true,
         elevation: 0.5,
@@ -43,7 +41,7 @@ class NoticeScreen extends GetView<NoticeViewModel> {
               padding: EdgeInsets.only(left: 20.0.w, top: 17.h, bottom: 17.h),
               child: Text(
                 "총 4건",
-                style: kSubtitle3BlackStyle,
+                style: Theme.of(context).textTheme.headline6,
               ),
             ),
             Container(

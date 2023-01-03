@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
@@ -53,7 +52,6 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
         return widget.diaryDataList
             .where((element) => element.writtenAt == format.format(day))
             .toList();
-
       },
       calendarStyle: const CalendarStyle(
         cellPadding: EdgeInsets.only(top: 5),
@@ -69,8 +67,6 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
               widget.onSetFocusDay(day);
 
               if ((DateTime.now().isAfter(day) || isToday(day))) {
-                //Get.delete<DiaryDetailViewModel>();
-
                 events.isEmpty
                     ? Get.to(() => EmptyDiaryScreen(
                           date: day,
@@ -91,13 +87,12 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                       title: "미래 일기는 쓸 수 없어요",
                       actionContent: [
                         DialogButton(
-                          title: "확인",
-                          onTap: () {
-                            Get.back();
-                          },
-                          backgroundColor: kPrimary2Color,
-                          textStyle: kSubtitle1WhiteStyle,
-                        ),
+                            title: "확인",
+                            onTap: () {
+                              Get.back();
+                            },
+                            backgroundColor: Theme.of(context).primaryColor,
+                            textStyle: Theme.of(context).textTheme.headline4!),
                       ],
                     );
                   },
@@ -122,7 +117,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                     )
                                   : null,
                               shape: BoxShape.circle,
-                              color: kGrayColor100,
+                              color: Theme.of(context).colorScheme.secondary,
                             ),
                           )
                         : Stack(
@@ -137,7 +132,8 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                         )
                                       : null,
                                   shape: BoxShape.circle,
-                                  color: kGrayColor100,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
                                 ),
                               ),
                               Positioned.fill(
@@ -174,7 +170,10 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                     child: Center(
                       child: Text(
                         DateFormat('dd').format(day),
-                        style: kCaption1WhiteStyle,
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption!
+                            .copyWith(color: kWhiteColor),
                       ),
                     ),
                   ),
@@ -184,14 +183,17 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         DateFormat('dd').format(day),
-                        style: kCaption1PrimaryStyle,
+                        style: Theme.of(context)
+                            .textTheme
+                            .caption!
+                            .copyWith(color: kPrimaryColor),
                       ),
                     )
                   : Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         DateFormat('dd').format(day),
-                        style: kCaption1BlackStyle,
+                        style: Theme.of(context).textTheme.caption,
                       ),
                     );
         },

@@ -82,7 +82,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                           ),
                           Text(
                             "작성한 일기가 없어요",
-                            style: kSubtitle2BlackStyle,
+                            style: Theme.of(context).textTheme.headline5,
                           )
                         ],
                       ),
@@ -107,7 +107,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                             padding: EdgeInsets.only(top: 20.h, left: 20.w),
                             child: Text(
                               "$dateTime번째 주",
-                              style: kSubtitle1BlackStyle,
+                              style: Theme.of(context).textTheme.subtitle1,
                             ),
                           ),
                         Padding(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
 class BottomButton extends StatelessWidget {
@@ -28,7 +27,8 @@ class BottomButton extends StatelessWidget {
           height: 48.h,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: kPrimaryColor,
+              disabledBackgroundColor: Theme.of(context).unselectedWidgetColor,
+              backgroundColor: Theme.of(context).primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(60),
               ),
@@ -36,7 +36,7 @@ class BottomButton extends StatelessWidget {
             onPressed: onTap,
             child: Text(
               title,
-              style: kSubtitle2WhiteStyle,
+              style: kHeader5WhiteStyle,
             ),
           ),
         ),

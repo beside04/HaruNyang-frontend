@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
-import 'package:frontend/config/theme/text_data.dart';
 
 class NicknameTextField extends StatelessWidget {
   const NicknameTextField({
@@ -17,7 +16,7 @@ class NicknameTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       name: 'name',
-      style: kSubtitle4BlackStyle,
+      style: Theme.of(context).textTheme.subtitle1,
       controller: textEditingController,
       keyboardType: TextInputType.text,
       textAlignVertical: TextAlignVertical.center,
@@ -25,7 +24,7 @@ class NicknameTextField extends StatelessWidget {
         helperText: "",
         counterText: "",
         hintText: '이름',
-        hintStyle: kSubtitle3Gray300Style,
+        hintStyle: Theme.of(context).textTheme.subtitle2,
         contentPadding: const EdgeInsets.only(
           top: 14,
           right: 14,

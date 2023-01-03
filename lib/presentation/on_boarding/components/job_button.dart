@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 
 class JobButton extends StatelessWidget {
   final String job;
   final String icon;
   final bool selected;
   final VoidCallback onPressed;
+
   const JobButton({
     super.key,
     required this.job,
@@ -27,11 +27,11 @@ class JobButton extends StatelessWidget {
             width: 96.w,
             height: 96.h,
             decoration: BoxDecoration(
-              color: kGrayColor50,
+              color: Theme.of(context).colorScheme.surface,
               shape: BoxShape.circle,
               border: Border.all(
                 width: selected ? 2 : 0.5,
-                color: selected ? kPrimaryColor : kGrayColor150,
+                color: selected ? kPrimaryColor : kGrayColor100,
               ),
             ),
             child: Stack(
@@ -51,7 +51,7 @@ class JobButton extends StatelessWidget {
           ),
           Text(
             job,
-            style: kSubtitle4BlackStyle,
+            style: Theme.of(context).textTheme.subtitle1,
           )
         ],
       ),

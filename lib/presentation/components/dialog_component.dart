@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:get/get.dart';
 
 class DialogComponent extends StatelessWidget {
@@ -31,7 +30,9 @@ class DialogComponent extends StatelessWidget {
       title: Center(
         child: Text(
           title.tr,
-          style: kHeader3BlackStyle,
+          style: Theme.of(context)
+              .textTheme
+              .headline3!,
         ),
       ),
       content: Column(

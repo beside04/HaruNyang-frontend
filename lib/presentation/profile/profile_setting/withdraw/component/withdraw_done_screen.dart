@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
@@ -16,7 +14,6 @@ class WithdrawDoneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kBackGroundLightColor,
         elevation: 0,
       ),
       body: Padding(
@@ -29,15 +26,15 @@ class WithdrawDoneScreen extends StatelessWidget {
                 children: [
                   Text(
                     '그동안',
-                    style: kHeader2BlackStyle,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                   Text(
                     '하루냥을 이용해 주셔서',
-                    style: kHeader2BlackStyle,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                   Text(
                     '감사합니다.',
-                    style: kHeader2BlackStyle,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
                   SizedBox(
                     height: 100.h,
@@ -53,7 +50,7 @@ class WithdrawDoneScreen extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: const Color(0xffe8e8e7),
+                        color: Theme.of(context).colorScheme.secondary,
                       ),
                       width: double.infinity,
                       height: 104.h,
@@ -63,18 +60,19 @@ class WithdrawDoneScreen extends StatelessWidget {
                         children: [
                           Text(
                             '나를 성장 시킨건 이별이 아니었다.',
-                            style: kBody1BlackStyle,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                           Text(
                             '함께했던 시간이었지',
-                            style: kBody1BlackStyle,
+                            style: Theme.of(context).textTheme.bodyText1,
                           ),
                           SizedBox(
                             height: 6.h,
                           ),
                           Text(
                             '하상욱',
-                            style: kSubtitle4BlackStyle,
+                            //style: kSubtitle1BlackStyle,
+                            style: Theme.of(context).textTheme.subtitle1,
                           )
                         ],
                       ),
