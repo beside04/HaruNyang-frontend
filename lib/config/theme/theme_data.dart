@@ -4,17 +4,16 @@ import 'package:frontend/config/theme/text_data.dart';
 
 ThemeData lightMode = ThemeData(
   scaffoldBackgroundColor: kWhiteColor,
-  bottomAppBarColor: Color(0xfff6f5f4),
+  bottomAppBarColor: const Color(0xfff6f5f4),
   primaryColor: kPrimaryColor,
   unselectedWidgetColor: kGrayColor400,
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    // backgroundColor: const Color(0xfff6f5f4),
     unselectedItemColor: kGrayColor400,
     selectedItemColor: kBlackColor,
     selectedLabelStyle: kBody2BlackStyle,
     unselectedLabelStyle: kBody2BlackStyle,
-    selectedIconTheme: IconThemeData(color: kBlackColor),
-    unselectedIconTheme: IconThemeData(color: kGrayColor400),
+    selectedIconTheme: const IconThemeData(color: kBlackColor),
+    unselectedIconTheme: const IconThemeData(color: kGrayColor400),
   ),
   colorScheme: const ColorScheme(
     primary: kWhiteColor,
@@ -54,12 +53,12 @@ ThemeData lightMode = ThemeData(
   ),
   inputDecorationTheme: const InputDecorationTheme(
     filled: true,
-    fillColor: kGrayColor50,
-    enabledBorder: OutlineInputBorder(
+    fillColor: Colors.transparent,
+    enabledBorder: UnderlineInputBorder(
       borderSide: BorderSide(color: kGrayColor100),
     ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: kGrayColor950),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: kGrayColor100),
     ),
   ),
 );
@@ -70,17 +69,16 @@ ThemeData darkMode = ThemeData(
   primaryColor: kPrimaryColor,
   unselectedWidgetColor: kGrayColor600,
   bottomNavigationBarTheme: BottomNavigationBarThemeData(
-    // backgroundColor: const Color(0xfff6f5f4),
     unselectedItemColor: kGrayColor600,
     selectedItemColor: kWhiteColor,
     selectedLabelStyle: kBody2WhiteStyle,
     unselectedLabelStyle: kBody2WhiteStyle,
-    selectedIconTheme: IconThemeData(color: kWhiteColor),
-    unselectedIconTheme: IconThemeData(color: kGrayColor600),
+    selectedIconTheme: const IconThemeData(color: kWhiteColor),
+    unselectedIconTheme: const IconThemeData(color: kGrayColor600),
   ),
   colorScheme: const ColorScheme(
     primary: kGrayColor950,
-      secondary: kGrayColor800,
+    secondary: kGrayColor800,
     brightness: Brightness.dark,
     onPrimary: kGrayColor900,
     onSecondary: kGrayColor800,
@@ -91,9 +89,6 @@ ThemeData darkMode = ThemeData(
     surface: kGrayColor700,
     onSurface: kGrayColor900,
   ),
-  // textSelectionTheme: const TextSelectionThemeData(
-  //   cursorColor: kSuccessColor,
-  // ),
   appBarTheme: const AppBarTheme(
     centerTitle: true,
     backgroundColor: kGrayColor950,
@@ -116,12 +111,12 @@ ThemeData darkMode = ThemeData(
   ),
   inputDecorationTheme: const InputDecorationTheme(
     filled: true,
-    fillColor: kGrayColor50,
-    enabledBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: kGrayColor100),
+    fillColor: Colors.transparent,
+    enabledBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: kGrayColor750),
     ),
-    focusedBorder: OutlineInputBorder(
-      borderSide: BorderSide(color: kGrayColor950),
+    focusedBorder: UnderlineInputBorder(
+      borderSide: BorderSide(color: kGrayColor750),
     ),
   ),
 );

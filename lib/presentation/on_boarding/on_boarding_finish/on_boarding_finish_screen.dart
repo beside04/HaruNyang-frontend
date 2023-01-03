@@ -49,14 +49,14 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                           ),
                           Text(
                             "하루냥의",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
                           Text(
                             "집사 등록이 완료되었어요!",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 158.h,

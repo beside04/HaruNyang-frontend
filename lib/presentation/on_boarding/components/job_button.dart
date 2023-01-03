@@ -9,6 +9,7 @@ class JobButton extends StatelessWidget {
   final String icon;
   final bool selected;
   final VoidCallback onPressed;
+
   const JobButton({
     super.key,
     required this.job,
@@ -27,7 +28,7 @@ class JobButton extends StatelessWidget {
             width: 96.w,
             height: 96.h,
             decoration: BoxDecoration(
-              color: kGrayColor50,
+              color: Theme.of(context).colorScheme.surface,
               shape: BoxShape.circle,
               border: Border.all(
                 width: selected ? 2 : 0.5,

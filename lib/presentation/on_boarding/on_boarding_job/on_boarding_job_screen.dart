@@ -52,14 +52,14 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                           ),
                           Text(
                             "어떤 일을",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
                           Text(
                             "하고 계세요?",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 40.h,

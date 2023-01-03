@@ -16,7 +16,6 @@ class WithdrawDoneScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kBackGroundLightColor,
         elevation: 0,
       ),
       body: Padding(

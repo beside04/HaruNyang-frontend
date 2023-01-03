@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
 class AgeTextField extends StatelessWidget {
@@ -19,7 +20,7 @@ class AgeTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return FormBuilderTextField(
       controller: textEditingController,
-      style: kSubtitle1BlackStyle,
+      style: Theme.of(context).textTheme.subtitle1,
       onTap: onTap,
       readOnly: true,
       name: 'age',
@@ -28,7 +29,9 @@ class AgeTextField extends StatelessWidget {
         helperText: "",
         counterText: "",
         hintText: 'YYYY-MM-DD 입력',
-        hintStyle: kHeader6Gray300Style,
+        hintStyle: Theme.of(context).textTheme.headline6!.copyWith(
+          color: kGrayColor300,
+        ),
         contentPadding: const EdgeInsets.only(
           top: 14,
           right: 14,

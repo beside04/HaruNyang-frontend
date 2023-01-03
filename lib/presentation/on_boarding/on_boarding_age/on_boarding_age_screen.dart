@@ -51,7 +51,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           ),
                           Text(
                             "몇 살이에요?",
-                            style: kHeader2BlackStyle,
+                            style: Theme.of(context).textTheme.headline2,
                           ),
                           SizedBox(
                             height: 40.h,
@@ -115,7 +115,6 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           var key = _fbKey.currentState!;
                           if (key.saveAndValidate()) {
                             FocusScope.of(context).unfocus();
-
                             Get.to(
                               () => OnBoardingJobScreen(
                                 nickname: nickname,

@@ -52,14 +52,14 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                             ),
                             Text(
                               "안녕하세요, 저는 하루냥이에요",
-                              style: kHeader2BlackStyle,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(
                               height: 4.h,
                             ),
                             Text(
                               "이름이 뭐에요?",
-                              style: kHeader2BlackStyle,
+                              style: Theme.of(context).textTheme.headline2,
                             ),
                             SizedBox(
                               height: 20.h,
