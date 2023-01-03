@@ -8,7 +8,12 @@ import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:get/get.dart';
 
 class EmotionModal extends GetView<DiaryViewModel> {
-  const EmotionModal({super.key});
+  final DateTime date;
+
+  const EmotionModal({
+    Key? key,
+    required this.date,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +88,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                           : () {
                               Get.to(
                                 () => WriteDiaryScreen(
-                                  date: controller.nowDate.value,
+                                  date: date,
                                   emotion: controller.selectedEmotion.value,
                                   weather: controller.weatherStatus.value!,
                                   emoticonIndex:

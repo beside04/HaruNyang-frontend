@@ -18,6 +18,7 @@ class DiaryData with _$DiaryData {
     @JsonKey(name: 'wise_sayings') required List<WiseSayingData> wiseSayings,
     @Default('') @JsonKey(name: 'created_at') String createTime,
     @Default('') @JsonKey(name: 'updated_at') String updateTime,
+    @Default('') @JsonKey(name: 'written_at') String writtenAt,
   }) = _DiaryData;
 
   factory DiaryData.fromJson(Map<String, dynamic> json) =>

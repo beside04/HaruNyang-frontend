@@ -7,9 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
-import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/splash/splash_sreen.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -57,16 +57,7 @@ class MyApp extends GetView<MainViewModel> {
             themeMode: controller.themeMode.value,
             darkTheme: darkMode,
             theme: lightMode,
-            home: Get.find<MainViewModel>().token == null
-                ? const LoginScreen()
-                : const HomeScreen(),
-            initialBinding: Get.find<MainViewModel>().token == null
-                ? BindingsBuilder(
-                    getLoginBinding,
-                  )
-                : BindingsBuilder(
-                    getHomeViewModelBinding,
-                  ),
+            home: const SplashScreen(),
           ),
         );
       },

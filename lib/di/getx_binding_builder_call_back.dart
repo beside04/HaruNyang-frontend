@@ -1,3 +1,11 @@
+import 'package:frontend/data/data_source/remote_data/bookmark_api.dart';
+import 'package:frontend/data/data_source/remote_data/diary_api.dart';
+import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
+import 'package:frontend/data/data_source/remote_data/on_boarding_api.dart';
+import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
+import 'package:frontend/data/data_source/remote_data/wise_saying_api.dart';
+import 'package:frontend/data/data_source/remote_data/withdraw_api.dart';
+import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
 import 'package:frontend/data/repository/emoticon/emoticon_repository_impl.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
@@ -12,6 +20,7 @@ import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
@@ -42,16 +51,52 @@ import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
+final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
+final TokenUseCase tokenUseCase = TokenUseCase(
+  tokenRepository: tokenRepositoryImpl,
+);
+
+final RefreshInterceptor interceptor = RefreshInterceptor(
+  tokenUseCase: tokenUseCase,
+);
+final onBoardingApi = OnBoardingApi(
+  interceptor: interceptor,
+);
+final wiseSayingApi = WiseSayingApi(
+  interceptor: interceptor,
+);
+final diaryApi = DiaryApi(
+  interceptor: interceptor,
+);
+final bookmarkApi = BookmarkApi(
+  interceptor: interceptor,
+);
+final withdrawApi = WithdrawApi(
+  interceptor: interceptor,
+);
+final emotionStampApi = EmotionStampApi(
+  interceptor: interceptor,
+);
+
 final KakaoLoginImpl kakaoLoginImpl = KakaoLoginImpl();
 final AppleLoginImpl appleLoginImpl = AppleLoginImpl();
-final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
 final ServerLoginRepositoryImpl serverLoginImpl = ServerLoginRepositoryImpl();
-final OnBoardingRepositoryImpl onBoardingImpl = OnBoardingRepositoryImpl();
+final OnBoardingRepositoryImpl onBoardingImpl = OnBoardingRepositoryImpl(
+  onBoardingApi: onBoardingApi,
+);
 final WiseSayingRepositoryImpl wiseSayingRepositoryImpl =
-    WiseSayingRepositoryImpl();
+    WiseSayingRepositoryImpl(
+  wiseSayingApi: wiseSayingApi,
+);
+
 final FileUploadRepositoryImpl fileUploadRepositoryImpl =
     FileUploadRepositoryImpl();
-final diaryRepository = DiaryRepositoryImpl();
+final diaryRepository = DiaryRepositoryImpl(
+  diaryApi: diaryApi,
+);
+final bookmarkRepository = BookmarkRepositoryImpl(
+  bookmarkApi: bookmarkApi,
+);
 
 //use case
 final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
@@ -72,12 +117,10 @@ final OnBoardingUseCase onBoardingUseCase = OnBoardingUseCase(
   onBoardingRepository: onBoardingImpl,
 );
 
-final TokenUseCase tokenUseCase = TokenUseCase(
-  tokenRepository: tokenRepositoryImpl,
-);
-
 final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
-  withdrawRepository: WithdrawRepositoryImpl(),
+  withdrawRepository: WithdrawRepositoryImpl(
+    withdrawApi: withdrawApi,
+  ),
   kakaoLoginUseCase: kakaoLoginUseCase,
   appleLoginUseCase: appleLoginUseCase,
 );
@@ -90,7 +133,9 @@ final GetEmoticonUseCase getEmoticonUseCase =
     GetEmoticonUseCase(emoticonRepository: EmoticonRepositoryImpl());
 
 final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
-  emotionStampRepository: EmotionStampRepositoryImpl(),
+  emotionStampRepository: EmotionStampRepositoryImpl(
+    emotionStampApi: emotionStampApi,
+  ),
 );
 
 final FileUploadUseCase fileUploadUseCase =
@@ -104,6 +149,10 @@ final updateDiaryUseCase = UpdateDiaryUseCase(
 );
 final deleteDiaryUseCase = DeleteDiaryUseCase(
   diaryRepository: diaryRepository,
+);
+
+final bookmarkUseCase = BookmarkUseCase(
+  bookmarkRepository: bookmarkRepository,
 );
 
 void getMainBinding() {
@@ -140,6 +189,7 @@ void getDiaryDetailBinding({
   required DiaryData diaryData,
   required bool isStamp,
   required CroppedFile? imageFile,
+  required DateTime date,
 }) {
   Get.put(DiaryDetailViewModel(
     getWiseSayingUseCase: getWiseSayingUseCase,
@@ -150,7 +200,9 @@ void getDiaryDetailBinding({
     diaryData: diaryData,
     imageFile: imageFile,
     isStamp: isStamp,
+    date: date,
     getEmotionStampUseCase: getEmotionStampUseCase,
+    bookmarkUseCase: bookmarkUseCase,
   ));
 }
 
@@ -215,6 +267,8 @@ void getProfileSettingViewModelBinding() {
 
 void getBookMarkViewModelBinding() {
   Get.put(
-    BookMarkViewModel(),
+    BookMarkViewModel(
+      bookmarkUseCase: bookmarkUseCase,
+    ),
   );
 }

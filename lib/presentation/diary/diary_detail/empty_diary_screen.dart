@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:get/get.dart';
@@ -17,7 +16,6 @@ class EmptyDiaryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getWriteDiaryBinding();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -55,9 +53,11 @@ class EmptyDiaryScreen extends StatelessWidget {
             BottomButton(
               title: '일기쓰기',
               onTap: () {
-                Get.to(() => DiaryScreen(
-                      date: date,
-                    ));
+                Get.to(
+                  () => DiaryScreen(
+                    date: date,
+                  ),
+                );
               },
             )
           ],
