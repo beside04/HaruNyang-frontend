@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/presentation/profile/components/notice_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_detail_screen.dart';
 import 'package:frontend/presentation/profile/notice/notice_view_model.dart';

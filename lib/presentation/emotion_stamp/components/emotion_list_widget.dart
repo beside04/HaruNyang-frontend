@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
@@ -35,97 +34,100 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
   @override
   Widget build(BuildContext context) {
     weekName = {};
-    return PageView.builder(
-      controller: PageController(initialPage: currentPageCount),
-      onPageChanged: (currentPage) {
-        // controllerTempCount와 비교해서 currentPage와 비교해서
-        // currentPage가 더 크면 1달 추가 그게 아니라면
-        // 1달 감소
-        if (widget.controllerTempCount < currentPage) {
-          widget
-              .onPageChanged(Jiffy(widget.focusedDate).add(months: 1).dateTime);
-        } else {
-          widget.onPageChanged(
-              Jiffy(widget.focusedDate).subtract(months: 1).dateTime);
-        }
+    return Container(
+      color: Theme.of(context).scaffoldBackgroundColor,
+      child: PageView.builder(
+        controller: PageController(initialPage: currentPageCount),
+        onPageChanged: (currentPage) {
+          // controllerTempCount와 비교해서 currentPage와 비교해서
+          // currentPage가 더 크면 1달 추가 그게 아니라면
+          // 1달 감소
+          if (widget.controllerTempCount < currentPage) {
+            widget.onPageChanged(
+                Jiffy(widget.focusedDate).add(months: 1).dateTime);
+          } else {
+            widget.onPageChanged(
+                Jiffy(widget.focusedDate).subtract(months: 1).dateTime);
+          }
 
-        widget.setControllerTempCount(currentPage);
-      },
-      itemBuilder: (context, i) {
-        return ListView.builder(
-          itemCount:
-              widget.diaryDataList.isEmpty ? 1 : widget.diaryDataList.length,
-          itemBuilder: (BuildContext context, int index) {
-            String dateTime = '';
-            if (widget.diaryDataList.isNotEmpty) {
-              dateTime = weekOfMonthForSimple(
-                  DateTime.parse(widget.diaryDataList[index].writtenAt));
-            }
+          widget.setControllerTempCount(currentPage);
+        },
+        itemBuilder: (context, i) {
+          return ListView.builder(
+            itemCount:
+                widget.diaryDataList.isEmpty ? 1 : widget.diaryDataList.length,
+            itemBuilder: (BuildContext context, int index) {
+              String dateTime = '';
+              if (widget.diaryDataList.isNotEmpty) {
+                dateTime = weekOfMonthForSimple(
+                    DateTime.parse(widget.diaryDataList[index].writtenAt));
+              }
 
-            return widget.diaryDataList.isEmpty
-                ? Column(
-                    children: [
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 121.h,
-                          ),
-                          Center(
-                            child: SvgPicture.asset(
-                              "lib/config/assets/images/character/onboarding2.svg",
-                              width: 240.w,
-                              height: 240.h,
+              return widget.diaryDataList.isEmpty
+                  ? Column(
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 121.h,
                             ),
+                            Center(
+                              child: SvgPicture.asset(
+                                "lib/config/assets/images/character/onboarding2.svg",
+                                width: 240.w,
+                                height: 240.h,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 45.h,
+                            ),
+                            Text(
+                              "작성한 일기가 없어요",
+                              style: Theme.of(context).textTheme.headline5,
+                            )
+                          ],
+                        ),
+                      ],
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        Get.to(
+                          () => DiaryDetailScreen(
+                            date: DateTime.parse(
+                                widget.diaryDataList[index].writtenAt),
+                            isStamp: true,
+                            diaryData: widget.diaryDataList[index],
                           ),
-                          SizedBox(
-                            height: 45.h,
-                          ),
-                          Text(
-                            "작성한 일기가 없어요",
-                            style: Theme.of(context).textTheme.headline5,
+                        );
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          if (!isUsedWeekName(dateTime))
+                            Padding(
+                              padding: EdgeInsets.only(top: 20.h, left: 20.w),
+                              child: Text(
+                                "$dateTime번째 주",
+                                style: Theme.of(context).textTheme.subtitle1,
+                              ),
+                            ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: 20.h,
+                              left: 20.w,
+                              right: 20.w,
+                            ),
+                            child: EmotionCardDiaryWidget(
+                              diaryData: widget.diaryDataList[index],
+                            ),
                           )
                         ],
                       ),
-                    ],
-                  )
-                : GestureDetector(
-                    onTap: () {
-                      Get.to(
-                        () => DiaryDetailScreen(
-                          date: DateTime.parse(
-                              widget.diaryDataList[index].writtenAt),
-                          isStamp: true,
-                          diaryData: widget.diaryDataList[index],
-                        ),
-                      );
-                    },
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        if (!isUsedWeekName(dateTime))
-                          Padding(
-                            padding: EdgeInsets.only(top: 20.h, left: 20.w),
-                            child: Text(
-                              "$dateTime번째 주",
-                              style: Theme.of(context).textTheme.subtitle1,
-                            ),
-                          ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: 20.h,
-                            left: 20.w,
-                            right: 20.w,
-                          ),
-                          child: EmotionCardDiaryWidget(
-                            diaryData: widget.diaryDataList[index],
-                          ),
-                        )
-                      ],
-                    ),
-                  );
-          },
-        );
-      },
+                    );
+            },
+          );
+        },
+      ),
     );
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/weather_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
@@ -22,7 +23,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
               topLeft: Radius.circular(40),
               topRight: Radius.circular(40),
             ),
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.darkTheme_50_850,
           ),
           child: Stack(
             children: [

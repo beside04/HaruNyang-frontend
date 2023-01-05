@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 
 class JobButton extends StatelessWidget {
   final String job;
@@ -27,7 +28,7 @@ class JobButton extends StatelessWidget {
             width: 96.w,
             height: 96.h,
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.darkTheme_100_700,
               shape: BoxShape.circle,
               border: Border.all(
                 width: selected ? 2 : 0.5,

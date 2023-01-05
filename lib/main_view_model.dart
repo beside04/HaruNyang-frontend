@@ -22,7 +22,6 @@ class MainViewModel extends GetxController {
 
   String? token;
   final pushMessageValue = true.obs;
-  final lightModeValue = true.obs;
   Rx<ThemeMode> themeMode = ThemeMode.light.obs;
 
   Rx<bool> get isLightMode => (themeMode.value == ThemeMode.light).obs;

@@ -6,11 +6,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -262,8 +264,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                               child: Container(
                                 height: 72.h,
                                 decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.onSurface,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .darkTheme_00_900,
                                   borderRadius: BorderRadius.circular(24),
                                 ),
                                 child: Padding(
@@ -298,53 +301,18 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                       ),
                       Container(
                         height: 1.h,
-                        color: kGrayColor50,
+                        color: Theme.of(context).colorScheme.darkTheme_50_900,
                       ),
                       Padding(
                         padding: EdgeInsets.only(
                           left: 20.w,
                           top: 16.h,
                         ),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(6),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Theme.of(context).colorScheme.surface,
-                              ),
-                              child: SvgPicture.asset(
-                                weatherDataList[weather.index].icon,
-                                width: 24.w,
-                                height: 24.h,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 12.w,
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 6.h, horizontal: 12.w),
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).colorScheme.surface,
-                                borderRadius: BorderRadius.circular(100.0.w),
-                              ),
-                              child: Row(
-                                children: [
-                                  SvgPicture.network(
-                                    emotion.emoticon,
-                                    width: 24.w,
-                                    height: 24.h,
-                                  ),
-                                  SizedBox(
-                                    width: 8.w,
-                                  ),
-                                  getEmotionTextWidget(emoticonIndex,
-                                      Theme.of(context).textTheme.bodyText1!),
-                                ],
-                              ),
-                            ),
-                          ],
+                        child: WeatherEmotionBadgeComponent(
+                          emoticon: emotion.emoticon,
+                          emoticonIndex: emoticonIndex,
+                          weatherIcon: weatherDataList[weather.index].icon,
+                          color: Theme.of(context).colorScheme.darkTheme_00_700,
                         ),
                       ),
                       FormBuilderTextField(

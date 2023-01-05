@@ -4,6 +4,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
@@ -50,7 +51,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
           children: [
             Divider(
               thickness: 12.h,
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.darkTheme_100_700,
             ),
             ProfileButton(
               icon: const Icon(
@@ -349,7 +350,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
             ),
             Divider(
               thickness: 12.h,
-              color: Theme.of(context).colorScheme.surface,
+              color: Theme.of(context).colorScheme.darkTheme_100_700,
             ),
             ProfileButton(
               icon: const Icon(
