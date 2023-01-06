@@ -48,41 +48,43 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
 
     return WillPopScope(
       onWillPop: () async {
-        showDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: (ctx) {
-            return DialogComponent(
-              title: "뒤로 가시겠어요?",
-              content: Text(
-                "작성 중인 모든 내용이 삭제되요.",
-                style: Theme.of(context).textTheme.headline6,
-              ),
-              actionContent: [
-                DialogButton(
-                  title: "아니요",
-                  onTap: () {
-                    Get.back();
-                  },
-                  backgroundColor: kGrayColor100,
-                  textStyle: kHeader4Gray600Style,
-                ),
-                SizedBox(
-                  width: 12.w,
-                ),
-                DialogButton(
-                  title: "예",
-                  onTap: () {
-                    Get.back();
-                    Get.back();
-                  },
-                  backgroundColor: kPrimary2Color,
-                  textStyle: kHeader4WhiteStyle,
-                ),
-              ],
-            );
-          },
-        );
+        controller.diaryEditingController.text.isEmpty
+            ? Get.back()
+            : showDialog(
+                barrierDismissible: true,
+                context: context,
+                builder: (ctx) {
+                  return DialogComponent(
+                    title: "뒤로 가시겠어요?",
+                    content: Text(
+                      "작성 중인 모든 내용이 삭제되요.",
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    actionContent: [
+                      DialogButton(
+                        title: "아니요",
+                        onTap: () {
+                          Get.back();
+                        },
+                        backgroundColor: kGrayColor100,
+                        textStyle: kHeader4Gray600Style,
+                      ),
+                      SizedBox(
+                        width: 12.w,
+                      ),
+                      DialogButton(
+                        title: "예",
+                        onTap: () {
+                          Get.back();
+                          Get.back();
+                        },
+                        backgroundColor: kPrimary2Color,
+                        textStyle: kHeader4WhiteStyle,
+                      ),
+                    ],
+                  );
+                },
+              );
         return false;
       },
       child: Scaffold(
@@ -114,7 +116,6 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                         getHomeViewModelBinding,
                                       ),
                                     );
-                                    //Get.delete<DiaryDetailViewModel>();
                                     Get.to(
                                       () => DiaryDetailScreen(
                                         date: date,
@@ -186,41 +187,43 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                   )
                 : IconButton(
                     onPressed: () {
-                      showDialog(
-                        barrierDismissible: true,
-                        context: context,
-                        builder: (ctx) {
-                          return DialogComponent(
-                            title: "뒤로 가시겠어요?",
-                            content: Text(
-                              "작성 중인 모든 내용이 삭제되요.",
-                              style: kHeader6Gray600Style,
-                            ),
-                            actionContent: [
-                              DialogButton(
-                                title: "아니요",
-                                onTap: () {
-                                  Get.back();
-                                },
-                                backgroundColor: kGrayColor100,
-                                textStyle: kHeader4Gray600Style,
-                              ),
-                              SizedBox(
-                                width: 12.w,
-                              ),
-                              DialogButton(
-                                title: "예",
-                                onTap: () {
-                                  Get.back();
-                                  Get.back();
-                                },
-                                backgroundColor: kPrimary2Color,
-                                textStyle: kHeader4WhiteStyle,
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      controller.diaryEditingController.text.isEmpty
+                          ? Get.back()
+                          : showDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (ctx) {
+                                return DialogComponent(
+                                  title: "뒤로 가시겠어요?",
+                                  content: Text(
+                                    "작성 중인 모든 내용이 삭제되요.",
+                                    style: kHeader6Gray600Style,
+                                  ),
+                                  actionContent: [
+                                    DialogButton(
+                                      title: "아니요",
+                                      onTap: () {
+                                        Get.back();
+                                      },
+                                      backgroundColor: kGrayColor100,
+                                      textStyle: kHeader4Gray600Style,
+                                    ),
+                                    SizedBox(
+                                      width: 12.w,
+                                    ),
+                                    DialogButton(
+                                      title: "예",
+                                      onTap: () {
+                                        Get.back();
+                                        Get.back();
+                                      },
+                                      backgroundColor: kPrimary2Color,
+                                      textStyle: kHeader4WhiteStyle,
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
                     },
                     icon: Icon(
                       Icons.arrow_back_ios,
@@ -268,6 +271,12 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       .colorScheme
                                       .darkTheme_00_900,
                                   borderRadius: BorderRadius.circular(24),
+                                  border: Border.all(
+                                    width: 1,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .darkTheme_250_850,
+                                  ),
                                 ),
                                 child: Padding(
                                   padding: EdgeInsets.only(
@@ -312,7 +321,8 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           emoticon: emotion.emoticon,
                           emoticonIndex: emoticonIndex,
                           weatherIcon: weatherDataList[weather.index].icon,
-                          color: Theme.of(context).colorScheme.darkTheme_00_700,
+                          color:
+                              Theme.of(context).colorScheme.darkTheme_100_700,
                         ),
                       ),
                       FormBuilderTextField(
@@ -460,7 +470,13 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                 Container(
                   height: 44.h,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.darkTheme_50_850,
+                    border: Border(
+                      top: BorderSide(
+                        width: 1,
+                        color: Theme.of(context).colorScheme.darkTheme_200_950,
+                      ),
+                    ),
                   ),
                   child: Row(
                     children: [

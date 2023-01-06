@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -7,6 +8,8 @@ import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:path_provider/path_provider.dart';
 
 class WriteDiaryViewModel extends GetxController {
   final TextEditingController diaryEditingController = TextEditingController();
@@ -14,6 +17,7 @@ class WriteDiaryViewModel extends GetxController {
   final RxBool isOnKeyboard = false.obs;
   final pickedFile = Rx<XFile?>(null);
   final croppedFile = Rx<CroppedFile?>(null);
+  final cropQualityImage = Rx<File?>(null);
   final networkImage = Rx<String?>(null);
   bool isUpdated = false;
 
@@ -43,11 +47,27 @@ class WriteDiaryViewModel extends GetxController {
   }
 
   Future<void> cropImage() async {
+    final bytes = await pickedFile.value!.readAsBytes();
+    final kb = bytes.lengthInBytes / 1024;
+    final directory = await getApplicationDocumentsDirectory();
+
+    if (kb > 200) {
+      cropQualityImage.value = await FlutterImageCompress.compressAndGetFile(
+        pickedFile.value!.path,
+        '${directory.path}/haruKitty.jpg',
+        quality: 20,
+      );
+    } else {
+      cropQualityImage.value = await FlutterImageCompress.compressAndGetFile(
+        pickedFile.value!.path,
+        '${directory.path}/haruKitty.jpg',
+        quality: 100,
+      );
+    }
     if (pickedFile.value != null) {
       CroppedFile? croppedImage = await ImageCropper().cropImage(
-        sourcePath: pickedFile.value!.path,
+        sourcePath: cropQualityImage.value!.path,
         compressFormat: ImageCompressFormat.jpg,
-        compressQuality: 100,
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Cropper',
@@ -68,8 +88,8 @@ class WriteDiaryViewModel extends GetxController {
   }
 
   Future<void> uploadImage() async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedImage = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (pickedImage != null) {
       pickedFile.value = pickedImage;
     }

@@ -118,6 +118,10 @@ extension CustomColorScheme on ColorScheme {
       brightness == Brightness.light ? kGrayColor100 : kGrayColor850;
   Color get darkTheme_200_900 =>
       brightness == Brightness.light ? kGrayColor200 : kGrayColor900;
+  Color get darkTheme_200_950 =>
+      brightness == Brightness.light ? kGrayColor200 : kGrayColor950;
+  Color get darkTheme_250_850 =>
+      brightness == Brightness.light ? kGrayColor250 : kGrayColor850;
   Color get darkTheme_250_900 =>
       brightness == Brightness.light ? kGrayColor250 : kGrayColor900;
 }

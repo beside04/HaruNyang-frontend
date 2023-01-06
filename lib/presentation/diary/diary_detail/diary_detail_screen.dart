@@ -24,7 +24,6 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   final DateTime date;
   final DiaryData diaryData;
   final bool isStamp;
-
   final CroppedFile? imageFile;
 
   const DiaryDetailScreen({
