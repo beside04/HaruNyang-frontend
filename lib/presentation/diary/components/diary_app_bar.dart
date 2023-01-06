@@ -21,10 +21,9 @@ class DiaryAppBar extends GetView<DiaryViewModel>
       () => AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor:
-            Get.find<MainViewModel>().themeMode.value == ThemeMode.light
-                ? const Color(0xffffac60)
-                : kGrayColor950,
+        backgroundColor: Get.find<MainViewModel>().isDarkMode.value
+            ? kGrayColor950
+            : const Color(0xffffac60),
         title: Text(
           DateFormat('MM월 dd일').format(date),
           style: Theme.of(context).textTheme.headline3,

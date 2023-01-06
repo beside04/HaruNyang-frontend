@@ -184,7 +184,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   activeColor: Theme.of(context).primaryColor,
                   inactiveColor: kGrayColor250,
                   toggleSize: 28.0.w,
-                  value: mainViewController.isLightMode.value,
+                  value: !mainViewController.isDarkMode.value,
                   borderRadius: 50.0.w,
                   onToggle: (val) async {
                     mainViewController.toggleTheme();

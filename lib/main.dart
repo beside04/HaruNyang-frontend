@@ -27,6 +27,7 @@ void main() async {
   KakaoSdk.init(nativeAppKey: appkey);
   getMainBinding();
   await Get.find<MainViewModel>().getAccessToken();
+  await Get.find<MainViewModel>().getIsDarkMode();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {
@@ -54,7 +55,8 @@ class MyApp extends GetView<MainViewModel> {
             getPages: [
               GetPage(name: '/home', page: () => const HomeScreen()),
             ],
-            themeMode: controller.themeMode.value,
+            themeMode:
+                controller.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
             darkTheme: darkMode,
             theme: lightMode,
             home: const SplashScreen(),

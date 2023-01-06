@@ -6,6 +6,7 @@ import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/data/data_source/remote_data/wise_saying_api.dart';
 import 'package:frontend/data/data_source/remote_data/withdraw_api.dart';
 import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
+import 'package:frontend/data/repository/dark_mode/dark_mode_repository_impl.dart';
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
 import 'package:frontend/data/repository/emoticon/emoticon_repository_impl.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
@@ -21,6 +22,7 @@ import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
+import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
@@ -52,8 +54,14 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
+final DarkModeRepositoryImpl darkModeRepositoryImpl = DarkModeRepositoryImpl();
+
 final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: tokenRepositoryImpl,
+);
+
+final DarkModeUseCase darkModeUseCase = DarkModeUseCase(
+  darkModeRepository: darkModeRepositoryImpl,
 );
 
 final RefreshInterceptor interceptor = RefreshInterceptor(
@@ -104,6 +112,7 @@ final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
   onBoardingUseCase: onBoardingUseCase,
+  darkModeUseCase: darkModeUseCase,
 );
 
 final AppleLoginUseCase appleLoginUseCase = AppleLoginUseCase(
@@ -111,6 +120,7 @@ final AppleLoginUseCase appleLoginUseCase = AppleLoginUseCase(
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
   onBoardingUseCase: onBoardingUseCase,
+  darkModeUseCase: darkModeUseCase,
 );
 
 final OnBoardingUseCase onBoardingUseCase = OnBoardingUseCase(
@@ -158,6 +168,7 @@ final bookmarkUseCase = BookmarkUseCase(
 void getMainBinding() {
   Get.put(MainViewModel(
     tokenUseCase: tokenUseCase,
+    darkModeUseCase: darkModeUseCase,
     onBoardingUseCase: onBoardingUseCase,
   ));
   Get.put(NotificationController());

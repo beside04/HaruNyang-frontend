@@ -3,6 +3,7 @@ import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/repository/social_login_repository/kakao_login_repository.dart';
 import 'package:frontend/domain/repository/token_repository.dart';
+import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -12,12 +13,14 @@ class KakaoLoginUseCase {
   final ServerLoginRepository serverLoginRepository;
   final TokenRepository tokenRepository;
   final OnBoardingUseCase onBoardingUseCase;
+  final DarkModeUseCase darkModeUseCase;
 
   KakaoLoginUseCase({
     required this.socialLoginRepository,
     required this.serverLoginRepository,
     required this.tokenRepository,
     required this.onBoardingUseCase,
+    required this.darkModeUseCase,
   });
 
   Future<SocialLoginResult> getKakaoSocialId() async {
@@ -84,6 +87,7 @@ class KakaoLoginUseCase {
 
   Future<UserIdResponse?> withdrawal() async {
     await tokenRepository.deleteAllToken();
+    await darkModeUseCase.deleteDarkModeData();
     onBoardingUseCase.clearMyInformation();
     return await socialLoginRepository.withdrawal();
   }
