@@ -122,8 +122,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                       onTap: () {
                                         Get.back();
                                       },
-                                      backgroundColor: kGrayColor100,
-                                      textStyle: kHeader4Gray600Style,
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .darkTheme_100_650,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .headline4!,
                                     ),
                                     SizedBox(
                                       width: 12.w,

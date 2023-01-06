@@ -61,11 +61,4 @@ class MainViewModel extends GetxController {
   togglePushMessageValue() {
     pushMessageValue.value = !pushMessageValue.value;
   }
-
-// toggleLightModeValue() {
-//   lightModeValue.value = !lightModeValue.value;
-//   lightModeValue.value
-//       ? Get.changeTheme(lightMode)
-//       : Get.changeTheme(darkMode);
-// }
 }

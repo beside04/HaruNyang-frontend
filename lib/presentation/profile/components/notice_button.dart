@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:intl/intl.dart';
 
 class NoticeButton extends StatelessWidget {
@@ -24,11 +25,11 @@ class NoticeButton extends StatelessWidget {
     return InkWell(
       onTap: onPressed,
       child: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border(
             bottom: BorderSide(
-              color: kGrayColor100,
+              color: Theme.of(context).colorScheme.darkTheme_200_900,
               width: 1.0,
             ),
           ),
@@ -53,7 +54,7 @@ class NoticeButton extends StatelessWidget {
                           ? Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.w),
-                                color: kPrimaryColor,
+                                color: kPrimary2Color,
                               ),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(

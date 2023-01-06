@@ -160,7 +160,6 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         horizontal: 30.0),
                                     child: Text(
                                       "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
-                                      //style: kHeader6Gray600Style,
                                       style:
                                           Theme.of(context).textTheme.bodyText1,
                                     ),
@@ -174,8 +173,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                       },
                                       backgroundColor: Theme.of(context)
                                           .colorScheme
-                                          .secondary,
-                                      textStyle: kHeader4WhiteStyle,
+                                          .darkTheme_100_650,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .headline4!,
                                     ),
                                     SizedBox(
                                       width: 12.w,

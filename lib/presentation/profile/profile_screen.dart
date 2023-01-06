@@ -152,7 +152,6 @@ class ProfileScreen extends GetView<ProfileViewModel> {
             ProfileButton(
               icon: const Icon(
                 Icons.navigate_next,
-                // color: kGrayColor250,
               ),
               title: '북마크 목록',
               onPressed: () {

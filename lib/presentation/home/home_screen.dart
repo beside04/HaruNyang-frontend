@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/assets/font/customIcons/my_flutter_app_icons.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
@@ -82,7 +83,10 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.back();
                           },
                           backgroundColor: Theme.of(context).primaryColor,
-                          textStyle: Theme.of(context).textTheme.headline4!,
+                          textStyle: Theme.of(context)
+                              .textTheme
+                              .headline4!
+                              .copyWith(color: kWhiteColor),
                         ),
                       ],
                     );
