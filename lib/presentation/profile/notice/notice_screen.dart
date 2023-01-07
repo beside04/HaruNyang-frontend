@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/profile/components/notice_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_detail_screen.dart';
 import 'package:frontend/presentation/profile/notice/notice_view_model.dart';
@@ -47,7 +46,7 @@ class NoticeScreen extends GetView<NoticeViewModel> {
             Container(
               width: MediaQuery.of(context).size.width,
               height: 1.h,
-              color: kGrayColor100,
+              color: Theme.of(context).colorScheme.darkTheme_200_900,
             ),
             NoticeButton(
               title: '베타버전 출시!',

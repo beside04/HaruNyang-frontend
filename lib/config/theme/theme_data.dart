@@ -15,20 +15,6 @@ ThemeData lightMode = ThemeData(
     selectedIconTheme: const IconThemeData(color: kBlackColor),
     unselectedIconTheme: const IconThemeData(color: kGrayColor400),
   ),
-  colorScheme: const ColorScheme(
-    primary: kWhiteColor,
-    secondary: Color(0xfff6f5f4),
-    brightness: Brightness.light,
-    onPrimary: kWhiteColor,
-    onSecondary: kWhiteColor,
-    error: kWhiteColor,
-    onError: kWhiteColor,
-    background: kWhiteColor,
-    onBackground: kWhiteColor,
-    surface: kGrayColor100,
-    onSurface: kWhiteColor,
-    inverseSurface: kBlackColor,
-  ),
   textSelectionTheme: const TextSelectionThemeData(
     cursorColor: kSuccessColor,
   ),
@@ -78,20 +64,6 @@ ThemeData darkMode = ThemeData(
     selectedIconTheme: const IconThemeData(color: kWhiteColor),
     unselectedIconTheme: const IconThemeData(color: kGrayColor600),
   ),
-  colorScheme: const ColorScheme(
-    primary: kGrayColor950,
-    secondary: kGrayColor850,
-    brightness: Brightness.dark,
-    onPrimary: kGrayColor900,
-    onSecondary: kGrayColor800,
-    error: kGrayColor900,
-    onError: kGrayColor900,
-    background: kGrayColor900,
-    onBackground: kGrayColor900,
-    surface: kGrayColor700,
-    onSurface: kGrayColor900,
-    inverseSurface: kWhiteColor,
-  ),
   appBarTheme: const AppBarTheme(
     centerTitle: true,
     backgroundColor: kGrayColor950,
@@ -124,3 +96,32 @@ ThemeData darkMode = ThemeData(
     ),
   ),
 );
+
+extension CustomColorScheme on ColorScheme {
+  Color get darkTheme_00_700 =>
+      brightness == Brightness.light ? kWhiteColor : kGrayColor700;
+  Color get darkTheme_00_900 =>
+      brightness == Brightness.light ? kWhiteColor : kGrayColor900;
+  Color get darkTheme_00_950 =>
+      brightness == Brightness.light ? kWhiteColor : kGrayColor950;
+  Color get darkTheme_50_700 =>
+      brightness == Brightness.light ? kGrayColor50 : kGrayColor700;
+  Color get darkTheme_50_850 =>
+      brightness == Brightness.light ? kGrayColor50 : kGrayColor850;
+  Color get darkTheme_50_900 =>
+      brightness == Brightness.light ? kGrayColor50 : kGrayColor900;
+  Color get darkTheme_100_650 =>
+      brightness == Brightness.light ? kGrayColor100 : kGrayColor650;
+  Color get darkTheme_100_700 =>
+      brightness == Brightness.light ? kGrayColor100 : kGrayColor700;
+  Color get darkTheme_100_850 =>
+      brightness == Brightness.light ? kGrayColor100 : kGrayColor850;
+  Color get darkTheme_200_900 =>
+      brightness == Brightness.light ? kGrayColor200 : kGrayColor900;
+  Color get darkTheme_200_950 =>
+      brightness == Brightness.light ? kGrayColor200 : kGrayColor950;
+  Color get darkTheme_250_850 =>
+      brightness == Brightness.light ? kGrayColor250 : kGrayColor850;
+  Color get darkTheme_250_900 =>
+      brightness == Brightness.light ? kGrayColor250 : kGrayColor900;
+}

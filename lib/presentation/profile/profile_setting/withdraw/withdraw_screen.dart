@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
@@ -84,7 +85,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   padding: kPrimaryPadding,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: Theme.of(context).colorScheme.darkTheme_50_850,
                   ),
                   child: Text(
                     '가입 시 수집한 개인정보(이메일)를 포함하여 작성한\n 일기, 기분, 감정캘린더, 발급받은 감정리포트가\n 영구적으로 삭제되며, 다시는 복구할 수 없습니다.',
@@ -159,8 +160,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         horizontal: 30.0),
                                     child: Text(
                                       "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
-                                      //style: kHeader6Gray600Style,
-                                      style: Theme.of(context).textTheme.bodyText1,
+                                      style:
+                                          Theme.of(context).textTheme.bodyText1,
                                     ),
                                   ),
                                   actionContent: [
@@ -170,8 +171,12 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         Get.back();
                                         Get.back();
                                       },
-                                      backgroundColor: Theme.of(context).colorScheme.secondary,
-                                      textStyle: kHeader4WhiteStyle,
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .darkTheme_100_650,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .headline4!,
                                     ),
                                     SizedBox(
                                       width: 12.w,

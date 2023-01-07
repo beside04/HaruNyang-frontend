@@ -5,10 +5,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
 import 'package:frontend/presentation/diary/components/diary_loading_widget.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
@@ -22,7 +24,6 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   final DateTime date;
   final DiaryData diaryData;
   final bool isStamp;
-
   final CroppedFile? imageFile;
 
   const DiaryDetailScreen({
@@ -43,7 +44,6 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
     );
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xffE69954),
         elevation: 0,
         centerTitle: true,
         actions: [
@@ -59,7 +59,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                     padding: EdgeInsets.only(
                         top: 40.h, right: 16.w, left: 16.w, bottom: 16.h),
                     height: 200.h,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.darkTheme_00_900,
                     child: Column(
                       children: [
                         InkWell(
@@ -121,8 +121,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                       onTap: () {
                                         Get.back();
                                       },
-                                      backgroundColor: kGrayColor100,
-                                      textStyle: kHeader4Gray600Style,
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .darkTheme_100_650,
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .headline4!,
                                     ),
                                     SizedBox(
                                       width: 12.w,
@@ -197,14 +201,13 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
             },
             icon: Icon(
               Icons.more_vert,
-              color: kBlackColor,
               size: 24.w,
             ),
           ),
         ],
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: kHeader3BlackStyle,
+          style: Theme.of(context).textTheme.headline3,
         ),
         leading: IconButton(
           onPressed: () {
@@ -212,19 +215,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
           },
           icon: Icon(
             Icons.arrow_back_ios,
-            color: kBlackColor,
             size: 20.w,
           ),
         ),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xffE69954), Color(0xffE4A469), Color(0xffE4A86F)],
-          ),
-        ),
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: SafeArea(
           child: Obx(
             () => ListView(
@@ -233,95 +229,52 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                   height: 6.h,
                 ),
                 Padding(
-                  padding: kPrimarySidePadding,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: kWhiteColor,
-                      borderRadius: BorderRadius.circular(16.0),
-                    ),
-                    child: Padding(
-                      padding: kPrimaryPadding,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(6.w),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: kSurfaceLightColor,
-                                ),
-                                child: SvgPicture.asset(
-                                  "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
-                                  width: 24.w,
-                                  height: 24.h,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 7.w,
-                              ),
-                              Container(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 6.h, horizontal: 12.w),
-                                decoration: BoxDecoration(
-                                  color: kSurfaceLightColor,
-                                  borderRadius: BorderRadius.circular(100.0.w),
-                                ),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.network(
-                                      diaryData.emotion.emoticon,
-                                      width: 24.w,
-                                      height: 24.h,
-                                    ),
-                                    SizedBox(
-                                      width: 8.w,
-                                    ),
-                                    getEmotionTextWidget(
-                                        diaryData.emoticonIndex,
-                                        Theme.of(context).textTheme.bodyText1!),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 12.h,
-                          ),
-                          controller.networkImage.value.isNotEmpty
-                              ? Column(
-                                  children: [
-                                    Center(
-                                      child: Image.network(
-                                        controller.networkImage.value,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 12.h,
-                                    ),
-                                  ],
-                                )
-                              : Container(),
-                          Text(
-                            diaryData.diaryContent,
-                            style: kBody1BlackStyle,
-                          )
-                        ],
+                  padding: kPrimaryPadding,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      WeatherEmotionBadgeComponent(
+                        emoticon: diaryData.emotion.emoticon,
+                        emoticonIndex: diaryData.emoticonIndex,
+                        weatherIcon:
+                            "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
+                        color: Theme.of(context).colorScheme.darkTheme_100_700,
                       ),
-                    ),
+                      SizedBox(
+                        height: 12.h,
+                      ),
+                      controller.networkImage.value.isNotEmpty
+                          ? Column(
+                              children: [
+                                Center(
+                                  child: Image.network(
+                                    controller.networkImage.value,
+                                    width: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 12.h,
+                                ),
+                              ],
+                            )
+                          : Container(),
+                      Text(
+                        diaryData.diaryContent,
+                        style: Theme.of(context).textTheme.bodyText1,
+                      )
+                    ],
                   ),
                 ),
-                SizedBox(
-                  height: 44.h,
+                Divider(
+                  thickness: 8.h,
+                  color: Theme.of(context).colorScheme.darkTheme_100_850,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(left: 25.w),
+                  padding: EdgeInsets.only(left: 25.w, top: 20.h),
                   child: Text(
                     "하루냥의 명언",
-                    style: kHeader3BlackStyle,
+                    style: Theme.of(context).textTheme.headline3,
                   ),
                 ),
                 Obx(

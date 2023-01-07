@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
-import 'package:frontend/res/constants.dart';
+import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
 import 'package:intl/intl.dart';
 
 class EmotionCardDiaryWidget extends StatelessWidget {
@@ -19,7 +18,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: Theme.of(context).colorScheme.darkTheme_50_850,
         borderRadius: BorderRadius.circular(20.0.w),
       ),
       child: Padding(
@@ -35,49 +34,13 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                       .format(DateTime.parse(diaryData.writtenAt)),
                   style: Theme.of(context).textTheme.headline5,
                 ),
-                Row(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.all(4.w),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).colorScheme.surface,
-                      ),
-                      child: SvgPicture.asset(
-                        "lib/config/assets/images/diary/weather/sunny.svg",
-                        width: 16.w,
-                        height: 16.h,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 7.w,
-                    ),
-                    Container(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.surface,
-                        borderRadius: BorderRadius.circular(100.0.w),
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.network(
-                            diaryData.emotion.emoticon,
-                            width: 16.w,
-                            height: 16.h,
-                          ),
-                          SizedBox(
-                            width: 6.w,
-                          ),
-                          getEmotionTextWidget(
-                            diaryData.emoticonIndex,
-                            Theme.of(context).textTheme.bodyText1!,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+                WeatherEmotionBadgeComponent(
+                  emoticon: diaryData.emotion.emoticon,
+                  emoticonIndex: diaryData.emoticonIndex,
+                  weatherIcon:
+                      "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
+                  color: Theme.of(context).colorScheme.darkTheme_00_700,
+                )
               ],
             ),
             SizedBox(

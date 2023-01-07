@@ -34,12 +34,12 @@ class DiaryScreen extends GetView<DiaryViewModel> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: Get.find<MainViewModel>().themeMode.value == ThemeMode.light
-                ? [
+            colors: Get.find<MainViewModel>().isDarkMode.value
+                ? [kGrayColor950, kGrayColor950]
+                : [
                     const Color(0xffffac60),
                     const Color(0xffffc793),
-                  ]
-                : [kGrayColor950, kGrayColor950],
+                  ],
           ),
         ),
         child: SafeArea(

@@ -45,7 +45,7 @@ class NoticeDetailScreen extends StatelessWidget {
                       ? Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.w),
-                            color: kPrimaryColor,
+                            color: kPrimary2Color,
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -59,13 +59,6 @@ class NoticeDetailScreen extends StatelessWidget {
                       : Container(),
                   SizedBox(
                     height: 13.h,
-                  ),
-                  Text(
-                    title,
-                    style: Theme.of(context).textTheme.headline6,
-                  ),
-                  SizedBox(
-                    height: 9.h,
                   ),
                   Text(
                     DateFormat('yyyy.MM.dd').format(date),

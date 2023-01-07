@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 
 class EmoticonIconButton extends StatelessWidget {
   const EmoticonIconButton({
@@ -37,10 +38,10 @@ class EmoticonIconButton extends StatelessWidget {
                       width: selected ? 2 : 0.5,
                       color: selected
                           ? kPrimaryColor
-                          : Theme.of(context).colorScheme.surface,
+                          : Theme.of(context).colorScheme.darkTheme_100_700,
                     ),
                     shape: BoxShape.circle,
-                    color: Theme.of(context).colorScheme.surface,
+                    color: Theme.of(context).colorScheme.darkTheme_100_700,
                   ),
                   child: SvgPicture.network(
                     icon,

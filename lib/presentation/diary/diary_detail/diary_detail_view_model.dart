@@ -149,6 +149,8 @@ class DiaryDetailViewModel extends GetxController {
       );
 
       //Diary Stamp 업데이트
+      Get.put(EmotionStampViewModel(
+          getEmotionStampUseCase: getEmotionStampUseCase));
       Get.find<EmotionStampViewModel>().getMonthStartEndData();
       await Get.find<EmotionStampViewModel>().getEmotionStampList();
     }
