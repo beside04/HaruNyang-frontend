@@ -17,7 +17,7 @@ class EmotionStampApi {
     var dio = await interceptor.refreshInterceptor();
 
     try {
-      String emoticonStampUrl = '$_baseUrl/v1/diary?from=$from&to=$to';
+      String emoticonStampUrl = '$_baseUrl/v1/diaries?from=$from&to=$to';
       Response response;
       response = await dio.get(
         emoticonStampUrl,
