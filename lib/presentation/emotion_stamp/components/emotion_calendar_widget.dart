@@ -41,7 +41,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: TableCalendar<DiaryData>(
         onPageChanged: widget.onPageChanged,
-        rowHeight: 70,
+        rowHeight: 70.h,
         focusedDay: widget.focusedDate,
         firstDay: DateTime(1900, 1),
         lastDay: DateTime(2199, 12),
@@ -49,15 +49,15 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
         weekendDays: const [DateTime.sunday, 6],
         startingDayOfWeek: StartingDayOfWeek.monday,
         locale: 'ko-KR',
-        daysOfWeekHeight: 30,
+        daysOfWeekHeight: 30.h,
         headerVisible: false,
         eventLoader: (DateTime day) {
           return widget.diaryDataList
               .where((element) => element.writtenAt == format.format(day))
               .toList();
         },
-        calendarStyle: const CalendarStyle(
-          cellPadding: EdgeInsets.only(top: 5),
+        calendarStyle: CalendarStyle(
+          cellPadding: EdgeInsets.only(top: 5.h),
           cellAlignment: Alignment.bottomCenter,
           isTodayHighlighted: true,
           outsideDaysVisible: false,
@@ -107,14 +107,16 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
               },
               child: Center(
                 child: Container(
-                  padding: const EdgeInsets.only(
-                    top: 10,
+                  padding: EdgeInsets.only(
+                    top: 10.h,
                   ),
                   child: Column(
                     children: [
                       events.isEmpty
                           ? Container(
-                              padding: EdgeInsets.all(14.w),
+                              padding: context.isTablet
+                                  ? EdgeInsets.all(9.w)
+                                  : EdgeInsets.all(14.w),
                               decoration: BoxDecoration(
                                 border: isToday(day)
                                     ? Border.all(
@@ -131,7 +133,9 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                           : Stack(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.all(14.w),
+                                  padding: context.isTablet
+                                      ? EdgeInsets.all(9.w)
+                                      : EdgeInsets.all(14.w),
                                   decoration: BoxDecoration(
                                     border: isToday(day)
                                         ? Border.all(
@@ -189,7 +193,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                   )
                 : isToday(day)
                     ? Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0.w),
                         child: Text(
                           DateFormat('dd').format(day),
                           style: Theme.of(context)
@@ -199,7 +203,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                         ),
                       )
                     : Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(8.0.w),
                         child: Text(
                           DateFormat('dd').format(day),
                           style: Theme.of(context).textTheme.caption,

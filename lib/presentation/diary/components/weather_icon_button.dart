@@ -30,12 +30,11 @@ class WeatherIconButton extends StatelessWidget {
             Stack(
               children: [
                 Container(
-                  padding: selected
-                      ? const EdgeInsets.all(8.5)
-                      : const EdgeInsets.all(10),
+                  padding:
+                      selected ? EdgeInsets.all(8.5.w) : EdgeInsets.all(10.w),
                   decoration: BoxDecoration(
                     border: Border.all(
-                      width: selected ? 2 : 0.5,
+                      width: selected ? 2.w : 0.5.w,
                       color: selected
                           ? kPrimaryColor
                           : Theme.of(context).colorScheme.darkTheme_100_700,
@@ -52,7 +51,7 @@ class WeatherIconButton extends StatelessWidget {
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 8.0),
+              padding: EdgeInsets.only(top: 8.0.h),
               child: Text(
                 name,
                 style: Theme.of(context).textTheme.bodyText1,

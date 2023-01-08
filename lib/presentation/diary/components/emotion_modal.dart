@@ -16,7 +16,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
     return Obx(
       () => AnimatedPositioned(
         duration: const Duration(milliseconds: 200),
-        bottom: controller.isEmotionModal.value ? -276 : 0,
+        bottom: controller.isEmotionModal.value ? -276.h : 0,
         child: Obx(
           () => AnimatedContainer(
             duration: const Duration(milliseconds: 200),

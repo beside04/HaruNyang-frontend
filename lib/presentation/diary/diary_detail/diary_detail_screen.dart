@@ -94,7 +94,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                             child: Center(
                               child: Text(
                                 "일기 수정",
-                                style: kHeader5Primary2Style,
+                                style: Theme.of(context).textTheme.headline5,
                               ),
                             ),
                           ),
@@ -188,7 +188,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                             child: Center(
                               child: Text(
                                 "일기 삭제",
-                                style: kHeader5Primary2Style,
+                                style: Theme.of(context).textTheme.headline5,
                               ),
                             ),
                           ),
