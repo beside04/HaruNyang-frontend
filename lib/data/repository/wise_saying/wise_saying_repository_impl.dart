@@ -15,4 +15,10 @@ class WiseSayingRepositoryImpl implements WiseSayingRepository {
       int emoticonId, String content) async {
     return await wiseSayingApi.getWiseSaying(emoticonId, content);
   }
+
+  @override
+  Future<Result<List<WiseSayingData>>> getRandomWiseSaying(
+      int emoticonId) async {
+    return await wiseSayingApi.getRandomWiseSaying(emoticonId);
+  }
 }

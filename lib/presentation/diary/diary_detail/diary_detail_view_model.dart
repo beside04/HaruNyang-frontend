@@ -93,6 +93,22 @@ class DiaryDetailViewModel extends GetxController {
     final result = await getWiseSayingUseCase(emoticonId, content);
 
     result.when(
+      success: (result) async {
+        wiseSayingList.value = List.from(result);
+        if (wiseSayingList.isEmpty) {
+          await getRandomWiseSayingList(emoticonId);
+        }
+      },
+      error: (message) {
+        Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
+      },
+    );
+  }
+
+  Future<void> getRandomWiseSayingList(int emoticonId) async {
+    final result = await getWiseSayingUseCase.getRandomWiseSaying(emoticonId);
+
+    result.when(
       success: (result) {
         wiseSayingList.value = List.from(result);
       },

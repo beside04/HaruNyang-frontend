@@ -292,7 +292,9 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                           shrinkWrap: true,
                           padding: EdgeInsets.only(left: 20.w, right: 20.w),
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.wiseSayingList.length,
+                          itemCount: controller.wiseSayingList.length < 3
+                              ? controller.wiseSayingList.length
+                              : 3,
                           itemBuilder: (BuildContext context, int index) {
                             return AnimationConfiguration.staggeredList(
                               position: index,
