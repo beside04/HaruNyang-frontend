@@ -73,12 +73,12 @@ class DiaryDetailViewModel extends GetxController {
 
   void toggleBookmark(WiseSayingData wiseSayingData) {
     final index = wiseSayingList.indexOf(wiseSayingData);
-
-    wiseSayingList[index] = wiseSayingData.copyWith(
+    final tempWiseSayingList =
+        wiseSayingList.toList()[index] = wiseSayingData.copyWith(
       isBookmarked: !wiseSayingData.isBookmarked,
     );
 
-    if (wiseSayingList[index].isBookmarked) {
+    if (tempWiseSayingList.isBookmarked) {
       if (wiseSayingList[index].id != null) {
         bookmarkUseCase.saveBookmark(wiseSayingList[index].id!);
       }
@@ -91,6 +91,22 @@ class DiaryDetailViewModel extends GetxController {
 
   Future<void> getWiseSayingList(int emoticonId, String content) async {
     final result = await getWiseSayingUseCase(emoticonId, content);
+
+    result.when(
+      success: (result) async {
+        wiseSayingList.value = List.from(result);
+        if (wiseSayingList.isEmpty) {
+          await getRandomWiseSayingList(emoticonId);
+        }
+      },
+      error: (message) {
+        Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
+      },
+    );
+  }
+
+  Future<void> getRandomWiseSayingList(int emoticonId) async {
+    final result = await getWiseSayingUseCase.getRandomWiseSaying(emoticonId);
 
     result.when(
       success: (result) {

@@ -13,4 +13,9 @@ class GetWiseSayingUseCase {
       int emoticonId, String content) async {
     return wiseSayingRepository.getWiseSaying(emoticonId, content);
   }
+
+  Future<Result<List<WiseSayingData>>> getRandomWiseSaying(
+      int emoticonId) async {
+    return wiseSayingRepository.getRandomWiseSaying(emoticonId);
+  }
 }

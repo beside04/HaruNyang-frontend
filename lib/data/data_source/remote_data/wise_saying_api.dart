@@ -40,4 +40,28 @@ class WiseSayingApi {
       return Result.error(e.toString());
     }
   }
+
+  Future<Result<List<WiseSayingData>>> getRandomWiseSaying(
+      int emoticonId) async {
+    var dio = await interceptor.refreshInterceptor();
+
+    try {
+      String emoticonUrl = '$_baseUrl/v1/wisesaying/emotion/$emoticonId';
+      Response response;
+      response = await dio.get(emoticonUrl);
+
+      if (response.data['status'] == 200) {
+        final Iterable wiseSayingIterable = response.data['data'];
+        final List<WiseSayingData> wiseSayingList =
+            wiseSayingIterable.map((e) => WiseSayingData.fromJson(e)).toList();
+
+        return Result.success(wiseSayingList);
+      } else {
+        return Result.error(
+            '서버 error : status code : ${response.data['status']}');
+      }
+    } catch (e) {
+      return Result.error(e.toString());
+    }
+  }
 }

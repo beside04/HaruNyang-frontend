@@ -13,6 +13,7 @@ import 'package:frontend/presentation/splash/splash_sreen.dart';
 import 'package:get/get.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'presentation/home/home_screen.dart';
 
 void main() async {

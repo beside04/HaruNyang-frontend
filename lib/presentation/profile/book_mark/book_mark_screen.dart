@@ -30,13 +30,11 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
         ),
       ),
       body: SafeArea(
-        child: ListView(
-          children: [
-            SizedBox(
-              height: 8.h,
-            ),
-            Obx(
-              () => BookMarkList(
+        child: Padding(
+          padding: EdgeInsets.only(top: 8.0.h),
+          child: Column(
+            children: [
+              BookMarkList(
                 date: DateTime(2022, 12, 15),
                 isBookMark: controller.isBookmark.value,
                 title:
@@ -46,20 +44,26 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
                   controller.toggleBookmark();
                 },
               ),
-            ),
-            Obx(
-              () => BookMarkList(
-                date: DateTime(2022, 12, 20),
-                isBookMark: controller.isBookmark.value,
-                title:
-                    '가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사',
-                name: '이름',
-                onTap: () {
-                  controller.toggleBookmark();
+              ListView.builder(
+                shrinkWrap: true,
+                itemCount: controller.bookmarkList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Obx(
+                    () => BookMarkList(
+                      date: DateTime(2022, 12, 15),
+                      isBookMark: controller.isBookmark.value,
+                      title:
+                          '가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사',
+                      name: '이름',
+                      onTap: () {
+                        controller.toggleBookmark();
+                      },
+                    ),
+                  );
                 },
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

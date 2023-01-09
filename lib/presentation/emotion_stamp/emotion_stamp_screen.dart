@@ -2,30 +2,14 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_list_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class EmotionStampScreen extends StatefulWidget {
+class EmotionStampScreen extends GetView<EmotionStampViewModel> {
   const EmotionStampScreen({super.key});
-
-  @override
-  State<EmotionStampScreen> createState() => _EmotionStampScreenState();
-}
-
-class _EmotionStampScreenState extends State<EmotionStampScreen> {
-  late final EmotionStampViewModel controller;
-
-  @override
-  void initState() {
-    Get.delete<EmotionStampViewModel>();
-    controller = getEmotionStampBinding();
-
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -108,31 +92,8 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   child: controller.isLoading.value
                       ? const Center(child: CircularProgressIndicator())
                       : controller.isCalendar.value
-                          ? Obx(
-                              () {
-                                return EmotionCalendarWidget(
-                                  onPageChanged: controller.onPageChanged,
-                                  focusedDate:
-                                      controller.focusedCalendarDate.value,
-                                  onSetFocusDay: controller.setFocusDay,
-                                  diaryDataList: controller.diaryDataList,
-                                );
-                              },
-                            )
-                          : Obx(
-                              () {
-                                return EmotionListWidget(
-                                  focusedDate:
-                                      controller.focusedCalendarDate.value,
-                                  onPageChanged: controller.onPageChanged,
-                                  diaryDataList: controller.diaryDataList,
-                                  controllerTempCount:
-                                      controller.controllerTempCount.value,
-                                  setControllerTempCount:
-                                      controller.setControllerTempCount,
-                                );
-                              },
-                            ),
+                          ? const EmotionCalendarWidget()
+                          : EmotionListWidget(),
                 ),
               ),
             ),
