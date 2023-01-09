@@ -61,11 +61,6 @@ class MyApp extends GetView<MainViewModel> {
             darkTheme: darkMode,
             theme: lightMode,
             home: const SplashScreen(),
-            initialBinding: BindingsBuilder(() {
-              Get.put(EmotionStampViewModel(
-                getEmotionStampUseCase: getEmotionStampUseCase,
-              ));
-            }),
           ),
         );
       },

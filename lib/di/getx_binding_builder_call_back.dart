@@ -172,6 +172,9 @@ void getMainBinding() {
     onBoardingUseCase: onBoardingUseCase,
   ));
   Get.put(NotificationController());
+  Get.put(EmotionStampViewModel(
+    getEmotionStampUseCase: getEmotionStampUseCase,
+  ));
 }
 
 void getLoginBinding() {
