@@ -20,7 +20,7 @@ class EmotionStampViewModel extends GetxController {
 
   final RxBool isCalendar = true.obs;
   final RxBool isLoading = false.obs;
-  Rx<int> controllerTempCount = 0.obs;
+  int currentPageCount = 250;
 
   Rx<DateTime> focusedCalendarDate = DateTime.now().obs;
   RxList<DiaryData> diaryDataList = <DiaryData>[].obs;
@@ -28,6 +28,7 @@ class EmotionStampViewModel extends GetxController {
   Map<String, Object> diaryListDataList = {"key_ordered": [], "values": {}}.obs;
   var focusedStartDate = DateTime.now().obs;
   var focusedEndDate = DateTime.now().obs;
+  DateTime selectedCalendarDate = DateTime.now();
 
   void _updateIsLoading(bool currentStatus) {
     isLoading.value = currentStatus;
@@ -78,9 +79,5 @@ class EmotionStampViewModel extends GetxController {
 
   void setFocusDay(DateTime day) {
     focusedCalendarDate.value = day;
-  }
-
-  void setControllerTempCount(int value) {
-    controllerTempCount.value = value;
   }
 }
