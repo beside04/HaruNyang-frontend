@@ -13,13 +13,12 @@ class BookmarkApi {
   });
 
   Future<Result<bool>> saveBookmark(int wiseSayingId) async {
-    String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
+    String bookmarkUrl =
+        '$_baseUrl/v1/wise-saying-bookmark?wiseSayingId=$wiseSayingId';
     var dio = await interceptor.refreshInterceptor();
     try {
       Response response;
-      response = await dio.post(bookmarkUrl, data: {
-        "wiseSayingId": wiseSayingId,
-      });
+      response = await dio.post(bookmarkUrl);
 
       final bool resultData = response.data['data'];
       if (resultData) {
@@ -44,7 +43,7 @@ class BookmarkApi {
     }
   }
 
-  Future<Result<BookmarkData>> getBookmark(int page, int limit) async {
+  Future<Result<List<BookmarkData>>> getBookmark(int page, int limit) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
     var dio = await interceptor.refreshInterceptor();
     try {
@@ -57,9 +56,12 @@ class BookmarkApi {
         },
       );
 
-      BookmarkData bookmark = BookmarkData.fromJson(response.data['data']);
+      final Iterable bookmarkIterable = response.data['data'];
 
-      return Result.success(bookmark);
+      final List<BookmarkData> bookmarkList =
+          bookmarkIterable.map((e) => BookmarkData.fromJson(e)).toList();
+
+      return Result.success(bookmarkList);
     } on DioError catch (e) {
       String errMessage = '';
 

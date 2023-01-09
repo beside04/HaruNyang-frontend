@@ -73,12 +73,12 @@ class DiaryDetailViewModel extends GetxController {
 
   void toggleBookmark(WiseSayingData wiseSayingData) {
     final index = wiseSayingList.indexOf(wiseSayingData);
-
-    wiseSayingList[index] = wiseSayingData.copyWith(
+    final tempWiseSayingList =
+        wiseSayingList.toList()[index] = wiseSayingData.copyWith(
       isBookmarked: !wiseSayingData.isBookmarked,
     );
 
-    if (wiseSayingList[index].isBookmarked) {
+    if (tempWiseSayingList.isBookmarked) {
       if (wiseSayingList[index].id != null) {
         bookmarkUseCase.saveBookmark(wiseSayingList[index].id!);
       }

@@ -1,3 +1,4 @@
+import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:get/get.dart';
 
@@ -9,6 +10,14 @@ class BookMarkViewModel extends GetxController {
   });
 
   final RxBool isBookmark = false.obs;
+
+  RxList<BookmarkData> bookmarkList = <BookmarkData>[].obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getBookmark();
+  }
 
   void toggleBookmark() {
     isBookmark.value = !isBookmark.value;
@@ -27,9 +36,14 @@ class BookMarkViewModel extends GetxController {
     int page = 0;
 
     final result = await bookmarkUseCase.getBookmark(page, limit);
+
     result.when(
-      success: (data) {},
-      error: (message) {},
+      success: (data) {
+        bookmarkList.value = List.from(data);
+      },
+      error: (message) {
+        Get.snackbar('알림', '북마크를 불러오는데 실패했습니다.');
+      },
     );
   }
 
