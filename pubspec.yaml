@@ -104,7 +104,7 @@ flutter:
     - lib/config/assets/images/home/dark_mode/
     - lib/config/assets/images/home/light_mode/
     - lib/config/assets/images/profile/
-    - lib/config/assets/lottie/test.json
+    - lib/config/assets/lottie/
     - .env
   #   - images/a_dot_ham.jpeg
 

@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     _controller = AnimationController(vsync: this);
 
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Get.offAll(
         () => Get.find<MainViewModel>().token == null
             ? const LoginScreen()
@@ -46,16 +46,15 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Lottie.asset(
-        'lib/config/assets/lottie/test.json',
-        controller: _controller,
-        onLoaded: (composition) {
-          _controller
-            ..duration = composition.duration
-            ..forward();
-        },
-      ),
+    return Lottie.asset(
+      'lib/config/assets/lottie/graphic_type.json',
+      controller: _controller,
+      onLoaded: (composition) {
+        _controller
+          ..duration = composition.duration
+          ..forward();
+      },
+      fit: BoxFit.fill,
     );
   }
 }
