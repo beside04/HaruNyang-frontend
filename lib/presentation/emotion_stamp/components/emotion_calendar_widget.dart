@@ -8,6 +8,7 @@ import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
+import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:intl/intl.dart';
 import 'package:jiffy/jiffy.dart';
@@ -21,8 +22,6 @@ class EmotionCalendarWidget extends GetView<EmotionStampViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    String? swipeDirection;
-
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
       child: Column(
@@ -202,27 +201,20 @@ class EmotionCalendarWidget extends GetView<EmotionStampViewModel> {
             ),
           ),
           Expanded(
-            child: GestureDetector(
-              onPanUpdate: (event) {
-                swipeDirection = event.delta.dx < 0 ? 'right' : 'left';
+            child: SwipeDetector(
+              onSwipeLeft: () {
+                controller.onPageChanged(
+                    Jiffy(controller.focusedCalendarDate.value)
+                        .add(months: 1)
+                        .dateTime);
               },
-              onPanEnd: (event) {
-                if (swipeDirection == null) {
-                  return;
-                }
-                if (swipeDirection == 'left') {
-                  controller.onPageChanged(
-                      Jiffy(controller.focusedCalendarDate.value)
-                          .subtract(months: 1)
-                          .dateTime);
-                }
-                if (swipeDirection == 'right') {
-                  controller.onPageChanged(
-                      Jiffy(controller.focusedCalendarDate.value)
-                          .add(months: 1)
-                          .dateTime);
-                }
+              onSwipeRight: () {
+                controller.onPageChanged(
+                    Jiffy(controller.focusedCalendarDate.value)
+                        .subtract(months: 1)
+                        .dateTime);
               },
+              child: Container(),
             ),
           ),
         ],

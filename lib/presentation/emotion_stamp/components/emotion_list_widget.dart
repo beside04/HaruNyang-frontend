@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
+import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
@@ -15,30 +16,21 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    weekName = {};
-    String? swipeDirection;
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: Listener(
-        onPointerMove: (event) {
-          swipeDirection = event.delta.dx < 0 ? 'right' : 'left';
+      child: SwipeDetector(
+        onSwipeLeft: () {
+          controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
+              .add(months: 1)
+              .dateTime);
         },
-        onPointerUp: (event) {
-          if (swipeDirection == null) {
-            return;
-          }
-          if (swipeDirection == 'left') {
-            controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
-                .subtract(months: 1)
-                .dateTime);
-          }
-          if (swipeDirection == 'right') {
-            controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
-                .add(months: 1)
-                .dateTime);
-          }
+        onSwipeRight: () {
+          controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
+              .subtract(months: 1)
+              .dateTime);
         },
         child: PageView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           controller: PageController(initialPage: controller.currentPageCount),
           itemBuilder: (context, i) {
             return ListView.builder(
