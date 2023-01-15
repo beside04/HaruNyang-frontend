@@ -58,7 +58,8 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                     title: "뒤로 가시겠어요?",
                     content: Text(
                       "작성 중인 모든 내용이 삭제되요.",
-                      style: Theme.of(context).textTheme.headline6,
+                      style: kHeader6Style.copyWith(
+                          color: Theme.of(context).colorScheme.textSubtitle),
                     ),
                     actionContent: [
                       DialogButton(
@@ -66,8 +67,10 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                         onTap: () {
                           Get.back();
                         },
-                        backgroundColor: kGrayColor100,
-                        textStyle: kHeader4Gray600Style,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.secondaryColor,
+                        textStyle: kHeader4Style.copyWith(
+                            color: Theme.of(context).colorScheme.textSubtitle),
                       ),
                       SizedBox(
                         width: 12.w,
@@ -78,8 +81,8 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           Get.back();
                           Get.back();
                         },
-                        backgroundColor: kPrimary2Color,
-                        textStyle: kHeader4WhiteStyle,
+                        backgroundColor: kOrange200Color,
+                        textStyle: kHeader4Style.copyWith(color: kWhiteColor),
                       ),
                     ],
                   );
@@ -104,7 +107,10 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                               title: "작성 완료",
                               content: Text(
                                 "하루냥의 명언이 준비됐어요.",
-                                style: Theme.of(context).textTheme.headline6,
+                                style: kHeader6Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textSubtitle),
                               ),
                               actionContent: [
                                 DialogButton(
@@ -148,8 +154,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       ),
                                     );
                                   },
-                                  backgroundColor: kPrimary2Color,
-                                  textStyle: kHeader4WhiteStyle,
+                                  backgroundColor: kOrange200Color,
+                                  textStyle: kHeader4Style.copyWith(
+                                      color: kWhiteColor),
                                 ),
                               ],
                             );
@@ -159,15 +166,17 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                 child: Text(
                   '등록',
                   style: controller.diaryValue.value.isEmpty
-                      ? kHeader6Gray300Style
-                      : kHeader6Primary250Style,
+                      ? kHeader6Style.copyWith(
+                          color: Theme.of(context).colorScheme.disabledColor)
+                      : kHeader6Style.copyWith(color: kOrange350Color),
                 ),
               ),
             ),
           ],
           title: Text(
             DateFormat('MM월 dd일').format(date),
-            style: Theme.of(context).textTheme.headline3,
+            style: kHeader3Style.copyWith(
+                color: Theme.of(context).colorScheme.textTitle),
           ),
           leading: Obx(
             () => controller.isOnKeyboard.value
@@ -197,7 +206,10 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                   title: "뒤로 가시겠어요?",
                                   content: Text(
                                     "작성 중인 모든 내용이 삭제되요.",
-                                    style: kHeader6Gray600Style,
+                                    style: kHeader6Style.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .textSubtitle),
                                   ),
                                   actionContent: [
                                     DialogButton(
@@ -205,8 +217,13 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       onTap: () {
                                         Get.back();
                                       },
-                                      backgroundColor: kGrayColor100,
-                                      textStyle: kHeader4Gray600Style,
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryColor,
+                                      textStyle: kHeader4Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textSubtitle),
                                     ),
                                     SizedBox(
                                       width: 12.w,
@@ -217,8 +234,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                         Get.back();
                                         Get.back();
                                       },
-                                      backgroundColor: kPrimary2Color,
-                                      textStyle: kHeader4WhiteStyle,
+                                      backgroundColor: kOrange200Color,
+                                      textStyle: kHeader4Style.copyWith(
+                                          color: kWhiteColor),
                                     ),
                                   ],
                                 );
@@ -251,7 +269,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                 padding: const EdgeInsets.all(10),
                                 decoration: const BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: kPrimary2Color,
+                                  color: kOrange300Color,
                                 ),
                                 child: SvgPicture.asset(
                                   "lib/config/assets/images/character/onboarding1.svg",
@@ -267,15 +285,14 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                               child: Container(
                                 height: 72.h,
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .darkTheme_00_900,
+                                  color:
+                                      Theme.of(context).colorScheme.surface_02,
                                   borderRadius: BorderRadius.circular(24),
                                   border: Border.all(
                                     width: 1,
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .darkTheme_250_850,
+                                        .surface_02,
                                   ),
                                 ),
                                 child: Padding(
@@ -290,7 +307,11 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                     children: [
                                       Text(
                                         '',
-                                        style: kHeader4Gray950Style,
+                                        style: kHeader4Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textTitle,
+                                        ),
                                       ),
                                       SvgPicture.asset(
                                         "lib/config/assets/images/diary/write_diary/refresh.svg",
@@ -310,7 +331,6 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                       ),
                       Container(
                         height: 1.h,
-                        color: Theme.of(context).colorScheme.darkTheme_50_900,
                       ),
                       Padding(
                         padding: EdgeInsets.only(
@@ -321,15 +341,15 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           emoticon: emotion.emoticon,
                           emoticonIndex: emoticonIndex,
                           weatherIcon: weatherDataList[weather.index].icon,
-                          color:
-                              Theme.of(context).colorScheme.darkTheme_100_700,
+                          color: Theme.of(context).colorScheme.surface_01,
                         ),
                       ),
                       FormBuilderTextField(
                         maxLength: 1000,
                         maxLines: null,
                         name: 'name',
-                        style: Theme.of(context).textTheme.subtitle1,
+                        style: kBody1Style.copyWith(
+                            color: Theme.of(context).colorScheme.textBody),
                         controller: controller.diaryEditingController,
                         keyboardType: TextInputType.multiline,
                         textAlignVertical: TextAlignVertical.center,
@@ -339,7 +359,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           helperText: "",
                           counterText: "",
                           hintText: '오늘 있었던 일과 기분을 자유롭게 말해보세요!',
-                          hintStyle: Theme.of(context).textTheme.subtitle2,
+                          hintStyle: kBody1Style.copyWith(color: kGrayColor400),
                           contentPadding: const EdgeInsets.only(
                             top: 12,
                             left: 20,
@@ -362,7 +382,10 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       title: "글자 제한",
                                       content: Text(
                                         "1000 글자까지 작성할 수 있어요.",
-                                        style: kHeader6Gray600Style,
+                                        style: kHeader6Style.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .textSubtitle),
                                       ),
                                       actionContent: [
                                         DialogButton(
@@ -370,8 +393,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                           onTap: () {
                                             Get.back();
                                           },
-                                          backgroundColor: kPrimary2Color,
-                                          textStyle: kHeader4WhiteStyle,
+                                          backgroundColor: kOrange200Color,
+                                          textStyle: kHeader4Style.copyWith(
+                                              color: kWhiteColor),
                                         ),
                                       ],
                                     );
@@ -470,11 +494,11 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                 Container(
                   height: 44.h,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.darkTheme_50_850,
+                    color: Theme.of(context).colorScheme.surfaceModal,
                     border: Border(
                       top: BorderSide(
                         width: 1,
-                        color: Theme.of(context).colorScheme.darkTheme_200_950,
+                        color: Theme.of(context).colorScheme.border,
                       ),
                     ),
                   ),

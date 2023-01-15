@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:get/get.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
@@ -13,7 +15,8 @@ class PrivacyPolicyScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "개인정보 처리방침",
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
         actions: [
@@ -200,9 +203,12 @@ Firebase Crashlytics (Google Inc.)
 Copyright © 하루냥. All rights reserved.
 ''',
             styleSheet: MarkdownStyleSheet(
-              h2: Theme.of(context).textTheme.headline3,
-              h3: Theme.of(context).textTheme.headline4,
-              p: Theme.of(context).textTheme.bodyText1,
+              h2: kHeader3Style.copyWith(
+                  color: Theme.of(context).colorScheme.textBody),
+              h3: kHeader4Style.copyWith(
+                  color: Theme.of(context).colorScheme.textBody),
+              p: kBody1Style.copyWith(
+                  color: Theme.of(context).colorScheme.textBody),
             ),
           ),
         ),

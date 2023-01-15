@@ -37,6 +37,8 @@ void main() async {
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
 }
 
+GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
 class MyApp extends GetView<MainViewModel> {
   const MyApp({super.key});
 
@@ -57,8 +59,8 @@ class MyApp extends GetView<MainViewModel> {
             ],
             themeMode:
                 controller.isDarkMode.value ? ThemeMode.dark : ThemeMode.light,
-            darkTheme: darkMode,
-            theme: lightMode,
+            theme: lightMode(context),
+            darkTheme: darkMode(context),
             home: const SplashScreen(),
           ),
         );

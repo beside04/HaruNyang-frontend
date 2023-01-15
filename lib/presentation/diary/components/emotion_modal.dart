@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
@@ -27,11 +28,11 @@ class EmotionModal extends GetView<DiaryViewModel> {
                 : 375.h,
             child: Container(
               decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.backgroundModal,
                 borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(40),
                   topRight: Radius.circular(40),
                 ),
-                color: Theme.of(context).colorScheme.darkTheme_50_850,
               ),
               child: Stack(
                 children: [
@@ -41,7 +42,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       children: [
                         Text(
                           "기분",
-                          style: Theme.of(context).textTheme.headline3,
+                          style: kHeader3Style.copyWith(
+                              color: Theme.of(context).colorScheme.textTitle),
                         ),
                       ],
                     ),
@@ -110,7 +112,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
         children: [
           Text(
             controller.emotionTextValue.value,
-            style: Theme.of(context).textTheme.headline6,
+            style: kHeader6Style.copyWith(
+                color: Theme.of(context).colorScheme.textBody),
           ),
           SliderTheme(
             data: const SliderThemeData(
@@ -119,7 +122,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
               inactiveTickMarkColor: Colors.transparent,
               inactiveTrackColor: kGrayColor100,
               thumbColor: kWhiteColor,
-              activeTrackColor: kPrimaryColor,
+              activeTrackColor: kOrange300Color,
               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12),
             ),
             child: Obx(

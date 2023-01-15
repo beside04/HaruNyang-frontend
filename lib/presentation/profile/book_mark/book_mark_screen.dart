@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/profile/book_mark/book_mark_view_model.dart';
 import 'package:frontend/presentation/profile/components/book_mark_list.dart';
@@ -17,7 +19,8 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
       appBar: AppBar(
         title: Text(
           '북마크',
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0.5,
         leading: IconButton(

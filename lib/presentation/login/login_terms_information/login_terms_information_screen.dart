@@ -25,10 +25,9 @@ class LoginTermsInformationScreen
 
     return Scaffold(
       appBar: AppBar(
-          centerTitle: false,
-          title: Text(
+          centerTitle: true,
+          title: const Text(
             "약관정보",
-            style: Theme.of(context).textTheme.headline3,
           ),
           elevation: 0.5,
           leading: IconButton(
@@ -56,12 +55,13 @@ class LoginTermsInformationScreen
                   padding: kPrimaryPadding,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.darkTheme_50_850,
+                    color: Theme.of(context).colorScheme.surface_01,
                     borderRadius: BorderRadius.circular(12.0.w),
                   ),
                   child: Text(
                     '하루냥의 서비스 약관이에요. \n 필수 약관을 동의하셔야 이용할 수 있어요',
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: kBody2Style.copyWith(
+                        color: Theme.of(context).colorScheme.textLowEmphasis),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -78,7 +78,7 @@ class LoginTermsInformationScreen
                           width: 20.w,
                           height: 20.h,
                           child: Checkbox(
-                            activeColor: kPrimaryColor,
+                            activeColor: kOrange300Color,
                             value: controller.isTermsAgree.value &&
                                 controller.isPrivacyPolicyAgree.value,
                             onChanged: (value) {
@@ -93,18 +93,17 @@ class LoginTermsInformationScreen
                         padding: EdgeInsets.all(8.w),
                         child: Text(
                           '전체 동의하기',
-                          style: Theme.of(context).textTheme.subtitle1,
+                          style: kSubtitle1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textBody),
                         ),
                       ),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 1.h,
-                    color: kGrayColor200,
+                  padding: EdgeInsets.symmetric(vertical: 10.h),
+                  child: Divider(
+                    thickness: 1.h,
                   ),
                 ),
                 Obx(
@@ -114,11 +113,13 @@ class LoginTermsInformationScreen
                       children: [
                         Text(
                           '(필수) ',
-                          style: kBody1Primary2Style,
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textPrimary),
                         ),
                         Text(
                           '서비스 이용약관',
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textBody),
                         ),
                       ],
                     ),
@@ -141,11 +142,13 @@ class LoginTermsInformationScreen
                       children: [
                         Text(
                           '(필수) ',
-                          style: kBody1Primary2Style,
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textPrimary),
                         ),
                         Text(
                           '개인정보 처리방침',
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textBody),
                         ),
                       ],
                     ),
@@ -166,7 +169,8 @@ class LoginTermsInformationScreen
                     termValue: controller.isMarketingConsentAgree.value,
                     termTitle: Text(
                       '(선택) 마케팅 정보 수신 동의',
-                      style: Theme.of(context).textTheme.bodyText1,
+                      style: kBody1Style.copyWith(
+                          color: Theme.of(context).colorScheme.textBody),
                     ),
                     onTap: controller.toggleMarketingConsentCheck,
                     termOnTap: () {

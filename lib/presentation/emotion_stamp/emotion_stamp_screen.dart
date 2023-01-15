@@ -2,6 +2,8 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_list_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -57,14 +59,15 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                   Text(
                     DateFormat('yyyy년 MM월')
                         .format(controller.focusedCalendarDate.value),
-                    style: Theme.of(context).textTheme.headline3,
+                    style: kHeader3Style.copyWith(
+                        color: Theme.of(context).colorScheme.textTitle),
                   ),
                   SizedBox(
                     width: 6.w,
                   ),
-                  const Icon(
+                  Icon(
                     Icons.keyboard_arrow_down,
-                    //color: kBlackColor,
+                    color: Theme.of(context).colorScheme.iconColor,
                   )
                 ],
               ),

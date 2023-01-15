@@ -34,7 +34,7 @@ class AppleLoginWidget extends StatelessWidget {
             ),
             Text(
               "애플로 시작하기",
-              style: kHeader5WhiteStyle,
+              style: kHeader5Style.copyWith(color: kWhiteColor),
             ),
           ],
         ),

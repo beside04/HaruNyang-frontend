@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
@@ -77,16 +78,15 @@ class EmotionCalendarWidget extends GetView<EmotionStampViewModel> {
                             title: "미래 일기는 쓸 수 없어요",
                             actionContent: [
                               DialogButton(
-                                  title: "확인",
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  textStyle: Theme.of(context)
-                                      .textTheme
-                                      .headline4!
-                                      .copyWith(color: kWhiteColor)),
+                                title: "확인",
+                                onTap: () {
+                                  Get.back();
+                                },
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.primaryColor,
+                                textStyle:
+                                    kHeader4Style.copyWith(color: kWhiteColor),
+                              )
                             ],
                           );
                         },
@@ -109,13 +109,13 @@ class EmotionCalendarWidget extends GetView<EmotionStampViewModel> {
                                     border: isToday(day)
                                         ? Border.all(
                                             width: 1,
-                                            color: kPrimaryColor,
+                                            color: kOrange300Color,
                                           )
                                         : null,
                                     shape: BoxShape.circle,
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .darkTheme_50_850,
+                                        .surface_01,
                                   ),
                                 )
                               : Stack(
@@ -128,13 +128,13 @@ class EmotionCalendarWidget extends GetView<EmotionStampViewModel> {
                                         border: isToday(day)
                                             ? Border.all(
                                                 width: 1,
-                                                color: kPrimaryColor,
+                                                color: kOrange300Color,
                                               )
                                             : null,
                                         shape: BoxShape.circle,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .darkTheme_50_850,
+                                            .surface_01,
                                       ),
                                     ),
                                     Positioned.fill(
@@ -166,15 +166,13 @@ class EmotionCalendarWidget extends GetView<EmotionStampViewModel> {
                           height: 20.h,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: kPrimaryColor,
+                            color: kOrange300Color,
                           ),
                           child: Center(
                             child: Text(
                               DateFormat('dd').format(day),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(color: kWhiteColor),
+                              style:
+                                  kCaption1Style.copyWith(color: kWhiteColor),
                             ),
                           ),
                         ),
@@ -184,17 +182,17 @@ class EmotionCalendarWidget extends GetView<EmotionStampViewModel> {
                             padding: EdgeInsets.all(8.0.w),
                             child: Text(
                               DateFormat('dd').format(day),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .caption!
-                                  .copyWith(color: kPrimaryColor),
+                              style: kCaption1Style.copyWith(
+                                  color: kOrange300Color),
                             ),
                           )
                         : Padding(
                             padding: EdgeInsets.all(8.0.w),
                             child: Text(
                               DateFormat('dd').format(day),
-                              style: Theme.of(context).textTheme.caption,
+                              style: kCaption1Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                           );
               },

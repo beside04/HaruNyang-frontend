@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/profile/components/notice_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_detail_screen.dart';
@@ -17,7 +18,8 @@ class NoticeScreen extends GetView<NoticeViewModel> {
       appBar: AppBar(
         title: Text(
           '공지사항',
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         centerTitle: true,
         elevation: 0.5,
@@ -40,13 +42,12 @@ class NoticeScreen extends GetView<NoticeViewModel> {
               padding: EdgeInsets.only(left: 20.0.w, top: 17.h, bottom: 17.h),
               child: Text(
                 "총 4건",
-                style: Theme.of(context).textTheme.headline6,
+                style: kHeader6Style.copyWith(
+                    color: Theme.of(context).colorScheme.textTitle),
               ),
             ),
-            Container(
-              width: MediaQuery.of(context).size.width,
-              height: 1.h,
-              color: Theme.of(context).colorScheme.darkTheme_200_900,
+            Divider(
+              thickness: 1.h,
             ),
             NoticeButton(
               title: '베타버전 출시!',

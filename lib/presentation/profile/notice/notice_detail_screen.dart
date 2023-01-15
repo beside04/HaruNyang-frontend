@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:intl/intl.dart';
 
 class NoticeDetailScreen extends StatelessWidget {
@@ -24,7 +25,8 @@ class NoticeDetailScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           title,
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         centerTitle: true,
         elevation: 0.5,
@@ -45,14 +47,15 @@ class NoticeDetailScreen extends StatelessWidget {
                       ? Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30.w),
-                            color: kPrimary2Color,
+                            color: kOrange200Color,
                           ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
                                 vertical: 4.0.h, horizontal: 6.0.w),
                             child: Text(
                               '중요',
-                              style: kCaption1WhiteStyle,
+                              style:
+                                  kCaption1Style.copyWith(color: kWhiteColor),
                             ),
                           ),
                         )
@@ -62,14 +65,16 @@ class NoticeDetailScreen extends StatelessWidget {
                   ),
                   Text(
                     DateFormat('yyyy.MM.dd').format(date),
-                    style: kBody2Gray400Style,
+                    style: kBody2Style.copyWith(
+                        color: Theme.of(context).colorScheme.textLowEmphasis),
                   ),
                   SizedBox(
                     height: 9.h,
                   ),
                   Text(
                     content,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: kBody1Style.copyWith(
+                        color: Theme.of(context).colorScheme.textBody),
                   ),
                 ],
               ),

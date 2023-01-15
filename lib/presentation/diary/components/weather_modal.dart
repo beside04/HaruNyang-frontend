@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/weather_icon_button.dart';
@@ -19,11 +21,11 @@ class WeatherModal extends GetView<DiaryViewModel> {
         height: 276.h,
         child: Container(
           decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.backgroundModal,
             borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(40),
               topRight: Radius.circular(40),
             ),
-            color: Theme.of(context).colorScheme.darkTheme_50_850,
           ),
           child: Stack(
             children: [
@@ -33,7 +35,8 @@ class WeatherModal extends GetView<DiaryViewModel> {
                   children: [
                     Text(
                       "날씨",
-                      style: Theme.of(context).textTheme.headline3,
+                      style: kHeader3Style.copyWith(
+                          color: Theme.of(context).colorScheme.textTitle),
                     ),
                   ],
                 ),

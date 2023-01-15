@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/res/constants.dart';
 
 class WeatherEmotionBadgeComponent extends StatelessWidget {
@@ -54,7 +56,8 @@ class WeatherEmotionBadgeComponent extends StatelessWidget {
               ),
               getEmotionTextWidget(
                 emoticonIndex,
-                Theme.of(context).textTheme.bodyText1!,
+                kBody2Style.copyWith(
+                    color: Theme.of(context).colorScheme.textCaption),
               ),
             ],
           ),

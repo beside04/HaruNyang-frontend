@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
@@ -18,7 +19,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.darkTheme_50_850,
+        color: Theme.of(context).colorScheme.surfaceModal,
         borderRadius: BorderRadius.circular(20.0.w),
       ),
       child: Padding(
@@ -32,14 +33,15 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                 Text(
                   DateFormat.MMMEd("ko_KR")
                       .format(DateTime.parse(diaryData.writtenAt)),
-                  style: Theme.of(context).textTheme.headline5,
+                  style: kHeader5Style.copyWith(
+                      color: Theme.of(context).colorScheme.textTitle),
                 ),
                 WeatherEmotionBadgeComponent(
                   emoticon: diaryData.emotion.emoticon,
                   emoticonIndex: diaryData.emoticonIndex,
                   weatherIcon:
                       "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
-                  color: Theme.of(context).colorScheme.darkTheme_00_700,
+                  color: Theme.of(context).colorScheme.surface_01,
                 )
               ],
             ),
@@ -64,7 +66,8 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                   ),
             Text(
               diaryData.diaryContent,
-              style: Theme.of(context).textTheme.bodyText1,
+              style: kBody1Style.copyWith(
+                  color: Theme.of(context).colorScheme.textBody),
             )
           ],
         ),

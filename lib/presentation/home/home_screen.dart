@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/assets/font/customIcons/my_flutter_app_icons.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
@@ -73,7 +75,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Text(
                           "일기는 하루에 한번만 작성 할 수 있어요.",
-                          style: Theme.of(context).textTheme.headline6!,
+                          style: kHeader6Style.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.textSubtitle),
                         ),
                       ),
                       actionContent: [
@@ -83,10 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Get.back();
                           },
                           backgroundColor: Theme.of(context).primaryColor,
-                          textStyle: Theme.of(context)
-                              .textTheme
-                              .headline4!
-                              .copyWith(color: kWhiteColor),
+                          textStyle: kHeader4Style.copyWith(color: kWhiteColor),
                         ),
                       ],
                     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
@@ -64,7 +66,10 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
                               ),
                               Text(
                                 "작성한 일기가 없어요",
-                                style: Theme.of(context).textTheme.headline5,
+                                style: kHeader5Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textTitle),
                               )
                             ],
                           ),
@@ -89,7 +94,10 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
                                 padding: EdgeInsets.only(top: 20.h, left: 20.w),
                                 child: Text(
                                   "$dateTime번째 주",
-                                  style: Theme.of(context).textTheme.subtitle1,
+                                  style: kSubtitle1Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
                                 ),
                               ),
                             Padding(

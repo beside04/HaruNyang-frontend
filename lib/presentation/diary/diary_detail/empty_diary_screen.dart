@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:get/get.dart';
@@ -21,7 +23,8 @@ class EmptyDiaryScreen extends StatelessWidget {
         elevation: 0,
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
       ),
       body: SafeArea(
@@ -45,7 +48,8 @@ class EmptyDiaryScreen extends StatelessWidget {
                   ),
                   Text(
                     "작성한 일기가 없어요",
-                    style: Theme.of(context).textTheme.headline5,
+                    style: kHeader5Style.copyWith(
+                        color: Theme.of(context).colorScheme.textTitle),
                   )
                 ],
               ),

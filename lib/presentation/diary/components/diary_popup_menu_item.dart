@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 
 PopupMenuItem diaryPopUpMenuItem(
   String title,
@@ -10,7 +12,8 @@ PopupMenuItem diaryPopUpMenuItem(
     child: Center(
       child: Text(
         value,
-        style: Theme.of(context).textTheme.headline6,
+        style: kHeader6Style.copyWith(
+            color: Theme.of(context).colorScheme.textTitle),
       ),
     ),
   );

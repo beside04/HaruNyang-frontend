@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -39,7 +41,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const OnBoardingStepper(
-                      blackNumber: 3,
+                      pointNumber: 3,
                     ),
                     Padding(
                       padding: kPrimarySidePadding,
@@ -51,14 +53,16 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                           ),
                           Text(
                             "어떤 일을",
-                            style: Theme.of(context).textTheme.headline2,
+                            style: kHeader2Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
                           Text(
                             "하고 계세요?",
-                            style: Theme.of(context).textTheme.headline2,
+                            style: kHeader2Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           ),
                           SizedBox(
                             height: 40.h,
