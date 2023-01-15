@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:get/get.dart';
 
@@ -18,7 +19,7 @@ class DialogComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.darkTheme_00_900,
+      backgroundColor: Theme.of(context).colorScheme.backgroundModal,
       insetPadding: EdgeInsets.symmetric(
         horizontal: 20.w,
       ),
@@ -32,7 +33,8 @@ class DialogComponent extends StatelessWidget {
       title: Center(
         child: Text(
           title.tr,
-          style: Theme.of(context).textTheme.headline3!,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
       ),
       content: Column(

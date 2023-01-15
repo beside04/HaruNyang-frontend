@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -11,9 +12,11 @@ import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
+import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
@@ -34,7 +37,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
       appBar: AppBar(
         title: Text(
           '내 정보 관리',
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
         leading: IconButton(
@@ -51,11 +55,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
           children: [
             Divider(
               thickness: 12.h,
-              color: Theme.of(context).colorScheme.darkTheme_100_700,
             ),
             ProfileButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.navigate_next,
+                color: Theme.of(context).colorScheme.iconSubColor,
               ),
               title: '닉네임 수정',
               onPressed: () {
@@ -83,7 +87,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "닉네임 변경",
-                              style: Theme.of(context).textTheme.headline4,
+                              style: kHeader4Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                           ),
                           Padding(
@@ -98,9 +104,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                         child: Container(),
                                       )
                                     : GestureDetector(
-                                        child: const Icon(
+                                        child: Icon(
                                           Icons.cancel,
-                                          // color: kGrayColor200,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .iconColor,
                                           size: 20,
                                         ),
                                         onTap: () => controller
@@ -148,10 +156,13 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 );
               },
             ),
+            Divider(
+              thickness: 1.h,
+            ),
             ProfileButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.navigate_next,
-                // color: kGrayColor250,
+                color: Theme.of(context).colorScheme.iconSubColor,
               ),
               title: '나이 수정',
               onPressed: () {
@@ -179,7 +190,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "날짜 변경",
-                              style: Theme.of(context).textTheme.headline4,
+                              style: kHeader4Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                           ),
                           Padding(
@@ -211,7 +224,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     : GestureDetector(
                                         child: const Icon(
                                           Icons.cancel,
-                                          // color: kGrayColor200,
+                                          color: kGrayColor200,
                                           size: 20,
                                         ),
                                         onTap: () => controller
@@ -258,10 +271,13 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 );
               },
             ),
+            Divider(
+              thickness: 1.h,
+            ),
             ProfileButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.navigate_next,
-                // color: kGrayColor250,
+                color: Theme.of(context).colorScheme.iconSubColor,
               ),
               title: '직업 수정',
               onPressed: () {
@@ -289,7 +305,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           padding: EdgeInsets.only(left: 24.0.w),
                           child: Text(
                             "직업 변경",
-                            style: Theme.of(context).textTheme.headline4,
+                            style: kHeader4Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           ),
                         ),
                         Padding(
@@ -350,12 +367,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
             ),
             Divider(
               thickness: 12.h,
-              color: Theme.of(context).colorScheme.darkTheme_100_700,
             ),
             ProfileButton(
-              icon: const Icon(
+              icon: Icon(
                 Icons.navigate_next,
-                // color: kGrayColor250,
+                color: Theme.of(context).colorScheme.iconSubColor,
               ),
               title: '로그아웃',
               onPressed: () async {

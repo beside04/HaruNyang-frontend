@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
+import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
@@ -15,30 +18,21 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    weekName = {};
-    String? swipeDirection;
     return Container(
       color: Theme.of(context).scaffoldBackgroundColor,
-      child: Listener(
-        onPointerMove: (event) {
-          swipeDirection = event.delta.dx < 0 ? 'right' : 'left';
+      child: SwipeDetector(
+        onSwipeLeft: () {
+          controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
+              .add(months: 1)
+              .dateTime);
         },
-        onPointerUp: (event) {
-          if (swipeDirection == null) {
-            return;
-          }
-          if (swipeDirection == 'left') {
-            controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
-                .subtract(months: 1)
-                .dateTime);
-          }
-          if (swipeDirection == 'right') {
-            controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
-                .add(months: 1)
-                .dateTime);
-          }
+        onSwipeRight: () {
+          controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
+              .subtract(months: 1)
+              .dateTime);
         },
         child: PageView.builder(
+          physics: const NeverScrollableScrollPhysics(),
           controller: PageController(initialPage: controller.currentPageCount),
           itemBuilder: (context, i) {
             return ListView.builder(
@@ -72,7 +66,10 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
                               ),
                               Text(
                                 "작성한 일기가 없어요",
-                                style: Theme.of(context).textTheme.headline5,
+                                style: kHeader5Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textTitle),
                               )
                             ],
                           ),
@@ -97,7 +94,10 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
                                 padding: EdgeInsets.only(top: 20.h, left: 20.w),
                                 child: Text(
                                   "$dateTime번째 주",
-                                  style: Theme.of(context).textTheme.subtitle1,
+                                  style: kSubtitle1Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
                                 ),
                               ),
                             Padding(

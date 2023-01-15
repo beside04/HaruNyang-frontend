@@ -29,7 +29,7 @@ class NoticeButton extends StatelessWidget {
           color: Colors.transparent,
           border: Border(
             bottom: BorderSide(
-              color: Theme.of(context).colorScheme.darkTheme_200_900,
+              color: Theme.of(context).colorScheme.border,
               width: 1.0,
             ),
           ),
@@ -46,7 +46,8 @@ class NoticeButton extends StatelessWidget {
                     children: [
                       Text(
                         title,
-                        style: Theme.of(context).textTheme.headline6,
+                        style: kHeader6Style.copyWith(
+                            color: Theme.of(context).colorScheme.textBody),
                         overflow: TextOverflow.ellipsis,
                       ),
                       SizedBox(width: 12.0.w),
@@ -54,14 +55,15 @@ class NoticeButton extends StatelessWidget {
                           ? Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.w),
-                                color: kPrimary2Color,
+                                color: kOrange200Color,
                               ),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(
                                     vertical: 4.0.h, horizontal: 6.0.w),
                                 child: Text(
                                   '중요',
-                                  style: kCaption1WhiteStyle,
+                                  style: kCaption1Style.copyWith(
+                                      color: kWhiteColor),
                                 ),
                               ),
                             )
@@ -70,13 +72,14 @@ class NoticeButton extends StatelessWidget {
                   ),
                   Text(
                     DateFormat('yyyy.MM.dd').format(date),
-                    style: kBody2Gray400Style,
+                    style: kBody2Style.copyWith(
+                        color: Theme.of(context).colorScheme.textLowEmphasis),
                   ),
                 ],
               ),
-              const Icon(
+              Icon(
                 Icons.navigate_next,
-                color: kGrayColor250,
+                color: Theme.of(context).colorScheme.iconSubColor,
               ),
             ],
           ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 
 class WeatherIconButton extends StatelessWidget {
@@ -36,11 +37,11 @@ class WeatherIconButton extends StatelessWidget {
                     border: Border.all(
                       width: selected ? 2.w : 0.5.w,
                       color: selected
-                          ? kPrimaryColor
-                          : Theme.of(context).colorScheme.darkTheme_100_700,
+                          ? kOrange300Color
+                          : Theme.of(context).colorScheme.outlineChip,
                     ),
                     shape: BoxShape.circle,
-                    color: Theme.of(context).colorScheme.darkTheme_100_700,
+                    color: Theme.of(context).colorScheme.surfaceModal,
                   ),
                   child: SvgPicture.asset(
                     icon,
@@ -54,7 +55,8 @@ class WeatherIconButton extends StatelessWidget {
               padding: EdgeInsets.only(top: 8.0.h),
               child: Text(
                 name,
-                style: Theme.of(context).textTheme.bodyText1,
+                style: kBody1Style.copyWith(
+                    color: Theme.of(context).colorScheme.textCaption),
               ),
             ),
           ],

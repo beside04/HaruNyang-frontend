@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/size_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -36,7 +38,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const OnBoardingStepper(
-                      blackNumber: 4,
+                      pointNumber: 4,
                     ),
                     Padding(
                       padding: kPrimarySidePadding,
@@ -48,14 +50,16 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                           ),
                           Text(
                             "하루냥의",
-                            style: Theme.of(context).textTheme.headline2,
+                            style: kHeader2Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
                           Text(
                             "집사 등록이 완료되었어요!",
-                            style: Theme.of(context).textTheme.headline2,
+                            style: kHeader2Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           ),
                           SizedBox(
                             height: 158.h,

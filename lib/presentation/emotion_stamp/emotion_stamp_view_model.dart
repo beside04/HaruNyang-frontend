@@ -1,5 +1,6 @@
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -15,7 +16,7 @@ class EmotionStampViewModel extends GetxController {
     super.onInit();
 
     getMonthStartEndData();
-    getEmotionStampList();
+    Get.find<MainViewModel>().token == null ? null : getEmotionStampList();
   }
 
   final RxBool isCalendar = true.obs;

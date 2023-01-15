@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/size_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 
 class ProfileButton extends StatelessWidget {
   const ProfileButton({
@@ -24,7 +26,8 @@ class ProfileButton extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.headline5,
+              style: kHeader5Style.copyWith(
+                  color: Theme.of(context).colorScheme.textTitle),
             ),
             icon
           ],

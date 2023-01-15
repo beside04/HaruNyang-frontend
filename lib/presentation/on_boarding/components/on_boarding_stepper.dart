@@ -5,10 +5,10 @@ import 'package:frontend/config/theme/color_data.dart';
 class OnBoardingStepper extends StatelessWidget {
   const OnBoardingStepper({
     super.key,
-    required this.blackNumber,
+    required this.pointNumber,
   });
 
-  final int blackNumber;
+  final int pointNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 1 ? kPrimary2Color : kGrayColor200,
+              color: pointNumber >= 1 ? kOrange200Color : kGrayColor200,
             ),
           ),
         ),
@@ -26,7 +26,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 2 ? kPrimary2Color : kGrayColor200,
+              color: pointNumber >= 2 ? kOrange200Color : kGrayColor200,
             ),
           ),
         ),
@@ -34,7 +34,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 3 ? kPrimary2Color : kGrayColor200,
+              color: pointNumber >= 3 ? kOrange200Color : kGrayColor200,
             ),
           ),
         ),
@@ -42,7 +42,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: blackNumber >= 4 ? kPrimary2Color : kGrayColor200,
+              color: pointNumber >= 4 ? kOrange200Color : kGrayColor200,
             ),
           ),
         ),

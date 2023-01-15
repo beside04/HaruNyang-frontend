@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/size_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -27,15 +28,18 @@ class WithdrawDoneScreen extends StatelessWidget {
                 children: [
                   Text(
                     '그동안',
-                    style: Theme.of(context).textTheme.headline2,
+                    style: kHeader2Style.copyWith(
+                        color: Theme.of(context).colorScheme.textTitle),
                   ),
                   Text(
                     '하루냥을 이용해 주셔서',
-                    style: Theme.of(context).textTheme.headline2,
+                    style: kHeader2Style.copyWith(
+                        color: Theme.of(context).colorScheme.textTitle),
                   ),
                   Text(
                     '감사합니다.',
-                    style: Theme.of(context).textTheme.headline2,
+                    style: kHeader2Style.copyWith(
+                        color: Theme.of(context).colorScheme.textTitle),
                   ),
                   SizedBox(
                     height: 100.h,
@@ -51,7 +55,7 @@ class WithdrawDoneScreen extends StatelessWidget {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Theme.of(context).colorScheme.darkTheme_50_850,
+                        color: Theme.of(context).colorScheme.surface_01,
                       ),
                       width: double.infinity,
                       height: 104.h,
@@ -61,19 +65,21 @@ class WithdrawDoneScreen extends StatelessWidget {
                         children: [
                           Text(
                             '나를 성장 시킨건 이별이 아니었다.',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: kBody1Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           ),
                           Text(
                             '함께했던 시간이었지',
-                            style: Theme.of(context).textTheme.bodyText1,
+                            style: kBody1Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           ),
                           SizedBox(
                             height: 6.h,
                           ),
                           Text(
                             '하상욱',
-                            //style: kSubtitle1BlackStyle,
-                            style: Theme.of(context).textTheme.subtitle1,
+                            style: kSubtitle1Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
                           )
                         ],
                       ),

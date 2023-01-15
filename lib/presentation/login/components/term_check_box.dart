@@ -31,7 +31,7 @@ class TermCheckBox extends GetView<LoginTermsInformationViewModel> {
                 width: 20.w,
                 height: 20.h,
                 child: Checkbox(
-                  activeColor: kPrimaryColor,
+                  activeColor: kOrange300Color,
                   value: termValue,
                   onChanged: (value) {
                     if (value != null) onTap();

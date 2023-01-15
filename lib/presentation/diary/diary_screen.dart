@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/components/diary_app_bar.dart';
@@ -56,8 +58,9 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                   children: [
                     Obx(
                       () => Text(
-                        "${Get.find<MainViewModel>().state.value.nickname}님",
-                        style: Theme.of(context).textTheme.headline1,
+                        "${Get.find<MainViewModel>().state.value.nickname}님,",
+                        style: kHeader1Style.copyWith(
+                            color: Theme.of(context).colorScheme.textTitle),
                       ),
                     ),
                   ],
@@ -71,11 +74,17 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                         controller.isEmotionModal.value
                             ? Text(
                                 "오늘 날씨 어때요?",
-                                style: Theme.of(context).textTheme.headline1,
+                                style: kHeader1Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textTitle),
                               )
                             : Text(
                                 "오늘 기분 어때요?",
-                                style: Theme.of(context).textTheme.headline1,
+                                style: kHeader1Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textTitle),
                               ),
                       ],
                     ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,8 @@ class DiaryAppBar extends GetView<DiaryViewModel>
             : const Color(0xffffac60),
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader4Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         leading: controller.isEmotionModal.value
             ? null

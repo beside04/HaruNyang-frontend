@@ -71,7 +71,7 @@ class WriteDiaryViewModel extends GetxController {
         uiSettings: [
           AndroidUiSettings(
             toolbarTitle: 'Cropper',
-            toolbarColor: kPrimary2Color,
+            toolbarColor: kOrange200Color,
             toolbarWidgetColor: kWhiteColor,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,

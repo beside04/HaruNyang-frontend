@@ -23,10 +23,11 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: false,
+        centerTitle: true,
         title: Text(
           '회원 탈퇴',
-          style: Theme.of(context).textTheme.headline2,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
         leading: IconButton(
@@ -55,7 +56,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                     width: 120.w,
                     height: 120.h,
                     child: CircleAvatar(
-                      backgroundColor: kPrimary2Color,
+                      backgroundColor: kOrange200Color,
                       child: SvgPicture.asset(
                         "lib/config/assets/images/character/sad1.svg",
                         width: 100.w,
@@ -74,7 +75,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   child: Center(
                     child: Text(
                       '탈퇴 전 확인하세요!',
-                      style: Theme.of(context).textTheme.headline2,
+                      style: kHeader2Style.copyWith(
+                          color: Theme.of(context).colorScheme.textTitle),
                     ),
                   ),
                 ),
@@ -85,12 +87,12 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   padding: kPrimaryPadding,
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.darkTheme_50_850,
+                    color: Theme.of(context).colorScheme.surface_01,
                   ),
                   child: Text(
                     '가입 시 수집한 개인정보(이메일)를 포함하여 작성한\n 일기, 기분, 감정캘린더, 발급받은 감정리포트가\n 영구적으로 삭제되며, 다시는 복구할 수 없습니다.',
-                    //style: kBody2Gray400Style,
-                    style: Theme.of(context).textTheme.bodyText1,
+                    style: kBody2Style.copyWith(
+                        color: Theme.of(context).colorScheme.iconSubColor),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -110,7 +112,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                           width: 20.w,
                           height: 20.h,
                           child: Checkbox(
-                            activeColor: kPrimaryColor,
+                            activeColor: kOrange300Color,
                             value: controller.state.value.isAgreeWithdrawTerms,
                             onChanged: (value) {
                               if (value != null) {
@@ -124,7 +126,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                         padding: EdgeInsets.all(8.0.w),
                         child: Text(
                           '안내사항을 확인하였으며 이에 동의합니다.',
-                          style: Theme.of(context).textTheme.bodyText1,
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textBody),
                         ),
                       ),
                     ],
@@ -141,7 +144,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                     style: ElevatedButton.styleFrom(
                       disabledBackgroundColor:
                           Theme.of(context).unselectedWidgetColor,
-                      backgroundColor: kPrimaryColor,
+                      backgroundColor: kOrange300Color,
                       minimumSize: const Size(double.infinity, 52),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(60),
@@ -160,8 +163,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         horizontal: 30.0),
                                     child: Text(
                                       "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
-                                      style:
-                                          Theme.of(context).textTheme.bodyText1,
+                                      style: kHeader6Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textSubtitle),
                                     ),
                                   ),
                                   actionContent: [
@@ -173,10 +178,11 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                       },
                                       backgroundColor: Theme.of(context)
                                           .colorScheme
-                                          .darkTheme_100_650,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .headline4!,
+                                          .background,
+                                      textStyle: kHeader4Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textSubtitle),
                                     ),
                                     SizedBox(
                                       width: 12.w,
@@ -195,8 +201,12 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                           Get.snackbar('알림', '회원 탈퇴에 실패했습니다.');
                                         }
                                       },
-                                      backgroundColor: kPrimary2Color,
-                                      textStyle: kHeader4WhiteStyle,
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .primaryColor,
+                                      textStyle: kHeader4Style.copyWith(
+                                        color: kWhiteColor,
+                                      ),
                                     ),
                                   ],
                                 );
@@ -206,7 +216,9 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                         : null,
                     child: Text(
                       '탈퇴하기',
-                      style: kHeader6WhiteStyle,
+                      style: kHeader6Style.copyWith(
+                        color: kWhiteColor,
+                      ),
                     ),
                   ),
                 ),

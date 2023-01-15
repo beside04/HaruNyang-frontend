@@ -12,6 +12,7 @@ import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
 import 'package:frontend/presentation/diary/components/diary_loading_widget.dart';
+import 'package:frontend/presentation/diary/components/diary_popup_menu_item.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -47,167 +48,140 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
         elevation: 0,
         centerTitle: true,
         actions: [
-          IconButton(
-            onPressed: () {
-              Get.bottomSheet(
-                ClipRRect(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.w),
-                    topRight: Radius.circular(16.w),
-                  ),
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        top: 40.h, right: 16.w, left: 16.w, bottom: 16.h),
-                    height: 200.h,
-                    color: Theme.of(context).colorScheme.darkTheme_00_900,
-                    child: Column(
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            if (controller.diary.value != null) {
-                              Get.back();
-                              Get.to(
-                                () => Obx(
-                                  () => WriteDiaryScreen(
-                                    date: date,
-                                    weather: Weather.values[0],
-                                    emotion: controller.diary.value!.emotion,
-                                    emoticonIndex:
-                                        controller.diary.value!.emoticonIndex,
-                                    diaryData: controller.diary.value!,
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          child: Container(
-                            height: 52.h,
-                            width: double.infinity,
-                            padding: EdgeInsets.all(15.w),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(60.0.w),
-                              border: Border.all(
-                                width: 1,
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "일기 수정",
-                                style: Theme.of(context).textTheme.headline5,
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 16,
-                        ),
-                        InkWell(
-                          onTap: () async {
-                            Get.back();
-                            showDialog(
-                              barrierDismissible: true,
-                              context: context,
-                              builder: (ctx) {
-                                return DialogComponent(
-                                  title: "삭제 하실래요?",
-                                  content: Text(
-                                    "삭제 후 일기를 복원 할 수 없어요",
-                                    style: kHeader6Gray600Style,
-                                  ),
-                                  actionContent: [
-                                    DialogButton(
-                                      title: "아니요",
-                                      onTap: () {
-                                        Get.back();
-                                      },
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .darkTheme_100_650,
-                                      textStyle: Theme.of(context)
-                                          .textTheme
-                                          .headline4!,
-                                    ),
-                                    SizedBox(
-                                      width: 12.w,
-                                    ),
-                                    DialogButton(
-                                      title: "예",
-                                      onTap: () async {
-                                        Get.back();
-                                        await controller.deleteDiary();
-                                        showDialog(
-                                          barrierDismissible: true,
-                                          context: context,
-                                          builder: (ctx) {
-                                            return DialogComponent(
-                                              title: "삭제 완료",
-                                              content: Text(
-                                                "일기를 삭제했어요.",
-                                                style: kHeader6Gray600Style,
-                                              ),
-                                              actionContent: [
-                                                DialogButton(
-                                                  title: "확인",
-                                                  onTap: () {
-                                                    Get.offAll(
-                                                      () => const HomeScreen(),
-                                                      binding: BindingsBuilder(
-                                                        getHomeViewModelBinding,
-                                                      ),
-                                                    );
-                                                  },
-                                                  backgroundColor:
-                                                      kPrimary2Color,
-                                                  textStyle: kHeader4WhiteStyle,
-                                                ),
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      backgroundColor: kPrimary2Color,
-                                      textStyle: kHeader4WhiteStyle,
-                                    ),
-                                  ],
-                                );
-                              },
-                            );
-                          },
-                          child: Container(
-                            height: 52.h,
-                            width: double.infinity,
-                            padding: EdgeInsets.all(15.w),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(60.0.w),
-                              border: Border.all(
-                                width: 1,
-                                color: kPrimaryColor,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                "일기 삭제",
-                                style: Theme.of(context).textTheme.headline5,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+          Theme(
+            data: Theme.of(context).copyWith(
+              dividerTheme: DividerThemeData(
+                color: Theme.of(context).colorScheme.border,
+              ),
+            ),
+            child: PopupMenuButton(
+              onSelected: (id) {
+                if (id == 'edit') {
+                  Get.to(
+                    () => WriteDiaryScreen(
+                      date: date,
+                      weather: Weather.values[0],
+                      emotion: controller.diary.value!.emotion,
+                      emoticonIndex: controller.diary.value!.emoticonIndex,
+                      diaryData: controller.diary.value!,
                     ),
-                  ),
+                  );
+                }
+                if (id == 'delete') {
+                  showDialog(
+                    barrierDismissible: true,
+                    context: context,
+                    builder: (ctx) {
+                      return DialogComponent(
+                        title: "삭제 하실래요?",
+                        content: Text(
+                          "삭제 후 일기를 복원 할 수 없어요",
+                          style: kHeader6Style.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.textSubtitle),
+                        ),
+                        actionContent: [
+                          DialogButton(
+                            title: "아니요",
+                            onTap: () {
+                              Get.back();
+                            },
+                            backgroundColor:
+                                Theme.of(context).colorScheme.secondaryColor,
+                            textStyle: kHeader4Style.copyWith(
+                                color:
+                                    Theme.of(context).colorScheme.textSubtitle),
+                          ),
+                          SizedBox(
+                            width: 12.w,
+                          ),
+                          DialogButton(
+                            title: "예",
+                            onTap: () async {
+                              Get.back();
+                              await controller.deleteDiary();
+                              showDialog(
+                                barrierDismissible: true,
+                                context: context,
+                                builder: (ctx) {
+                                  return DialogComponent(
+                                    title: "삭제 완료",
+                                    content: Text(
+                                      "일기를 삭제했어요.",
+                                      style: kHeader6Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textSubtitle),
+                                    ),
+                                    actionContent: [
+                                      DialogButton(
+                                        title: "확인",
+                                        onTap: () {
+                                          Get.offAll(
+                                            () => const HomeScreen(),
+                                            binding: BindingsBuilder(
+                                              getHomeViewModelBinding,
+                                            ),
+                                          );
+                                        },
+                                        backgroundColor: kOrange200Color,
+                                        textStyle: kHeader4Style.copyWith(
+                                            color: kWhiteColor),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            backgroundColor: kOrange200Color,
+                            textStyle:
+                                kHeader4Style.copyWith(color: kWhiteColor),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              offset: Offset(0.0, AppBar().preferredSize.height),
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(16.0),
+                  bottomRight: Radius.circular(16.0),
+                  topLeft: Radius.circular(16.0),
+                  topRight: Radius.circular(16.0),
                 ),
-              );
-            },
-            icon: Icon(
-              Icons.more_vert,
-              size: 24.w,
+              ),
+              itemBuilder: (context) {
+                final list = <PopupMenuEntry>[];
+                list.add(
+                  diaryPopUpMenuItem(
+                    'edit',
+                    '일기 수정',
+                    context,
+                  ),
+                );
+                list.add(
+                  const PopupMenuDivider(
+                    height: 10,
+                  ),
+                );
+                list.add(
+                  diaryPopUpMenuItem(
+                    'delete',
+                    '일기 삭제',
+                    context,
+                  ),
+                );
+                return list;
+              },
             ),
           ),
         ],
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: Theme.of(context).textTheme.headline3,
+          style: kHeader3Style.copyWith(
+              color: Theme.of(context).colorScheme.textTitle),
         ),
         leading: IconButton(
           onPressed: () {
@@ -238,7 +212,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                         emoticonIndex: diaryData.emoticonIndex,
                         weatherIcon:
                             "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
-                        color: Theme.of(context).colorScheme.darkTheme_100_700,
+                        color: Theme.of(context).colorScheme.surface_01,
                       ),
                       SizedBox(
                         height: 12.h,
@@ -261,20 +235,21 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                           : Container(),
                       Text(
                         diaryData.diaryContent,
-                        style: Theme.of(context).textTheme.bodyText1,
+                        style: kBody1Style.copyWith(
+                            color: Theme.of(context).colorScheme.textBody),
                       )
                     ],
                   ),
                 ),
                 Divider(
                   thickness: 8.h,
-                  color: Theme.of(context).colorScheme.darkTheme_100_850,
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 25.w, top: 20.h),
                   child: Text(
                     "하루냥의 명언",
-                    style: Theme.of(context).textTheme.headline3,
+                    style: kHeader4Style.copyWith(
+                        color: Theme.of(context).colorScheme.textTitle),
                   ),
                 ),
                 Obx(
@@ -308,9 +283,14 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                   child: Container(
                                     margin: EdgeInsets.only(bottom: 12.h),
                                     decoration: BoxDecoration(
-                                      color: kWhiteColor,
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(16.w),
+                                      ),
+                                      border: Border.all(
+                                        width: 1,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .borderModal,
                                       ),
                                       boxShadow: [
                                         BoxShadow(
@@ -322,7 +302,9 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                     ),
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        color: kWhiteColor,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .surface_01,
                                         borderRadius:
                                             BorderRadius.circular(16.0),
                                       ),
@@ -348,8 +330,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                       ),
                                                       Text(
                                                         "하루냥",
-                                                        style:
-                                                            kHeader4BlackStyle,
+                                                        style: kHeader4Style
+                                                            .copyWith(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .textTitle),
                                                       )
                                                     ],
                                                   ),
@@ -368,7 +354,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                             child: const Icon(
                                                               Icons.bookmark,
                                                               color:
-                                                                  kPrimaryColor,
+                                                                  kOrange300Color,
                                                             ),
                                                           )
                                                         : GestureDetector(
@@ -388,8 +374,25 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                 height: 12.h,
                                               ),
                                               Text(
-                                                "${controller.wiseSayingList[index].message} \n- ${controller.wiseSayingList[index].author}",
-                                                style: kBody1BlackStyle,
+                                                controller.wiseSayingList[index]
+                                                    .message,
+                                                style: kBody1Style.copyWith(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .textBody),
+                                              ),
+                                              Align(
+                                                alignment:
+                                                    Alignment.centerRight,
+                                                child: Text(
+                                                  controller
+                                                      .wiseSayingList[index]
+                                                      .author,
+                                                  style: kBody2Style.copyWith(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .textSubtitle),
+                                                ),
                                               )
                                             ],
                                           ),
