@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -12,11 +13,9 @@ import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
-import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
-import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
@@ -57,9 +56,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               thickness: 12.h,
             ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '닉네임 수정',
               onPressed: () {
@@ -158,11 +156,12 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
             ),
             Divider(
               thickness: 1.h,
+              height: 1.h,
+              color: Theme.of(context).colorScheme.border,
             ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '나이 수정',
               onPressed: () {
@@ -273,11 +272,12 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
             ),
             Divider(
               thickness: 1.h,
+              height: 1.h,
+              color: Theme.of(context).colorScheme.border,
             ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '직업 수정',
               onPressed: () {
@@ -369,9 +369,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               thickness: 12.h,
             ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '로그아웃',
               onPressed: () async {

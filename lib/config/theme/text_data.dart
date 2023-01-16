@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/theme_data.dart';
 
 const pretendard = 'pretendard';
 

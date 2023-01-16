@@ -8,7 +8,7 @@ ThemeData lightMode(context) => ThemeData(
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor400,
       dividerTheme: const DividerThemeData(
-        color: kGrayColor100,
+        color: kBeigeColor200,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         unselectedItemColor: kGrayColor400,
@@ -48,7 +48,7 @@ ThemeData darkMode(context) => ThemeData(
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor600,
       dividerTheme: const DividerThemeData(
-        color: kGrayColor850,
+        color: kGrayColor900,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         unselectedItemColor: kGrayColor600,
