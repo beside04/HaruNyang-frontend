@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
@@ -77,9 +78,8 @@ class NoticeButton extends StatelessWidget {
                   ),
                 ],
               ),
-              Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
             ],
           ),

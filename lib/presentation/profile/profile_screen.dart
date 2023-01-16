@@ -13,7 +13,6 @@ import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
-import 'package:frontend/presentation/profile/terms/privacy_policy_screen.dart';
 import 'package:frontend/presentation/profile/terms/terms_of_service_screen.dart';
 import 'package:get/get.dart';
 
@@ -129,10 +128,17 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 ],
               ),
             ),
+            Padding(
+              padding: kPrimarySidePadding,
+              child: Divider(
+                thickness: 1.h,
+                height: 1.h,
+                color: Theme.of(context).colorScheme.border,
+              ),
+            ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '내 정보 관리',
               onPressed: () {
@@ -152,14 +158,18 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               thickness: 12.h,
             ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '북마크 목록',
               onPressed: () {
                 Get.to(() => const BookMarkScreen());
               },
+            ),
+            Divider(
+              thickness: 1.h,
+              height: 1.h,
+              color: Theme.of(context).colorScheme.border,
             ),
             Obx(
               () => ProfileButton(
@@ -178,6 +188,11 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 title: '푸시 메세지 설정',
                 onPressed: null,
               ),
+            ),
+            Divider(
+              thickness: 1.h,
+              height: 1.h,
+              color: Theme.of(context).colorScheme.border,
             ),
             Obx(
               () => ProfileButton(
@@ -215,9 +230,8 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               thickness: 12.h,
             ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '공지사항',
               onPressed: () {
@@ -225,14 +239,15 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               },
             ),
             Divider(
-              thickness: 12.h,
+              thickness: 1.h,
+              height: 1.h,
+              color: Theme.of(context).colorScheme.border,
             ),
             ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
-              title: '서비스 이용약관',
+              title: '이용약관',
               onPressed: () {
                 Get.to(
                   () => const TermsOfServiceScreen(),
@@ -240,18 +255,10 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 );
               },
             ),
-            ProfileButton(
-              icon: Icon(
-                Icons.navigate_next,
-                color: Theme.of(context).colorScheme.iconSubColor,
-              ),
-              title: '개인정보 취급방침',
-              onPressed: () {
-                Get.to(
-                  () => const PrivacyPolicyScreen(),
-                  transition: Transition.downToUp,
-                );
-              },
+            Divider(
+              thickness: 1.h,
+              height: 1.h,
+              color: Theme.of(context).colorScheme.border,
             ),
           ],
         ),
