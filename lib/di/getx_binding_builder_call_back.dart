@@ -50,6 +50,7 @@ import 'package:frontend/presentation/profile/book_mark/book_mark_view_model.dar
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
+import 'package:frontend/presentation/profile/terms/marketing_consent_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -285,4 +286,8 @@ void getBookMarkViewModelBinding() {
       bookmarkUseCase: bookmarkUseCase,
     ),
   );
+}
+
+void getMarketingConsentViewModelBinding() {
+  Get.put(MarketingConsentViewModel());
 }

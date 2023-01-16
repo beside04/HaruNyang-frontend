@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:get/get.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {
+  final bool isProfileScreen;
+
   const TermsOfServiceScreen({
-    super.key,
-  });
+    Key? key,
+    required this.isProfileScreen,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,17 +23,30 @@ class TermsOfServiceScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
+        leading: isProfileScreen
+            ? IconButton(
+                onPressed: () {
+                  Get.back();
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20.w,
+                ),
+              )
+            : null,
         actions: [
-          IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: const Icon(
-              Icons.close,
-            ),
-          )
+          isProfileScreen
+              ? Container()
+              : IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: const Icon(
+                    Icons.close,
+                  ),
+                )
         ],
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: isProfileScreen ? true : false,
       ),
       body: SafeArea(
         child: Scrollbar(

@@ -13,7 +13,7 @@ import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
-import 'package:frontend/presentation/profile/terms/terms_of_service_screen.dart';
+import 'package:frontend/presentation/profile/terms/terms_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreen extends GetView<ProfileViewModel> {
@@ -174,6 +174,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
             Obx(
               () => ProfileButton(
                 icon: FlutterSwitch(
+                  padding: 2,
                   width: 52.0.w,
                   height: 32.0.h,
                   activeColor: Theme.of(context).primaryColor,
@@ -197,6 +198,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
             Obx(
               () => ProfileButton(
                 icon: FlutterSwitch(
+                  padding: 2,
                   width: 52.0.w,
                   height: 32.0.h,
                   activeColor: Theme.of(context).primaryColor,
@@ -250,8 +252,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               title: '이용약관',
               onPressed: () {
                 Get.to(
-                  () => const TermsOfServiceScreen(),
-                  transition: Transition.downToUp,
+                  () => const TermsScreen(),
                 );
               },
             ),
