@@ -92,11 +92,12 @@ class DiaryDetailViewModel extends GetxController {
   Future<void> getWiseSayingList(int emoticonId, String content) async {
     final result = await getWiseSayingUseCase(emoticonId, content);
 
-    result.when(
+    await result.when(
       success: (result) async {
-        wiseSayingList.value = List.from(result);
         if (wiseSayingList.isEmpty) {
           await getRandomWiseSayingList(emoticonId);
+        } else {
+          wiseSayingList.value = List.from(result);
         }
       },
       error: (message) {
