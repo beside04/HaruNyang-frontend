@@ -47,12 +47,12 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                       border: Border.all(width: 0.5, color: Colors.transparent),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(10.0.w),
+                      padding: EdgeInsets.all(6.w),
                       child: Center(
                         child: SvgPicture.asset(
-                          "lib/config/assets/images/character/onboarding1.svg",
-                          width: 40.w,
-                          height: 40.h,
+                          "lib/config/assets/images/character/character1.svg",
+                          width: 48.w,
+                          height: 48.h,
                         ),
                       ),
                     ),

@@ -56,7 +56,7 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
                               ),
                               Center(
                                 child: SvgPicture.asset(
-                                  "lib/config/assets/images/character/onboarding2.svg",
+                                  "lib/config/assets/images/character/character6.svg",
                                   width: 240.w,
                                   height: 240.h,
                                 ),

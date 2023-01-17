@@ -20,7 +20,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 0.5,
         actions: [
           Obx(
             () => IconButton(

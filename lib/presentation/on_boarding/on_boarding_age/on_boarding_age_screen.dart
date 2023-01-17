@@ -109,7 +109,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           ),
                           Center(
                             child: SvgPicture.asset(
-                              "lib/config/assets/images/character/weather2.svg",
+                              "lib/config/assets/images/character/character4.svg",
                               width: 300.w,
                               height: 300.h,
                             ),

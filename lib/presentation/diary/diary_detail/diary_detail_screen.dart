@@ -321,12 +321,9 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                   Row(
                                                     children: [
                                                       SvgPicture.asset(
-                                                        "lib/config/assets/images/character/defalut1.svg",
-                                                        width: 24.w,
-                                                        height: 24.h,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 7.w,
+                                                        "lib/config/assets/images/character/character11.svg",
+                                                        width: 28.w,
+                                                        height: 28.h,
                                                       ),
                                                       Text(
                                                         "하루냥",
