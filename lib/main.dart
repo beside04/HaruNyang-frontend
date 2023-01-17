@@ -27,6 +27,7 @@ void main() async {
   KakaoSdk.init(nativeAppKey: appkey);
   getMainBinding();
   await Get.find<MainViewModel>().getAccessToken();
+  getEmotionStampBinding();
   await Get.find<MainViewModel>().getIsDarkMode();
   await Get.find<MainViewModel>().getIsPushMessage();
 

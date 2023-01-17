@@ -184,6 +184,9 @@ void getMainBinding() {
     pushMessagePermissionUseCase: pushMessagePermissionUseCase,
   ));
   Get.put(NotificationController());
+}
+
+void getEmotionStampBinding() {
   Get.put(EmotionStampViewModel(
     getEmotionStampUseCase: getEmotionStampUseCase,
   ));
@@ -257,12 +260,6 @@ void getProfileBinding() {
   Get.put(
     profileViewModel,
   );
-}
-
-EmotionStampViewModel getEmotionStampBinding() {
-  return Get.put(EmotionStampViewModel(
-    getEmotionStampUseCase: getEmotionStampUseCase,
-  ));
 }
 
 HomeViewModel getHomeViewModelBinding() {
