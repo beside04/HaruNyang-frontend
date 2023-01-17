@@ -12,6 +12,7 @@ import 'package:frontend/data/repository/emoticon/emoticon_repository_impl.dart'
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
+import 'package:frontend/data/repository/push_messge_permission/dark_mode_repository_impl.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
@@ -29,6 +30,7 @@ import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
+import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
@@ -50,12 +52,13 @@ import 'package:frontend/presentation/profile/book_mark/book_mark_view_model.dar
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
-import 'package:frontend/presentation/profile/terms/marketing_consent_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
 final DarkModeRepositoryImpl darkModeRepositoryImpl = DarkModeRepositoryImpl();
+final PushMessagePermissionRepositoryImpl pushMessagePermissionRepositoryImpl =
+    PushMessagePermissionRepositoryImpl();
 
 final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: tokenRepositoryImpl,
@@ -63,6 +66,11 @@ final TokenUseCase tokenUseCase = TokenUseCase(
 
 final DarkModeUseCase darkModeUseCase = DarkModeUseCase(
   darkModeRepository: darkModeRepositoryImpl,
+);
+
+final PushMessagePermissionUseCase pushMessagePermissionUseCase =
+    PushMessagePermissionUseCase(
+  pushMessagePermissionRepository: pushMessagePermissionRepositoryImpl,
 );
 
 final RefreshInterceptor interceptor = RefreshInterceptor(
@@ -114,6 +122,7 @@ final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
   tokenRepository: tokenRepositoryImpl,
   onBoardingUseCase: onBoardingUseCase,
   darkModeUseCase: darkModeUseCase,
+  pushMessagePermissionUseCase: pushMessagePermissionUseCase,
 );
 
 final AppleLoginUseCase appleLoginUseCase = AppleLoginUseCase(
@@ -122,6 +131,7 @@ final AppleLoginUseCase appleLoginUseCase = AppleLoginUseCase(
   tokenRepository: tokenRepositoryImpl,
   onBoardingUseCase: onBoardingUseCase,
   darkModeUseCase: darkModeUseCase,
+  pushMessagePermissionUseCase: pushMessagePermissionUseCase,
 );
 
 final OnBoardingUseCase onBoardingUseCase = OnBoardingUseCase(
@@ -171,6 +181,7 @@ void getMainBinding() {
     tokenUseCase: tokenUseCase,
     darkModeUseCase: darkModeUseCase,
     onBoardingUseCase: onBoardingUseCase,
+    pushMessagePermissionUseCase: pushMessagePermissionUseCase,
   ));
   Get.put(NotificationController());
   Get.put(EmotionStampViewModel(
@@ -286,8 +297,4 @@ void getBookMarkViewModelBinding() {
       bookmarkUseCase: bookmarkUseCase,
     ),
   );
-}
-
-void getMarketingConsentViewModelBinding() {
-  Get.put(MarketingConsentViewModel());
 }

@@ -1,12 +1,14 @@
 import 'package:enum_to_string/enum_to_string.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/DatePickerTheme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
@@ -204,7 +206,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                   context,
                                   showTitleActions: true,
                                   minTime: DateTime(1930, 1, 1),
-                                  maxTime: DateTime(2005, 12, 30),
+                                  maxTime: DateTime(2022, 12, 31),
                                   onConfirm: (date) {
                                     controller.getBirthDateFormat(date);
                                   },
@@ -212,6 +214,16 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     Get.find<MainViewModel>().state.value.age!,
                                   ),
                                   locale: LocaleType.ko,
+                                  theme: DatePickerTheme(
+                                    itemStyle: kSubtitle1Style.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .textBody),
+                                    backgroundColor: Theme.of(context)
+                                        .colorScheme
+                                        .backgroundModal,
+                                    title: "나이 수정",
+                                  ),
                                 );
                               },
                               suffixIcon: Obx(

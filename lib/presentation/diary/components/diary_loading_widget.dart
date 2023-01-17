@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/core/utils/delay_tween_animation.dart';
+import 'package:frontend/core/utils/library/delay_tween_animation.dart';
 
 class DiaryLoadingWidget extends StatefulWidget {
   const DiaryLoadingWidget({

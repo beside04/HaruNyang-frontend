@@ -16,6 +16,8 @@ import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:frontend/presentation/profile/terms/terms_screen.dart';
 import 'package:get/get.dart';
 
+import 'push_message/push_message_screen.dart';
+
 class ProfileScreen extends GetView<ProfileViewModel> {
   const ProfileScreen({Key? key}) : super(key: key);
 
@@ -171,24 +173,14 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               height: 1.h,
               color: Theme.of(context).colorScheme.border,
             ),
-            Obx(
-              () => ProfileButton(
-                icon: FlutterSwitch(
-                  padding: 2,
-                  width: 52.0.w,
-                  height: 32.0.h,
-                  activeColor: Theme.of(context).primaryColor,
-                  inactiveColor: kGrayColor250,
-                  toggleSize: 28.0.w,
-                  value: mainViewController.pushMessageValue.value,
-                  borderRadius: 50.0.w,
-                  onToggle: (val) async {
-                    mainViewController.togglePushMessageValue();
-                  },
-                ),
-                title: '푸시 메세지 설정',
-                onPressed: null,
+            ProfileButton(
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
+              title: '푸시 메세지 설정',
+              onPressed: () {
+                Get.to(() => const PushMessageScreen());
+              },
             ),
             Divider(
               thickness: 1.h,

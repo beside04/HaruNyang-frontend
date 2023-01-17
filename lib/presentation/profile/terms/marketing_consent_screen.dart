@@ -6,11 +6,11 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/profile/terms/marketing_consent_view_model.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:get/get.dart';
+import 'package:notification_permissions/notification_permissions.dart';
 
-class MarketingConsentScreen extends GetView<MarketingConsentViewModel> {
+class MarketingConsentScreen extends StatelessWidget {
   final bool isProfileScreen;
 
   const MarketingConsentScreen({
@@ -19,7 +19,8 @@ class MarketingConsentScreen extends GetView<MarketingConsentViewModel> {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    getMarketingConsentViewModelBinding();
+    final mainViewController = Get.find<MainViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -122,10 +123,22 @@ Copyright © 하루냥. All rights reserved.''',
                               activeColor: Theme.of(context).primaryColor,
                               inactiveColor: kGrayColor250,
                               toggleSize: 28.0.w,
-                              value: controller.isMarketingValue.value,
+                              value: mainViewController
+                                  .pushMessagePermission.value,
                               borderRadius: 50.0.w,
                               onToggle: (val) async {
-                                controller.toggleMarketingValue();
+                                Future<PermissionStatus> permissionStatus =
+                                    NotificationPermissions
+                                        .getNotificationPermissionStatus();
+                                if (await permissionStatus ==
+                                        PermissionStatus.denied ||
+                                    await permissionStatus ==
+                                        PermissionStatus.unknown) {
+                                  permissionStatus = NotificationPermissions
+                                      .requestNotificationPermissions();
+                                } else {
+                                  mainViewController.togglePushMessageValue();
+                                }
                               },
                             ),
                           ),

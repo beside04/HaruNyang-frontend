@@ -5,6 +5,7 @@ import 'package:frontend/domain/repository/social_login_repository/kakao_login_r
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
+import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -14,6 +15,7 @@ class KakaoLoginUseCase {
   final TokenRepository tokenRepository;
   final OnBoardingUseCase onBoardingUseCase;
   final DarkModeUseCase darkModeUseCase;
+  final PushMessagePermissionUseCase pushMessagePermissionUseCase;
 
   KakaoLoginUseCase({
     required this.socialLoginRepository,
@@ -21,6 +23,7 @@ class KakaoLoginUseCase {
     required this.tokenRepository,
     required this.onBoardingUseCase,
     required this.darkModeUseCase,
+    required this.pushMessagePermissionUseCase,
   });
 
   Future<SocialLoginResult> getKakaoSocialId() async {
@@ -88,6 +91,8 @@ class KakaoLoginUseCase {
   Future<UserIdResponse?> withdrawal() async {
     await tokenRepository.deleteAllToken();
     await darkModeUseCase.deleteDarkModeData();
+    await pushMessagePermissionUseCase.deletePushMessagePermissionData();
+
     onBoardingUseCase.clearMyInformation();
     return await socialLoginRepository.withdrawal();
   }

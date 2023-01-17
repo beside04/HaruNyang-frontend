@@ -28,6 +28,7 @@ void main() async {
   getMainBinding();
   await Get.find<MainViewModel>().getAccessToken();
   await Get.find<MainViewModel>().getIsDarkMode();
+  await Get.find<MainViewModel>().getIsPushMessage();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {
