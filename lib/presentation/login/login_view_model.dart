@@ -1,7 +1,6 @@
 import 'package:frontend/core/result.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/my_information.dart';
-import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -14,12 +13,10 @@ import 'package:get/get.dart';
 class LoginViewModel extends GetxController {
   final KakaoLoginUseCase kakaoLoginUseCase;
   final AppleLoginUseCase appleLoginUseCase;
-  final OnBoardingUseCase onBoardingUseCase;
 
   LoginViewModel({
     required this.kakaoLoginUseCase,
     required this.appleLoginUseCase,
-    required this.onBoardingUseCase,
   });
 
   final Rx<LoginState> _state = LoginState().obs;

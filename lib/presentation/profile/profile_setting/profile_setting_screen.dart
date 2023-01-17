@@ -8,7 +8,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/main_view_model.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
@@ -29,6 +29,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
   }) : super(key: key);
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+    final onBoardingController = Get.find<OnBoardingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -126,20 +127,13 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       if (key.saveAndValidate()) {
                                         FocusScope.of(context).unfocus();
 
-                                        await controller.putMyInformation(
+                                        await onBoardingController
+                                            .putMyInformation(
                                           nickname:
                                               controller.nicknameValue.value,
-                                          job: Get.find<MainViewModel>()
-                                              .state
-                                              .value
-                                              .job,
-                                          age: Get.find<MainViewModel>()
-                                              .state
-                                              .value
-                                              .age,
                                         );
 
-                                        await Get.find<MainViewModel>()
+                                        await onBoardingController
                                             .getMyInformation();
 
                                         Get.back();
@@ -209,7 +203,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     controller.getBirthDateFormat(date);
                                   },
                                   currentTime: DateTime.parse(
-                                    Get.find<MainViewModel>().state.value.age!,
+                                    onBoardingController.state.value.age,
                                   ),
                                   locale: LocaleType.ko,
                                 );
@@ -243,19 +237,12 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       if (key.saveAndValidate()) {
                                         FocusScope.of(context).unfocus();
 
-                                        await controller.putMyInformation(
-                                          nickname: Get.find<MainViewModel>()
-                                              .state
-                                              .value
-                                              .nickname,
-                                          job: Get.find<MainViewModel>()
-                                              .state
-                                              .value
-                                              .job,
+                                        await onBoardingController
+                                            .putMyInformation(
                                           age: controller.ageValue.value,
                                         );
 
-                                        await Get.find<MainViewModel>()
+                                        await onBoardingController
                                             .getMyInformation();
 
                                         Get.back();
@@ -282,7 +269,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               title: '직업 수정',
               onPressed: () {
                 controller.jobStatus.value = EnumToString.fromString(
-                    Job.values, "${Get.find<MainViewModel>().state.value.job}");
+                    Job.values, onBoardingController.state.value.job);
                 showModalBottomSheet(
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
@@ -340,19 +327,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             onTap: controller.jobStatus.value == null
                                 ? null
                                 : () async {
-                                    await controller.putMyInformation(
-                                      nickname: Get.find<MainViewModel>()
-                                          .state
-                                          .value
-                                          .nickname,
+                                    await onBoardingController.putMyInformation(
                                       job: controller.jobStatus.value!.name,
-                                      age: Get.find<MainViewModel>()
-                                          .state
-                                          .value
-                                          .age,
                                     );
 
-                                    await Get.find<MainViewModel>()
+                                    await onBoardingController
                                         .getMyInformation();
 
                                     Get.back();

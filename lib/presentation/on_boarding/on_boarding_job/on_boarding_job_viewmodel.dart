@@ -3,19 +3,5 @@ import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class OnBoardingJobViewModel extends GetxController {
-  final OnBoardingUseCase onBoardingUseCase;
-
-  OnBoardingJobViewModel({
-    required this.onBoardingUseCase,
-  });
-
-  Future<void> putMyInformation({
-    required nickname,
-    required job,
-    required age,
-  }) async {
-    onBoardingUseCase.putMyInformation(nickname: nickname, job: job, age: age);
-  }
-
   final Rx<Job?> jobStatus = Rx<Job?>(null);
 }

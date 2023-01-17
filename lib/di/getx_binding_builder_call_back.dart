@@ -111,16 +111,16 @@ final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
   socialLoginRepository: kakaoLoginImpl,
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
-  onBoardingUseCase: onBoardingUseCase,
   darkModeUseCase: darkModeUseCase,
+  onBoardingRepository: onBoardingImpl,
 );
 
 final AppleLoginUseCase appleLoginUseCase = AppleLoginUseCase(
   socialLoginRepository: appleLoginImpl,
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
-  onBoardingUseCase: onBoardingUseCase,
   darkModeUseCase: darkModeUseCase,
+  onBoardingRepository: onBoardingImpl,
 );
 
 final OnBoardingUseCase onBoardingUseCase = OnBoardingUseCase(
@@ -169,7 +169,6 @@ void getMainBinding() {
   Get.put(MainViewModel(
     tokenUseCase: tokenUseCase,
     darkModeUseCase: darkModeUseCase,
-    onBoardingUseCase: onBoardingUseCase,
   ));
   Get.put(NotificationController());
   Get.put(EmotionStampViewModel(
@@ -181,7 +180,6 @@ void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
     appleLoginUseCase: appleLoginUseCase,
-    onBoardingUseCase: onBoardingUseCase,
   ));
 }
 
@@ -228,9 +226,7 @@ void getLoginTermsInformationBinding() {
 }
 
 void getOnBoardingJobBinding() {
-  Get.put(OnBoardingJobViewModel(
-    onBoardingUseCase: onBoardingUseCase,
-  ));
+  Get.put(OnBoardingJobViewModel());
 }
 
 void getOnBoardingBirthBinding() {
@@ -274,7 +270,6 @@ void getProfileSettingViewModelBinding() {
     ProfileSettingViewModel(
       kakaoLoginUseCase: kakaoLoginUseCase,
       appleLoginUseCase: appleLoginUseCase,
-      onBoardingUseCase: onBoardingUseCase,
     ),
   );
 }

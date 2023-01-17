@@ -9,12 +9,10 @@ import 'package:intl/intl.dart';
 class ProfileSettingViewModel extends GetxController {
   final KakaoLoginUseCase kakaoLoginUseCase;
   final AppleLoginUseCase appleLoginUseCase;
-  final OnBoardingUseCase onBoardingUseCase;
 
   ProfileSettingViewModel({
     required this.kakaoLoginUseCase,
     required this.appleLoginUseCase,
-    required this.onBoardingUseCase,
   });
 
   final TextEditingController nicknameEditingController =
@@ -53,13 +51,5 @@ class ProfileSettingViewModel extends GetxController {
 
   Future<void> appleLogout() async {
     await appleLoginUseCase.logout();
-  }
-
-  Future<void> putMyInformation({
-    required nickname,
-    required job,
-    required age,
-  }) async {
-    onBoardingUseCase.putMyInformation(nickname: nickname, job: job, age: age);
   }
 }
