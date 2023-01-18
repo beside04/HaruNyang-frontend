@@ -3,6 +3,7 @@ import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
+import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:get/get.dart';
 import 'presentation/profile/profile_state.dart';
@@ -11,11 +12,13 @@ class MainViewModel extends GetxController {
   final TokenUseCase tokenUseCase;
   final OnBoardingUseCase onBoardingUseCase;
   final DarkModeUseCase darkModeUseCase;
+  final PushMessagePermissionUseCase pushMessagePermissionUseCase;
 
   MainViewModel({
     required this.tokenUseCase,
     required this.onBoardingUseCase,
     required this.darkModeUseCase,
+    required this.pushMessagePermissionUseCase,
   });
 
   final Rx<ProfileState> _state = ProfileState().obs;
@@ -24,7 +27,7 @@ class MainViewModel extends GetxController {
 
   String? token;
   RxBool isDarkMode = false.obs;
-  final pushMessageValue = true.obs;
+  final pushMessagePermission = false.obs;
 
   void toggleTheme() {
     if (isDarkMode.value) {
@@ -35,6 +38,16 @@ class MainViewModel extends GetxController {
       ThemeMode.dark;
       isDarkMode.value = true;
       darkModeUseCase.setDarkMode(true.toString());
+    }
+  }
+
+  togglePushMessageValue() {
+    if (pushMessagePermission.value) {
+      pushMessagePermission.value = false;
+      pushMessagePermissionUseCase.setPushMessagePermission(false.toString());
+    } else {
+      pushMessagePermission.value = true;
+      pushMessagePermissionUseCase.setPushMessagePermission(true.toString());
     }
   }
 
@@ -73,7 +86,8 @@ class MainViewModel extends GetxController {
     isDarkMode.value = (toBoolean(await darkModeUseCase.getIsDarkMode()));
   }
 
-  togglePushMessageValue() {
-    pushMessageValue.value = !pushMessageValue.value;
+  Future<void> getIsPushMessage() async {
+    pushMessagePermission.value = (toBoolean(
+        await pushMessagePermissionUseCase.getIsPushMessagePermission()));
   }
 }

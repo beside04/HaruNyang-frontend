@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/assets/font/customIcons/my_flutter_app_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
@@ -30,6 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final mainViewController = Get.find<MainViewModel>();
+
     return WillPopScope(
       onWillPop: () async {
         bool backResult = GlobalUtils.onBackPressed();
@@ -38,26 +41,59 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Obx(
         () => Scaffold(
           bottomNavigationBar: BottomNavigationBar(
-            items: const [
+            items: [
               BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.emotionStamp,
-                  size: 20,
-                ),
+                icon: controller.selectedIndex.value == 0
+                    ? mainViewController.isDarkMode.value
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/home/dark_mode/tap_emotion_stamp.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/home/light_mode/tap_emotion_stamp.svg",
+                          )
+                    : mainViewController.isDarkMode.value
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/home/dark_mode/emotion_stamp.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/home/light_mode/emotion_stamp.svg",
+                          ),
                 label: '감정캘린더',
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.pen,
-                  size: 20,
-                ),
+                icon: controller.selectedIndex.value == 1
+                    ? mainViewController.isDarkMode.value
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/home/dark_mode/tap_pen.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/home/light_mode/tap_pen.svg",
+                          )
+                    : mainViewController.isDarkMode.value
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/home/dark_mode/pen.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/home/light_mode/pen.svg",
+                          ),
                 label: '일기쓰기',
               ),
               BottomNavigationBarItem(
-                icon: Icon(
-                  CustomIcons.profile,
-                  size: 20,
-                ),
+                icon: controller.selectedIndex.value == 2
+                    ? mainViewController.isDarkMode.value
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/home/dark_mode/tap_profile.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/home/light_mode/tap_profile.svg",
+                          )
+                    : mainViewController.isDarkMode.value
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/home/dark_mode/profile.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/home/light_mode/profile.svg",
+                          ),
                 label: '프로필',
               ),
             ],

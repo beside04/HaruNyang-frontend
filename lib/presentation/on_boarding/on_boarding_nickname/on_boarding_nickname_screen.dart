@@ -94,14 +94,14 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                               () => controller.isOnKeyboard.value
                                   ? Container()
                                   : SizedBox(
-                                      height: 126.h,
+                                      height: 71.h,
                                     ),
                             ),
                             Center(
                               child: SvgPicture.asset(
-                                "lib/config/assets/images/character/onboarding1.svg",
-                                width: 300.w,
-                                height: 300.h,
+                                "lib/config/assets/images/character/character8.svg",
+                                width: 375.w,
+                                height: 375.h,
                               ),
                             ),
                           ],

@@ -13,8 +13,10 @@ import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/presentation/profile/profile_view_model.dart';
-import 'package:frontend/presentation/profile/terms/terms_of_service_screen.dart';
+import 'package:frontend/presentation/profile/terms/terms_screen.dart';
 import 'package:get/get.dart';
+
+import 'push_message/push_message_screen.dart';
 
 class ProfileScreen extends GetView<ProfileViewModel> {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -45,12 +47,12 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                       border: Border.all(width: 0.5, color: Colors.transparent),
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(10.0.w),
+                      padding: EdgeInsets.all(6.w),
                       child: Center(
                         child: SvgPicture.asset(
-                          "lib/config/assets/images/character/onboarding1.svg",
-                          width: 40.w,
-                          height: 40.h,
+                          "lib/config/assets/images/character/character1.svg",
+                          width: 48.w,
+                          height: 48.h,
                         ),
                       ),
                     ),
@@ -171,23 +173,14 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               height: 1.h,
               color: Theme.of(context).colorScheme.border,
             ),
-            Obx(
-              () => ProfileButton(
-                icon: FlutterSwitch(
-                  width: 52.0.w,
-                  height: 32.0.h,
-                  activeColor: Theme.of(context).primaryColor,
-                  inactiveColor: kGrayColor250,
-                  toggleSize: 28.0.w,
-                  value: mainViewController.pushMessageValue.value,
-                  borderRadius: 50.0.w,
-                  onToggle: (val) async {
-                    mainViewController.togglePushMessageValue();
-                  },
-                ),
-                title: '푸시 메세지 설정',
-                onPressed: null,
+            ProfileButton(
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
               ),
+              title: '푸시 메세지 설정',
+              onPressed: () {
+                Get.to(() => const PushMessageScreen());
+              },
             ),
             Divider(
               thickness: 1.h,
@@ -197,6 +190,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
             Obx(
               () => ProfileButton(
                 icon: FlutterSwitch(
+                  padding: 2,
                   width: 52.0.w,
                   height: 32.0.h,
                   activeColor: Theme.of(context).primaryColor,
@@ -250,8 +244,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
               title: '이용약관',
               onPressed: () {
                 Get.to(
-                  () => const TermsOfServiceScreen(),
-                  transition: Transition.downToUp,
+                  () => const TermsScreen(),
                 );
               },
             ),

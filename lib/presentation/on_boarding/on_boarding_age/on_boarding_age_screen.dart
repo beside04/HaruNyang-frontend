@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/DatePickerTheme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -66,12 +68,22 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                                 context,
                                 showTitleActions: true,
                                 minTime: DateTime(1930, 1, 1),
-                                maxTime: DateTime(2005, 12, 30),
+                                maxTime: DateTime(2022, 12, 31),
                                 onConfirm: (date) {
                                   controller.getBirthDateFormat(date);
                                 },
-                                currentTime: DateTime(1995, 12, 30),
+                                currentTime: DateTime(2000, 01, 01),
                                 locale: LocaleType.ko,
+                                theme: DatePickerTheme(
+                                  itemStyle: kSubtitle1Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textBody),
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .backgroundModal,
+                                  title: "나이 입력하기",
+                                ),
                               );
                             },
                             suffixIcon: Obx(
@@ -97,7 +109,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           ),
                           Center(
                             child: SvgPicture.asset(
-                              "lib/config/assets/images/character/weather2.svg",
+                              "lib/config/assets/images/character/character4.svg",
                               width: 300.w,
                               height: 300.h,
                             ),

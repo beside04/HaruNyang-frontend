@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
@@ -38,27 +36,23 @@ class LoginScreen extends GetView<LoginViewModel> {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 165.h,
+                top: 250.h,
               ),
               child: Center(
                 child: SvgPicture.asset(
-                  "lib/config/assets/images/character/weather1.svg",
-                  width: 280.w,
-                  height: 280.h,
+                  "lib/config/assets/images/character/character11.svg",
+                  width: 100.w,
+                  height: 80.h,
                 ),
               ),
             ),
-            SizedBox(
-              height: 50.h,
-            ),
             Center(
-              child: Text(
-                "하루냥과 함께해볼까요?",
-                style: kHeader2Style.copyWith(color: kBlackColor),
+              child: SvgPicture.asset(
+                "lib/config/assets/images/character/logo_text.svg",
               ),
             ),
             SizedBox(
-              height: 54.h,
+              height: 230.h,
             ),
             InkWell(
               onTap: () async {

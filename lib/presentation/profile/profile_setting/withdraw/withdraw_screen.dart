@@ -58,7 +58,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                     child: CircleAvatar(
                       backgroundColor: kOrange200Color,
                       child: SvgPicture.asset(
-                        "lib/config/assets/images/character/sad1.svg",
+                        "lib/config/assets/images/character/character9.svg",
                         width: 100.w,
                         height: 100.h,
                       ),
@@ -178,7 +178,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                       },
                                       backgroundColor: Theme.of(context)
                                           .colorScheme
-                                          .background,
+                                          .secondaryColor,
                                       textStyle: kHeader4Style.copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
