@@ -1,14 +1,11 @@
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
-import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_state.dart';
 import 'package:get/get.dart';
 
 class OnBoardingController extends GetxController {
-  final TokenUseCase tokenUseCase;
   final OnBoardingUseCase onBoardingUseCase;
 
   OnBoardingController({
-    required this.tokenUseCase,
     required this.onBoardingUseCase,
   });
 
@@ -17,6 +14,7 @@ class OnBoardingController extends GetxController {
   Rx<OnBoardingState> get state => _state;
 
   Future<bool> getMyInformation() async {
+    bool check = false;
     final myInfo = await onBoardingUseCase.getMyInformation();
 
     myInfo.when(
@@ -29,13 +27,13 @@ class OnBoardingController extends GetxController {
             loginType: data.loginType,
             email: data.email,
           );
-          return true;
+          check = true;
         }
       },
       error: (message) {},
     );
 
-    return false;
+    return check;
   }
 
   Future<void> putMyInformation(
@@ -45,5 +43,7 @@ class OnBoardingController extends GetxController {
     age ??= state.value.age;
     await onBoardingUseCase.putMyInformation(
         nickname: nickname, job: job, age: age);
+
+    await getMyInformation();
   }
 }

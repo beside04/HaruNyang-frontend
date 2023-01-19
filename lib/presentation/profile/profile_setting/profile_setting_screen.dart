@@ -133,9 +133,6 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                               controller.nicknameValue.value,
                                         );
 
-                                        await onBoardingController
-                                            .getMyInformation();
-
                                         Get.back();
                                       }
                                     },
@@ -242,9 +239,6 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                           age: controller.ageValue.value,
                                         );
 
-                                        await onBoardingController
-                                            .getMyInformation();
-
                                         Get.back();
                                       }
                                     },
@@ -330,9 +324,6 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     await onBoardingController.putMyInformation(
                                       job: controller.jobStatus.value!.name,
                                     );
-
-                                    await onBoardingController
-                                        .getMyInformation();
 
                                     Get.back();
                                   },

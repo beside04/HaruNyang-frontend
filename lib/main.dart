@@ -25,8 +25,11 @@ void main() async {
   // runApp() 호출 전 Flutter SDK 초기화
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
   KakaoSdk.init(nativeAppKey: appkey);
+  //global controller binding
   getMainBinding();
-  await Get.find<MainViewModel>().getAccessToken();
+  getOnBoardingControllerBinding();
+  getTokenControllerBinding();
+
   await Get.find<MainViewModel>().getIsDarkMode();
 
   //FirebaseCrashlytics

@@ -13,12 +13,6 @@ class HomeViewModel extends GetxController {
     required this.getEmotionStampUseCase,
   });
 
-  @override
-  void onInit() {
-    Get.find<OnBoardingController>().getMyInformation();
-    super.onInit();
-  }
-
   RxInt selectedIndex = 0.obs;
 
   Future<bool> onItemTapped(int index) async {

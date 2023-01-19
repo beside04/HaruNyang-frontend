@@ -13,16 +13,14 @@ import 'package:frontend/presentation/profile/book_mark/book_mark_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
-import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:frontend/presentation/profile/terms/terms_of_service_screen.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends GetView<ProfileViewModel> {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getProfileBinding();
     final mainViewController = Get.find<MainViewModel>();
     final onBoardingController = Get.find<OnBoardingController>();
 

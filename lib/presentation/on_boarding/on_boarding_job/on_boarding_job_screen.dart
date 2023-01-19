@@ -112,8 +112,6 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                               age: birth,
                             );
 
-                            await onBoardingController.getMyInformation();
-
                             Get.to(
                               () => const OnBoardingFinishScreen(),
                               transition: Transition.cupertino,
