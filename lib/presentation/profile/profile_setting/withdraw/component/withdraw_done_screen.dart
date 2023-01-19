@@ -46,9 +46,9 @@ class WithdrawDoneScreen extends StatelessWidget {
                   ),
                   Center(
                     child: SvgPicture.asset(
-                      "lib/config/assets/images/character/intro1.svg",
-                      width: 280.w,
-                      height: 280.h,
+                      "lib/config/assets/images/character/character10.svg",
+                      width: 360.w,
+                      height: 250.h,
                     ),
                   ),
                   Center(

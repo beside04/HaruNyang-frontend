@@ -66,7 +66,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                           ),
                           Center(
                             child: SvgPicture.asset(
-                              "lib/config/assets/images/character/onboarding3.svg",
+                              "lib/config/assets/images/character/character5.svg",
                               width: 340.w,
                               height: 340.h,
                             ),

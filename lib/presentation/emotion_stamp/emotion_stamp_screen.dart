@@ -1,9 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_list_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
@@ -17,7 +20,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 0.5,
         actions: [
           Obx(
             () => IconButton(
@@ -48,6 +51,13 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                   controller.getEmotionStampList();
                 },
                 locale: LocaleType.ko,
+                theme: DatePickerTheme(
+                  itemStyle: kSubtitle1Style.copyWith(
+                      color: Theme.of(context).colorScheme.textBody),
+                  backgroundColor:
+                      Theme.of(context).colorScheme.backgroundModal,
+                  title: "다른 날짜 일기 보기",
+                ),
               );
             },
             child: Padding(

@@ -100,10 +100,10 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                         alignment: Alignment.topCenter,
                         child: SvgPicture.asset(
                           controller.isEmotionModal.value
-                              ? "lib/config/assets/images/character/weather1.svg"
-                              : "lib/config/assets/images/character/weather2.svg",
-                          width: 300.w,
-                          height: 300.h,
+                              ? "lib/config/assets/images/character/character7.svg"
+                              : "lib/config/assets/images/character/character4.svg",
+                          width: 320.w,
+                          height: 320.h,
                         ),
                       ),
                       const WeatherModal(),

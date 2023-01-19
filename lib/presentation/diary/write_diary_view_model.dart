@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:get/get.dart';
@@ -14,35 +14,26 @@ import 'package:path_provider/path_provider.dart';
 class WriteDiaryViewModel extends GetxController {
   final TextEditingController diaryEditingController = TextEditingController();
   final RxString diaryValue = ''.obs;
-  final RxBool isOnKeyboard = false.obs;
   final pickedFile = Rx<XFile?>(null);
   final croppedFile = Rx<CroppedFile?>(null);
   final cropQualityImage = Rx<File?>(null);
   final networkImage = Rx<String?>(null);
   bool isUpdated = false;
-
-  late Rx<StreamSubscription<bool>?> keyboardSubscription =
-      Rx<StreamSubscription<bool>?>(null);
+  int randomImageNumber = 1;
 
   @override
   void onInit() {
     super.onInit();
+    randomImageNumber = Random().nextInt(7) + 1;
+
     diaryEditingController.addListener(() {
       diaryValue.value = diaryEditingController.text;
-    });
-
-    var keyboardVisibilityController = KeyboardVisibilityController();
-
-    keyboardSubscription.value =
-        keyboardVisibilityController.onChange.listen((bool visible) {
-      isOnKeyboard.value = visible;
     });
   }
 
   @override
   void onClose() {
     diaryEditingController.dispose();
-    keyboardSubscription.value?.cancel();
     super.onClose();
   }
 

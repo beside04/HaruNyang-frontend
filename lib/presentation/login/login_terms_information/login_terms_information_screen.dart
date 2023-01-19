@@ -127,7 +127,9 @@ class LoginTermsInformationScreen
                     onTap: controller.toggleTermsCheck,
                     termOnTap: () {
                       Get.to(
-                        () => const TermsOfServiceScreen(),
+                        () => const TermsOfServiceScreen(
+                          isProfileScreen: false,
+                        ),
                         transition: Transition.downToUp,
                       );
                     },
@@ -156,7 +158,9 @@ class LoginTermsInformationScreen
                     onTap: controller.togglePrivacyPolicyCheck,
                     termOnTap: () {
                       Get.to(
-                        () => const PrivacyPolicyScreen(),
+                        () => const PrivacyPolicyScreen(
+                          isProfileScreen: false,
+                        ),
                         transition: Transition.downToUp,
                       );
                     },
@@ -176,7 +180,9 @@ class LoginTermsInformationScreen
                     onTap: controller.toggleMarketingConsentCheck,
                     termOnTap: () {
                       Get.to(
-                        () => const MarketingConsentScreen(),
+                        () => const MarketingConsentScreen(
+                          isProfileScreen: false,
+                        ),
                         transition: Transition.downToUp,
                       );
                     },

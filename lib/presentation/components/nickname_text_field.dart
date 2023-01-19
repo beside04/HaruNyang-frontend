@@ -3,7 +3,6 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:get/get.dart';
 
 class NicknameTextField extends StatelessWidget {
   const NicknameTextField({
@@ -56,7 +55,7 @@ class NicknameTextField extends StatelessWidget {
           }
 
           RegExp regex = RegExp(r'([^가-힣a-z\x20])');
-          if (regex.hasMatch(value!)) {
+          if (regex.hasMatch(value)) {
             return '사용할 수 없는 닉네임이에요.';
           } else {
             return null;

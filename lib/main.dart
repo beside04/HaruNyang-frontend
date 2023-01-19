@@ -29,8 +29,9 @@ void main() async {
   getMainBinding();
   getOnBoardingControllerBinding();
   getTokenControllerBinding();
-
+  getEmotionStampBinding();
   await Get.find<MainViewModel>().getIsDarkMode();
+  await Get.find<MainViewModel>().getIsPushMessage();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {

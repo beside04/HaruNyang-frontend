@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/core/utils/delay_tween_animation.dart';
+import 'package:frontend/core/utils/library/delay_tween_animation.dart';
 
 class DiaryLoadingWidget extends StatefulWidget {
   const DiaryLoadingWidget({
@@ -87,7 +87,7 @@ class _DiaryLoadingWidgetState extends State<DiaryLoadingWidget>
         Padding(
           padding: EdgeInsets.only(bottom: 40.0.h),
           child: SvgPicture.asset(
-            "lib/config/assets/images/character/onboarding2.svg",
+            "lib/config/assets/images/character/character6.svg",
             width: 350.w,
             height: 350.h,
           ),
