@@ -42,7 +42,7 @@ class OnBoardingApi {
     }
   }
 
-  Future<Result<MyInformation>> putMyInformation({
+  Future<Result<bool>> putMyInformation({
     required nickname,
     required job,
     required age,
@@ -62,9 +62,9 @@ class OnBoardingApi {
         },
       );
 
-      final json = response.data['data'];
-      MyInformation result = MyInformation.fromJson(json);
-
+      //final json = response.data['data'];
+      //MyInformation result = MyInformation.fromJson(json);
+      final bool result = response.data['data'];
       return Result.success(result);
     } on DioError catch (e) {
       String errMessage = '';

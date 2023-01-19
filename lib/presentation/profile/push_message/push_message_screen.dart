@@ -5,7 +5,7 @@ import 'package:flutter_switch/flutter_switch.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/DatePickerTheme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/main_view_model.dart';

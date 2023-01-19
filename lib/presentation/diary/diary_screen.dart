@@ -5,6 +5,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/components/diary_app_bar.dart';
 import 'package:frontend/presentation/diary/components/emotion_modal.dart';
@@ -23,6 +24,7 @@ class DiaryScreen extends GetView<DiaryViewModel> {
   @override
   Widget build(BuildContext context) {
     getDiaryBinding();
+    final onBoardingController = Get.find<OnBoardingController>();
 
     if (date != null) {
       controller.nowDate.value = date!;
@@ -58,7 +60,7 @@ class DiaryScreen extends GetView<DiaryViewModel> {
                   children: [
                     Obx(
                       () => Text(
-                        "${Get.find<MainViewModel>().state.value.nickname}님,",
+                        "${onBoardingController.state.value.nickname}님,",
                         style: kHeader1Style.copyWith(
                             color: Theme.of(context).colorScheme.textTitle),
                       ),

@@ -31,7 +31,7 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
   }
 
   @override
-  Future<Result<MyInformation>> putMyInformation({
+  Future<Result<bool>> putMyInformation({
     required nickname,
     required job,
     required age,

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/main_view_model.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
+import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
 
@@ -16,26 +18,49 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+  final tokenController = Get.find<TokenController>();
+  final onBoardingController = Get.find<OnBoardingController>();
 
   @override
   void initState() {
     _controller = AnimationController(vsync: this);
-
-    Future.delayed(const Duration(seconds: 5), () {
-      Get.offAll(
-        () => Get.find<MainViewModel>().token == null
-            ? const LoginScreen()
-            : const HomeScreen(),
-        binding: Get.find<MainViewModel>().token == null
-            ? BindingsBuilder(
-                getLoginBinding,
-              )
-            : BindingsBuilder(
-                getHomeViewModelBinding,
-              ),
-      );
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      init();
     });
     super.initState();
+  }
+
+  Future<void> init() async {
+    await Future.delayed(const Duration(seconds: 5), () async {
+      String? token = await tokenController.getAccessToken();
+      bool isOnBoardingDone = false;
+      if (token != null) {
+        isOnBoardingDone = await onBoardingController.getMyInformation();
+      }
+
+      if (token == null) {
+        //로그인 화면 이동
+        Get.offAll(
+          () => const LoginScreen(),
+          binding: BindingsBuilder(
+            getLoginBinding,
+          ),
+        );
+      } else if (isOnBoardingDone == false) {
+        //온보딩 화면 이동
+        Get.offAll(
+          () => const OnBoardingNicknameScreen(),
+        );
+      } else {
+        //Home 화면 이동
+        Get.offAll(
+          () => const HomeScreen(),
+          binding: BindingsBuilder(
+            getHomeViewModelBinding,
+          ),
+        );
+      }
+    });
   }
 
   @override

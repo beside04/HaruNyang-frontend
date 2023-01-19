@@ -1,25 +1,21 @@
-import 'package:frontend/core/result.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domain/model/my_information.dart';
-import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/login_state.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
+import 'package:frontend/presentation/sign_in_complete/sign_in_complete_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class LoginViewModel extends GetxController {
   final KakaoLoginUseCase kakaoLoginUseCase;
   final AppleLoginUseCase appleLoginUseCase;
-  final OnBoardingUseCase onBoardingUseCase;
 
   LoginViewModel({
     required this.kakaoLoginUseCase,
     required this.appleLoginUseCase,
-    required this.onBoardingUseCase,
   });
 
   final Rx<LoginState> _state = LoginState().obs;
@@ -44,23 +40,9 @@ class LoginViewModel extends GetxController {
         //로그인
         final loginResult = await _onLogin(isSocialKakao: true);
         if (loginResult) {
-          //내정보 조회 API를 통해 온보딩 여부 체크
-          final infoResult = await getMyInformation();
-          infoResult.when(
-            success: (info) {
-              if (info.nickname == null ||
-                  info.job == null ||
-                  info.age == null) {
-                //온보딩 미완료했으면 온보딩 화면으로 이동
-                Get.offAll(
-                  () => const OnBoardingNicknameScreen(),
-                );
-              } else {
-                //온보딩 완료했으면 Home 화면으로 이동
-                goHome();
-              }
-            },
-            error: (message) {},
+          //온보딩 화면으로 이동
+          Get.offAll(
+            () => const OnBoardingNicknameScreen(),
           );
         }
         break;
@@ -97,23 +79,9 @@ class LoginViewModel extends GetxController {
         //이미 가입한 회원이므로 로그인
         final loginResult = await _onLogin(isSocialKakao: false);
         if (loginResult) {
-          //내정보 조회 API를 통해 온보딩 여부 체크
-          final infoResult = await getMyInformation();
-          infoResult.when(
-            success: (info) {
-              if (info.nickname == null ||
-                  info.job == null ||
-                  info.age == null) {
-                //온보딩 미완료했으면 온보딩 화면으로 이동
-                Get.offAll(
-                  () => const OnBoardingNicknameScreen(),
-                );
-              } else {
-                //온보딩 완료했으면 Home 화면으로 이동
-                goHome();
-              }
-            },
-            error: (message) {},
+          //온보딩 화면으로 이동
+          Get.offAll(
+            () => const OnBoardingNicknameScreen(),
           );
         }
         break;
@@ -161,26 +129,16 @@ class LoginViewModel extends GetxController {
     if (!result) {
       Get.snackbar('알림', '회원가입에 실패했습니다.');
     } else {
-      //회원 가입 완료 되었으므로 로그인
+      // //회원 가입 완료 되었으므로 로그인
       final loginResult =
           await _onLogin(isSocialKakao: state.value.isSocialKakao);
       if (loginResult) {
-        //내정보 조회 API를 통해 온보딩 여부 체크
-        final infoResult = await getMyInformation();
-        infoResult.when(
-          success: (info) {
-            if (info.nickname == null || info.job == null || info.age == null) {
-              //온보딩 미완료했으면 온보딩 화면으로 이동
-              Get.offAll(
-                () => const OnBoardingNicknameScreen(),
-              );
-            } else {
-              //온보딩 완료했으면 Home 화면으로 이동
-              goHome();
-            }
-          },
-          error: (message) {},
+        //회원가입 완료 페이지로 이동
+        Get.offAll(
+          () => const SignInCompleteScreen(),
         );
+      } else {
+        Get.snackbar('알림', '로그인에 실패했습니다.');
       }
     }
   }
@@ -203,19 +161,6 @@ class LoginViewModel extends GetxController {
     );
 
     return result;
-  }
-
-  Future<Result<MyInformation>> getMyInformation() async {
-    final getMyInformation = await onBoardingUseCase.getMyInformation();
-
-    return getMyInformation.when(
-      success: (successData) async {
-        return Result.success(successData);
-      },
-      error: (message) {
-        return Result.error(message);
-      },
-    );
   }
 
   void goHome() {

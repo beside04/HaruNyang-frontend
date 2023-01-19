@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/BasePickerModel.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/DatePickerTheme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 

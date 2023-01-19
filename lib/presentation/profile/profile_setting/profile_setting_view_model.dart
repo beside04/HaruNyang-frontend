@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/res/constants.dart';
@@ -9,12 +8,10 @@ import 'package:intl/intl.dart';
 class ProfileSettingViewModel extends GetxController {
   final KakaoLoginUseCase kakaoLoginUseCase;
   final AppleLoginUseCase appleLoginUseCase;
-  final OnBoardingUseCase onBoardingUseCase;
 
   ProfileSettingViewModel({
     required this.kakaoLoginUseCase,
     required this.appleLoginUseCase,
-    required this.onBoardingUseCase,
   });
 
   final TextEditingController nicknameEditingController =
@@ -53,13 +50,5 @@ class ProfileSettingViewModel extends GetxController {
 
   Future<void> appleLogout() async {
     await appleLoginUseCase.logout();
-  }
-
-  Future<void> putMyInformation({
-    required nickname,
-    required job,
-    required age,
-  }) async {
-    onBoardingUseCase.putMyInformation(nickname: nickname, job: job, age: age);
   }
 }

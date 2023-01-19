@@ -25,8 +25,10 @@ void main() async {
   // runApp() 호출 전 Flutter SDK 초기화
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
   KakaoSdk.init(nativeAppKey: appkey);
+  //global controller binding
   getMainBinding();
-  await Get.find<MainViewModel>().getAccessToken();
+  getOnBoardingControllerBinding();
+  getTokenControllerBinding();
   getEmotionStampBinding();
   await Get.find<MainViewModel>().getIsDarkMode();
   await Get.find<MainViewModel>().getIsPushMessage();
@@ -57,6 +59,7 @@ class MyApp extends GetView<MainViewModel> {
             debugShowCheckedModeBanner: false,
             initialRoute: '/',
             getPages: [
+              GetPage(name: '/', page: () => const SplashScreen()),
               GetPage(name: '/home', page: () => const HomeScreen()),
             ],
             themeMode:

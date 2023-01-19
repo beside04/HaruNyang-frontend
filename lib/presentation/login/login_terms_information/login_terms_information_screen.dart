@@ -80,7 +80,8 @@ class LoginTermsInformationScreen
                           child: Checkbox(
                             activeColor: kOrange300Color,
                             value: controller.isTermsAgree.value &&
-                                controller.isPrivacyPolicyAgree.value,
+                                controller.isPrivacyPolicyAgree.value &&
+                                controller.isMarketingConsentAgree.value,
                             onChanged: (value) {
                               if (value != null) {
                                 controller.toggleAllCheck();

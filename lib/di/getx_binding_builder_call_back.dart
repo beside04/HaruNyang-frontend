@@ -37,6 +37,8 @@ import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_c
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
+import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
@@ -51,7 +53,6 @@ import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boardi
 import 'package:frontend/presentation/profile/book_mark/book_mark_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
-import 'package:frontend/presentation/profile/profile_view_model.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 
@@ -120,8 +121,8 @@ final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
   socialLoginRepository: kakaoLoginImpl,
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
-  onBoardingUseCase: onBoardingUseCase,
   darkModeUseCase: darkModeUseCase,
+  onBoardingRepository: onBoardingImpl,
   pushMessagePermissionUseCase: pushMessagePermissionUseCase,
 );
 
@@ -129,8 +130,8 @@ final AppleLoginUseCase appleLoginUseCase = AppleLoginUseCase(
   socialLoginRepository: appleLoginImpl,
   serverLoginRepository: serverLoginImpl,
   tokenRepository: tokenRepositoryImpl,
-  onBoardingUseCase: onBoardingUseCase,
   darkModeUseCase: darkModeUseCase,
+  onBoardingRepository: onBoardingImpl,
   pushMessagePermissionUseCase: pushMessagePermissionUseCase,
 );
 
@@ -161,7 +162,6 @@ final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
 
 final FileUploadUseCase fileUploadUseCase =
     FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
-final profileViewModel = ProfileViewModel();
 final saveDiaryUseCase = SaveDiaryUseCase(
   diaryRepository: diaryRepository,
 );
@@ -178,9 +178,7 @@ final bookmarkUseCase = BookmarkUseCase(
 
 void getMainBinding() {
   Get.put(MainViewModel(
-    tokenUseCase: tokenUseCase,
     darkModeUseCase: darkModeUseCase,
-    onBoardingUseCase: onBoardingUseCase,
     pushMessagePermissionUseCase: pushMessagePermissionUseCase,
   ));
   Get.put(NotificationController());
@@ -196,7 +194,6 @@ void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
     appleLoginUseCase: appleLoginUseCase,
-    onBoardingUseCase: onBoardingUseCase,
   ));
 }
 
@@ -243,9 +240,7 @@ void getLoginTermsInformationBinding() {
 }
 
 void getOnBoardingJobBinding() {
-  Get.put(OnBoardingJobViewModel(
-    onBoardingUseCase: onBoardingUseCase,
-  ));
+  Get.put(OnBoardingJobViewModel());
 }
 
 void getOnBoardingBirthBinding() {
@@ -254,12 +249,6 @@ void getOnBoardingBirthBinding() {
 
 void getOnBoardingNickNameBinding() {
   Get.put(OnBoardingNicknameViewModel());
-}
-
-void getProfileBinding() {
-  Get.put(
-    profileViewModel,
-  );
 }
 
 HomeViewModel getHomeViewModelBinding() {
@@ -283,7 +272,6 @@ void getProfileSettingViewModelBinding() {
     ProfileSettingViewModel(
       kakaoLoginUseCase: kakaoLoginUseCase,
       appleLoginUseCase: appleLoginUseCase,
-      onBoardingUseCase: onBoardingUseCase,
     ),
   );
 }
@@ -292,6 +280,22 @@ void getBookMarkViewModelBinding() {
   Get.put(
     BookMarkViewModel(
       bookmarkUseCase: bookmarkUseCase,
+    ),
+  );
+}
+
+void getOnBoardingControllerBinding() {
+  Get.put(
+    OnBoardingController(
+      onBoardingUseCase: onBoardingUseCase,
+    ),
+  );
+}
+
+void getTokenControllerBinding() {
+  Get.put(
+    TokenController(
+      tokenUseCase: tokenUseCase,
     ),
   );
 }

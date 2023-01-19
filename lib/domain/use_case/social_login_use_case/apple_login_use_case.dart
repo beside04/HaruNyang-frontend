@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
+import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/repository/social_login_repository/apple_login_repository.dart';
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
-import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -15,16 +15,16 @@ class AppleLoginUseCase {
   final AppleLoginRepository socialLoginRepository;
   final ServerLoginRepository serverLoginRepository;
   final TokenRepository tokenRepository;
-  final OnBoardingUseCase onBoardingUseCase;
   final DarkModeUseCase darkModeUseCase;
+  final OnBoardingRepository onBoardingRepository;
   final PushMessagePermissionUseCase pushMessagePermissionUseCase;
 
   AppleLoginUseCase({
     required this.socialLoginRepository,
     required this.serverLoginRepository,
     required this.tokenRepository,
-    required this.onBoardingUseCase,
     required this.darkModeUseCase,
+    required this.onBoardingRepository,
     required this.pushMessagePermissionUseCase,
   });
 
@@ -97,16 +97,16 @@ class AppleLoginUseCase {
 
   Future<void> logout() async {
     await tokenRepository.deleteAllToken();
-    onBoardingUseCase.clearMyInformation();
+    onBoardingRepository.clearMyInformation();
     return await socialLoginRepository.logout();
   }
 
   Future<void> withdrawal() async {
     await tokenRepository.deleteAllToken();
+    onBoardingRepository.clearMyInformation();
     await darkModeUseCase.deleteDarkModeData();
     await pushMessagePermissionUseCase.deletePushMessagePermissionData();
 
-    onBoardingUseCase.clearMyInformation();
     return await socialLoginRepository.withdrawal();
   }
 }

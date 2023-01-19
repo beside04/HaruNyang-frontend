@@ -9,24 +9,13 @@ class OnBoardingUseCase {
     required this.onBoardingRepository,
   });
 
-  void clearMyInformation() {
-    onBoardingRepository.clearMyInformation();
-  }
-
   Future<Result<MyInformation>> getMyInformation() async {
     final result = await onBoardingRepository.getMyInformation();
 
-    return await result.when(
-      success: (successData) async {
-        return Result.success(successData);
-      },
-      error: (message) {
-        return Result.error(message);
-      },
-    );
+    return result;
   }
 
-  Future<Result<MyInformation>> putMyInformation({
+  Future<Result<bool>> putMyInformation({
     required nickname,
     required job,
     required age,

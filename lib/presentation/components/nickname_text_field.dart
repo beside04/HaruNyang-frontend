@@ -50,9 +50,13 @@ class NicknameTextField extends StatelessWidget {
           errorText: '12글자 이내로 입력해 주세요.',
         ),
         (value) {
+          if (value!.contains(' ')) {
+            return '띄어쓰기는 사용 할 수 없어요.';
+          }
+
           RegExp regex = RegExp(r'([^가-힣a-z\x20])');
-          if (regex.hasMatch(value!)) {
-            return '허용되지 않는 닉네임 입니다.';
+          if (regex.hasMatch(value)) {
+            return '사용할 수 없는 닉네임이에요.';
           } else {
             return null;
           }

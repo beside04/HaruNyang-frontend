@@ -4,7 +4,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/main_view_model.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
@@ -24,6 +24,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
     required this.birth,
   }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
+  final onBoardingController = Get.find<OnBoardingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -105,13 +106,11 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                           if (key.saveAndValidate()) {
                             FocusScope.of(context).unfocus();
 
-                            await controller.putMyInformation(
+                            await onBoardingController.putMyInformation(
                               nickname: nickname,
                               job: controller.jobStatus.value!.name,
                               age: birth,
                             );
-
-                            await Get.find<MainViewModel>().getMyInformation();
 
                             Get.to(
                               () => const OnBoardingFinishScreen(),

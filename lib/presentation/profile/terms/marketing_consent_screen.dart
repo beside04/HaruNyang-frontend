@@ -17,6 +17,7 @@ class MarketingConsentScreen extends StatelessWidget {
     Key? key,
     required this.isProfileScreen,
   }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final mainViewController = Get.find<MainViewModel>();

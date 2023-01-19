@@ -12,7 +12,12 @@ import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  final bool isFirstUser;
+
+  const HomeScreen({
+    super.key,
+    this.isFirstUser = false,
+  });
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -25,6 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     Get.delete<HomeViewModel>();
     controller = getHomeViewModelBinding();
+
+    if (widget.isFirstUser) {
+      //처음 가입한 유저라면 일기쓰기 화면으로 이동
+      controller.selectedIndex.value = 1;
+    }
 
     super.initState();
   }

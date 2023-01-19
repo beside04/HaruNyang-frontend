@@ -7,24 +7,25 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/profile/book_mark/book_mark_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
-import 'package:frontend/presentation/profile/profile_view_model.dart';
-import 'package:frontend/presentation/profile/terms/terms_screen.dart';
 import 'package:get/get.dart';
+
+import 'package:frontend/presentation/profile/terms/terms_screen.dart';
 
 import 'push_message/push_message_screen.dart';
 
-class ProfileScreen extends GetView<ProfileViewModel> {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    getProfileBinding();
     final mainViewController = Get.find<MainViewModel>();
+    final onBoardingController = Get.find<OnBoardingController>();
 
     return Scaffold(
       body: SafeArea(
@@ -62,7 +63,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   ),
                   Obx(
                     () => Text(
-                      '${Get.find<MainViewModel>().state.value.nickname}님 반가워요!',
+                      '${onBoardingController.state.value.nickname}님 반가워요!',
                       style: kHeader2Style.copyWith(
                           color: Theme.of(context).colorScheme.textTitle),
                     ),
@@ -73,8 +74,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                   Obx(
                     () => Row(
                       children: [
-                        Get.find<MainViewModel>().state.value.loginType ==
-                                "KAKAO"
+                        onBoardingController.state.value.loginType == "KAKAO"
                             ? Container(
                                 width: 20.w,
                                 height: 20.h,
@@ -115,7 +115,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                               ),
                         Obx(
                           () => Text(
-                            " ${Get.find<MainViewModel>().state.value.email}",
+                            " ${onBoardingController.state.value.email}",
                             style: kBody2Style.copyWith(
                                 color:
                                     Theme.of(context).colorScheme.textSubtitle),
@@ -147,8 +147,7 @@ class ProfileScreen extends GetView<ProfileViewModel> {
                 Get.to(
                   () => ProfileSettingScreen(
                     isKakaoLogin:
-                        Get.find<MainViewModel>().state.value.loginType ==
-                            'KAKAO',
+                        onBoardingController.state.value.loginType == 'KAKAO',
                   ),
                   binding: BindingsBuilder(
                     getProfileSettingViewModelBinding,
