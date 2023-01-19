@@ -58,6 +58,7 @@ class MyApp extends GetView<MainViewModel> {
             debugShowCheckedModeBanner: false,
             initialRoute: '/',
             getPages: [
+              GetPage(name: '/', page: () => const SplashScreen()),
               GetPage(name: '/home', page: () => const HomeScreen()),
             ],
             themeMode:
