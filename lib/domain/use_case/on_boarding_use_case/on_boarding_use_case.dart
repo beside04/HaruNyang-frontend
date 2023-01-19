@@ -15,7 +15,7 @@ class OnBoardingUseCase {
     return result;
   }
 
-  Future<Result<MyInformation>> putMyInformation({
+  Future<Result<bool>> putMyInformation({
     required nickname,
     required job,
     required age,

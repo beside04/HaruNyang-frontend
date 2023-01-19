@@ -4,7 +4,7 @@ import 'package:frontend/domain/model/my_information.dart';
 abstract class OnBoardingRepository {
   Future<Result<MyInformation>> getMyInformation();
 
-  Future<Result<MyInformation>> putMyInformation({
+  Future<Result<bool>> putMyInformation({
     required nickname,
     required job,
     required age,
