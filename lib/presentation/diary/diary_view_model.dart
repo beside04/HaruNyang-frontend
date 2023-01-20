@@ -8,6 +8,14 @@ import 'package:get/get.dart';
 
 class DiaryViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
+  List<String> weatherInfo = [
+    'sunny',
+    'rainy',
+    'cloudy',
+    'snow',
+    'windy',
+    'thunder'
+  ];
   final GetEmoticonUseCase getEmoticonUseCase;
   final GetWeatherUseCase getWeatherUseCase;
 
@@ -19,9 +27,6 @@ class DiaryViewModel extends GetxController
     getWeatherData();
   }
 
-  //final weatherStatus = Rx<Weather?>(null);
-
-  // final emotionStatus = Rx<Emotion?>(null);
   final nowDate = DateTime.now().obs;
   final isEmotionModal = true.obs;
   final emotionNumberValue = 6.0.obs;
@@ -84,8 +89,23 @@ class DiaryViewModel extends GetxController
 
     await result.when(
       success: (data) async {
-        weatherDataList.value = data;
-        for (final weather in data) {
+        List<WeatherData> weathers = [];
+
+        for (int i = 0; i < weatherInfo.length; i++) {
+          for (int j = 0; j < data.length; j++) {
+            if (weatherInfo[i] == data[j].value) {
+              weathers.add(
+                data[j].copyWith(
+                  value: getWeatherNameKorean(data[j].value),
+                ),
+              );
+              break;
+            }
+          }
+        }
+
+        weatherDataList.value = weathers;
+        for (final weather in weathers) {
           await precachePicture(
               NetworkPicture(
                 SvgPicture.svgByteDecoderBuilder,
@@ -102,5 +122,24 @@ class DiaryViewModel extends GetxController
 
   void setSelectedEmoticon(EmoticonData emoticon) {
     selectedEmotion.value = emoticon;
+  }
+
+  String getWeatherNameKorean(String value) {
+    switch (value) {
+      case 'sunny':
+        return '맑음';
+      case 'rainy':
+        return '비';
+      case 'cloudy':
+        return '흐림';
+      case 'snow':
+        return '눈';
+      case 'windy':
+        return '바람';
+      case 'thunder':
+        return '천둥';
+      default:
+        return '';
+    }
   }
 }
