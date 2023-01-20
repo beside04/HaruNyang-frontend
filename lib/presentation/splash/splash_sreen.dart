@@ -32,6 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
 
   void controllerBinding() {
     getDiaryBinding();
+    getDiaryControllerBinding();
   }
 
   Future<void> init() async {
