@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
 
-class EmoticonApi {
+class EmoticonWeatherApi {
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
   final Dio _client = Dio();
 
@@ -25,6 +26,29 @@ class EmoticonApi {
             emoticonList.map((e) => EmoticonData.fromJson(e)).toList();
 
         return Result.success(emoticonData);
+      } else {
+        return Result.error(
+            '서버 error : status code : ${response.data['status']}');
+      }
+    } catch (e) {
+      return Result.error(e.toString());
+    }
+  }
+
+  Future<Result<List<WeatherData>>> getWeather() async {
+    try {
+      String weatherUrl = '$_baseUrl/v1/weathers';
+      Response response;
+      response = await _client.get(
+        weatherUrl,
+      );
+
+      if (response.data['status'] == 200) {
+        final Iterable weatherList = response.data['data'];
+        final List<WeatherData> weatherData =
+            weatherList.map((e) => WeatherData.fromJson(e)).toList();
+
+        return Result.success(weatherData);
       } else {
         return Result.error(
             '서버 error : status code : ${response.data['status']}');

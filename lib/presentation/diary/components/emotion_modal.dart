@@ -88,7 +88,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
                                 () => WriteDiaryScreen(
                                   date: controller.nowDate.value,
                                   emotion: controller.selectedEmotion.value,
-                                  weather: controller.weatherStatus.value!,
+                                  weather:
+                                      controller.selectedWeather.value.image,
                                   emoticonIndex:
                                       (controller.emotionNumberValue.value * 10)
                                           .toInt(),

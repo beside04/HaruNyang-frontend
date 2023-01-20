@@ -5,7 +5,6 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/weather_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class WeatherModal extends GetView<DiaryViewModel> {
@@ -45,16 +44,17 @@ class WeatherModal extends GetView<DiaryViewModel> {
                 child: ListView.builder(
                   physics: const BouncingScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: weatherDataList.length,
+                  itemCount: controller.weatherDataList.length,
                   itemBuilder: (BuildContext context, int i) {
                     return Obx(
                       () => WeatherIconButton(
-                        name: weatherDataList[i].name,
-                        icon: weatherDataList[i].icon,
-                        selected:
-                            controller.weatherStatus.value == Weather.values[i],
+                        name: controller.weatherDataList[i].value,
+                        icon: controller.weatherDataList[i].image,
+                        selected: controller.selectedWeather.value ==
+                            controller.weatherDataList[i],
                         onPressed: () {
-                          controller.weatherStatus.value = Weather.values[i];
+                          controller.selectedWeather.value =
+                              controller.weatherDataList[i];
                         },
                       ),
                     );
@@ -64,7 +64,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
               Obx(
                 () => BottomButton(
                   title: '다음으로',
-                  onTap: controller.weatherStatus.value == null
+                  onTap: controller.selectedWeather.value.image.isEmpty
                       ? null
                       : () {
                           controller.popDownEmotionModal();
