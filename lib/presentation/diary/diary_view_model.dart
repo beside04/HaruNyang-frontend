@@ -1,19 +1,24 @@
-import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
-import 'package:frontend/domain/use_case/emoticon_use_case/get_emoticon_use_case.dart';
+import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
+import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
+import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_use_case.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class DiaryViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
   final GetEmoticonUseCase getEmoticonUseCase;
+  final GetWeatherUseCase getWeatherUseCase;
 
   DiaryViewModel({
     required this.getEmoticonUseCase,
+    required this.getWeatherUseCase,
   }) {
     getEmoticonData();
+    getWeatherData();
   }
 
-  final weatherStatus = Rx<Weather?>(null);
+  //final weatherStatus = Rx<Weather?>(null);
 
   // final emotionStatus = Rx<Emotion?>(null);
   final nowDate = DateTime.now().obs;
@@ -24,6 +29,9 @@ class DiaryViewModel extends GetxController
   final RxList<EmoticonData> emoticonDataList = <EmoticonData>[].obs;
   final Rx<EmoticonData> selectedEmotion =
       EmoticonData(emoticon: '', value: '', desc: '').obs;
+
+  final RxList<WeatherData> weatherDataList = <WeatherData>[].obs;
+  final Rx<WeatherData> selectedWeather = WeatherData(image: '', value: '').obs;
 
   void popDownEmotionModal() {
     isEmotionModal.value = false;
@@ -53,7 +61,7 @@ class DiaryViewModel extends GetxController
     final result = await getEmoticonUseCase(limit, page);
 
     result.when(
-      success: (data) async {
+      success: (data) {
         emoticonDataList.value = data;
         // for (final emoticon in data) {
         //   await precachePicture(
@@ -63,6 +71,19 @@ class DiaryViewModel extends GetxController
         //       ),
         //       null);
         // }
+      },
+      error: (message) {
+        Get.snackbar('알림', message);
+      },
+    );
+  }
+
+  Future<void> getWeatherData() async {
+    final result = await getWeatherUseCase();
+
+    result.when(
+      success: (data) {
+        weatherDataList.value = data;
       },
       error: (message) {
         Get.snackbar('알림', message);

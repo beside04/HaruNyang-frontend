@@ -9,22 +9,21 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   final DateTime date;
   final EmoticonData emotion;
-  final Weather weather;
+  final String weather;
   final int emoticonIndex;
   final DiaryData? diaryData;
 
@@ -190,7 +189,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                     .diaryEditingController
                                                     .text,
                                                 emoticonIndex: emoticonIndex,
-                                                weather: weather.name,
+                                                weather: weather,
                                                 images: [],
                                                 wiseSayings: [],
                                               ),
@@ -405,7 +404,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                         child: WeatherEmotionBadgeComponent(
                           emoticon: emotion.emoticon,
                           emoticonIndex: emoticonIndex,
-                          weatherIcon: weatherDataList[weather.index].icon,
+                          weatherIcon: weather,
                           color: Theme.of(context).colorScheme.surface_01,
                         ),
                       ),

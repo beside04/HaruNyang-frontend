@@ -29,7 +29,7 @@ class WeatherEmotionBadgeComponent extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-          child: SvgPicture.asset(
+          child: SvgPicture.network(
             weatherIcon,
             width: 16.w,
             height: 16.h,

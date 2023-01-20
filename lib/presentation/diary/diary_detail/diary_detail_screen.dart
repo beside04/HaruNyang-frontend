@@ -16,7 +16,6 @@ import 'package:frontend/presentation/diary/components/diary_popup_menu_item.dar
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
@@ -60,7 +59,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                   Get.to(
                     () => WriteDiaryScreen(
                       date: date,
-                      weather: Weather.values[0],
+                      weather: controller.diary.value!.weather,
                       emotion: controller.diary.value!.emotion,
                       emoticonIndex: controller.diary.value!.emoticonIndex,
                       diaryData: controller.diary.value!,
@@ -210,8 +209,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                       WeatherEmotionBadgeComponent(
                         emoticon: diaryData.emotion.emoticon,
                         emoticonIndex: diaryData.emoticonIndex,
-                        weatherIcon:
-                            "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
+                        weatherIcon: diaryData.weather,
                         color: Theme.of(context).colorScheme.surface_01,
                       ),
                       SizedBox(

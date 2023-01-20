@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:frontend/domain/model/diary/weather_data.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 enum Job {
@@ -9,15 +8,6 @@ enum Job {
   freelancer,
   rest,
   etc,
-}
-
-enum Weather {
-  sunny,
-  cloudy,
-  rainy,
-  snow,
-  windy,
-  thunder,
 }
 
 enum Emotion {
@@ -41,39 +31,6 @@ enum SocialIDCheck {
 }
 
 const int getEmoticonLimitCount = 100;
-
-List<WeatherData> weatherDataList = [
-  WeatherData(
-    name: "맑음",
-    icon: 'lib/config/assets/images/diary/weather/sunny.svg',
-    value: 'sunny',
-  ),
-  WeatherData(
-    name: "흐림",
-    icon: 'lib/config/assets/images/diary/weather/cloudy.svg',
-    value: 'cloudy',
-  ),
-  WeatherData(
-    name: "비",
-    icon: 'lib/config/assets/images/diary/weather/rainy.svg',
-    value: 'rainy',
-  ),
-  WeatherData(
-    name: "눈",
-    icon: 'lib/config/assets/images/diary/weather/snow.svg',
-    value: 'snow',
-  ),
-  WeatherData(
-    name: "바람",
-    icon: 'lib/config/assets/images/diary/weather/windy.svg',
-    value: 'windy',
-  ),
-  WeatherData(
-    name: "번개",
-    icon: 'lib/config/assets/images/diary/weather/thunder.svg',
-    value: 'thunder',
-  ),
-];
 
 List<JobData> jobList = [
   JobData(
@@ -108,7 +65,7 @@ List<JobData> jobList = [
   ),
 ];
 
-Widget getEmotionTextWidget(int value,TextStyle style) {
+Widget getEmotionTextWidget(int value, TextStyle style) {
   if (value < 20.0) {
     return Text("조금", style: style);
   } else if (value < 50.0) {

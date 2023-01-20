@@ -1,9 +1,9 @@
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/Emoticon/emoticon_data.dart';
-import 'package:frontend/domain/repository/emoticon/emoticon_repository.dart';
+import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
+import 'package:frontend/domain/repository/emoticon_weather/emoticon_repository.dart';
 
 class GetEmoticonUseCase {
-  final EmoticonRepository emoticonRepository;
+  final EmoticonWeatherRepository emoticonRepository;
 
   GetEmoticonUseCase({
     required this.emoticonRepository,
