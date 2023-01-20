@@ -30,9 +30,7 @@ class DiaryController extends GetxController {
     required this.deleteDiaryUseCase,
     required this.bookmarkUseCase,
     required this.getEmotionStampUseCase,
-  }) {
-    getMonthStartEndData();
-  }
+  });
 
   final Rx<DiaryState> _state = DiaryState(
     focusedStartDate: DateTime.now(),
@@ -237,6 +235,13 @@ class DiaryController extends GetxController {
         state.value.focusedCalendarDate.month + 1,
         0,
       ),
+    );
+  }
+
+  void initPage() {
+    onPageChanged(DateTime.now());
+    _state.value = state.value.copyWith(
+      selectedCalendarDate: DateTime.now(),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/login_state.dart';
@@ -41,17 +42,7 @@ class LoginViewModel extends GetxController {
         //로그인
         final loginResult = await _onLogin(isSocialKakao: true);
         if (loginResult) {
-          final bool isOnBoardingDone =
-              await Get.find<OnBoardingController>().getMyInformation();
-          if (isOnBoardingDone) {
-            //홈으로 이동
-            goHome();
-          } else {
-            //온보딩 화면으로 이동
-            Get.offAll(
-              () => const OnBoardingNicknameScreen(),
-            );
-          }
+          await _loginDone();
         }
         break;
       case SocialIDCheck.notMember:
@@ -87,17 +78,7 @@ class LoginViewModel extends GetxController {
         //이미 가입한 회원이므로 로그인
         final loginResult = await _onLogin(isSocialKakao: false);
         if (loginResult) {
-          final bool isOnBoardingDone =
-              await Get.find<OnBoardingController>().getMyInformation();
-          if (isOnBoardingDone) {
-            //홈으로 이동
-            goHome();
-          } else {
-            //온보딩 화면으로 이동
-            Get.offAll(
-              () => const OnBoardingNicknameScreen(),
-            );
-          }
+          await _loginDone();
         }
         break;
       case SocialIDCheck.notMember:
@@ -183,5 +164,22 @@ class LoginViewModel extends GetxController {
         getHomeViewModelBinding,
       ),
     );
+  }
+
+  Future<void> _loginDone() async {
+    //캘린더 업데이트
+    Get.find<DiaryController>().initPage();
+
+    final bool isOnBoardingDone =
+        await Get.find<OnBoardingController>().getMyInformation();
+    if (isOnBoardingDone) {
+      //홈으로 이동
+      goHome();
+    } else {
+      //온보딩 화면으로 이동
+      Get.offAll(
+        () => const OnBoardingNicknameScreen(),
+      );
+    }
   }
 }

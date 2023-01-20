@@ -48,21 +48,24 @@ class _SplashScreenState extends State<SplashScreen>
             getLoginBinding,
           ),
         );
-      } else if (isOnBoardingDone == false) {
-        //온보딩 화면 이동
-        Get.offAll(
-          () => const OnBoardingNicknameScreen(),
-        );
       } else {
         //캘린더 업데이트
-        diaryController.onPageChanged(DateTime.now());
-        //Home 화면 이동
-        Get.offAll(
-          () => const HomeScreen(),
-          binding: BindingsBuilder(
-            getHomeViewModelBinding,
-          ),
-        );
+        diaryController.initPage();
+
+        if (isOnBoardingDone == false) {
+          //온보딩 화면 이동
+          Get.offAll(
+            () => const OnBoardingNicknameScreen(),
+          );
+        } else {
+          //Home 화면 이동
+          Get.offAll(
+            () => const HomeScreen(),
+            binding: BindingsBuilder(
+              getHomeViewModelBinding,
+            ),
+          );
+        }
       }
     });
   }
