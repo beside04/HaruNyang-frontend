@@ -39,8 +39,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                 WeatherEmotionBadgeComponent(
                   emoticon: diaryData.emotion.emoticon,
                   emoticonIndex: diaryData.emoticonIndex,
-                  weatherIcon:
-                      "lib/config/assets/images/diary/weather/${diaryData.weather}.svg",
+                  weatherIcon: diaryData.weather,
                   color: Theme.of(context).colorScheme.surface_01,
                 )
               ],

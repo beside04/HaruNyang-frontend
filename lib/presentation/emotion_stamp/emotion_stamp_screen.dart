@@ -7,14 +7,39 @@ import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.
 import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_list_widget.dart';
-import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class EmotionStampScreen extends GetView<EmotionStampViewModel> {
+class YearMonthModel extends DatePickerModel {
+  YearMonthModel(
+      {required DateTime currentTime,
+      required DateTime maxTime,
+      required DateTime minTime,
+      required LocaleType locale})
+      : super(
+            currentTime: currentTime,
+            maxTime: maxTime,
+            minTime: minTime,
+            locale: locale);
+
+  @override
+  List<int> layoutProportions() {
+    return [1, 1, 0];
+  }
+}
+
+class EmotionStampScreen extends StatefulWidget {
   const EmotionStampScreen({super.key});
+
+  @override
+  State<EmotionStampScreen> createState() => _EmotionStampScreenState();
+}
+
+class _EmotionStampScreenState extends State<EmotionStampScreen> {
+  final diaryController = Get.find<DiaryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,9 +50,9 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
           Obx(
             () => IconButton(
               onPressed: () {
-                controller.isCalendar.value = !controller.isCalendar.value;
+                diaryController.toggleCalendarMode();
               },
-              icon: controller.isCalendar.value
+              icon: diaryController.state.value.isCalendar
                   ? const Icon(Icons.list)
                   : const Icon(Icons.calendar_month_outlined),
             ),
@@ -39,16 +64,14 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
               DatePicker.showPicker(
                 context,
                 pickerModel: YearMonthModel(
-                  currentTime: controller.focusedCalendarDate.value,
+                  currentTime: diaryController.state.value.focusedCalendarDate,
                   maxTime: DateTime(2099, 12),
                   minTime: DateTime(2000, 1),
                   locale: LocaleType.ko,
                 ),
                 showTitleActions: true,
                 onConfirm: (date) {
-                  controller.focusedCalendarDate.value = date;
-                  controller.getMonthStartEndData();
-                  controller.getEmotionStampList();
+                  diaryController.onPageChanged(date);
                 },
                 locale: LocaleType.ko,
                 theme: DatePickerTheme(
@@ -67,8 +90,8 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    DateFormat('yyyy년 MM월')
-                        .format(controller.focusedCalendarDate.value),
+                    DateFormat('yyyy년 MM월').format(
+                        diaryController.state.value.focusedCalendarDate),
                     style: kHeader3Style.copyWith(
                         color: Theme.of(context).colorScheme.textTitle),
                   ),
@@ -92,7 +115,7 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
               () => Expanded(
                 child: PageTransitionSwitcher(
                   duration: const Duration(milliseconds: 300),
-                  reverse: !controller.isCalendar.value,
+                  reverse: !diaryController.state.value.isCalendar,
                   transitionBuilder: (Widget child, Animation<double> animation,
                       Animation<double> secondaryAnimation) {
                     return SharedAxisTransition(
@@ -102,11 +125,11 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
                       child: child,
                     );
                   },
-                  child: controller.isLoading.value
+                  child: diaryController.state.value.isCalendarLoading
                       ? const Center(child: CircularProgressIndicator())
-                      : controller.isCalendar.value
+                      : diaryController.state.value.isCalendar
                           ? const EmotionCalendarWidget()
-                          : EmotionListWidget(),
+                          : const EmotionListWidget(),
                 ),
               ),
             ),
@@ -114,23 +137,5 @@ class EmotionStampScreen extends GetView<EmotionStampViewModel> {
         ),
       ),
     );
-  }
-}
-
-class YearMonthModel extends DatePickerModel {
-  YearMonthModel(
-      {required DateTime currentTime,
-      required DateTime maxTime,
-      required DateTime minTime,
-      required LocaleType locale})
-      : super(
-            currentTime: currentTime,
-            maxTime: maxTime,
-            minTime: minTime,
-            locale: locale);
-
-  @override
-  List<int> layoutProportions() {
-    return [1, 1, 0];
   }
 }

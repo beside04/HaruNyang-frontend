@@ -1,6 +1,7 @@
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/login_state.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
@@ -40,10 +41,17 @@ class LoginViewModel extends GetxController {
         //로그인
         final loginResult = await _onLogin(isSocialKakao: true);
         if (loginResult) {
-          //온보딩 화면으로 이동
-          Get.offAll(
-            () => const OnBoardingNicknameScreen(),
-          );
+          final bool isOnBoardingDone =
+              await Get.find<OnBoardingController>().getMyInformation();
+          if (isOnBoardingDone) {
+            //홈으로 이동
+            goHome();
+          } else {
+            //온보딩 화면으로 이동
+            Get.offAll(
+              () => const OnBoardingNicknameScreen(),
+            );
+          }
         }
         break;
       case SocialIDCheck.notMember:
@@ -79,10 +87,17 @@ class LoginViewModel extends GetxController {
         //이미 가입한 회원이므로 로그인
         final loginResult = await _onLogin(isSocialKakao: false);
         if (loginResult) {
-          //온보딩 화면으로 이동
-          Get.offAll(
-            () => const OnBoardingNicknameScreen(),
-          );
+          final bool isOnBoardingDone =
+              await Get.find<OnBoardingController>().getMyInformation();
+          if (isOnBoardingDone) {
+            //홈으로 이동
+            goHome();
+          } else {
+            //온보딩 화면으로 이동
+            Get.offAll(
+              () => const OnBoardingNicknameScreen(),
+            );
+          }
         }
         break;
       case SocialIDCheck.notMember:
@@ -152,8 +167,6 @@ class LoginViewModel extends GetxController {
     await loginResult.when(
       success: (accessToken) async {
         result = true;
-        // await Get.find<EmotionStampViewModel>().getMonthStartEndData();
-        // await Get.find<EmotionStampViewModel>().getEmotionStampList();
       },
       error: (message) {
         Get.snackbar('알림', '로그인이 실패했습니다.');

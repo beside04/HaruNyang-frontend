@@ -21,7 +21,6 @@ import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart
 
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
@@ -38,13 +37,12 @@ import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_c
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/main_view_model.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
-import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -55,7 +53,6 @@ import 'package:frontend/presentation/profile/book_mark/book_mark_view_model.dar
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:get/get.dart';
-import 'package:image_cropper/image_cropper.dart';
 
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
 final DarkModeRepositoryImpl darkModeRepositoryImpl = DarkModeRepositoryImpl();
@@ -188,12 +185,6 @@ void getMainBinding() {
   Get.put(NotificationController());
 }
 
-void getEmotionStampBinding() {
-  Get.put(EmotionStampViewModel(
-    getEmotionStampUseCase: getEmotionStampUseCase,
-  ));
-}
-
 void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
@@ -214,27 +205,6 @@ void getWriteDiaryBinding() {
   Get.put(
     WriteDiaryViewModel(),
   );
-}
-
-void getDiaryDetailBinding({
-  required DiaryData diaryData,
-  required bool isStamp,
-  required CroppedFile? imageFile,
-  required DateTime date,
-}) {
-  Get.put(DiaryDetailViewModel(
-    getWiseSayingUseCase: getWiseSayingUseCase,
-    fileUploadUseCase: fileUploadUseCase,
-    saveDiaryUseCase: saveDiaryUseCase,
-    updateDiaryUseCase: updateDiaryUseCase,
-    deleteDiaryUseCase: deleteDiaryUseCase,
-    diaryData: diaryData,
-    imageFile: imageFile,
-    isStamp: isStamp,
-    date: date,
-    getEmotionStampUseCase: getEmotionStampUseCase,
-    bookmarkUseCase: bookmarkUseCase,
-  ));
 }
 
 void getLoginTermsInformationBinding() {
@@ -301,6 +271,20 @@ void getTokenControllerBinding() {
   Get.put(
     TokenController(
       tokenUseCase: tokenUseCase,
+    ),
+  );
+}
+
+void getDiaryControllerBinding() {
+  Get.put(
+    DiaryController(
+      fileUploadUseCase: fileUploadUseCase,
+      getWiseSayingUseCase: getWiseSayingUseCase,
+      saveDiaryUseCase: saveDiaryUseCase,
+      updateDiaryUseCase: updateDiaryUseCase,
+      deleteDiaryUseCase: deleteDiaryUseCase,
+      bookmarkUseCase: bookmarkUseCase,
+      getEmotionStampUseCase: getEmotionStampUseCase,
     ),
   );
 }

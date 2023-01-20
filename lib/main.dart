@@ -25,11 +25,8 @@ void main() async {
   // runApp() 호출 전 Flutter SDK 초기화
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
   KakaoSdk.init(nativeAppKey: appkey);
-  //global controller binding
   getMainBinding();
-  getOnBoardingControllerBinding();
-  getTokenControllerBinding();
-  getEmotionStampBinding();
+  globalControllerBinding();
   await Get.find<MainViewModel>().getIsDarkMode();
   await Get.find<MainViewModel>().getIsPushMessage();
 
@@ -39,6 +36,13 @@ void main() async {
 
     initializeDateFormatting().then((_) => runApp(const MyApp()));
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
+}
+
+void globalControllerBinding() {
+  getDiaryBinding();
+  getDiaryControllerBinding();
+  getOnBoardingControllerBinding();
+  getTokenControllerBinding();
 }
 
 GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

@@ -8,19 +8,19 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
 import 'package:frontend/presentation/diary/components/diary_loading_widget.dart';
 import 'package:frontend/presentation/diary/components/diary_popup_menu_item.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
-class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
+class DiaryDetailScreen extends StatefulWidget {
   final DateTime date;
   final DiaryData diaryData;
   final bool isStamp;
@@ -35,13 +35,27 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
   }) : super(key: key);
 
   @override
+  State<DiaryDetailScreen> createState() => _DiaryDetailScreenState();
+}
+
+class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
+  final diaryController = Get.find<DiaryController>();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (widget.isStamp) {
+        diaryController.setCalendarData(widget.diaryData);
+      } else {
+        await diaryController.saveDiary(
+            widget.diaryData, widget.imageFile, widget.date);
+      }
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    getDiaryDetailBinding(
-      diaryData: diaryData,
-      isStamp: isStamp,
-      imageFile: imageFile,
-      date: date,
-    );
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -58,11 +72,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                 if (id == 'edit') {
                   Get.to(
                     () => WriteDiaryScreen(
-                      date: date,
-                      weather: controller.diary.value!.weather,
-                      emotion: controller.diary.value!.emotion,
-                      emoticonIndex: controller.diary.value!.emoticonIndex,
-                      diaryData: controller.diary.value!,
+                      date: widget.date,
+                      weather: diaryController.state.value.diary!.weather,
+                      emotion: diaryController.state.value.diary!.emotion,
+                      emoticonIndex:
+                          diaryController.state.value.diary!.emoticonIndex,
+                      diaryData: diaryController.state.value.diary!,
                     ),
                   );
                 }
@@ -98,7 +113,8 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                             title: "예",
                             onTap: () async {
                               Get.back();
-                              await controller.deleteDiary();
+                              await diaryController.deleteDiary(
+                                  diaryController.state.value.diary!.id ?? '');
                               showDialog(
                                 barrierDismissible: true,
                                 context: context,
@@ -178,7 +194,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
           ),
         ],
         title: Text(
-          DateFormat('MM월 dd일').format(date),
+          DateFormat('MM월 dd일').format(widget.date),
           style: kHeader3Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
@@ -207,20 +223,20 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       WeatherEmotionBadgeComponent(
-                        emoticon: diaryData.emotion.emoticon,
-                        emoticonIndex: diaryData.emoticonIndex,
-                        weatherIcon: diaryData.weather,
+                        emoticon: widget.diaryData.emotion.emoticon,
+                        emoticonIndex: widget.diaryData.emoticonIndex,
+                        weatherIcon: widget.diaryData.weather,
                         color: Theme.of(context).colorScheme.surface_01,
                       ),
                       SizedBox(
                         height: 12.h,
                       ),
-                      controller.networkImage.value.isNotEmpty
+                      diaryController.state.value.networkImage.isNotEmpty
                           ? Column(
                               children: [
                                 Center(
                                   child: Image.network(
-                                    controller.networkImage.value,
+                                    diaryController.state.value.networkImage,
                                     width: double.infinity,
                                     fit: BoxFit.cover,
                                   ),
@@ -232,7 +248,7 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                             )
                           : Container(),
                       Text(
-                        diaryData.diaryContent,
+                        widget.diaryData.diaryContent,
                         style: kBody1Style.copyWith(
                             color: Theme.of(context).colorScheme.textBody),
                       )
@@ -252,12 +268,12 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                 ),
                 Obx(
                   () => SizedBox(
-                    height: controller.isLoading.value ? 36.h : 16.h,
+                    height: diaryController.state.value.isLoading ? 36.h : 16.h,
                   ),
                 ),
                 Obx(
                   () {
-                    if (controller.isLoading.value) {
+                    if (diaryController.state.value.isLoading) {
                       return const DiaryLoadingWidget();
                     } else {
                       return AnimationLimiter(
@@ -265,8 +281,11 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                           shrinkWrap: true,
                           padding: EdgeInsets.only(left: 20.w, right: 20.w),
                           physics: const NeverScrollableScrollPhysics(),
-                          itemCount: controller.wiseSayingList.length < 3
-                              ? controller.wiseSayingList.length
+                          itemCount: diaryController
+                                      .state.value.wiseSayingList.length <
+                                  3
+                              ? diaryController
+                                  .state.value.wiseSayingList.length
                               : 3,
                           itemBuilder: (BuildContext context, int index) {
                             return AnimationConfiguration.staggeredList(
@@ -335,33 +354,41 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                     ],
                                                   ),
                                                   Obx(
-                                                    () => controller
-                                                            .wiseSayingList[
-                                                                index]
-                                                            .isBookmarked
-                                                        ? GestureDetector(
-                                                            onTap: () {
-                                                              controller.toggleBookmark(
-                                                                  controller
-                                                                          .wiseSayingList[
-                                                                      index]);
-                                                            },
-                                                            child: const Icon(
-                                                              Icons.bookmark,
-                                                              color:
-                                                                  kOrange300Color,
-                                                            ),
-                                                          )
-                                                        : GestureDetector(
-                                                            onTap: () {
-                                                              controller.toggleBookmark(
-                                                                  controller
-                                                                          .wiseSayingList[
-                                                                      index]);
-                                                            },
-                                                            child: const Icon(Icons
-                                                                .bookmark_border),
-                                                          ),
+                                                    () =>
+                                                        diaryController
+                                                                .state
+                                                                .value
+                                                                .wiseSayingList[
+                                                                    index]
+                                                                .isBookmarked
+                                                            ? GestureDetector(
+                                                                onTap: () {
+                                                                  diaryController.toggleBookmark(
+                                                                      diaryController
+                                                                          .state
+                                                                          .value
+                                                                          .wiseSayingList[index]);
+                                                                },
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .bookmark,
+                                                                  color:
+                                                                      kOrange300Color,
+                                                                ),
+                                                              )
+                                                            : GestureDetector(
+                                                                onTap: () {
+                                                                  diaryController.toggleBookmark(
+                                                                      diaryController
+                                                                          .state
+                                                                          .value
+                                                                          .wiseSayingList[index]);
+                                                                },
+                                                                child: const Icon(
+                                                                    Icons
+                                                                        .bookmark_border),
+                                                              ),
                                                   )
                                                 ],
                                               ),
@@ -369,7 +396,10 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                 height: 12.h,
                                               ),
                                               Text(
-                                                controller.wiseSayingList[index]
+                                                diaryController
+                                                    .state
+                                                    .value
+                                                    .wiseSayingList[index]
                                                     .message,
                                                 style: kBody1Style.copyWith(
                                                     color: Theme.of(context)
@@ -380,7 +410,9 @@ class DiaryDetailScreen extends GetView<DiaryDetailViewModel> {
                                                 alignment:
                                                     Alignment.centerRight,
                                                 child: Text(
-                                                  controller
+                                                  diaryController
+                                                      .state
+                                                      .value
                                                       .wiseSayingList[index]
                                                       .author,
                                                   style: kBody2Style.copyWith(

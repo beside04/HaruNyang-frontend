@@ -3,18 +3,23 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
-import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:get/get.dart';
 import 'package:jiffy/jiffy.dart';
 
-// ignore: must_be_immutable
-class EmotionListWidget extends GetView<EmotionStampViewModel> {
-  Map<String, bool> weekName = {};
+class EmotionListWidget extends StatefulWidget {
+  const EmotionListWidget({super.key});
 
-  EmotionListWidget({super.key});
+  @override
+  State<EmotionListWidget> createState() => _EmotionListWidgetState();
+}
+
+class _EmotionListWidgetState extends State<EmotionListWidget> {
+  Map<String, bool> weekName = {};
+  final diaryController = Get.find<DiaryController>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,31 +27,34 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
       color: Theme.of(context).scaffoldBackgroundColor,
       child: SwipeDetector(
         onSwipeLeft: () {
-          controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
-              .add(months: 1)
-              .dateTime);
+          diaryController.onPageChanged(
+              Jiffy(diaryController.state.value.focusedCalendarDate)
+                  .add(months: 1)
+                  .dateTime);
         },
         onSwipeRight: () {
-          controller.onPageChanged(Jiffy(controller.focusedCalendarDate.value)
-              .subtract(months: 1)
-              .dateTime);
+          diaryController.onPageChanged(
+              Jiffy(diaryController.state.value.focusedCalendarDate)
+                  .subtract(months: 1)
+                  .dateTime);
         },
         child: PageView.builder(
           physics: const NeverScrollableScrollPhysics(),
-          controller: PageController(initialPage: controller.currentPageCount),
+          controller:
+              PageController(initialPage: diaryController.currentPageCount),
           itemBuilder: (context, i) {
             return ListView.builder(
-              itemCount: controller.diaryDataList.isEmpty
+              itemCount: diaryController.state.value.diaryDataList.isEmpty
                   ? 1
-                  : controller.diaryDataList.length,
+                  : diaryController.state.value.diaryDataList.length,
               itemBuilder: (BuildContext context, int index) {
                 String dateTime = '';
-                if (controller.diaryDataList.isNotEmpty) {
-                  dateTime = weekOfMonthForSimple(DateTime.parse(
-                      controller.diaryDataList[index].writtenAt));
+                if (diaryController.state.value.diaryDataList.isNotEmpty) {
+                  dateTime = weekOfMonthForSimple(DateTime.parse(diaryController
+                      .state.value.diaryDataList[index].writtenAt));
                 }
 
-                return controller.diaryDataList.isEmpty
+                return diaryController.state.value.diaryDataList.isEmpty
                     ? Column(
                         children: [
                           Column(
@@ -79,10 +87,11 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
                         onTap: () {
                           Get.to(
                             () => DiaryDetailScreen(
-                              date: DateTime.parse(
-                                  controller.diaryDataList[index].writtenAt),
+                              date: DateTime.parse(diaryController
+                                  .state.value.diaryDataList[index].writtenAt),
                               isStamp: true,
-                              diaryData: controller.diaryDataList[index],
+                              diaryData: diaryController
+                                  .state.value.diaryDataList[index],
                             ),
                           );
                         },
@@ -107,7 +116,8 @@ class EmotionListWidget extends GetView<EmotionStampViewModel> {
                                 right: 20.w,
                               ),
                               child: EmotionCardDiaryWidget(
-                                diaryData: controller.diaryDataList[index],
+                                diaryData: diaryController
+                                    .state.value.diaryDataList[index],
                               ),
                             )
                           ],
