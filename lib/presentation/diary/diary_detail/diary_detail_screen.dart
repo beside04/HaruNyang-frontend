@@ -75,7 +75,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                       date: widget.date,
                       weather: diaryController.state.value.diary!.weather,
                       emotion: diaryController.state.value.diary!.emotion,
-                      emoticonIndex: diaryController.state.value.diary!.emoticonIndex,
+                      emoticonIndex:
+                          diaryController.state.value.diary!.emoticonIndex,
                       diaryData: diaryController.state.value.diary!,
                     ),
                   );
@@ -112,8 +113,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                             title: "예",
                             onTap: () async {
                               Get.back();
-                              await diaryController
-                                  .deleteDiary(diaryController.state.value.diary!.id ?? '');
+                              await diaryController.deleteDiary(
+                                  diaryController.state.value.diary!.id ?? '');
                               showDialog(
                                 barrierDismissible: true,
                                 context: context,
@@ -267,9 +268,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                 ),
                 Obx(
                   () => SizedBox(
-                    height: diaryController.state.value.isLoading
-                        ? 36.h
-                        : 16.h,
+                    height: diaryController.state.value.isLoading ? 36.h : 16.h,
                   ),
                 ),
                 Obx(
