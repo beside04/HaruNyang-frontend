@@ -5,6 +5,7 @@ import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
+import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
 import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:frontend/global_controller/diary/diary_state.dart';
@@ -19,6 +20,7 @@ class DiaryController extends GetxController {
   final UpdateDiaryUseCase updateDiaryUseCase;
   final DeleteDiaryUseCase deleteDiaryUseCase;
   final BookmarkUseCase bookmarkUseCase;
+  final GetEmotionStampUseCase getEmotionStampUseCase;
 
   DiaryController({
     required this.fileUploadUseCase,
@@ -27,11 +29,20 @@ class DiaryController extends GetxController {
     required this.updateDiaryUseCase,
     required this.deleteDiaryUseCase,
     required this.bookmarkUseCase,
-  });
+    required this.getEmotionStampUseCase,
+  }) {
+    getMonthStartEndData();
+  }
 
-  final Rx<DiaryState> _state = DiaryState().obs;
+  final Rx<DiaryState> _state = DiaryState(
+    focusedStartDate: DateTime.now(),
+    focusedEndDate: DateTime.now(),
+    focusedCalendarDate: DateTime.now(),
+    selectedCalendarDate: DateTime.now(),
+  ).obs;
 
   Rx<DiaryState> get state => _state;
+  int currentPageCount = 250;
 
   Future<void> saveDiary(
       DiaryData diary, CroppedFile? imageFile, DateTime writeDate) async {
@@ -91,6 +102,7 @@ class DiaryController extends GetxController {
       );
     }
 
+    getEmotionStampList();
     _state.value = state.value.copyWith(
       isLoading: false,
     );
@@ -98,6 +110,7 @@ class DiaryController extends GetxController {
 
   Future<void> deleteDiary(String diaryID) async {
     await deleteDiaryUseCase(diaryID);
+    getEmotionStampList();
   }
 
   void setCalendarData(DiaryData diaryData) {
@@ -175,5 +188,76 @@ class DiaryController extends GetxController {
         bookmarkUseCase.deleteBookmark(state.value.wiseSayingList[index].id!);
       }
     }
+  }
+
+  Future<void> getEmotionStampList() async {
+    _state.value = state.value.copyWith(
+      isCalendarLoading: true,
+    );
+
+    final result = await getEmotionStampUseCase(
+      DateFormat('yyyy-MM-dd').format(state.value.focusedStartDate),
+      DateFormat('yyyy-MM-dd').format(state.value.focusedEndDate),
+    );
+
+    result.when(
+      success: (result) {
+        result.sort((a, b) {
+          return b.writtenAt.compareTo(a.writtenAt);
+        });
+
+        _state.value = state.value.copyWith(
+          diaryDataList: result,
+        );
+      },
+      error: (message) {
+        Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
+      },
+    );
+
+    _state.value = state.value.copyWith(
+      isCalendarLoading: false,
+    );
+  }
+
+  void getMonthStartEndData() {
+    _state.value = state.value.copyWith(
+      focusedStartDate: DateTime(
+        state.value.focusedCalendarDate.year,
+        state.value.focusedCalendarDate.month,
+        1,
+      ),
+      focusedEndDate: DateTime(
+        state.value.focusedCalendarDate.year,
+        state.value.focusedCalendarDate.month + 1,
+        0,
+      ),
+    );
+  }
+
+  void onPageChanged(DateTime day) {
+    _state.value = state.value.copyWith(
+      focusedCalendarDate: day,
+    );
+    getMonthStartEndData();
+    getEmotionStampList();
+  }
+
+  void setFocusDay(DateTime day) {
+    _state.value = state.value.copyWith(
+      focusedCalendarDate: day,
+    );
+  }
+
+  void toggleCalendarMode() {
+    _state.value = state.value.copyWith(
+      isCalendar: !state.value.isCalendar,
+    );
+  }
+
+  void setSelectedCalendarDate(DateTime date) {
+    _state.value = state.value.copyWith(
+      selectedCalendarDate: date,
+    );
   }
 }

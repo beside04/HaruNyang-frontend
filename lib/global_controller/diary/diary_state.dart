@@ -12,7 +12,14 @@ class DiaryState with _$DiaryState {
     DiaryData? diary,
     @Default([]) List<WiseSayingData> wiseSayingList,
     @Default('') String networkImage,
-    @Default(false) isLoading,
+    @Default(false) bool isLoading,
+    @Default(false) bool isCalendarLoading,
+    @Default(true) bool isCalendar,
+    @Default([]) List<DiaryData> diaryDataList,
+    required DateTime focusedStartDate,
+    required DateTime focusedEndDate,
+    required DateTime focusedCalendarDate,
+    required DateTime selectedCalendarDate,
   }) = _DiaryState;
 
   factory DiaryState.fromJson(Map<String, dynamic> json) =>

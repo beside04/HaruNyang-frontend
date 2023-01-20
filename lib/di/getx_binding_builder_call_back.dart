@@ -43,7 +43,6 @@ import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
-import 'package:frontend/presentation/emotion_stamp/emotion_stamp_view_model.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -186,12 +185,6 @@ void getMainBinding() {
   Get.put(NotificationController());
 }
 
-void getEmotionStampBinding() {
-  Get.put(EmotionStampViewModel(
-    getEmotionStampUseCase: getEmotionStampUseCase,
-  ));
-}
-
 void getLoginBinding() {
   Get.put(LoginViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
@@ -291,6 +284,7 @@ void getDiaryControllerBinding() {
       updateDiaryUseCase: updateDiaryUseCase,
       deleteDiaryUseCase: deleteDiaryUseCase,
       bookmarkUseCase: bookmarkUseCase,
+      getEmotionStampUseCase: getEmotionStampUseCase,
     ),
   );
 }

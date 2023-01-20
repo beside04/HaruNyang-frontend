@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -20,6 +21,7 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _controller;
   final tokenController = Get.find<TokenController>();
   final onBoardingController = Get.find<OnBoardingController>();
+  final diaryController = Get.find<DiaryController>();
 
   @override
   void initState() {
@@ -30,13 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
   }
 
-  void controllerBinding() {
-    getDiaryBinding();
-    getDiaryControllerBinding();
-  }
-
   Future<void> init() async {
-    controllerBinding();
     await Future.delayed(const Duration(seconds: 5), () async {
       String? token = await tokenController.getAccessToken();
       bool isOnBoardingDone = false;
@@ -58,6 +54,8 @@ class _SplashScreenState extends State<SplashScreen>
           () => const OnBoardingNicknameScreen(),
         );
       } else {
+        //캘린더 업데이트
+        diaryController.onPageChanged(DateTime.now());
         //Home 화면 이동
         Get.offAll(
           () => const HomeScreen(),
