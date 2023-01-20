@@ -174,12 +174,17 @@ class DiaryController extends GetxController {
   }
 
   void toggleBookmark(WiseSayingData wiseSayingData) {
-    final index = state.value.wiseSayingList.indexOf(wiseSayingData);
-    final tempWiseSayingList = wiseSayingData.copyWith(
+    List<WiseSayingData> tempList = List.from(state.value.wiseSayingList);
+    final index = tempList.indexOf(wiseSayingData);
+    final tempWiseSaying = wiseSayingData.copyWith(
       isBookmarked: !wiseSayingData.isBookmarked,
     );
+    tempList[index] = tempWiseSaying;
+    _state.value = state.value.copyWith(
+      wiseSayingList: tempList,
+    );
 
-    if (tempWiseSayingList.isBookmarked) {
+    if (tempWiseSaying.isBookmarked) {
       if (state.value.wiseSayingList[index].id != null) {
         bookmarkUseCase.saveBookmark(state.value.wiseSayingList[index].id!);
       }
