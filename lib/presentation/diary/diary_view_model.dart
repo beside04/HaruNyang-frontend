@@ -1,3 +1,4 @@
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
@@ -60,17 +61,17 @@ class DiaryViewModel extends GetxController
     int page = 0;
     final result = await getEmoticonUseCase(limit, page);
 
-    result.when(
-      success: (data) {
+    await result.when(
+      success: (data) async {
         emoticonDataList.value = data;
-        // for (final emoticon in data) {
-        //   await precachePicture(
-        //       NetworkPicture(
-        //         SvgPicture.svgByteDecoderBuilder,
-        //         emoticon.emoticon,
-        //       ),
-        //       null);
-        // }
+        for (final emoticon in data) {
+          await precachePicture(
+              NetworkPicture(
+                SvgPicture.svgByteDecoderBuilder,
+                emoticon.emoticon,
+              ),
+              null);
+        }
       },
       error: (message) {
         Get.snackbar('알림', message);
@@ -81,9 +82,17 @@ class DiaryViewModel extends GetxController
   Future<void> getWeatherData() async {
     final result = await getWeatherUseCase();
 
-    result.when(
-      success: (data) {
+    await result.when(
+      success: (data) async {
         weatherDataList.value = data;
+        for (final weather in data) {
+          await precachePicture(
+              NetworkPicture(
+                SvgPicture.svgByteDecoderBuilder,
+                weather.image,
+              ),
+              null);
+        }
       },
       error: (message) {
         Get.snackbar('알림', message);

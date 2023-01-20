@@ -30,7 +30,12 @@ class _SplashScreenState extends State<SplashScreen>
     super.initState();
   }
 
+  void controllerBinding() {
+    getDiaryBinding();
+  }
+
   Future<void> init() async {
+    controllerBinding();
     await Future.delayed(const Duration(seconds: 5), () async {
       String? token = await tokenController.getAccessToken();
       bool isOnBoardingDone = false;

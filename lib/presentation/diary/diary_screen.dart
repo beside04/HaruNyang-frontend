@@ -23,7 +23,6 @@ class DiaryScreen extends GetView<DiaryViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    getDiaryBinding();
     final onBoardingController = Get.find<OnBoardingController>();
 
     if (date != null) {
