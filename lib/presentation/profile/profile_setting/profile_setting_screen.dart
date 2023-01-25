@@ -31,7 +31,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
   }) : super(key: key);
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-    final onBoardingController = Get.find<OnBoardingController>();
+  final onBoardingController = Get.find<OnBoardingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +96,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           Padding(
                             padding: EdgeInsets.all(24.w),
                             child: NicknameTextField(
+                              nameHintText:
+                                  onBoardingController.state.value.nickname,
                               textEditingController:
                                   controller.nicknameEditingController,
                               suffixIcon: Obx(

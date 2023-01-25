@@ -7,10 +7,12 @@ import 'package:frontend/config/theme/theme_data.dart';
 class NicknameTextField extends StatelessWidget {
   const NicknameTextField({
     super.key,
+    required this.nameHintText,
     required this.textEditingController,
     required this.suffixIcon,
   });
 
+  final String nameHintText;
   final TextEditingController textEditingController;
   final Widget? suffixIcon;
 
@@ -26,7 +28,7 @@ class NicknameTextField extends StatelessWidget {
       decoration: InputDecoration(
         helperText: "",
         counterText: "",
-        hintText: '이름',
+        hintText: nameHintText,
         hintStyle: kSubtitle1Style.copyWith(
             color: Theme.of(context).colorScheme.placeHolder),
         contentPadding: const EdgeInsets.only(
