@@ -9,18 +9,12 @@ class BookMarkViewModel extends GetxController {
     required this.bookmarkUseCase,
   });
 
-  final RxBool isBookmark = false.obs;
-
   RxList<BookmarkData> bookmarkList = <BookmarkData>[].obs;
 
   @override
   void onInit() {
     super.onInit();
     getBookmark();
-  }
-
-  void toggleBookmark() {
-    isBookmark.value = !isBookmark.value;
   }
 
   Future<void> saveBookmark(int wiseSayingId) async {
@@ -50,7 +44,9 @@ class BookMarkViewModel extends GetxController {
   Future<void> deleteBookmark(int bookmarkId) async {
     final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
     result.when(
-      success: (data) {},
+      success: (data) {
+        getBookmark();
+      },
       error: (message) {},
     );
   }

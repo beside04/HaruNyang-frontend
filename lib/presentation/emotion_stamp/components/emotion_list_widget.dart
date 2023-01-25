@@ -103,7 +103,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                                 padding: EdgeInsets.only(top: 20.h, left: 20.w),
                                 child: Text(
                                   "$dateTime번째 주",
-                                  style: kSubtitle1Style.copyWith(
+                                  style: kHeader3Style.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
                                           .textTitle),
