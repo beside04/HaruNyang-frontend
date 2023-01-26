@@ -130,16 +130,19 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                   ? null
                                   : () async {
                                       var key = _fbKey.currentState!;
-                                      if (key.saveAndValidate()) {
+
+                                      if (key.saveAndValidate() ||
+                                          onBoardingController
+                                              .isDuplicateNickname.value) {
                                         FocusScope.of(context).unfocus();
 
                                         await onBoardingController
                                             .putMyInformation(
                                           nickname:
                                               controller.nicknameValue.value,
+                                          isOnBoarding: false,
+                                          isPutNickname: true,
                                         );
-
-                                        Get.back();
                                       }
                                     },
                             ),
@@ -253,6 +256,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                         await onBoardingController
                                             .putMyInformation(
                                           age: controller.ageValue.value,
+                                          isOnBoarding: false,
+                                          isPutNickname: false,
                                         );
 
                                         Get.back();
@@ -339,6 +344,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                 : () async {
                                     await onBoardingController.putMyInformation(
                                       job: controller.jobStatus.value!.name,
+                                      isOnBoarding: false,
+                                      isPutNickname: false,
                                     );
 
                                     Get.back();

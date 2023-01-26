@@ -1,5 +1,7 @@
+import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_state.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
 import 'package:get/get.dart';
 
 class OnBoardingController extends GetxController {
@@ -12,6 +14,9 @@ class OnBoardingController extends GetxController {
   final Rx<OnBoardingState> _state = OnBoardingState().obs;
 
   Rx<OnBoardingState> get state => _state;
+
+  final isDuplicateNickname = false.obs;
+  final nicknameError = Rx<String?>(null);
 
   Future<bool> getMyInformation() async {
     bool check = false;
@@ -36,13 +41,46 @@ class OnBoardingController extends GetxController {
     return check;
   }
 
-  Future<void> putMyInformation(
-      {String? nickname, String? job, String? age}) async {
+  Future<void> putNickname({
+    required String nickname,
+    required bool isOnBoarding,
+  }) async {
+    Result<bool> isNicknameError = await onBoardingUseCase.putMyInformation(
+        nickname: nickname, job: state.value.job, age: state.value.age);
+
+    if (isNicknameError == const Result<bool>.error('중복된 닉네임 입니다.')) {
+      isDuplicateNickname.value = true;
+      nicknameError.value = '중복된 닉네임 입니다.';
+    } else {
+      isDuplicateNickname.value = false;
+      nicknameError.value = null;
+
+      isOnBoarding
+          ? Get.to(
+              () => OnBoardingAgeScreen(
+                nickname: nickname,
+              ),
+              transition: Transition.cupertino,
+            )
+          : Get.back();
+    }
+  }
+
+  Future<void> putMyInformation({
+    String? nickname,
+    String? job,
+    String? age,
+    required bool isPutNickname,
+    required bool isOnBoarding,
+  }) async {
     nickname ??= state.value.nickname;
     job ??= state.value.job;
     age ??= state.value.age;
-    await onBoardingUseCase.putMyInformation(
-        nickname: nickname, job: job, age: age);
+
+    isPutNickname
+        ? await putNickname(nickname: nickname, isOnBoarding: isOnBoarding)
+        : await onBoardingUseCase.putMyInformation(
+            nickname: nickname, job: job, age: age);
 
     await getMyInformation();
   }
