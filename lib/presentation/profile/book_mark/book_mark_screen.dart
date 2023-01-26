@@ -35,37 +35,25 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(top: 8.0.h),
-          child: Column(
-            children: [
-              BookMarkList(
-                date: DateTime(2022, 12, 15),
-                isBookMark: controller.isBookmark.value,
-                title:
-                    '가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사',
-                name: '이름',
-                onTap: () {
-                  controller.toggleBookmark();
-                },
-              ),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: controller.bookmarkList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Obx(
-                    () => BookMarkList(
-                      date: DateTime(2022, 12, 15),
-                      isBookMark: controller.isBookmark.value,
-                      title:
-                          '가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사가나다라마바사',
-                      name: '이름',
-                      onTap: () {
-                        controller.toggleBookmark();
-                      },
-                    ),
-                  );
-                },
-              ),
-            ],
+          child: Obx(
+            () => ListView.builder(
+              shrinkWrap: true,
+              itemCount: controller.bookmarkList.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Obx(
+                  () => BookMarkList(
+                    date: DateTime(2022, 12, 15),
+                    isBookMark: false,
+                    title: controller.bookmarkList[index].wiseSaying.message,
+                    name: controller.bookmarkList[index].wiseSaying.author,
+                    onTap: () {
+                      controller
+                          .deleteBookmark(controller.bookmarkList[index].id);
+                    },
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

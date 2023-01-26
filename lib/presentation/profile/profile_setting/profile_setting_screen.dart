@@ -13,6 +13,8 @@ import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
+import 'package:frontend/presentation/components/dialog_button.dart';
+import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
@@ -31,7 +33,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
   }) : super(key: key);
 
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
-    final onBoardingController = Get.find<OnBoardingController>();
+  final onBoardingController = Get.find<OnBoardingController>();
 
   @override
   Widget build(BuildContext context) {
@@ -96,6 +98,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           Padding(
                             padding: EdgeInsets.all(24.w),
                             child: NicknameTextField(
+                              nameHintText:
+                                  onBoardingController.state.value.nickname,
                               textEditingController:
                                   controller.nicknameEditingController,
                               suffixIcon: Obx(
@@ -356,14 +360,51 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               ),
               title: '로그아웃',
               onPressed: () async {
-                isKakaoLogin
-                    ? await controller.kakaoLogout()
-                    : await controller.appleLogout();
-                Get.offAll(
-                  const LoginScreen(),
-                  binding: BindingsBuilder(
-                    getLoginBinding,
-                  ),
+                showDialog(
+                  barrierDismissible: true,
+                  context: context,
+                  builder: (ctx) {
+                    return DialogComponent(
+                      title: "로그아웃 하시겠어요?",
+                      content: Text(
+                        "다음에 또 만나요!",
+                        style: kHeader6Style.copyWith(
+                            color: Theme.of(context).colorScheme.textSubtitle),
+                      ),
+                      actionContent: [
+                        DialogButton(
+                          title: "아니요",
+                          onTap: () {
+                            Get.back();
+                          },
+                          backgroundColor:
+                              Theme.of(context).colorScheme.secondaryColor,
+                          textStyle: kHeader4Style.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.textSubtitle),
+                        ),
+                        SizedBox(
+                          width: 12.w,
+                        ),
+                        DialogButton(
+                          title: "예",
+                          onTap: () async {
+                            isKakaoLogin
+                                ? await controller.kakaoLogout()
+                                : await controller.appleLogout();
+                            Get.offAll(
+                              const LoginScreen(),
+                              binding: BindingsBuilder(
+                                getLoginBinding,
+                              ),
+                            );
+                          },
+                          backgroundColor: kOrange200Color,
+                          textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                        ),
+                      ],
+                    );
+                  },
                 );
               },
             ),

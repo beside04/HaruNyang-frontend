@@ -70,6 +70,7 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                               height: 20.h,
                             ),
                             NicknameTextField(
+                              nameHintText: '이름',
                               textEditingController:
                                   controller.nicknameEditingController,
                               suffixIcon: Obx(

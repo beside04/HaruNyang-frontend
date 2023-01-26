@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -19,7 +20,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceModal,
+        color: Theme.of(context).colorScheme.surface_01,
         borderRadius: BorderRadius.circular(20.0.w),
       ),
       child: Padding(
@@ -40,7 +41,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                   emoticon: diaryData.emotion.emoticon,
                   emoticonIndex: diaryData.emoticonIndex,
                   weatherIcon: diaryData.weather,
-                  color: Theme.of(context).colorScheme.surface_01,
+                  color: kWhiteColor,
                 )
               ],
             ),
