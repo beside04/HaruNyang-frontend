@@ -412,6 +412,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                         DialogButton(
                           title: "예",
                           onTap: () async {
+                            Get.find<OnBoardingController>()
+                                .clearMyInformation();
                             isKakaoLogin
                                 ? await controller.kakaoLogout()
                                 : await controller.appleLogout();
