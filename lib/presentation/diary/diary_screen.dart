@@ -12,7 +12,7 @@ import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
 
-class DiaryScreen extends GetView<DiaryViewModel> {
+class DiaryScreen extends StatefulWidget {
   final DateTime? date;
 
   const DiaryScreen({
@@ -21,15 +21,28 @@ class DiaryScreen extends GetView<DiaryViewModel> {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final onBoardingController = Get.find<OnBoardingController>();
+  State<DiaryScreen> createState() => _DiaryScreenState();
+}
 
-    if (date != null) {
-      controller.nowDate.value = date!;
+class _DiaryScreenState extends State<DiaryScreen> {
+  @override
+  void initState() {
+    Get.find<DiaryViewModel>().popUpEmotionModal();
+
+    super.initState();
+  }
+
+  final onBoardingController = Get.find<OnBoardingController>();
+  final controller = Get.find<DiaryViewModel>();
+
+  @override
+  Widget build(BuildContext context) {
+    if (widget.date != null) {
+      controller.nowDate.value = widget.date!;
     }
     return Scaffold(
       appBar: DiaryAppBar(
-        date: date != null ? date! : DateTime.now(),
+        date: widget.date != null ? widget.date! : DateTime.now(),
       ),
       body: Container(
         decoration: BoxDecoration(

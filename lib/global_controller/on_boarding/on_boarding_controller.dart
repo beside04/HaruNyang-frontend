@@ -13,7 +13,7 @@ class OnBoardingController extends GetxController {
 
   Rx<OnBoardingState> get state => _state;
 
-  Future<bool> getMyInformation() async {
+  Future<bool> getMyInformation({bool isMoveToLoginPage = true}) async {
     bool check = false;
     final myInfo = await onBoardingUseCase.getMyInformation();
 
