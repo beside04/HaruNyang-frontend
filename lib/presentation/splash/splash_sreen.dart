@@ -39,7 +39,6 @@ class _SplashScreenState extends State<SplashScreen>
       if (token != null) {
         isOnBoardingDone = await onBoardingController.getMyInformation(
             isMoveToLoginPage: false);
-        Get.find<DiaryController>().getAllBookmarkData();
       }
 
       if (token == null) {
@@ -61,6 +60,8 @@ class _SplashScreenState extends State<SplashScreen>
           );
         } else {
           //Home 화면 이동
+          Get.find<DiaryController>().getAllBookmarkData();
+
           Get.offAll(
             () => const HomeScreen(),
             binding: BindingsBuilder(
