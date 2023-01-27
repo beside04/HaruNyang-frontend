@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
-import 'package:frontend/presentation/components/dialog_button.dart';
-import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 
@@ -111,33 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
             onTap: (index) async {
               final result = await controller.onItemTapped(index);
               if (!result) {
-                showDialog(
-                  barrierDismissible: true,
+                toast(
                   context: context,
-                  builder: (context) {
-                    return DialogComponent(
-                      title: "알림",
-                      content: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                        child: Text(
-                          "일기는 하루에 한번만 작성 할 수 있어요.",
-                          style: kHeader6Style.copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.textSubtitle),
-                        ),
-                      ),
-                      actionContent: [
-                        DialogButton(
-                          title: "확인",
-                          onTap: () {
-                            Get.back();
-                          },
-                          backgroundColor: Theme.of(context).primaryColor,
-                          textStyle: kHeader4Style.copyWith(color: kWhiteColor),
-                        ),
-                      ],
-                    );
-                  },
+                  text: '일기는 하루에 한번만 작성 할 수 있어요.',
+                  isCheckIcon: false,
                 );
               }
             },

@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_state.dart';
+import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
 import 'package:get/get.dart';
 
@@ -44,9 +46,13 @@ class OnBoardingController extends GetxController {
   Future<void> putNickname({
     required String nickname,
     required bool isOnBoarding,
+    required BuildContext context,
   }) async {
     Result<bool> isNicknameError = await onBoardingUseCase.putMyInformation(
-        nickname: nickname, job: state.value.job, age: state.value.age);
+      nickname: nickname,
+      job: state.value.job,
+      age: state.value.age,
+    );
 
     if (isNicknameError == const Result<bool>.error('중복된 닉네임 입니다.')) {
       isDuplicateNickname.value = true;
@@ -55,14 +61,18 @@ class OnBoardingController extends GetxController {
       isDuplicateNickname.value = false;
       nicknameError.value = null;
 
-      isOnBoarding
-          ? Get.to(
-              () => OnBoardingAgeScreen(
-                nickname: nickname,
-              ),
-              transition: Transition.cupertino,
-            )
-          : Get.back();
+      if (isOnBoarding) {
+        Get.to(() => OnBoardingAgeScreen(
+              nickname: nickname,
+            ));
+      } else {
+        toast(
+          context: context,
+          text: '변경을 완료했어요.',
+          isCheckIcon: true,
+        );
+        Get.back();
+      }
     }
   }
 
@@ -72,13 +82,18 @@ class OnBoardingController extends GetxController {
     String? age,
     required bool isPutNickname,
     required bool isOnBoarding,
+    BuildContext? context,
   }) async {
     nickname ??= state.value.nickname;
     job ??= state.value.job;
     age ??= state.value.age;
 
     isPutNickname
-        ? await putNickname(nickname: nickname, isOnBoarding: isOnBoarding)
+        ? await putNickname(
+            nickname: nickname,
+            isOnBoarding: isOnBoarding,
+            context: context!,
+          )
         : await onBoardingUseCase.putMyInformation(
             nickname: nickname, job: job, age: age);
 
