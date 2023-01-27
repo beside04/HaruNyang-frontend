@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
@@ -172,26 +173,86 @@ class DiaryController extends GetxController {
     );
   }
 
-  void toggleBookmark(WiseSayingData wiseSayingData) {
-    List<WiseSayingData> tempList = List.from(state.value.wiseSayingList);
-    final index = tempList.indexOf(wiseSayingData);
-    final tempWiseSaying = wiseSayingData.copyWith(
-      isBookmarked: !wiseSayingData.isBookmarked,
-    );
-    tempList[index] = tempWiseSaying;
-    _state.value = state.value.copyWith(
-      wiseSayingList: tempList,
-    );
-
-    if (tempWiseSaying.isBookmarked) {
-      if (state.value.wiseSayingList[index].id != null) {
-        bookmarkUseCase.saveBookmark(state.value.wiseSayingList[index].id!);
+  Future<void> getAllBookmarkData() async {
+    int limit = 100;
+    int page = 0;
+    List<BookmarkData> bookmarkList = [];
+    bool isEnd = false;
+    while (true) {
+      final result = await bookmarkUseCase.getBookmark(page, limit);
+      result.when(
+        success: (data) {
+          bookmarkList.addAll(data);
+          if (data.length < limit) {
+            isEnd = true;
+          }
+        },
+        error: (message) {},
+      );
+      if (isEnd) {
+        break;
       }
-    } else {
-      if (state.value.wiseSayingList[index].id != null) {
-        bookmarkUseCase.deleteBookmark(state.value.wiseSayingList[index].id!);
+      page += 1;
+    }
+    _state.value = state.value.copyWith(
+      bookmarkList: bookmarkList,
+    );
+  }
+
+  Future<void> deleteBookmarkByBookmarkId(int bookmarkId) async {
+    final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
+    result.when(
+      success: (data) {
+        getAllBookmarkData();
+      },
+      error: (message) {},
+    );
+  }
+
+  Future<void> deleteBookmarkByWiseSaying(WiseSayingData wiseSaying) async {
+    int bookmarkId = _getBookmarkId(wiseSaying);
+    if (bookmarkId == -1) {
+      return;
+    }
+    final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
+    result.when(
+      success: (data) {
+        getAllBookmarkData();
+      },
+      error: (message) {},
+    );
+  }
+
+  int _getBookmarkId(WiseSayingData wiseSayingData) {
+    final bookmarkList = state.value.bookmarkList;
+    int bookmarkId = -1;
+    for (int i = 0; i < bookmarkList.length; i++) {
+      if (bookmarkList[i].wiseSaying.id == wiseSayingData.id) {
+        bookmarkId = bookmarkList[i].id;
       }
     }
+    return bookmarkId;
+  }
+
+  Future<void> saveBookmark(WiseSayingData wiseSayingData) async {
+    if (!isBookmarked(wiseSayingData.id!)) {
+      if (wiseSayingData.id != null) {
+        await bookmarkUseCase.saveBookmark(wiseSayingData.id!);
+        getAllBookmarkData();
+      }
+    }
+  }
+
+  bool isBookmarked(int wiseSayingId) {
+    bool result = false;
+    final List<BookmarkData> bookmarkList = state.value.bookmarkList;
+    for (int i = 0; i < bookmarkList.length; i++) {
+      if (bookmarkList[i].wiseSaying.id == wiseSayingId) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   }
 
   Future<void> getEmotionStampList() async {

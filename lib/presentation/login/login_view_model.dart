@@ -172,6 +172,9 @@ class LoginViewModel extends GetxController {
 
     final bool isOnBoardingDone =
         await Get.find<OnBoardingController>().getMyInformation();
+
+    Get.find<DiaryController>().getAllBookmarkData();
+
     if (isOnBoardingDone) {
       //홈으로 이동
       goHome();

@@ -12,7 +12,7 @@ class RefreshInterceptor {
     required this.tokenUseCase,
   });
 
-  Future<Dio> refreshInterceptor() async {
+  Future<Dio> refreshInterceptor({bool isMoveToLoginPage = true}) async {
     String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
     var dio = Dio();
 
@@ -48,14 +48,15 @@ class RefreshInterceptor {
             await tokenUseCase.deleteAllToken();
 
             // 로그인 만료 dialog 발생 후 로그인 페이지로 이동
-
-            Get.offAll(
-              () => const LoginScreen(),
-              binding: BindingsBuilder(
-                getLoginBinding,
-              ),
-            );
-            Get.snackbar('알림', '세션이 만료되었습니다.');
+            if (isMoveToLoginPage) {
+              Get.offAll(
+                () => const LoginScreen(),
+                binding: BindingsBuilder(
+                  getLoginBinding,
+                ),
+              );
+              Get.snackbar('알림', '세션이 만료되었습니다.');
+            }
           }
 
           return handler.next(error);

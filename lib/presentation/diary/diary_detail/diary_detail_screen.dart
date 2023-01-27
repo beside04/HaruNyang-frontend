@@ -354,41 +354,42 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                     ],
                                                   ),
                                                   Obx(
-                                                    () =>
-                                                        diaryController
-                                                                .state
-                                                                .value
-                                                                .wiseSayingList[
-                                                                    index]
-                                                                .isBookmarked
-                                                            ? GestureDetector(
-                                                                onTap: () {
-                                                                  diaryController.toggleBookmark(
-                                                                      diaryController
+                                                    () => diaryController
+                                                            .isBookmarked(
+                                                                diaryController
+                                                                        .state
+                                                                        .value
+                                                                        .wiseSayingList[
+                                                                            index]
+                                                                        .id ??
+                                                                    0)
+                                                        ? GestureDetector(
+                                                            onTap: () {
+                                                              diaryController.deleteBookmarkByWiseSaying(
+                                                                  diaryController
                                                                           .state
                                                                           .value
-                                                                          .wiseSayingList[index]);
-                                                                },
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons
-                                                                      .bookmark,
-                                                                  color:
-                                                                      kOrange300Color,
-                                                                ),
-                                                              )
-                                                            : GestureDetector(
-                                                                onTap: () {
-                                                                  diaryController.toggleBookmark(
-                                                                      diaryController
+                                                                          .wiseSayingList[
+                                                                      index]);
+                                                            },
+                                                            child: const Icon(
+                                                              Icons.bookmark,
+                                                              color:
+                                                                  kOrange300Color,
+                                                            ),
+                                                          )
+                                                        : GestureDetector(
+                                                            onTap: () {
+                                                              diaryController.saveBookmark(
+                                                                  diaryController
                                                                           .state
                                                                           .value
-                                                                          .wiseSayingList[index]);
-                                                                },
-                                                                child: const Icon(
-                                                                    Icons
-                                                                        .bookmark_border),
-                                                              ),
+                                                                          .wiseSayingList[
+                                                                      index]);
+                                                            },
+                                                            child: const Icon(Icons
+                                                                .bookmark_border),
+                                                          ),
                                                   )
                                                 ],
                                               ),
