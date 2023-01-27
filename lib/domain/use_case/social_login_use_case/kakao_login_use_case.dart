@@ -1,4 +1,5 @@
 import 'package:frontend/core/result.dart';
+import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -7,6 +8,7 @@ import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
 import 'package:frontend/res/constants.dart';
+import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class KakaoLoginUseCase {
@@ -66,8 +68,11 @@ class KakaoLoginUseCase {
 
   Future<Result<String>> loginProcess(String socialId) async {
     String accessToken = '';
+    var deviceToken = Get.find<NotificationController>().token;
+
     //로그인 api 호출
-    final loginResult = await serverLoginRepository.login('KAKAO', socialId);
+    final loginResult =
+        await serverLoginRepository.login('KAKAO', socialId, deviceToken);
 
     return await loginResult.when(
       success: (loginData) async {

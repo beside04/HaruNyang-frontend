@@ -62,15 +62,15 @@ class OnBoardingApi {
         },
       );
 
-      //final json = response.data['data'];
-      //MyInformation result = MyInformation.fromJson(json);
       final bool result = response.data['data'];
       return Result.success(result);
     } on DioError catch (e) {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
+        if (e.response!.data['code'] == "M006") {
+          errMessage = '중복된 닉네임 입니다.';
+        } else if (e.response!.statusCode != 200) {
           errMessage =
               'api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
         }

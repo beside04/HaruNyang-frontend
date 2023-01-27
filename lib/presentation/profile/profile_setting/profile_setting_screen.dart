@@ -16,6 +16,7 @@ import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
+import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
@@ -130,16 +131,20 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                   ? null
                                   : () async {
                                       var key = _fbKey.currentState!;
-                                      if (key.saveAndValidate()) {
+
+                                      if (key.saveAndValidate() ||
+                                          onBoardingController
+                                              .isDuplicateNickname.value) {
                                         FocusScope.of(context).unfocus();
 
                                         await onBoardingController
                                             .putMyInformation(
                                           nickname:
                                               controller.nicknameValue.value,
+                                          isOnBoarding: false,
+                                          isPutNickname: true,
+                                          context: context,
                                         );
-
-                                        Get.back();
                                       }
                                     },
                             ),
@@ -253,9 +258,18 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                         await onBoardingController
                                             .putMyInformation(
                                           age: controller.ageValue.value,
+                                          isOnBoarding: false,
+                                          isPutNickname: false,
+                                          context: context,
                                         );
 
                                         Get.back();
+
+                                        toast(
+                                          context: context,
+                                          text: '변경을 완료했어요.',
+                                          isCheckIcon: true,
+                                        );
                                       }
                                     },
                             ),
@@ -339,9 +353,18 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                 : () async {
                                     await onBoardingController.putMyInformation(
                                       job: controller.jobStatus.value!.name,
+                                      isOnBoarding: false,
+                                      isPutNickname: false,
+                                      context: context,
                                     );
 
                                     Get.back();
+
+                                    toast(
+                                      context: context,
+                                      text: '변경을 완료했어요.',
+                                      isCheckIcon: true,
+                                    );
                                   },
                           ),
                         )

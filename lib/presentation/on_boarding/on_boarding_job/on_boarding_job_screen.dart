@@ -110,6 +110,8 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                               nickname: nickname,
                               job: controller.jobStatus.value!.name,
                               age: birth,
+                              isPutNickname: false,
+                              isOnBoarding: false,
                             );
 
                             Get.to(

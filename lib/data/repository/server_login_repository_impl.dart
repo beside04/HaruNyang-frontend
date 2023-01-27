@@ -8,8 +8,8 @@ class ServerLoginRepositoryImpl implements ServerLoginRepository {
   final LoginApi loginApi = LoginApi();
 
   @override
-  Future<Result<LoginTokenData>> login(loginType, socialId) async {
-    return await loginApi.login(loginType, socialId);
+  Future<Result<LoginTokenData>> login(loginType, socialId, deviceId) async {
+    return await loginApi.login(loginType, socialId, deviceId);
   }
 
   @override

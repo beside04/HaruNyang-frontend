@@ -26,8 +26,10 @@ class LoginTermsInformationScreen
     return Scaffold(
       appBar: AppBar(
           centerTitle: true,
-          title: const Text(
+          title: Text(
             "약관정보",
+            style: kHeader3Style.copyWith(
+                color: Theme.of(context).colorScheme.textTitle),
           ),
           elevation: 0.5,
           leading: IconButton(

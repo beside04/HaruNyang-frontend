@@ -7,10 +7,10 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -25,6 +25,8 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
   @override
   Widget build(BuildContext context) {
     getOnBoardingNickNameBinding();
+    final onBoardingController = Get.find<OnBoardingController>();
+
     return WillPopScope(
       onWillPop: () async {
         bool backResult = GlobalUtils.onBackPressed();
@@ -116,16 +118,17 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                     title: '다음',
                     onTap: controller.nicknameValue.value.isEmpty
                         ? null
-                        : () {
+                        : () async {
                             var key = _fbKey.currentState!;
-                            if (key.saveAndValidate()) {
+                            if (key.saveAndValidate() ||
+                                onBoardingController
+                                    .isDuplicateNickname.value) {
                               FocusScope.of(context).unfocus();
 
-                              Get.to(
-                                () => OnBoardingAgeScreen(
-                                  nickname: controller.nicknameValue.value,
-                                ),
-                                transition: Transition.cupertino,
+                              await onBoardingController.putMyInformation(
+                                nickname: controller.nicknameValue.value,
+                                isOnBoarding: true,
+                                isPutNickname: true,
                               );
                             }
                           },
