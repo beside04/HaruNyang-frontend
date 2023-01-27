@@ -9,13 +9,14 @@ class LoginApi {
   final Dio _client = Dio();
 
   Future<Result<LoginTokenData>> login(
-      String loginType, String socialId) async {
+      String loginType, String socialId, String? deviceId) async {
     String loginUrl = '$baseUrl/v1/login';
     try {
       Response response;
       response = await _client.post(
         loginUrl,
         data: {
+          'device_id': deviceId ?? "",
           'login_type': loginType,
           'social_id': socialId,
         },

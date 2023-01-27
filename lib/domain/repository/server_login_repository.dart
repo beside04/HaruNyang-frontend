@@ -3,7 +3,8 @@ import 'package:frontend/domain/model/login_token_data.dart';
 import 'package:frontend/res/constants.dart';
 
 abstract class ServerLoginRepository {
-  Future<Result<LoginTokenData>> login(String loginType, String socialId);
+  Future<Result<LoginTokenData>> login(
+      String loginType, String socialId, String? deviceId);
 
   Future<void> logout();
 
