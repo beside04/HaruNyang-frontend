@@ -6,8 +6,7 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/presentation/components/dialog_button.dart';
-import 'package:frontend/presentation/components/dialog_component.dart';
+import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
@@ -78,27 +77,10 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                 ),
                               );
                       } else {
-                        showDialog(
-                          barrierDismissible: true,
+                        toast(
                           context: context,
-                          builder: (ctx) {
-                            return DialogComponent(
-                              title: "미래 일기는 쓸 수 없어요",
-                              actionContent: [
-                                DialogButton(
-                                  title: "확인",
-                                  onTap: () {
-                                    Get.back();
-                                  },
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .primaryColor,
-                                  textStyle: kHeader4Style.copyWith(
-                                      color: kWhiteColor),
-                                )
-                              ],
-                            );
-                          },
+                          text: '미래 일기는 미리 쓸 수 없어요.',
+                          isCheckIcon: false,
                         );
                       }
                     },
