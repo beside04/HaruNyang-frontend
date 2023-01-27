@@ -1,3 +1,5 @@
+import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
+import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -16,6 +18,8 @@ class DiaryState with _$DiaryState {
     @Default(false) bool isCalendarLoading,
     @Default(true) bool isCalendar,
     @Default([]) List<DiaryData> diaryDataList,
+    @Default([]) List<DiaryCardData> diaryCardDataList,
+    @Default([]) List<BookmarkData> bookmarkList,
     required DateTime focusedStartDate,
     required DateTime focusedEndDate,
     required DateTime focusedCalendarDate,

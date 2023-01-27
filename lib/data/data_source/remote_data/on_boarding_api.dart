@@ -15,7 +15,7 @@ class OnBoardingApi {
   Future<Result<MyInformation>> getMyInformation() async {
     String myInformationUrl = '$baseUrl/v1/me';
 
-    var dio = await interceptor.refreshInterceptor();
+    var dio = await interceptor.refreshInterceptor(isMoveToLoginPage: false);
 
     try {
       Response response;

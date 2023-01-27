@@ -19,8 +19,7 @@ class OnBoardingController extends GetxController {
 
   final isDuplicateNickname = false.obs;
   final nicknameError = Rx<String?>(null);
-
-  Future<bool> getMyInformation() async {
+  Future<bool> getMyInformation({bool isMoveToLoginPage = true}) async {
     bool check = false;
     final myInfo = await onBoardingUseCase.getMyInformation();
 

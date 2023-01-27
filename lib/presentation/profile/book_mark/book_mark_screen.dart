@@ -2,19 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/profile/book_mark/book_mark_view_model.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/profile/components/book_mark_list.dart';
 import 'package:get/get.dart';
 
-class BookMarkScreen extends GetView<BookMarkViewModel> {
+class BookMarkScreen extends StatefulWidget {
   const BookMarkScreen({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<BookMarkScreen> createState() => _BookMarkScreenState();
+}
+
+class _BookMarkScreenState extends State<BookMarkScreen> {
+  final diaryController = Get.find<DiaryController>();
+
+  @override
   Widget build(BuildContext context) {
-    getBookMarkViewModelBinding();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -38,17 +43,19 @@ class BookMarkScreen extends GetView<BookMarkViewModel> {
           child: Obx(
             () => ListView.builder(
               shrinkWrap: true,
-              itemCount: controller.bookmarkList.length,
+              itemCount: diaryController.state.value.bookmarkList.length,
               itemBuilder: (BuildContext context, int index) {
                 return Obx(
                   () => BookMarkList(
                     date: DateTime(2022, 12, 15),
                     isBookMark: false,
-                    title: controller.bookmarkList[index].wiseSaying.message,
-                    name: controller.bookmarkList[index].wiseSaying.author,
+                    title: diaryController
+                        .state.value.bookmarkList[index].wiseSaying.message,
+                    name: diaryController
+                        .state.value.bookmarkList[index].wiseSaying.author,
                     onTap: () {
-                      controller
-                          .deleteBookmark(controller.bookmarkList[index].id);
+                      diaryController.deleteBookmarkByBookmarkId(
+                          diaryController.state.value.bookmarkList[index].id);
                     },
                   ),
                 );

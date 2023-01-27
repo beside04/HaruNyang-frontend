@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
+import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
@@ -171,26 +173,86 @@ class DiaryController extends GetxController {
     );
   }
 
-  void toggleBookmark(WiseSayingData wiseSayingData) {
-    List<WiseSayingData> tempList = List.from(state.value.wiseSayingList);
-    final index = tempList.indexOf(wiseSayingData);
-    final tempWiseSaying = wiseSayingData.copyWith(
-      isBookmarked: !wiseSayingData.isBookmarked,
-    );
-    tempList[index] = tempWiseSaying;
-    _state.value = state.value.copyWith(
-      wiseSayingList: tempList,
-    );
-
-    if (tempWiseSaying.isBookmarked) {
-      if (state.value.wiseSayingList[index].id != null) {
-        bookmarkUseCase.saveBookmark(state.value.wiseSayingList[index].id!);
+  Future<void> getAllBookmarkData() async {
+    int limit = 100;
+    int page = 0;
+    List<BookmarkData> bookmarkList = [];
+    bool isEnd = false;
+    while (true) {
+      final result = await bookmarkUseCase.getBookmark(page, limit);
+      result.when(
+        success: (data) {
+          bookmarkList.addAll(data);
+          if (data.length < limit) {
+            isEnd = true;
+          }
+        },
+        error: (message) {},
+      );
+      if (isEnd) {
+        break;
       }
-    } else {
-      if (state.value.wiseSayingList[index].id != null) {
-        bookmarkUseCase.deleteBookmark(state.value.wiseSayingList[index].id!);
+      page += 1;
+    }
+    _state.value = state.value.copyWith(
+      bookmarkList: bookmarkList,
+    );
+  }
+
+  Future<void> deleteBookmarkByBookmarkId(int bookmarkId) async {
+    final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
+    result.when(
+      success: (data) {
+        getAllBookmarkData();
+      },
+      error: (message) {},
+    );
+  }
+
+  Future<void> deleteBookmarkByWiseSaying(WiseSayingData wiseSaying) async {
+    int bookmarkId = _getBookmarkId(wiseSaying);
+    if (bookmarkId == -1) {
+      return;
+    }
+    final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
+    result.when(
+      success: (data) {
+        getAllBookmarkData();
+      },
+      error: (message) {},
+    );
+  }
+
+  int _getBookmarkId(WiseSayingData wiseSayingData) {
+    final bookmarkList = state.value.bookmarkList;
+    int bookmarkId = -1;
+    for (int i = 0; i < bookmarkList.length; i++) {
+      if (bookmarkList[i].wiseSaying.id == wiseSayingData.id) {
+        bookmarkId = bookmarkList[i].id;
       }
     }
+    return bookmarkId;
+  }
+
+  Future<void> saveBookmark(WiseSayingData wiseSayingData) async {
+    if (!isBookmarked(wiseSayingData.id!)) {
+      if (wiseSayingData.id != null) {
+        await bookmarkUseCase.saveBookmark(wiseSayingData.id!);
+        getAllBookmarkData();
+      }
+    }
+  }
+
+  bool isBookmarked(int wiseSayingId) {
+    bool result = false;
+    final List<BookmarkData> bookmarkList = state.value.bookmarkList;
+    for (int i = 0; i < bookmarkList.length; i++) {
+      if (bookmarkList[i].wiseSaying.id == wiseSayingId) {
+        result = true;
+        break;
+      }
+    }
+    return result;
   }
 
   Future<void> getEmotionStampList() async {
@@ -212,6 +274,7 @@ class DiaryController extends GetxController {
         _state.value = state.value.copyWith(
           diaryDataList: result,
         );
+        _makeDiaryCardDataList(result);
       },
       error: (message) {
         Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
@@ -221,6 +284,65 @@ class DiaryController extends GetxController {
     _state.value = state.value.copyWith(
       isCalendarLoading: false,
     );
+  }
+
+  void _makeDiaryCardDataList(List<DiaryData> diaries) {
+    List<DiaryCardData> diaryCardDataList = [];
+    Map<String, List<DiaryData>> weekName = {};
+    for (int i = 0; i < diaries.length; i++) {
+      String title =
+          _weekOfMonthForSimple(DateTime.parse(diaries[i].writtenAt));
+      if (weekName.containsKey(title)) {
+        weekName[title]!.add(diaries[i]);
+      } else {
+        weekName[title] = [diaries[i]];
+      }
+    }
+    for (var title in weekName.keys) {
+      diaryCardDataList
+          .add(DiaryCardData(title: title, diaryDataList: weekName[title]!));
+    }
+    _state.value = state.value.copyWith(
+      diaryCardDataList: diaryCardDataList,
+    );
+  }
+
+  // 월 주차. (단순하게 1일이 1주차 시작).
+  String _weekOfMonthForSimple(DateTime date) {
+    // 월의 첫번째 날짜.
+    DateTime firstDay = DateTime(date.year, date.month, 1);
+
+    // 월중에 첫번째 월요일인 날짜.
+    DateTime firstMonday = firstDay
+        .add(Duration(days: (DateTime.monday + 7 - firstDay.weekday) % 7));
+
+    // 첫번째 날짜와 첫번째 월요일인 날짜가 동일한지 판단.
+    // 동일할 경우: 1, 동일하지 않은 경우: 2 를 마지막에 더한다.
+    final bool isFirstDayMonday = firstDay == firstMonday;
+
+    final different = _calculateDaysBetween(from: firstMonday, to: date);
+
+    // 주차 계산.
+    int weekOfMonth = (different / 7 + (isFirstDayMonday ? 1 : 2)).toInt();
+
+    switch (weekOfMonth) {
+      case 1:
+        return "첫";
+      case 2:
+        return "두";
+      case 3:
+        return "세";
+      case 4:
+        return "네";
+      case 5:
+        return "다섯";
+    }
+    return "";
+  }
+
+  // D-Day 계산.
+  int _calculateDaysBetween({required DateTime from, required DateTime to}) {
+    return (to.difference(from).inHours / 24).round();
   }
 
   void getMonthStartEndData() {

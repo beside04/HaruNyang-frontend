@@ -411,6 +411,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                       FormBuilderTextField(
                         maxLength: 1000,
                         maxLines: null,
+                        autofocus: true,
                         name: 'name',
                         style: kBody1Style.copyWith(
                             color: Theme.of(context).colorScheme.textBody),
