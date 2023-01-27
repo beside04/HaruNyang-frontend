@@ -49,41 +49,39 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
                   : diaryController.state.value.bookmarkList.length,
               itemBuilder: (BuildContext context, int index) {
                 return diaryController.state.value.bookmarkList.isEmpty
-                    ? Expanded(
-                        child: Column(
-                          children: [
-                            SizedBox(
-                              height: 121.h,
-                            ),
-                            Center(
-                              child: SvgPicture.asset(
-                                "lib/config/assets/images/character/character3.svg",
-                                width: 280.w,
-                                height: 280.h,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 12.h,
-                            ),
-                            Text(
-                              "작성한 내용이 없어요",
-                              style: kHeader3Style.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.textTitle),
-                            ),
-                            SizedBox(
-                              height: 4.h,
-                            ),
-                            Text(
-                              "일기를 쓰고 하루냥이 준 위로를 저장해보세요!",
-                              style: kBody1Style.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .textSubtitle),
-                            )
-                          ],
+                    ? Column(
+                      children: [
+                        SizedBox(
+                          height: 121.h,
                         ),
-                      )
+                        Center(
+                          child: SvgPicture.asset(
+                            "lib/config/assets/images/character/character3.svg",
+                            width: 280.w,
+                            height: 280.h,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        Text(
+                          "작성한 내용이 없어요",
+                          style: kHeader3Style.copyWith(
+                              color:
+                                  Theme.of(context).colorScheme.textTitle),
+                        ),
+                        SizedBox(
+                          height: 4.h,
+                        ),
+                        Text(
+                          "일기를 쓰고 하루냥이 준 위로를 저장해보세요!",
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .textSubtitle),
+                        )
+                      ],
+                    )
                     : Obx(
                         () => BookMarkList(
                           date: DateTime(2022, 12, 15),
