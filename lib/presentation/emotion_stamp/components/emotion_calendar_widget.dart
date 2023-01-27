@@ -42,7 +42,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
               lastDay: DateTime(2199, 12),
               calendarFormat: CalendarFormat.month,
               weekendDays: const [DateTime.sunday, 6],
-              startingDayOfWeek: StartingDayOfWeek.monday,
+              startingDayOfWeek: StartingDayOfWeek.sunday,
               locale: 'ko-KR',
               daysOfWeekHeight: 30.h,
               headerVisible: false,
