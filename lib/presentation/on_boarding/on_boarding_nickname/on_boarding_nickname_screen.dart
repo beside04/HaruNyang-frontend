@@ -129,6 +129,7 @@ class OnBoardingNicknameScreen extends GetView<OnBoardingNicknameViewModel> {
                                 nickname: controller.nicknameValue.value,
                                 isOnBoarding: true,
                                 isPutNickname: true,
+                                context: context,
                               );
                             }
                           },
