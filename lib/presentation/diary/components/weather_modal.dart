@@ -16,13 +16,13 @@ class WeatherModal extends GetView<DiaryViewModel> {
       alignment: Alignment.bottomCenter,
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 276.h,
+        height: 300.h,
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.backgroundModal,
             borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(40),
-              topRight: Radius.circular(40),
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
             ),
           ),
           child: Stack(

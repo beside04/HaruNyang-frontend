@@ -106,7 +106,7 @@ extension CustomColorScheme on ColorScheme {
   Color get textSubtitle =>
       brightness == Brightness.light ? kGrayColor500 : kGrayColor400;
   Color get textBody =>
-      brightness == Brightness.light ? kGrayColor550 : kGrayColor50;
+      brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
   Color get textLowEmphasis =>
       brightness == Brightness.light ? kGrayColor400 : kGrayColor550;
   Color get textCaption =>

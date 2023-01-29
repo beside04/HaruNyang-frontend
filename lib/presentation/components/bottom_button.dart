@@ -21,12 +21,12 @@ class BottomButton extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(
           left: 16.w,
-          bottom: 12.h,
+          bottom: 50.h,
           right: 16.w,
         ),
         child: SizedBox(
-          width: 343.w,
-          height: 48.h,
+          width: 335.w,
+          height: 52.h,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               disabledBackgroundColor:

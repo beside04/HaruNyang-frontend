@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
+import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -32,7 +34,20 @@ class DiaryAppBar extends GetView<DiaryViewModel>
               color: Theme.of(context).colorScheme.textTitle),
         ),
         leading: controller.isEmotionModal.value
-            ? null
+            ? IconButton(
+                onPressed: () {
+                  Get.offAll(
+                    () => const HomeScreen(),
+                    binding: BindingsBuilder(
+                      getHomeViewModelBinding,
+                    ),
+                  );
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios,
+                  size: 20.w,
+                ),
+              )
             : IconButton(
                 onPressed: () {
                   controller.popUpEmotionModal();
