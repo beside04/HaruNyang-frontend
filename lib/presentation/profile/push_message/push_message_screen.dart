@@ -27,7 +27,7 @@ class PushMessageScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           '푸시메세지 설정',
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,

@@ -26,7 +26,7 @@ class MarketingConsentScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "마케팅 정보 수신 동의",
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,

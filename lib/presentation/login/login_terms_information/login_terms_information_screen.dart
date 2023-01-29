@@ -28,7 +28,7 @@ class LoginTermsInformationScreen
           centerTitle: true,
           title: Text(
             "약관정보",
-            style: kHeader3Style.copyWith(
+            style: kHeader4Style.copyWith(
                 color: Theme.of(context).colorScheme.textTitle),
           ),
           elevation: 0.5,

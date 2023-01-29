@@ -19,7 +19,7 @@ class TermsOfServiceScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "서비스 이용약관",
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,

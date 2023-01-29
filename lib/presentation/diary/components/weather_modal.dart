@@ -20,9 +20,9 @@ class WeatherModal extends GetView<DiaryViewModel> {
         child: Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.backgroundModal,
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(24),
-              topRight: Radius.circular(24),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(24.w),
+              topRight: Radius.circular(24.w),
             ),
           ),
           child: Stack(

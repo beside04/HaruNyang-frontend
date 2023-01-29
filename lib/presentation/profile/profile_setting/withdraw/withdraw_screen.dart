@@ -27,7 +27,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
         centerTitle: true,
         title: Text(
           '회원 탈퇴',
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,

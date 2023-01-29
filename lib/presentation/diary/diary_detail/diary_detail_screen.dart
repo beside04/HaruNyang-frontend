@@ -195,7 +195,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
         ],
         title: Text(
           DateFormat('MM월 dd일').format(widget.date),
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         leading: IconButton(

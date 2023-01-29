@@ -42,7 +42,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
       appBar: AppBar(
         title: Text(
           '내 정보 관리',
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,

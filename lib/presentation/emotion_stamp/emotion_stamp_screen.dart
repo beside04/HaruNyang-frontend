@@ -92,7 +92,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   Text(
                     DateFormat('yyyy년 MM월').format(
                         diaryController.state.value.focusedCalendarDate),
-                    style: kHeader3Style.copyWith(
+                    style: kHeader4Style.copyWith(
                         color: Theme.of(context).colorScheme.textTitle),
                   ),
                   SizedBox(
