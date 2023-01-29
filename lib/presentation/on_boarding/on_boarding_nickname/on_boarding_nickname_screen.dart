@@ -67,6 +67,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
         },
         child: Scaffold(
           body: SafeArea(
+            bottom: false,
             child: FormBuilder(
               key: _fbKey,
               autovalidateMode: AutovalidateMode.disabled,

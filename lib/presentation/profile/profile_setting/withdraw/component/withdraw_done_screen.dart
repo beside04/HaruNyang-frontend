@@ -19,7 +19,9 @@ class WithdrawDoneScreen extends StatelessWidget {
         elevation: 0,
       ),
       body: Padding(
-        padding: kPrimaryPadding,
+        padding: kPrimaryPadding.copyWith(
+          bottom: 0,
+        ),
         child: Stack(
           children: [
             Center(
@@ -89,15 +91,16 @@ class WithdrawDoneScreen extends StatelessWidget {
               ),
             ),
             BottomButton(
-                title: "첫 화면으로",
-                onTap: () {
-                  Get.offAll(
-                    () => const LoginScreen(),
-                    binding: BindingsBuilder(
-                      getLoginBinding,
-                    ),
-                  );
-                }),
+              title: "첫 화면으로",
+              onTap: () {
+                Get.offAll(
+                  () => const LoginScreen(),
+                  binding: BindingsBuilder(
+                    getLoginBinding,
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),

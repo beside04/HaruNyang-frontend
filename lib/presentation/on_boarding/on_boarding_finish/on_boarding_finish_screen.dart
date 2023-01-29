@@ -31,6 +31,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
       },
       child: Scaffold(
         body: SafeArea(
+          bottom: false,
           child: Stack(
             children: [
               Center(

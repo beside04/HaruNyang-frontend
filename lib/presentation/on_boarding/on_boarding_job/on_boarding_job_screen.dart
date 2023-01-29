@@ -32,6 +32,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
 
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: FormBuilder(
           key: _fbKey,
           autovalidateMode: AutovalidateMode.disabled,
