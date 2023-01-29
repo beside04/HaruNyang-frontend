@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class OnBoardingNicknameViewModel extends GetxController {
   final TextEditingController nicknameEditingController =
       TextEditingController();
+
   final RxString nicknameValue = ''.obs;
   final RxBool isOnKeyboard = false.obs;
 

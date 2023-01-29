@@ -21,6 +21,7 @@ class SignInCompleteScreen extends StatelessWidget {
       },
       child: Scaffold(
         body: SafeArea(
+          bottom: false,
           child: Stack(
             children: [
               Center(

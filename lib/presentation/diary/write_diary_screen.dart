@@ -218,7 +218,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
           ],
           title: Text(
             DateFormat('MM월 dd일').format(date),
-            style: kHeader3Style.copyWith(
+            style: kHeader4Style.copyWith(
                 color: Theme.of(context).colorScheme.textTitle),
           ),
           leading: IconButton(
@@ -391,7 +391,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                       ),
                       Divider(
                         height: 1.h,
-                        thickness: 12.h,
+                        thickness: 5.h,
                       ),
                       Container(
                         height: 1.h,
@@ -428,6 +428,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           contentPadding: const EdgeInsets.only(
                             top: 12,
                             left: 20,
+                            right: 20,
                           ),
                           filled: true,
                           enabledBorder: const OutlineInputBorder(
@@ -521,28 +522,16 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                       .croppedFile.value!.path),
                                                 ),
                                                 Positioned(
-                                                  right: 0,
-                                                  top: 0,
+                                                  right: 16,
+                                                  top: 16,
                                                   child: GestureDetector(
                                                     onTap: () {
                                                       controller.clear();
                                                     },
-                                                    child: Container(
-                                                      margin:
-                                                          const EdgeInsets.all(
-                                                              6),
-                                                      decoration: BoxDecoration(
-                                                        color: kWhiteColor
-                                                            .withOpacity(.6),
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      height: 24.h,
-                                                      width: 24.w,
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        size: 12,
-                                                        color: kBlackColor,
-                                                      ),
+                                                    child: SvgPicture.asset(
+                                                      "lib/config/assets/images/diary/write_diary/image_close.svg",
+                                                      width: 35.w,
+                                                      height: 35.h,
                                                     ),
                                                   ),
                                                 ),

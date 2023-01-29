@@ -5,6 +5,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
@@ -193,6 +194,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                         final result = await controller
                                             .withdrawUser(isKakaoLogin);
                                         if (result) {
+                                          Get.find<OnBoardingController>()
+                                              .clearMyInformation();
                                           Get.offAll(
                                             () => const WithdrawDoneScreen(),
                                           );

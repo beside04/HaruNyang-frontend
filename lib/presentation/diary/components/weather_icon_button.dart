@@ -55,7 +55,7 @@ class WeatherIconButton extends StatelessWidget {
               padding: EdgeInsets.only(top: 8.0.h),
               child: Text(
                 name,
-                style: kBody1Style.copyWith(
+                style: kSubtitle1Style.copyWith(
                     color: Theme.of(context).colorScheme.textCaption),
               ),
             ),

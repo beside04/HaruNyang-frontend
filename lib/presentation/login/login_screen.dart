@@ -71,9 +71,6 @@ class LoginScreen extends GetView<LoginViewModel> {
                     },
                     child: const AppleLoginWidget(),
                   ),
-            SizedBox(
-              height: 20.h,
-            ),
           ],
         ),
       ),

@@ -19,13 +19,17 @@ class OnBoardingController extends GetxController {
 
   final isDuplicateNickname = false.obs;
   final nicknameError = Rx<String?>(null);
-  Future<bool> getMyInformation({bool isMoveToLoginPage = true}) async {
+
+  Future<bool> getMyInformation() async {
     bool check = false;
     final myInfo = await onBoardingUseCase.getMyInformation();
 
     myInfo.when(
       success: (data) {
         if (data.job != null && data.nickname != null && data.age != null) {
+          if (data.job!.isNotEmpty &&
+              data.nickname!.isNotEmpty &&
+              data.age!.isNotEmpty) {
           _state.value = state.value.copyWith(
             job: data.job!,
             age: data.age!,
@@ -34,12 +38,23 @@ class OnBoardingController extends GetxController {
             email: data.email,
           );
           check = true;
+          }
         }
       },
       error: (message) {},
     );
 
     return check;
+  }
+
+  void clearMyInformation() {
+    _state.value = state.value.copyWith(
+      job: '',
+      age: '',
+      socialId: '',
+      nickname: '',
+      loginType: '',
+    );
   }
 
   Future<void> putNickname({

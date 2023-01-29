@@ -46,75 +46,77 @@ class _HomeScreenState extends State<HomeScreen> {
       },
       child: Obx(
         () => Scaffold(
-          bottomNavigationBar: BottomNavigationBar(
-            items: [
-              BottomNavigationBarItem(
-                icon: controller.selectedIndex.value == 0
-                    ? mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/home/dark_mode/tap_emotion_stamp.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/home/light_mode/tap_emotion_stamp.svg",
-                          )
-                    : mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/home/dark_mode/emotion_stamp.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/home/light_mode/emotion_stamp.svg",
-                          ),
-                label: '감정캘린더',
-              ),
-              BottomNavigationBarItem(
-                icon: controller.selectedIndex.value == 1
-                    ? mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/home/dark_mode/tap_pen.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/home/light_mode/tap_pen.svg",
-                          )
-                    : mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/home/dark_mode/pen.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/home/light_mode/pen.svg",
-                          ),
-                label: '일기쓰기',
-              ),
-              BottomNavigationBarItem(
-                icon: controller.selectedIndex.value == 2
-                    ? mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/home/dark_mode/tap_profile.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/home/light_mode/tap_profile.svg",
-                          )
-                    : mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/home/dark_mode/profile.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/home/light_mode/profile.svg",
-                          ),
-                label: '프로필',
-              ),
-            ],
-            currentIndex: controller.selectedIndex.value,
-            onTap: (index) async {
-              final result = await controller.onItemTapped(index);
-              if (!result) {
-                toast(
-                  context: context,
-                  text: '일기는 하루에 한번만 작성 할 수 있어요.',
-                  isCheckIcon: false,
-                );
-              }
-            },
-          ),
+          bottomNavigationBar: controller.selectedIndex.value == 1
+              ? null
+              : BottomNavigationBar(
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: controller.selectedIndex.value == 0
+                          ? mainViewController.isDarkMode.value
+                              ? SvgPicture.asset(
+                                  "lib/config/assets/images/home/dark_mode/tap_emotion_stamp.svg",
+                                )
+                              : SvgPicture.asset(
+                                  "lib/config/assets/images/home/light_mode/tap_emotion_stamp.svg",
+                                )
+                          : mainViewController.isDarkMode.value
+                              ? SvgPicture.asset(
+                                  "lib/config/assets/images/home/dark_mode/emotion_stamp.svg",
+                                )
+                              : SvgPicture.asset(
+                                  "lib/config/assets/images/home/light_mode/emotion_stamp.svg",
+                                ),
+                      label: '감정캘린더',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: controller.selectedIndex.value == 1
+                          ? mainViewController.isDarkMode.value
+                              ? SvgPicture.asset(
+                                  "lib/config/assets/images/home/dark_mode/tap_pen.svg",
+                                )
+                              : SvgPicture.asset(
+                                  "lib/config/assets/images/home/light_mode/tap_pen.svg",
+                                )
+                          : mainViewController.isDarkMode.value
+                              ? SvgPicture.asset(
+                                  "lib/config/assets/images/home/dark_mode/pen.svg",
+                                )
+                              : SvgPicture.asset(
+                                  "lib/config/assets/images/home/light_mode/pen.svg",
+                                ),
+                      label: '일기쓰기',
+                    ),
+                    BottomNavigationBarItem(
+                      icon: controller.selectedIndex.value == 2
+                          ? mainViewController.isDarkMode.value
+                              ? SvgPicture.asset(
+                                  "lib/config/assets/images/home/dark_mode/tap_profile.svg",
+                                )
+                              : SvgPicture.asset(
+                                  "lib/config/assets/images/home/light_mode/tap_profile.svg",
+                                )
+                          : mainViewController.isDarkMode.value
+                              ? SvgPicture.asset(
+                                  "lib/config/assets/images/home/dark_mode/profile.svg",
+                                )
+                              : SvgPicture.asset(
+                                  "lib/config/assets/images/home/light_mode/profile.svg",
+                                ),
+                      label: '프로필',
+                    ),
+                  ],
+                  currentIndex: controller.selectedIndex.value,
+                  onTap: (index) async {
+                    final result = await controller.onItemTapped(index);
+                    if (!result) {
+                      toast(
+                        context: context,
+                        text: '일기는 하루에 한번만 작성 할 수 있어요.',
+                        isCheckIcon: false,
+                      );
+                    }
+                  },
+                ),
           body: controller.widgetList[controller.selectedIndex.value],
         ),
       ),

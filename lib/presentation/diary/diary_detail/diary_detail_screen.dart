@@ -231,6 +231,14 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                       SizedBox(
                         height: 12.h,
                       ),
+                      Text(
+                        widget.diaryData.diaryContent,
+                        style: kBody1Style.copyWith(
+                            color: Theme.of(context).colorScheme.textBody),
+                      ),
+                      SizedBox(
+                        height: 12.h,
+                      ),
                       diaryController.state.value.networkImage.isNotEmpty
                           ? Column(
                               children: [
@@ -247,11 +255,6 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                               ],
                             )
                           : Container(),
-                      Text(
-                        widget.diaryData.diaryContent,
-                        style: kBody1Style.copyWith(
-                            color: Theme.of(context).colorScheme.textBody),
-                      )
                     ],
                   ),
                 ),

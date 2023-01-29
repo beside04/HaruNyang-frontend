@@ -57,74 +57,70 @@ class _DiaryScreenState extends State<DiaryScreen> {
                   ],
           ),
         ),
-        child: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 8.h,
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 8.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 24.w),
+              child: Row(
+                children: [
+                  Obx(
+                    () => Text(
+                      "${onBoardingController.state.value.nickname}님,",
+                      style: kHeader1Style.copyWith(
+                          color: Theme.of(context).colorScheme.textTitle),
+                    ),
+                  ),
+                ],
               ),
-              Padding(
+            ),
+            Padding(
                 padding: EdgeInsets.only(left: 24.w),
-                child: Row(
-                  children: [
-                    Obx(
-                      () => Text(
-                        "${onBoardingController.state.value.nickname}님,",
-                        style: kHeader1Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(left: 24.w),
-                  child: Obx(
-                    () => Row(
-                      children: [
-                        controller.isEmotionModal.value
-                            ? Text(
-                                "오늘 날씨 어때요?",
-                                style: kHeader1Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
-                              )
-                            : Text(
-                                "오늘 기분 어때요?",
-                                style: kHeader1Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
-                              ),
-                      ],
-                    ),
-                  )),
-              SizedBox(height: 20.h),
-              GetBuilder<DiaryViewModel>(builder: (context) {
-                return Expanded(
-                  child: Stack(
+                child: Obx(
+                  () => Row(
                     children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: SvgPicture.asset(
-                          controller.isEmotionModal.value
-                              ? "lib/config/assets/images/character/character7.svg"
-                              : "lib/config/assets/images/character/character4.svg",
-                          width: 320.w,
-                          height: 320.h,
-                        ),
-                      ),
-                      const WeatherModal(),
-                      const EmotionModal(),
+                      controller.isEmotionModal.value
+                          ? Text(
+                              "오늘 날씨 어때요?",
+                              style: kHeader1Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
+                            )
+                          : Text(
+                              "오늘 기분 어때요?",
+                              style: kHeader1Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
+                            ),
                     ],
                   ),
-                );
-              }),
-            ],
-          ),
+                )),
+            SizedBox(height: 20.h),
+            GetBuilder<DiaryViewModel>(builder: (context) {
+              return Expanded(
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: SvgPicture.asset(
+                        controller.isEmotionModal.value
+                            ? "lib/config/assets/images/character/character7.svg"
+                            : "lib/config/assets/images/character/character4.svg",
+                        width: 320.w,
+                        height: 320.h,
+                      ),
+                    ),
+                    const WeatherModal(),
+                    const EmotionModal(),
+                  ],
+                ),
+              );
+            }),
+          ],
         ),
       ),
     );

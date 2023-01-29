@@ -301,7 +301,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
       child: AnimatedBuilder(
         animation: widget.route.animation!,
         builder: (BuildContext context, Widget? child) {
-          final double bottomPadding = 80.0.h;
+          final double bottomPadding = 75.0.h;
           return ClipRect(
             child: CustomSingleChildLayout(
               delegate: _BottomPickerLayout(
@@ -621,6 +621,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
   Widget _renderBottomActionsView() {
     return BottomButton(
       title: '변경하기',
+      bottomPadding: 20,
       onTap: () {
         Navigator.pop(context, widget.pickerModel.finalTime());
         if (widget.route.onConfirm != null) {

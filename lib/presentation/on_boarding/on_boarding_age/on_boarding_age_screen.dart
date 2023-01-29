@@ -32,6 +32,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
 
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: FormBuilder(
           key: _fbKey,
           autovalidateMode: AutovalidateMode.disabled,

@@ -55,7 +55,7 @@ class EmoticonIconButton extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8.0),
               child: Text(
                 name,
-                style: kBody1Style.copyWith(
+                style: kSubtitle1Style.copyWith(
                     color: Theme.of(context).colorScheme.textCaption),
               ),
             ),

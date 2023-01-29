@@ -24,14 +24,14 @@ class EmotionModal extends GetView<DiaryViewModel> {
             width: MediaQuery.of(context).size.width,
             height: controller.selectedEmotion.value.emoticon.isEmpty ||
                     controller.isEmotionModal.value
-                ? 276.h
+                ? 300.h
                 : 375.h,
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.backgroundModal,
                 borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(40),
-                  topRight: Radius.circular(40),
+                  topLeft: Radius.circular(24),
+                  topRight: Radius.circular(24),
                 ),
               ),
               child: Stack(
@@ -72,7 +72,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                   ),
                   Obx(
                     () => Padding(
-                      padding: EdgeInsets.only(left: 6.w, top: 201.h),
+                      padding: EdgeInsets.only(left: 6.w, top: 180.h),
                       child: controller.selectedEmotion.value.emoticon.isEmpty
                           ? Container()
                           : buildSlider(context),
@@ -124,7 +124,11 @@ class EmotionModal extends GetView<DiaryViewModel> {
               inactiveTrackColor: kGrayColor100,
               thumbColor: kWhiteColor,
               activeTrackColor: kOrange300Color,
-              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12),
+              overlayColor: Colors.transparent,
+              thumbShape: RoundSliderThumbShape(
+                enabledThumbRadius: 12,
+                elevation: 7,
+              ),
             ),
             child: Obx(
               () => Slider(
