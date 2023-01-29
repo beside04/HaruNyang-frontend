@@ -5,7 +5,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
-import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
+import 'package:frontend/presentation/components/weather_emotion_badge_wise_saying.dart';
 import 'package:intl/intl.dart';
 
 class EmotionCardDiaryWidget extends StatelessWidget {
@@ -37,7 +37,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                   style: kHeader5Style.copyWith(
                       color: Theme.of(context).colorScheme.textTitle),
                 ),
-                WeatherEmotionBadgeComponent(
+                WeatherEmotionBadgeWiseSaying(
                   emoticon: diaryData.emotion.emoticon,
                   emoticonIndex: diaryData.emoticonIndex,
                   weatherIcon: diaryData.weather,

@@ -11,7 +11,7 @@ import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
+import 'package:frontend/presentation/components/weather_emotion_badge_wise_saying.dart';
 import 'package:frontend/presentation/diary/components/diary_loading_widget.dart';
 import 'package:frontend/presentation/diary/components/diary_popup_menu_item.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
@@ -222,7 +222,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      WeatherEmotionBadgeComponent(
+                      WeatherEmotionBadgeWiseSaying(
                         emoticon: widget.diaryData.emotion.emoticon,
                         emoticonIndex: widget.diaryData.emoticonIndex,
                         weatherIcon: widget.diaryData.weather,

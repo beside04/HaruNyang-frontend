@@ -143,6 +143,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                 child: Obx(
                   () => ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      shadowColor: Colors.transparent,
                       disabledBackgroundColor:
                           Theme.of(context).unselectedWidgetColor,
                       backgroundColor: kOrange300Color,
