@@ -12,11 +12,13 @@ class NicknameTextField extends StatelessWidget {
     required this.nameHintText,
     required this.textEditingController,
     required this.suffixIcon,
+    this.focus,
   });
 
   final String nameHintText;
   final TextEditingController textEditingController;
   final Widget? suffixIcon;
+  final FocusNode? focus;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,8 @@ class NicknameTextField extends StatelessWidget {
       () => FormBuilderTextField(
         maxLength: 12,
         name: 'name',
+        focusNode: focus,
+        autofocus: false,
         style: kSubtitle1Style.copyWith(
             color: Theme.of(context).colorScheme.textTitle),
         controller: textEditingController,
