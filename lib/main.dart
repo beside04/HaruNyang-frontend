@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/main_view_model.dart';
@@ -53,7 +54,8 @@ class MyApp extends GetView<MainViewModel> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<MainViewModel>();
-
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]); // 상단 StatusBar만 생성
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {

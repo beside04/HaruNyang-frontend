@@ -37,8 +37,7 @@ class _SplashScreenState extends State<SplashScreen>
       String? token = await tokenController.getAccessToken();
       bool isOnBoardingDone = false;
       if (token != null) {
-        isOnBoardingDone = await onBoardingController.getMyInformation(
-            isMoveToLoginPage: false);
+        isOnBoardingDone = await onBoardingController.getMyInformation();
       }
 
       if (token == null) {
