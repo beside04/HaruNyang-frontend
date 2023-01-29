@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -29,7 +29,7 @@ class LoginScreen extends GetView<LoginViewModel> {
         return await Future.value(backResult);
       },
       child: Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.primaryColor,
+        backgroundColor: kOrange300Color,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,

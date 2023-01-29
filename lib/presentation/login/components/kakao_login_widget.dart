@@ -32,8 +32,8 @@ class KakaoLoginWidget extends StatelessWidget {
               width: 7.w,
             ),
             Text(
-              "카카오로 시작하기",
-              style: kHeader5Style.copyWith(color: kBlackColor),
+              "카카오로 로그인",
+              style: kSubtitle1Style.copyWith(color: kBlackColor),
             ),
           ],
         ),
