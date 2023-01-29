@@ -11,6 +11,7 @@ ThemeData lightMode(context) => ThemeData(
         color: kBeigeColor200,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: kBeigeColor100,
         unselectedItemColor: kGrayColor400,
         selectedItemColor: kBlackColor,
         selectedLabelStyle: kBody2Style,
@@ -51,6 +52,7 @@ ThemeData darkMode(context) => ThemeData(
         color: kGrayColor900,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: kGrayColor950,
         unselectedItemColor: kGrayColor600,
         selectedItemColor: kWhiteColor,
         selectedLabelStyle: kBody2Style.copyWith(color: kWhiteColor),
@@ -79,7 +81,7 @@ ThemeData darkMode(context) => ThemeData(
     );
 
 extension CustomColorScheme on ColorScheme {
-  Color get background =>
+  Color get backgroundColor =>
       brightness == Brightness.light ? kBeigeColor100 : kGrayColor950;
   Color get backgroundModal =>
       brightness == Brightness.light ? kWhiteColor : kGrayColor900;
