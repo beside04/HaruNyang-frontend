@@ -52,6 +52,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                 locale: 'ko-KR',
                 daysOfWeekHeight: 30.h,
                 headerVisible: false,
+                availableGestures: AvailableGestures.none,
                 eventLoader: (DateTime day) {
                   return diaryController.state.value.diaryDataList
                       .where(
@@ -199,23 +200,6 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                   },
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            child: SwipeDetector(
-              onSwipeLeft: () {
-                diaryController.onPageChanged(
-                    Jiffy(diaryController.state.value.focusedCalendarDate)
-                        .add(months: 1)
-                        .dateTime);
-              },
-              onSwipeRight: () {
-                diaryController.onPageChanged(
-                    Jiffy(diaryController.state.value..focusedCalendarDate)
-                        .subtract(months: 1)
-                        .dateTime);
-              },
-              child: Container(),
             ),
           ),
         ],
