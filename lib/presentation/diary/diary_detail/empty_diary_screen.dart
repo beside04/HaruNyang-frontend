@@ -23,7 +23,7 @@ class EmptyDiaryScreen extends StatelessWidget {
         elevation: 0,
         title: Text(
           DateFormat('MM월 dd일').format(date),
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
       ),
@@ -59,7 +59,6 @@ class EmptyDiaryScreen extends StatelessWidget {
                   style: kBody1Style.copyWith(
                       color: Theme.of(context).colorScheme.textSubtitle),
                 ),
-
               ],
             ),
           ),

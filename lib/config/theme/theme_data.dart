@@ -11,6 +11,7 @@ ThemeData lightMode(context) => ThemeData(
         color: kBeigeColor200,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: kBeigeColor100,
         unselectedItemColor: kGrayColor400,
         selectedItemColor: kBlackColor,
         selectedLabelStyle: kBody2Style,
@@ -24,6 +25,7 @@ ThemeData lightMode(context) => ThemeData(
       appBarTheme: AppBarTheme(
         centerTitle: true,
         backgroundColor: kBeigeColor100,
+        shadowColor: kGrayColor200,
         iconTheme: const IconThemeData(
           color: kGrayColor950,
         ),
@@ -37,7 +39,10 @@ ThemeData lightMode(context) => ThemeData(
           borderSide: BorderSide(color: kGrayColor100),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: kGrayColor100),
+          borderSide: BorderSide(color: kGrayColor950),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: kRed300Color),
         ),
       ),
     );
@@ -51,6 +56,7 @@ ThemeData darkMode(context) => ThemeData(
         color: kGrayColor900,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: kGrayColor950,
         unselectedItemColor: kGrayColor600,
         selectedItemColor: kWhiteColor,
         selectedLabelStyle: kBody2Style.copyWith(color: kWhiteColor),
@@ -61,6 +67,7 @@ ThemeData darkMode(context) => ThemeData(
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         backgroundColor: kGrayColor950,
+        shadowColor: kGrayColor850,
         iconTheme: IconThemeData(
           color: kGrayColor50,
         ),
@@ -70,16 +77,19 @@ ThemeData darkMode(context) => ThemeData(
         filled: true,
         fillColor: Colors.transparent,
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: kGrayColor750),
+          borderSide: BorderSide(color: kGrayColor800),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: kGrayColor750),
+          borderSide: BorderSide(color: kGrayColor50),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: kRed200Color),
         ),
       ),
     );
 
 extension CustomColorScheme on ColorScheme {
-  Color get background =>
+  Color get backgroundColor =>
       brightness == Brightness.light ? kBeigeColor100 : kGrayColor950;
   Color get backgroundModal =>
       brightness == Brightness.light ? kWhiteColor : kGrayColor900;

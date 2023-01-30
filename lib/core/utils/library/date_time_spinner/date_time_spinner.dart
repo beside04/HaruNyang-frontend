@@ -342,7 +342,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
           Align(
             alignment: Alignment.centerLeft,
             child: Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 20.0),
+              padding: EdgeInsets.only(top: 32.0.h, left: 24.0.w),
               child: Text(
                 theme.title,
                 style: kHeader4Style.copyWith(

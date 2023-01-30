@@ -27,7 +27,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
         centerTitle: true,
         title: Text(
           '회원 탈퇴',
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
@@ -88,6 +88,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   padding: kPrimaryPadding,
                   width: double.infinity,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
                     color: Theme.of(context).colorScheme.surface_01,
                   ),
                   child: Text(
@@ -143,6 +144,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                 child: Obx(
                   () => ElevatedButton(
                     style: ElevatedButton.styleFrom(
+                      shadowColor: Colors.transparent,
                       disabledBackgroundColor:
                           Theme.of(context).unselectedWidgetColor,
                       backgroundColor: kOrange300Color,

@@ -5,8 +5,8 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/res/constants.dart';
 
-class WeatherEmotionBadgeComponent extends StatelessWidget {
-  const WeatherEmotionBadgeComponent({
+class WeatherEmotionBadgeWiseSaying extends StatelessWidget {
+  const WeatherEmotionBadgeWiseSaying({
     super.key,
     required this.weatherIcon,
     required this.emoticon,

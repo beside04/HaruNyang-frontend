@@ -13,7 +13,7 @@ import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/components/weather_emotion_badge_component.dart';
+import 'package:frontend/presentation/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
@@ -401,7 +401,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           left: 20.w,
                           top: 16.h,
                         ),
-                        child: WeatherEmotionBadgeComponent(
+                        child: WeatherEmotionBadgeWritingDiary(
                           emoticon: emotion.emoticon,
                           emoticonIndex: emoticonIndex,
                           weatherIcon: weather,
@@ -487,8 +487,8 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                               fit: BoxFit.cover,
                                             ),
                                             Positioned(
-                                              right: 0,
-                                              top: 0,
+                                              right: 12,
+                                              top: 12,
                                               child: GestureDetector(
                                                 onTap: () {
                                                   controller.clear();
@@ -496,9 +496,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                 child: Container(
                                                   margin:
                                                       const EdgeInsets.all(6),
-                                                  decoration: BoxDecoration(
-                                                    color: kWhiteColor
-                                                        .withOpacity(.6),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: kBlackColor,
                                                     shape: BoxShape.circle,
                                                   ),
                                                   height: 24.h,
@@ -506,7 +506,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                   child: const Icon(
                                                     Icons.close,
                                                     size: 12,
-                                                    color: kBlackColor,
+                                                    color: kWhiteColor,
                                                   ),
                                                 ),
                                               ),
@@ -522,16 +522,28 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                       .croppedFile.value!.path),
                                                 ),
                                                 Positioned(
-                                                  right: 16,
-                                                  top: 16,
+                                                  right: 12,
+                                                  top: 12,
                                                   child: GestureDetector(
                                                     onTap: () {
                                                       controller.clear();
                                                     },
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/write_diary/image_close.svg",
-                                                      width: 35.w,
-                                                      height: 35.h,
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              6),
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                        color: kBlackColor,
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      height: 24.h,
+                                                      width: 24.w,
+                                                      child: const Icon(
+                                                        Icons.close,
+                                                        size: 12,
+                                                        color: kWhiteColor,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),

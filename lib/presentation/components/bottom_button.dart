@@ -31,6 +31,7 @@ class BottomButton extends StatelessWidget {
           height: 52.h,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
+              shadowColor: Colors.transparent,
               disabledBackgroundColor:
                   Theme.of(context).colorScheme.disabledColor,
               backgroundColor: Theme.of(context).primaryColor,

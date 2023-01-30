@@ -26,7 +26,7 @@ class MarketingConsentScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           "마케팅 정보 수신 동의",
-          style: kHeader3Style.copyWith(
+          style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
@@ -81,12 +81,28 @@ class MarketingConsentScreen extends StatelessWidget {
 
 Copyright © 하루냥. All rights reserved.''',
                 styleSheet: MarkdownStyleSheet(
-                  h2: kHeader3Style.copyWith(
+                  h2: kHeader2Style.copyWith(
                       color: Theme.of(context).colorScheme.textBody),
-                  h3: kHeader4Style.copyWith(
+                  h2Padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                  ),
+                  h3: kHeader3Style.copyWith(
+                      color: Theme.of(context).colorScheme.textBody),
+                  h3Padding: const EdgeInsets.symmetric(
+                    vertical: 10,
+                  ),
+                  h4: kHeader4Style.copyWith(
                       color: Theme.of(context).colorScheme.textBody),
                   p: kBody1Style.copyWith(
                       color: Theme.of(context).colorScheme.textBody),
+                  horizontalRuleDecoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        width: 1.0,
+                        color: Theme.of(context).colorScheme.border,
+                      ),
+                    ),
+                  ),
                 ),
               ),
               Align(

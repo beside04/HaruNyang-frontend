@@ -33,7 +33,9 @@ class JobButton extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(
                 width: selected ? 2 : 0.5,
-                color: selected ? kOrange300Color : kGrayColor100,
+                color: selected
+                    ? kOrange300Color
+                    : Theme.of(context).colorScheme.outlineDefault,
               ),
             ),
             child: Stack(
@@ -54,7 +56,7 @@ class JobButton extends StatelessWidget {
           Text(
             job,
             style: kSubtitle1Style.copyWith(
-                color: Theme.of(context).colorScheme.textCaption),
+                color: Theme.of(context).colorScheme.textSubtitle),
           )
         ],
       ),
