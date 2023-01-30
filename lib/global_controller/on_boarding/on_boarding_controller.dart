@@ -136,7 +136,6 @@ class OnBoardingController extends GetxController {
       error: (message) {},
     );
 
-
     return result;
   }
 }

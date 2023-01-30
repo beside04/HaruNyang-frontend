@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
+import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:get/get.dart';
 
 class RefreshInterceptor extends Interceptor {
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
@@ -31,10 +34,17 @@ class RefreshInterceptor extends Interceptor {
     //401에러가 났을때(status code)
     //토큰 재발급 받는 시도를 하고 토큰이 재발급 되면
     //다시 새로운 토큰으로 요청을 한다.
-    print('[refresh err] [${err.response?.realUri}]');
     final refreshToken = await tokenUseCase.getRefreshToken();
 
     if (refreshToken == null) {
+      //로그인 필요
+      //로그인 화면으로 다시 이동
+      Get.offAll(
+            () => const LoginScreen(),
+        binding: BindingsBuilder(
+          getLoginBinding,
+        ),
+      );
       return handler.reject(err);
     }
 
@@ -71,6 +81,14 @@ class RefreshInterceptor extends Interceptor {
         return handler.resolve(response);
       }
     } on DioError catch (e) {
+      //로그인 필요
+      //로그인 화면으로 다시 이동
+      Get.offAll(
+            () => const LoginScreen(),
+        binding: BindingsBuilder(
+          getLoginBinding,
+        ),
+      );
       return handler.reject(e);
     }
 

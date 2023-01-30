@@ -64,15 +64,7 @@ class _SplashScreenState extends State<SplashScreen>
             },
           );
 
-          if (isError) {
-            //로그인 화면으로 다시 이동
-            Get.offAll(
-              () => const LoginScreen(),
-              binding: BindingsBuilder(
-                getLoginBinding,
-              ),
-            );
-          } else {
+          if (!isError) {
             if (isOnBoardingDone == false) {
               //온보딩 화면 이동
               Get.offAll(
