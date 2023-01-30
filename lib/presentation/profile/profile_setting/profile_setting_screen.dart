@@ -68,6 +68,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               title: '닉네임 수정',
               onPressed: () {
                 showModalBottomSheet(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.backgroundModal,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(25.0),
@@ -168,6 +170,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               title: '나이 수정',
               onPressed: () {
                 showModalBottomSheet(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.backgroundModal,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(25.0),
@@ -295,6 +299,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 controller.jobStatus.value = EnumToString.fromString(
                     Job.values, onBoardingController.state.value.job);
                 showModalBottomSheet(
+                  backgroundColor:
+                      Theme.of(context).colorScheme.backgroundModal,
                   shape: const RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(
                       top: Radius.circular(25.0),

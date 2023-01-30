@@ -39,7 +39,10 @@ ThemeData lightMode(context) => ThemeData(
           borderSide: BorderSide(color: kGrayColor100),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: kGrayColor100),
+          borderSide: BorderSide(color: kGrayColor950),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: kRed300Color),
         ),
       ),
     );
@@ -74,10 +77,13 @@ ThemeData darkMode(context) => ThemeData(
         filled: true,
         fillColor: Colors.transparent,
         enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: kGrayColor750),
+          borderSide: BorderSide(color: kGrayColor800),
         ),
         focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(color: kGrayColor750),
+          borderSide: BorderSide(color: kGrayColor50),
+        ),
+        focusedErrorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: kRed200Color),
         ),
       ),
     );

@@ -34,6 +34,9 @@ class NicknameTextField extends StatelessWidget {
         keyboardType: TextInputType.text,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
+          labelStyle: kSubtitle1Style.copyWith(
+              color: Theme.of(context).colorScheme.textSubtitle),
+          labelText: "닉네임",
           helperText: "",
           counterText: "",
           errorText: Get.find<OnBoardingController>().nicknameError.value,
@@ -42,9 +45,7 @@ class NicknameTextField extends StatelessWidget {
               color: Theme.of(context).colorScheme.placeHolder),
           contentPadding: const EdgeInsets.only(
             top: 14,
-            right: 14,
             bottom: 14,
-            left: 16,
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8),

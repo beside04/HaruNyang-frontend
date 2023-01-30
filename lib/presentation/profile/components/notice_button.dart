@@ -56,7 +56,8 @@ class NoticeButton extends StatelessWidget {
                           ? Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.w),
-                                color: kOrange200Color,
+                                color:
+                                    Theme.of(context).colorScheme.primaryColor,
                               ),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(

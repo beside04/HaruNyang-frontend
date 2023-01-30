@@ -88,6 +88,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                   padding: kPrimaryPadding,
                   width: double.infinity,
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
                     color: Theme.of(context).colorScheme.surface_01,
                   ),
                   child: Text(

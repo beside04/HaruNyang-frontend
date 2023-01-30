@@ -34,9 +34,7 @@ class AgeTextField extends StatelessWidget {
             color: Theme.of(context).colorScheme.placeHolder),
         contentPadding: const EdgeInsets.only(
           top: 14,
-          right: 14,
           bottom: 14,
-          left: 16,
         ),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8),

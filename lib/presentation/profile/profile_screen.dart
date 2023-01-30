@@ -188,11 +188,13 @@ class ProfileScreen extends StatelessWidget {
             ),
             Obx(
               () => ProfileButton(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                 icon: FlutterSwitch(
                   padding: 2,
                   width: 52.0.w,
                   height: 32.0.h,
-                  activeColor: Theme.of(context).primaryColor,
+                  activeColor: Theme.of(context).colorScheme.primaryColor,
                   inactiveColor: kGrayColor250,
                   toggleSize: 28.0.w,
                   value: !mainViewController.isDarkMode.value,
