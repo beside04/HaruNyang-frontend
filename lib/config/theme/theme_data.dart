@@ -25,6 +25,7 @@ ThemeData lightMode(context) => ThemeData(
       appBarTheme: AppBarTheme(
         centerTitle: true,
         backgroundColor: kBeigeColor100,
+        shadowColor: kGrayColor200,
         iconTheme: const IconThemeData(
           color: kGrayColor950,
         ),
@@ -63,6 +64,7 @@ ThemeData darkMode(context) => ThemeData(
       appBarTheme: const AppBarTheme(
         centerTitle: true,
         backgroundColor: kGrayColor950,
+        shadowColor: kGrayColor850,
         iconTheme: IconThemeData(
           color: kGrayColor50,
         ),

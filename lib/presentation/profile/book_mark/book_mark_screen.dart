@@ -28,7 +28,14 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
           style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
-        elevation: 0.5,
+        elevation: 0,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(0),
+          child: Container(
+            color: Theme.of(context).colorScheme.border,
+            height: 1.0,
+          ),
+        ),
         leading: IconButton(
           onPressed: () {
             Get.back();

@@ -103,6 +103,8 @@ flutter:
     - lib/config/assets/images/character/
     - lib/config/assets/images/diary/weather/
     - lib/config/assets/images/diary/write_diary/
+    - lib/config/assets/images/diary/dark_mode/
+    - lib/config/assets/images/diary/light_mode/
     - lib/config/assets/images/home/light_mode/
     - lib/config/assets/images/home/dark_mode/
     - lib/config/assets/images/profile/
