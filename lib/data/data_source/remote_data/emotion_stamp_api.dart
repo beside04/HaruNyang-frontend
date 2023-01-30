@@ -14,7 +14,12 @@ class EmotionStampApi {
 
   Future<Result<List<DiaryData>>> getEmotionStamp(
       String from, String to) async {
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
 
     try {
       String emoticonStampUrl = '$_baseUrl/v1/diaries?from=$from&to=$to';
@@ -34,6 +39,19 @@ class EmotionStampApi {
         return Result.error(
             '서버 error : status code : ${response.data['status']}');
       }
+    } on DioError catch (e) {
+      String errMessage = '';
+
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
+        }
+      } else {
+        errMessage = '401';
+      }
+      return Result.error(errMessage);
     } catch (e) {
       return Result.error(e.toString());
     }

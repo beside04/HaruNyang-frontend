@@ -14,7 +14,12 @@ class WiseSayingApi {
 
   Future<Result<List<WiseSayingData>>> getWiseSaying(
       int emoticonId, String content) async {
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
 
     try {
       String emoticonUrl = '$_baseUrl/v1/emotion/$emoticonId/wisesaying';
@@ -36,6 +41,18 @@ class WiseSayingApi {
         return Result.error(
             '서버 error : status code : ${response.data['status']}');
       }
+    } on DioError catch (e) {
+      String errMessage = '';
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
+        }
+      } else {
+        errMessage = '401';
+      }
+      return Result.error(errMessage);
     } catch (e) {
       return Result.error(e.toString());
     }
@@ -43,7 +60,12 @@ class WiseSayingApi {
 
   Future<Result<List<WiseSayingData>>> getRandomWiseSaying(
       int emoticonId) async {
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
 
     try {
       String emoticonUrl = '$_baseUrl/v1/wisesaying/emotion/$emoticonId';
@@ -60,6 +82,18 @@ class WiseSayingApi {
         return Result.error(
             '서버 error : status code : ${response.data['status']}');
       }
+    } on DioError catch (e) {
+      String errMessage = '';
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
+        }
+      } else {
+        errMessage = '401';
+      }
+      return Result.error(errMessage);
     } catch (e) {
       return Result.error(e.toString());
     }

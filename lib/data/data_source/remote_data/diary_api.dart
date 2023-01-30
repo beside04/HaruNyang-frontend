@@ -14,7 +14,12 @@ class DiaryApi {
 
   Future<Result<String>> saveDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary';
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
     try {
       Response response;
       response = await dio.post(
@@ -38,9 +43,13 @@ class DiaryApi {
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
-        errMessage = '일기 작성에 실패했습니다. ${e.response!.data['message']}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
+        }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {
@@ -50,7 +59,12 @@ class DiaryApi {
 
   Future<Result<bool>> updateDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary/${diary.id}';
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
     try {
       Response response;
       response = await dio.put(diaryUrl, data: {
@@ -72,12 +86,13 @@ class DiaryApi {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              '일기 수정 api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {
@@ -87,7 +102,12 @@ class DiaryApi {
 
   Future<Result<bool>> deleteDiary(String diaryId) async {
     String diaryUrl = '$_baseUrl/v1/diary/$diaryId';
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
     try {
       Response response;
       response = await dio.delete(
@@ -104,12 +124,13 @@ class DiaryApi {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              '일기 삭제 api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {

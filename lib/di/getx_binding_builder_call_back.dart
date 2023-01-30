@@ -3,6 +3,7 @@ import 'package:frontend/data/data_source/remote_data/diary_api.dart';
 import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
 import 'package:frontend/data/data_source/remote_data/on_boarding_api.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
+import 'package:frontend/data/data_source/remote_data/reissue_token_api.dart';
 import 'package:frontend/data/data_source/remote_data/wise_saying_api.dart';
 import 'package:frontend/data/data_source/remote_data/withdraw_api.dart';
 import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
@@ -13,6 +14,7 @@ import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/data/repository/push_messge_permission/dark_mode_repository_impl.dart';
+import 'package:frontend/data/repository/reissu_token/reissue_token_repository_impl.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
@@ -31,6 +33,7 @@ import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_u
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
+import 'package:frontend/domain/use_case/reissue_token_use_case/reissue_token_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
@@ -112,7 +115,9 @@ final diaryRepository = DiaryRepositoryImpl(
 final bookmarkRepository = BookmarkRepositoryImpl(
   bookmarkApi: bookmarkApi,
 );
-
+final reissueTokenRepository = ReissueTokenRepositoryImpl(
+  dataSource: ReissueTokenApi(),
+);
 //use case
 final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
   socialLoginRepository: kakaoLoginImpl,
@@ -174,6 +179,10 @@ final deleteDiaryUseCase = DeleteDiaryUseCase(
 
 final bookmarkUseCase = BookmarkUseCase(
   bookmarkRepository: bookmarkRepository,
+);
+
+final reissueTokenUseCase = ReissueTokenUseCase(
+  reissueTokenRepository: reissueTokenRepository,
 );
 
 void getMainBinding() {
@@ -254,6 +263,7 @@ void getOnBoardingControllerBinding() {
   Get.put(
     OnBoardingController(
       onBoardingUseCase: onBoardingUseCase,
+      reissueTokenUseCase: reissueTokenUseCase,
     ),
   );
 }
