@@ -116,34 +116,37 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                               await diaryController.deleteDiary(
                                   diaryController.state.value.diary!.id ?? '');
                               showDialog(
-                                barrierDismissible: true,
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (ctx) {
-                                  return DialogComponent(
-                                    title: "삭제 완료",
-                                    content: Text(
-                                      "일기를 삭제했어요.",
-                                      style: kHeader6Style.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .textSubtitle),
-                                    ),
-                                    actionContent: [
-                                      DialogButton(
-                                        title: "확인",
-                                        onTap: () {
-                                          Get.offAll(
-                                            () => const HomeScreen(),
-                                            binding: BindingsBuilder(
-                                              getHomeViewModelBinding,
-                                            ),
-                                          );
-                                        },
-                                        backgroundColor: kOrange200Color,
-                                        textStyle: kHeader4Style.copyWith(
-                                            color: kWhiteColor),
+                                  return WillPopScope(
+                                    onWillPop: () async => false,
+                                    child: DialogComponent(
+                                      title: "삭제 완료",
+                                      content: Text(
+                                        "일기를 삭제했어요.",
+                                        style: kHeader6Style.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .textSubtitle),
                                       ),
-                                    ],
+                                      actionContent: [
+                                        DialogButton(
+                                          title: "확인",
+                                          onTap: () {
+                                            Get.offAll(
+                                              () => const HomeScreen(),
+                                              binding: BindingsBuilder(
+                                                getHomeViewModelBinding,
+                                              ),
+                                            );
+                                          },
+                                          backgroundColor: kOrange200Color,
+                                          textStyle: kHeader4Style.copyWith(
+                                              color: kWhiteColor),
+                                        ),
+                                      ],
+                                    ),
                                   );
                                 },
                               );
