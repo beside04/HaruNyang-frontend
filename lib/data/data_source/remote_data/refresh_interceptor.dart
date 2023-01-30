@@ -37,8 +37,8 @@ class RefreshInterceptor extends Interceptor {
     final refreshToken = await tokenUseCase.getRefreshToken();
 
     if (refreshToken == null) {
-      //로그인 필요
       //로그인 화면으로 다시 이동
+      await tokenUseCase.deleteAllToken();
       Get.offAll(
             () => const LoginScreen(),
         binding: BindingsBuilder(
@@ -81,8 +81,8 @@ class RefreshInterceptor extends Interceptor {
         return handler.resolve(response);
       }
     } on DioError catch (e) {
-      //로그인 필요
       //로그인 화면으로 다시 이동
+      await tokenUseCase.deleteAllToken();
       Get.offAll(
             () => const LoginScreen(),
         binding: BindingsBuilder(
