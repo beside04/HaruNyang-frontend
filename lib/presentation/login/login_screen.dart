@@ -40,9 +40,9 @@ class LoginScreen extends GetView<LoginViewModel> {
               ),
               child: Center(
                 child: SvgPicture.asset(
-                  "lib/config/assets/images/character/character11.svg",
-                  width: 100.w,
-                  height: 80.h,
+                  "lib/config/assets/images/login/login_logo.svg",
+                  width: 110.w,
+                  height: 90.h,
                 ),
               ),
             ),
