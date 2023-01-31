@@ -34,7 +34,7 @@ class AppleLoginWidget extends StatelessWidget {
             ),
             Text(
               "Apple로 로그인",
-              style: kSubtitle1Style.copyWith(color: kWhiteColor),
+              style: kHeader5Style.copyWith(color: kWhiteColor),
             ),
           ],
         ),
