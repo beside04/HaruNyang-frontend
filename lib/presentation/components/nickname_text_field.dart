@@ -34,13 +34,13 @@ class NicknameTextField extends StatelessWidget {
         keyboardType: TextInputType.text,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
+          labelText: "이름",
           labelStyle: kSubtitle1Style.copyWith(
-              color: Theme.of(context).colorScheme.textSubtitle),
-          labelText: "닉네임",
+              color: Theme.of(context).colorScheme.placeHolder),
           helperText: "",
           counterText: "",
           errorText: Get.find<OnBoardingController>().nicknameError.value,
-          hintText: nameHintText,
+          //hintText: nameHintText,
           hintStyle: kSubtitle1Style.copyWith(
               color: Theme.of(context).colorScheme.placeHolder),
           contentPadding: const EdgeInsets.only(
