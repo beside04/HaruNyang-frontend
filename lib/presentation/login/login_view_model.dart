@@ -170,8 +170,24 @@ class LoginViewModel extends GetxController {
     //캘린더 업데이트
     Get.find<DiaryController>().initPage();
 
-    final bool isOnBoardingDone =
+    bool isOnBoardingDone = false;
+    bool isError = false;
+
+    final getMyInfoResult =
         await Get.find<OnBoardingController>().getMyInformation();
+
+    getMyInfoResult.when(
+      success: (data) {
+        isOnBoardingDone = data;
+      },
+      error: (message) {
+        isError = true;
+      },
+    );
+
+    if (isError) {
+      Get.snackbar('알림', '사용자 정보를 가져오는데 실패했습니다.');
+    }
 
     Get.find<DiaryController>().getAllBookmarkData();
 

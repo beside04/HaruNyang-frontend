@@ -13,7 +13,12 @@ class WithdrawApi {
 
   Future<Result<bool>> withdrawUser() async {
     String withdrawUrl = '$_baseUrl/v1/withdraw';
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
 
     try {
       Response response;
@@ -28,14 +33,14 @@ class WithdrawApi {
       }
     } on DioError catch (e) {
       String errMessage = '';
-
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              '회원탈퇴 api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {

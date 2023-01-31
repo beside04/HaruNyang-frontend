@@ -15,7 +15,13 @@ class OnBoardingApi {
   Future<Result<MyInformation>> getMyInformation() async {
     String myInformationUrl = '$baseUrl/v1/me';
 
-    var dio = await interceptor.refreshInterceptor(isMoveToLoginPage: false);
+    //var dio = await interceptor.refreshInterceptor(isMoveToLoginPage: false);
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
 
     try {
       Response response;
@@ -27,14 +33,14 @@ class OnBoardingApi {
       return Result.success(result);
     } on DioError catch (e) {
       String errMessage = '';
-
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              'api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {
@@ -49,7 +55,12 @@ class OnBoardingApi {
   }) async {
     String myInformationUrl = '$baseUrl/v1/members';
 
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
 
     try {
       Response response;
@@ -70,12 +81,15 @@ class OnBoardingApi {
       if (e.response != null) {
         if (e.response!.data['code'] == "M006") {
           errMessage = '중복된 닉네임 입니다.';
-        } else if (e.response!.statusCode != 200) {
-          errMessage =
-              'api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        } else if (e.response!.statusCode == 401) {
+          {
+            errMessage = '401';
+          }
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {

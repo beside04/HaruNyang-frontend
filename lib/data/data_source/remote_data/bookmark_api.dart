@@ -15,7 +15,12 @@ class BookmarkApi {
   Future<Result<bool>> saveBookmark(int wiseSayingId) async {
     String bookmarkUrl =
         '$_baseUrl/v1/wise-saying-bookmark?wiseSayingId=$wiseSayingId';
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
     try {
       Response response;
       response = await dio.post(bookmarkUrl);
@@ -30,12 +35,13 @@ class BookmarkApi {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              '북마크 저장의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {
@@ -45,7 +51,12 @@ class BookmarkApi {
 
   Future<Result<List<BookmarkData>>> getBookmark(int page, int limit) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
     try {
       Response response;
       response = await dio.get(
@@ -66,12 +77,13 @@ class BookmarkApi {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              '북마크를 가져오는 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {
@@ -81,7 +93,12 @@ class BookmarkApi {
 
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark/$bookmarkId';
-    var dio = await interceptor.refreshInterceptor();
+    //var dio = await interceptor.refreshInterceptor();
+    final dio = Dio();
+    dio.interceptors.add(interceptor);
+    dio.options.headers.addAll({
+      'accessToken': 'true',
+    });
     try {
       Response response;
       response = await dio.delete(
@@ -98,12 +115,13 @@ class BookmarkApi {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              '북마크를 삭제하는데 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
         }
       } else {
-        errMessage = e.message;
+        errMessage = '401';
       }
       return Result.error(errMessage);
     } catch (e) {

@@ -11,4 +11,8 @@ class TokenController extends GetxController {
   Future<String?> getAccessToken() async {
     return await tokenUseCase.getAccessToken();
   }
+
+  Future<String?> getRefreshToken() async {
+    return await tokenUseCase.getRefreshToken();
+  }
 }

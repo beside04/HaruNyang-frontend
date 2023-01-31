@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/result.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
@@ -34,14 +35,11 @@ class _SplashScreenState extends State<SplashScreen>
 
   Future<void> init() async {
     await Future.delayed(const Duration(seconds: 5), () async {
-      String? token = await tokenController.getAccessToken();
-      bool isOnBoardingDone = false;
-      if (token != null) {
-        isOnBoardingDone = await onBoardingController.getMyInformation();
-      }
+      String? accessToken = await tokenController.getAccessToken();
+      String? refreshToken = await tokenController.getRefreshToken();
 
-      if (token == null) {
-        //로그인 화면 이동
+      if (accessToken == null || refreshToken == null) {
+        //token이 없으면 로그인 화면 이동
         Get.offAll(
           () => const LoginScreen(),
           binding: BindingsBuilder(
@@ -49,22 +47,50 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         );
       } else {
-        //캘린더 업데이트
-        diaryController.initPage();
+        //reissue token 실행
+        final bool res = await onBoardingController.reissueToken(refreshToken);
 
-        if (isOnBoardingDone == false) {
-          //온보딩 화면 이동
-          Get.offAll(
-            () => const OnBoardingNicknameScreen(),
+        if (res) {
+          //에러 없으면 user 정보 가져온다
+          bool isOnBoardingDone = false;
+          bool isError = false;
+          final getMyInfoResult = await onBoardingController.getMyInformation();
+          getMyInfoResult.when(
+            success: (data) {
+              isOnBoardingDone = data;
+            },
+            error: (message) {
+              isError = true;
+            },
           );
-        } else {
-          //Home 화면 이동
-          Get.find<DiaryController>().getAllBookmarkData();
 
+          if (!isError) {
+            if (isOnBoardingDone == false) {
+              //온보딩 화면 이동
+              Get.offAll(
+                () => const OnBoardingNicknameScreen(),
+              );
+            } else {
+              //캘린더 업데이트
+              diaryController.initPage();
+              //북마크데이터 업데이트
+              Get.find<DiaryController>().getAllBookmarkData();
+
+              //Home 화면 이동
+              Get.offAll(
+                () => const HomeScreen(),
+                binding: BindingsBuilder(
+                  getHomeViewModelBinding,
+                ),
+              );
+            }
+          }
+        } else {
+          //에러 있으면 로그인 화면으로 이동
           Get.offAll(
-            () => const HomeScreen(),
+            () => const LoginScreen(),
             binding: BindingsBuilder(
-              getHomeViewModelBinding,
+              getLoginBinding,
             ),
           );
         }
