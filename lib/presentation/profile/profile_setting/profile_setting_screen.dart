@@ -19,8 +19,10 @@ import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
+import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
@@ -436,6 +438,28 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                       ],
                     );
                   },
+                );
+              },
+            ),
+            ProfileButton(
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
+              ),
+              title: '(TEST) 온보딩 페이지',
+              onPressed: () async {
+                Get.to(
+                  () => const OnBoardingNicknameScreen(),
+                );
+              },
+            ),
+            ProfileButton(
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
+              ),
+              title: '(TEST) 회원 탈퇴 완료 페이지',
+              onPressed: () async {
+                Get.to(
+                  () => const WithdrawDoneScreen(),
                 );
               },
             ),

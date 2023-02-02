@@ -61,6 +61,28 @@ class WeatherModal extends GetView<DiaryViewModel> {
                   },
                 ),
               ),
+              // Padding(
+              //   padding: EdgeInsets.only(left: 6.w, top: 75.h),
+              //   child: ListView.builder(
+              //     physics: const BouncingScrollPhysics(),
+              //     scrollDirection: Axis.horizontal,
+              //     itemCount: controller.weatherDataList.length,
+              //     itemBuilder: (BuildContext context, int i) {
+              //       return Obx(
+              //         () => WeatherIconButton(
+              //           name: controller.weatherDataList[i].value,
+              //           icon: controller.weatherDataList[i].image,
+              //           selected: controller.selectedWeather.value ==
+              //               controller.weatherDataList[i],
+              //           onPressed: () {
+              //             controller.selectedWeather.value =
+              //                 controller.weatherDataList[i];
+              //           },
+              //         ),
+              //       );
+              //     },
+              //   ),
+              // ),
               Obx(
                 () => BottomButton(
                   title: '다음으로',

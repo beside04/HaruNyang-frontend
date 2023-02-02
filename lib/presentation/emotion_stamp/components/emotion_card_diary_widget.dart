@@ -31,9 +31,14 @@ class EmotionCardDiaryWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // Text(
+                //   DateFormat.MMMEd("ko_KR")
+                //       .format(DateTime.parse(diaryData.writtenAt)),
+                //   style: kHeader5Style.copyWith(
+                //       color: Theme.of(context).colorScheme.textTitle),
+                // ),
                 Text(
-                  DateFormat.MMMEd("ko_KR")
-                      .format(DateTime.parse(diaryData.writtenAt)),
+                  DateFormat.MMMEd("ko_KR").format(DateTime.now()),
                   style: kHeader5Style.copyWith(
                       color: Theme.of(context).colorScheme.textTitle),
                 ),

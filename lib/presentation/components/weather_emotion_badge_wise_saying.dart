@@ -29,7 +29,7 @@ class WeatherEmotionBadgeWiseSaying extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-          child: SvgPicture.network(
+          child: SvgPicture.asset(
             weatherIcon,
             width: 16.w,
             height: 16.h,
@@ -46,7 +46,7 @@ class WeatherEmotionBadgeWiseSaying extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SvgPicture.network(
+              SvgPicture.asset(
                 emoticon,
                 width: 16.w,
                 height: 16.h,

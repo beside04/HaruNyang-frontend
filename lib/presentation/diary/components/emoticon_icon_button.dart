@@ -43,7 +43,7 @@ class EmoticonIconButton extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Theme.of(context).colorScheme.surfaceModal,
                   ),
-                  child: SvgPicture.network(
+                  child: SvgPicture.asset(
                     icon,
                     width: 40.w,
                     height: 40.h,

@@ -62,63 +62,93 @@ class DiaryViewModel extends GetxController
   }
 
   Future<void> getEmoticonData() async {
-    int limit = getEmoticonLimitCount;
-    int page = 0;
-    final result = await getEmoticonUseCase(limit, page);
-
-    await result.when(
-      success: (data) async {
-        emoticonDataList.value = data;
-        for (final emoticon in data) {
-          await precachePicture(
-              NetworkPicture(
-                SvgPicture.svgByteDecoderBuilder,
-                emoticon.emoticon,
-              ),
-              null);
-        }
-      },
-      error: (message) {
-        Get.snackbar('알림', message);
-      },
-    );
+    List<EmoticonData> emotions = [
+      EmoticonData(
+        value: '기뻐',
+        emoticon: 'lib/config/assets/images/diary/weather/sunny.svg',
+        desc: '기뻐',
+      ),
+      EmoticonData(
+        value: '슬퍼',
+        emoticon: 'lib/config/assets/images/diary/weather/rainy.svg',
+        desc: '슬퍼',
+      ),
+    ];
+    emoticonDataList.value = emotions;
   }
+
+  // Future<void> getEmoticonData() async {
+  //   int limit = getEmoticonLimitCount;
+  //   int page = 0;
+  //   final result = await getEmoticonUseCase(limit, page);
+  //
+  //   await result.when(
+  //     success: (data) async {
+  //       emoticonDataList.value = data;
+  //       for (final emoticon in data) {
+  //         await precachePicture(
+  //             NetworkPicture(
+  //               SvgPicture.svgByteDecoderBuilder,
+  //               emoticon.emoticon,
+  //             ),
+  //             null);
+  //       }
+  //     },
+  //     error: (message) {
+  //       Get.snackbar('알림', message);
+  //     },
+  //   );
+  // }
 
   Future<void> getWeatherData() async {
-    final result = await getWeatherUseCase();
-
-    await result.when(
-      success: (data) async {
-        List<WeatherData> weathers = [];
-
-        for (int i = 0; i < weatherInfo.length; i++) {
-          for (int j = 0; j < data.length; j++) {
-            if (weatherInfo[i] == data[j].value) {
-              weathers.add(
-                data[j].copyWith(
-                  value: getWeatherNameKorean(data[j].value),
-                ),
-              );
-              break;
-            }
-          }
-        }
-
-        weatherDataList.value = weathers;
-        for (final weather in weathers) {
-          await precachePicture(
-              NetworkPicture(
-                SvgPicture.svgByteDecoderBuilder,
-                weather.image,
-              ),
-              null);
-        }
-      },
-      error: (message) {
-        Get.snackbar('알림', message);
-      },
-    );
+    List<WeatherData> weathers = [
+      WeatherData(
+        image: 'lib/config/assets/images/diary/weather/sunny.svg',
+        value: '맑음',
+      ),
+      WeatherData(
+        image: 'lib/config/assets/images/diary/weather/rainy.svg',
+        value: '비',
+      ),
+    ];
+    weatherDataList.value = weathers;
   }
+
+  // Future<void> getWeatherData() async {
+  //   final result = await getWeatherUseCase();
+  //
+  //   await result.when(
+  //     success: (data) async {
+  //       List<WeatherData> weathers = [];
+  //
+  //       for (int i = 0; i < weatherInfo.length; i++) {
+  //         for (int j = 0; j < data.length; j++) {
+  //           if (weatherInfo[i] == data[j].value) {
+  //             weathers.add(
+  //               data[j].copyWith(
+  //                 value: getWeatherNameKorean(data[j].value),
+  //               ),
+  //             );
+  //             break;
+  //           }
+  //         }
+  //       }
+  //
+  //       weatherDataList.value = weathers;
+  //       for (final weather in weathers) {
+  //         await precachePicture(
+  //             NetworkPicture(
+  //               SvgPicture.svgByteDecoderBuilder,
+  //               weather.image,
+  //             ),
+  //             null);
+  //       }
+  //     },
+  //     error: (message) {
+  //       Get.snackbar('알림', message);
+  //     },
+  //   );
+  // }
 
   void setSelectedEmoticon(EmoticonData emoticon) {
     selectedEmotion.value = emoticon;

@@ -38,13 +38,13 @@ class RefreshInterceptor extends Interceptor {
 
     if (refreshToken == null) {
       //로그인 화면으로 다시 이동
-      await tokenUseCase.deleteAllToken();
-      Get.offAll(
-            () => const LoginScreen(),
-        binding: BindingsBuilder(
-          getLoginBinding,
-        ),
-      );
+      // await tokenUseCase.deleteAllToken();
+      // Get.offAll(
+      //       () => const LoginScreen(),
+      //   binding: BindingsBuilder(
+      //     getLoginBinding,
+      //   ),
+      // );
       return handler.reject(err);
     }
 
@@ -82,13 +82,13 @@ class RefreshInterceptor extends Interceptor {
       }
     } on DioError catch (e) {
       //로그인 화면으로 다시 이동
-      await tokenUseCase.deleteAllToken();
-      Get.offAll(
-            () => const LoginScreen(),
-        binding: BindingsBuilder(
-          getLoginBinding,
-        ),
-      );
+      // await tokenUseCase.deleteAllToken();
+      // Get.offAll(
+      //       () => const LoginScreen(),
+      //   binding: BindingsBuilder(
+      //     getLoginBinding,
+      //   ),
+      // );
       return handler.reject(e);
     }
 
