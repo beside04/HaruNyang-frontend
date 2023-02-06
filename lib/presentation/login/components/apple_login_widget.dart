@@ -19,8 +19,8 @@ class AppleLoginWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(60.w),
           color: kBlackColor,
         ),
-        width: 360.w,
-        height: 56.h,
+        width: 335.w,
+        height: 52.h,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

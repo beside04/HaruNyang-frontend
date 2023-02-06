@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/profile/components/notice_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_detail_screen.dart';
 import 'package:frontend/presentation/profile/notice/notice_view_model.dart';
@@ -30,13 +31,10 @@ class NoticeScreen extends GetView<NoticeViewModel> {
             height: 1.0,
           ),
         ),
-        leading: IconButton(
+        leading: BackIcon(
           onPressed: () {
             Get.back();
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
         ),
       ),
       body: SafeArea(

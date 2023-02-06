@@ -9,7 +9,7 @@ class BottomButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTap,
-    this.bottomPadding = 50,
+    this.bottomPadding = 37,
   });
 
   final String title;

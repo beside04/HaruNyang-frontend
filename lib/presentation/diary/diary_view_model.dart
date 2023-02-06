@@ -1,9 +1,7 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_use_case.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class DiaryViewModel extends GetxController

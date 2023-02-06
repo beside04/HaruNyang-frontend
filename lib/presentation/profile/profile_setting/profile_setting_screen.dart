@@ -12,18 +12,21 @@ import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/component/withdraw_done_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
+import 'package:frontend/presentation/sign_in_complete/sign_in_complete_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
@@ -48,13 +51,10 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
-        leading: IconButton(
+        leading: BackIcon(
           onPressed: () {
             Get.back();
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
         ),
       ),
       body: SafeArea(
@@ -241,7 +241,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     : GestureDetector(
                                         child: const Icon(
                                           Icons.cancel,
-                                          color: kGrayColor200,
+                                          color: kBlackColor,
                                           size: 20,
                                         ),
                                         onTap: () => controller
@@ -460,6 +460,28 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               onPressed: () async {
                 Get.to(
                   () => const WithdrawDoneScreen(),
+                );
+              },
+            ),
+            ProfileButton(
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
+              ),
+              title: '(TEST) 약관 정보 페이지',
+              onPressed: () async {
+                Get.to(
+                  () => const LoginTermsInformationScreen(),
+                );
+              },
+            ),
+            ProfileButton(
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
+              ),
+              title: '(TEST) 가입 완료 페이지',
+              onPressed: () async {
+                Get.to(
+                  () => const SignInCompleteScreen(),
                 );
               },
             ),

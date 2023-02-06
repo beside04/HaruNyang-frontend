@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
@@ -29,12 +29,12 @@ class DiaryAppBar extends GetView<DiaryViewModel>
             ? kGrayColor950
             : const Color(0xffffac60),
         title: Text(
-          DateFormat('MM월 dd일').format(date),
+          DateFormat('M월 d일').format(date),
           style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
         leading: controller.isEmotionModal.value
-            ? IconButton(
+            ? BackIcon(
                 onPressed: () {
                   Get.offAll(
                     () => const HomeScreen(),
@@ -43,19 +43,11 @@ class DiaryAppBar extends GetView<DiaryViewModel>
                     ),
                   );
                 },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20.w,
-                ),
               )
-            : IconButton(
+            : BackIcon(
                 onPressed: () {
                   controller.popUpEmotionModal();
                 },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20.w,
-                ),
               ),
       ),
     );

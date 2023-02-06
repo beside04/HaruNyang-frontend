@@ -42,6 +42,9 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 12.h,
+                    ),
                     const OnBoardingStepper(
                       pointNumber: 3,
                     ),
@@ -51,7 +54,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 40.h,
+                            height: 24.h,
                           ),
                           Text(
                             "어떤 일을",

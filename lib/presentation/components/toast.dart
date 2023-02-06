@@ -43,7 +43,7 @@ void toast({
 
   fToast.showToast(
       child: toast,
-      toastDuration: const Duration(milliseconds: 2000),
+      toastDuration: const Duration(milliseconds: 4000),
       positionedToastBuilder: (context, child) {
         return Stack(
           alignment: Alignment.center,

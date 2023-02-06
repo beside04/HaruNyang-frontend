@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -32,13 +31,13 @@ class EmotionCardDiaryWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 // Text(
-                //   DateFormat.MMMEd("ko_KR")
-                //       .format(DateTime.parse(diaryData.writtenAt)),
+                //   DateFormat('M월 d일 E요일', 'ko_KR').(DateTime.parse(diaryData.writtenAt)),
                 //   style: kHeader5Style.copyWith(
                 //       color: Theme.of(context).colorScheme.textTitle),
                 // ),
+
                 Text(
-                  DateFormat.MMMEd("ko_KR").format(DateTime.now()),
+                  DateFormat('M월 d일 E요일', 'ko_KR').format(DateTime.now()),
                   style: kHeader5Style.copyWith(
                       color: Theme.of(context).colorScheme.textTitle),
                 ),
@@ -46,7 +45,8 @@ class EmotionCardDiaryWidget extends StatelessWidget {
                   emoticon: diaryData.emotion.emoticon,
                   emoticonIndex: diaryData.emoticonIndex,
                   weatherIcon: diaryData.weather,
-                  color: kWhiteColor,
+                  color: Theme.of(context).colorScheme.surfaceModal,
+                  isEmotionText: false,
                 )
               ],
             ),

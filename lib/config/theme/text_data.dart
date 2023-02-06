@@ -46,7 +46,7 @@ TextStyle kHeader5Style = const TextStyle(
 TextStyle kHeader5Gray300UnderlineStyle = const TextStyle(
   fontFamily: pretendard,
   fontSize: 16,
-  color: kGrayColor300,
+  color: kGrayColor500,
   fontWeight: FontWeight.w600,
   height: 1.375,
   decoration: TextDecoration.underline,

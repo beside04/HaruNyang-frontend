@@ -43,14 +43,14 @@ class LoginScreen extends GetView<LoginViewModel> {
               child: Center(
                 child: SvgPicture.asset(
                   "lib/config/assets/images/login/login_logo.svg",
-                  width: 110.w,
-                  height: 90.h,
+                  width: 82.w,
                 ),
               ),
             ),
             Center(
               child: SvgPicture.asset(
                 "lib/config/assets/images/character/logo_text.svg",
+                width: 82.w,
               ),
             ),
             SizedBox(
@@ -85,6 +85,18 @@ class LoginScreen extends GetView<LoginViewModel> {
                     },
                     child: const AppleLoginWidget(),
                   ),
+            InkWell(
+              onTap: () async {
+                // await controller.connectAppleLogin();
+                Get.offAll(
+                  () => const HomeScreen(),
+                  binding: BindingsBuilder(
+                    getHomeViewModelBinding,
+                  ),
+                );
+              },
+              child: const AppleLoginWidget(),
+            ),
           ],
         ),
       ),

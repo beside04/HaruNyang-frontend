@@ -127,7 +127,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
               overlayColor: Colors.transparent,
               thumbShape: RoundSliderThumbShape(
                 enabledThumbRadius: 12,
-                elevation: 7,
+                elevation: 2,
               ),
             ),
             child: Obx(

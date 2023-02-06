@@ -54,9 +54,8 @@ class SignInCompleteScreen extends StatelessWidget {
                           ),
                           Center(
                             child: SvgPicture.asset(
-                              "lib/config/assets/images/character/character12.svg",
-                              width: 340.w,
-                              height: 340.h,
+                              "lib/config/assets/images/character/character5.svg",
+                              width: 375.w,
                             ),
                           ),
                         ],

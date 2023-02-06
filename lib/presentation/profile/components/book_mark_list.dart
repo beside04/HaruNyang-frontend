@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -46,26 +46,31 @@ class BookMarkList extends StatelessWidget {
                   children: [
                     Row(
                       children: [
+                        SvgPicture.asset(
+                          "lib/config/assets/images/character/character11.svg",
+                          width: 26.w,
+                        ),
+                        SizedBox(
+                          width: 4.w,
+                        ),
                         Text(
                           DateFormat('yyyy.MM.dd').format(date),
                           style: kSubtitle1Style.copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.textSubtitle),
+                              color: Theme.of(context).colorScheme.textBody),
                         )
                       ],
                     ),
                     isBookMark
                         ? GestureDetector(
                             onTap: onTap,
-                            child: const Icon(
-                              Icons.bookmark_border,
+                            child: SvgPicture.asset(
+                              "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
                             ),
                           )
                         : GestureDetector(
                             onTap: onTap,
-                            child: const Icon(
-                              Icons.bookmark,
-                              color: kOrange300Color,
+                            child: SvgPicture.asset(
+                              "lib/config/assets/images/diary/write_diary/bookmark.svg",
                             ),
                           ),
                   ],
@@ -76,7 +81,7 @@ class BookMarkList extends StatelessWidget {
                 Text(
                   title,
                   style: kBody1Style.copyWith(
-                      color: Theme.of(context).colorScheme.textSubtitle),
+                      color: Theme.of(context).colorScheme.textBody),
                 ),
                 Align(
                   alignment: Alignment.centerRight,

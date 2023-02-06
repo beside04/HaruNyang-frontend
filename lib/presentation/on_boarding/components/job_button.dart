@@ -51,7 +51,7 @@ class JobButton extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 8.h,
+            height: 2.h,
           ),
           Text(
             job,

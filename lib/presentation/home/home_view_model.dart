@@ -17,11 +17,15 @@ class HomeViewModel extends GetxController {
   Future<bool> onItemTapped(int index) async {
     if (index == 1) {
       final result = await getEmotionStampUseCase.hasTodayDiary();
+
       if (result) {
         return false;
+      } else {
+        Get.to(() => const DiaryScreen());
       }
     }
     selectedIndex.value = index;
+
     return true;
   }
 
