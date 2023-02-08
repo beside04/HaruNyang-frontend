@@ -54,10 +54,20 @@ class DiaryController extends GetxController {
       wiseSayingList: [],
     );
 
-    await Future.delayed(const Duration(seconds: 2));
+    //이미지 파일이 있다면 이미지 파일 업로드 먼저 실행
+    if (imageFile != null) {
+      final image = await fileUpload(imageFile);
+      _state.value = state.value.copyWith(
+        networkImage: image,
+      );
+    } else if (diary.images.isNotEmpty) {
+      _state.value = state.value.copyWith(
+        networkImage: diary.images.first,
+      );
+    }
 
     //명언 받아오기
-    await getWiseSayingList();
+    await getWiseSayingList(diary.emotion.id!, diary.diaryContent);
 
     //새로운 diary Data
     final newDiary = diary.copyWith(
@@ -98,70 +108,6 @@ class DiaryController extends GetxController {
     );
   }
 
-  // Future<void> saveDiary(
-  //     DiaryData diary, CroppedFile? imageFile, DateTime writeDate) async {
-  //   //데이터 초기화
-  //   _state.value = state.value.copyWith(
-  //     isLoading: true,
-  //     networkImage: '',
-  //     diary: null,
-  //     wiseSayingList: [],
-  //   );
-  //
-  //   //이미지 파일이 있다면 이미지 파일 업로드 먼저 실행
-  //   if (imageFile != null) {
-  //     final image = await fileUpload(imageFile);
-  //     _state.value = state.value.copyWith(
-  //       networkImage: image,
-  //     );
-  //   } else if (diary.images.isNotEmpty) {
-  //     _state.value = state.value.copyWith(
-  //       networkImage: diary.images.first,
-  //     );
-  //   }
-  //
-  //   //명언 받아오기
-  //   await getWiseSayingList(diary.emotion.id!, diary.diaryContent);
-  //
-  //   //새로운 diary Data
-  //   final newDiary = diary.copyWith(
-  //     images: [state.value.networkImage],
-  //     wiseSayings: state.value.wiseSayingList,
-  //     createTime: DateFormat('yyyy-MM-dd').format(writeDate),
-  //   );
-  //
-  //   if (diary.id != null) {
-  //     //다이어리 업데이트
-  //     await updateDiaryUseCase(
-  //       newDiary,
-  //     );
-  //     _state.value = state.value.copyWith(
-  //       diary: newDiary,
-  //     );
-  //   } else {
-  //     //다이어리 저장
-  //     final result = await saveDiaryUseCase(newDiary);
-  //     result.when(
-  //       success: (diaryId) {
-  //         _state.value = state.value.copyWith(
-  //           diary: newDiary.copyWith(id: diaryId),
-  //         );
-  //       },
-  //       error: (message) {
-  //         Get.snackbar(
-  //           '알림',
-  //           message,
-  //         );
-  //       },
-  //     );
-  //   }
-  //
-  //   getEmotionStampList();
-  //   _state.value = state.value.copyWith(
-  //     isLoading: false,
-  //   );
-  // }
-
   Future<void> deleteDiary(String diaryID) async {
     await deleteDiaryUseCase(diaryID);
     getEmotionStampList();
@@ -193,37 +139,24 @@ class DiaryController extends GetxController {
     return imageResult;
   }
 
-  Future<void> getWiseSayingList() async {
-    List<WiseSayingData> wiseSayingData = [
-      WiseSayingData(
-          author: "하루냥",
-          message: "Mock Data Mock Data Mock Data Mock Data Mock Data "),
-      WiseSayingData(author: "하루냥2", message: "2초뒤에 나오는 명언"),
-    ];
+  Future<void> getWiseSayingList(int emoticonId, String content) async {
+    final result = await getWiseSayingUseCase(emoticonId, content);
 
-    _state.value = state.value.copyWith(
-      wiseSayingList: List.from(wiseSayingData),
+    await result.when(
+      success: (result) async {
+        if (result.isEmpty) {
+          await getRandomWiseSayingList(emoticonId);
+        } else {
+          _state.value = state.value.copyWith(
+            wiseSayingList: List.from(result),
+          );
+        }
+      },
+      error: (message) {
+        Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
+      },
     );
   }
-
-  // Future<void> getWiseSayingList(int emoticonId, String content) async {
-  //   final result = await getWiseSayingUseCase(emoticonId, content);
-  //
-  //   await result.when(
-  //     success: (result) async {
-  //       if (result.isEmpty) {
-  //         await getRandomWiseSayingList(emoticonId);
-  //       } else {
-  //         _state.value = state.value.copyWith(
-  //           wiseSayingList: List.from(result),
-  //         );
-  //       }
-  //     },
-  //     error: (message) {
-  //       Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
-  //     },
-  //   );
-  // }
 
   Future<void> getRandomWiseSayingList(int emoticonId) async {
     final result = await getWiseSayingUseCase.getRandomWiseSaying(emoticonId);

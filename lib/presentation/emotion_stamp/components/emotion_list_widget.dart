@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
@@ -30,300 +31,81 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
             PageController(initialPage: diaryController.currentPageCount),
         itemBuilder: (context, i) {
           return ListView.builder(
+            itemCount: diaryController.state.value.diaryCardDataList.isEmpty
+                ? 1
+                : diaryController.state.value.diaryCardDataList.length,
             itemBuilder: (BuildContext context, int index) {
-              return Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //if (!isUsedWeekName(weekName))
-                  Padding(
-                    padding: EdgeInsets.only(top: 20.h, left: 20.w),
-                    child: Text(
-                      "첫번째 주",
-                      style: kHeader3Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle),
-                    ),
-                  ),
-                  Column(children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 20.h,
-                        left: 20.w,
-                        right: 20.w,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(
-                            () => DiaryDetailScreen(
-                              date: DateTime.now(),
-                              isStamp: true,
-                              diaryData: DiaryData(
-                                diaryContent: 'test',
-                                emotion: EmoticonData(
-                                  value: '기뻐',
-                                  emoticon:
-                                      'lib/config/assets/images/diary/weather/sunny.svg',
-                                  desc: '기뻐',
-                                ),
-                                emoticonIndex: 100,
-                                images: [""],
-                                weather:
-                                    'lib/config/assets/images/diary/weather/cloudy.svg',
-                                wiseSayings: [
-                                  WiseSayingData(
-                                      author: "하루냥",
-                                      message:
-                                          "Mock Data Mock Data Mock Data Mock Data Mock Data ")
-                                ],
+              return diaryController.state.value.diaryCardDataList.isEmpty
+                  ? Column(
+                      children: [
+                        Column(
+                          children: [
+                            SizedBox(
+                              height: 121.h,
+                            ),
+                            Center(
+                              child: SvgPicture.asset(
+                                "lib/config/assets/images/character/character6.svg",
+                                width: 240.w,
+                                height: 240.h,
                               ),
                             ),
-                          );
-                        },
-                        child: EmotionCardDiaryWidget(
-                          diaryData: DiaryData(
-                            diaryContent: 'test',
-                            emotion: EmoticonData(
-                              value: '기뻐',
-                              emoticon:
-                                  'lib/config/assets/images/diary/weather/sunny.svg',
-                              desc: '기뻐',
+                            SizedBox(
+                              height: 45.h,
                             ),
-                            emoticonIndex: 100,
-                            images: [""],
-                            weather:
-                                'lib/config/assets/images/diary/weather/cloudy.svg',
-                            wiseSayings: [
-                              WiseSayingData(
-                                  author: "하루냥",
-                                  message:
-                                      "Mock Data Mock Data Mock Data Mock Data Mock Data "),
-                            ],
-                          ),
+                            Text(
+                              "작성한 일기가 없어요",
+                              style: kHeader5Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
+                            )
+                          ],
                         ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 20.h,
-                        left: 20.w,
-                        right: 20.w,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(
-                            () => DiaryDetailScreen(
-                              date: DateTime.now(),
-                              isStamp: true,
-                              diaryData: DiaryData(
-                                diaryContent: 'test',
-                                emotion: EmoticonData(
-                                  value: '기뻐',
-                                  emoticon:
-                                      'lib/config/assets/images/diary/weather/sunny.svg',
-                                  desc: '기뻐',
-                                ),
-                                emoticonIndex: 100,
-                                images: [""],
-                                weather:
-                                    'lib/config/assets/images/diary/weather/cloudy.svg',
-                                wiseSayings: [
-                                  WiseSayingData(
-                                      author: "하루냥",
-                                      message:
-                                          "Mock Data Mock Data Mock Data Mock Data Mock Data ")
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        child: EmotionCardDiaryWidget(
-                          diaryData: DiaryData(
-                            diaryContent: 'test',
-                            emotion: EmoticonData(
-                              value: '기뻐',
-                              emoticon:
-                                  'lib/config/assets/images/diary/weather/sunny.svg',
-                              desc: '기뻐',
-                            ),
-                            emoticonIndex: 100,
-                            images: [""],
-                            weather:
-                                'lib/config/assets/images/diary/weather/cloudy.svg',
-                            wiseSayings: [
-                              WiseSayingData(
-                                  author: "하루냥",
-                                  message:
-                                      "Mock Data Mock Data Mock Data Mock Data Mock Data "),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        top: 20.h,
-                        left: 20.w,
-                        right: 20.w,
-                      ),
-                      child: GestureDetector(
-                        onTap: () {
-                          Get.to(
-                            () => DiaryDetailScreen(
-                              date: DateTime.now(),
-                              isStamp: true,
-                              diaryData: DiaryData(
-                                diaryContent: 'test',
-                                emotion: EmoticonData(
-                                  value: '기뻐',
-                                  emoticon:
-                                      'lib/config/assets/images/diary/weather/sunny.svg',
-                                  desc: '기뻐',
-                                ),
-                                emoticonIndex: 100,
-                                images: [""],
-                                weather:
-                                    'lib/config/assets/images/diary/weather/cloudy.svg',
-                                wiseSayings: [
-                                  WiseSayingData(
-                                      author: "하루냥",
-                                      message:
-                                          "Mock Data Mock Data Mock Data Mock Data Mock Data ")
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        child: EmotionCardDiaryWidget(
-                          diaryData: DiaryData(
-                            diaryContent: 'test',
-                            emotion: EmoticonData(
-                              value: '기뻐',
-                              emoticon:
-                                  'lib/config/assets/images/diary/weather/sunny.svg',
-                              desc: '기뻐',
-                            ),
-                            emoticonIndex: 100,
-                            images: [""],
-                            weather:
-                                'lib/config/assets/images/diary/weather/cloudy.svg',
-                            wiseSayings: [
-                              WiseSayingData(
-                                  author: "하루냥",
-                                  message:
-                                      "Mock Data Mock Data Mock Data Mock Data Mock Data "),
-                            ],
-                          ),
-                        ),
-                      ),
+                      ],
                     )
-                  ]),
-
-                  // Column(
-                  //   children: diaryController
-                  //       .state.value.diaryCardDataList[index].diaryDataList
-                  //       .map((diary) => Padding(
-                  //             padding: EdgeInsets.only(
-                  //               top: 20.h,
-                  //               left: 20.w,
-                  //               right: 20.w,
-                  //             ),
-                  //             child: GestureDetector(
-                  //               onTap: () {
-                  //                 Get.to(
-                  //                   () => DiaryDetailScreen(
-                  //                     date: DateTime.parse(diary.writtenAt),
-                  //                     isStamp: true,
-                  //                     diaryData: diary,
-                  //                   ),
-                  //                 );
-                  //               },
-                  //               child: EmotionCardDiaryWidget(
-                  //                 diaryData: diary,
-                  //               ),
-                  //             ),
-                  //           ))
-                  //       .toList(),
-                  // ),
-                ],
-              );
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        //if (!isUsedWeekName(weekName))
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.h, left: 20.w),
+                          child: Text(
+                            "${diaryController.state.value.diaryCardDataList[index].title}번째 주",
+                            style: kHeader3Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
+                          ),
+                        ),
+                        Column(
+                          children: diaryController.state.value
+                              .diaryCardDataList[index].diaryDataList
+                              .map((diary) => Padding(
+                                    padding: EdgeInsets.only(
+                                      top: 20.h,
+                                      left: 20.w,
+                                      right: 20.w,
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Get.to(
+                                          () => DiaryDetailScreen(
+                                            date:
+                                                DateTime.parse(diary.writtenAt),
+                                            isStamp: true,
+                                            diaryData: diary,
+                                          ),
+                                        );
+                                      },
+                                      child: EmotionCardDiaryWidget(
+                                        diaryData: diary,
+                                      ),
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
+                      ],
+                    );
             },
-            itemCount: 1,
           );
-          // return ListView.builder(
-          //   itemCount: diaryController.state.value.diaryCardDataList.isEmpty
-          //       ? 1
-          //       : diaryController.state.value.diaryCardDataList.length,
-          //   itemBuilder: (BuildContext context, int index) {
-          //     return diaryController.state.value.diaryCardDataList.isEmpty
-          //         ? Column(
-          //             children: [
-          //               Column(
-          //                 children: [
-          //                   SizedBox(
-          //                     height: 121.h,
-          //                   ),
-          //                   Center(
-          //                     child: SvgPicture.asset(
-          //                       "lib/config/assets/images/character/character6.svg",
-          //                       width: 240.w,
-          //                       height: 240.h,
-          //                     ),
-          //                   ),
-          //                   SizedBox(
-          //                     height: 45.h,
-          //                   ),
-          //                   Text(
-          //                     "작성한 일기가 없어요",
-          //                     style: kHeader5Style.copyWith(
-          //                         color:
-          //                             Theme.of(context).colorScheme.textTitle),
-          //                   )
-          //                 ],
-          //               ),
-          //             ],
-          //           )
-          //         : Column(
-          //             crossAxisAlignment: CrossAxisAlignment.start,
-          //             children: [
-          //               //if (!isUsedWeekName(weekName))
-          //               Padding(
-          //                 padding: EdgeInsets.only(top: 20.h, left: 20.w),
-          //                 child: Text(
-          //                   "${diaryController.state.value.diaryCardDataList[index].title}번째 주",
-          //                   style: kHeader3Style.copyWith(
-          //                       color: Theme.of(context).colorScheme.textTitle),
-          //                 ),
-          //               ),
-          //               Column(
-          //                 children: diaryController.state.value
-          //                     .diaryCardDataList[index].diaryDataList
-          //                     .map((diary) => Padding(
-          //                           padding: EdgeInsets.only(
-          //                             top: 20.h,
-          //                             left: 20.w,
-          //                             right: 20.w,
-          //                           ),
-          //                           child: GestureDetector(
-          //                             onTap: () {
-          //                               Get.to(
-          //                                 () => DiaryDetailScreen(
-          //                                   date:
-          //                                       DateTime.parse(diary.writtenAt),
-          //                                   isStamp: true,
-          //                                   diaryData: diary,
-          //                                 ),
-          //                               );
-          //                             },
-          //                             child: EmotionCardDiaryWidget(
-          //                               diaryData: diary,
-          //                             ),
-          //                           ),
-          //                         ))
-          //                     .toList(),
-          //               ),
-          //             ],
-          //           );
-          //   },
-          // );
         },
       ),
     );

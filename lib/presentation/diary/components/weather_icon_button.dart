@@ -43,7 +43,7 @@ class WeatherIconButton extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Theme.of(context).colorScheme.surfaceModal,
                   ),
-                  child: SvgPicture.asset(
+                  child: SvgPicture.network(
                     icon,
                     width: 40.w,
                     height: 40.h,

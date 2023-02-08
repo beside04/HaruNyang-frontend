@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
+import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:get/get.dart';
 
 class RefreshInterceptor extends Interceptor {
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
@@ -35,13 +38,13 @@ class RefreshInterceptor extends Interceptor {
 
     if (refreshToken == null) {
       //로그인 화면으로 다시 이동
-      // await tokenUseCase.deleteAllToken();
-      // Get.offAll(
-      //       () => const LoginScreen(),
-      //   binding: BindingsBuilder(
-      //     getLoginBinding,
-      //   ),
-      // );
+      await tokenUseCase.deleteAllToken();
+      Get.offAll(
+        () => const LoginScreen(),
+        binding: BindingsBuilder(
+          getLoginBinding,
+        ),
+      );
       return handler.reject(err);
     }
 
@@ -78,14 +81,14 @@ class RefreshInterceptor extends Interceptor {
         return handler.resolve(response);
       }
     } on DioError catch (e) {
-      //로그인 화면으로 다시 이동
-      // await tokenUseCase.deleteAllToken();
-      // Get.offAll(
-      //       () => const LoginScreen(),
-      //   binding: BindingsBuilder(
-      //     getLoginBinding,
-      //   ),
-      // );
+      // 로그인 화면으로 다시 이동
+      await tokenUseCase.deleteAllToken();
+      Get.offAll(
+        () => const LoginScreen(),
+        binding: BindingsBuilder(
+          getLoginBinding,
+        ),
+      );
       return handler.reject(e);
     }
 

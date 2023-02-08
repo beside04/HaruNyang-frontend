@@ -26,13 +26,13 @@ class JobButton extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            width: 96.w,
+            width: selected ? 96.w : 94.w,
             height: 96.h,
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.surface_01,
               shape: BoxShape.circle,
               border: Border.all(
-                width: selected ? 2 : 0.5,
+                width: selected ? 2.w : 0.5.w,
                 color: selected
                     ? kOrange300Color
                     : Theme.of(context).colorScheme.outlineDefault,

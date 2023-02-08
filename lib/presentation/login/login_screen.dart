@@ -58,7 +58,7 @@ class LoginScreen extends GetView<LoginViewModel> {
             ),
             InkWell(
               onTap: () async {
-                // await controller.connectKakaoLogin();
+                await controller.connectKakaoLogin();
                 Get.offAll(
                   () => const HomeScreen(),
                   binding: BindingsBuilder(
@@ -75,7 +75,7 @@ class LoginScreen extends GetView<LoginViewModel> {
                 ? Container()
                 : InkWell(
                     onTap: () async {
-                      // await controller.connectAppleLogin();
+                      await controller.connectAppleLogin();
                       Get.offAll(
                         () => const HomeScreen(),
                         binding: BindingsBuilder(
@@ -85,18 +85,6 @@ class LoginScreen extends GetView<LoginViewModel> {
                     },
                     child: const AppleLoginWidget(),
                   ),
-            InkWell(
-              onTap: () async {
-                // await controller.connectAppleLogin();
-                Get.offAll(
-                  () => const HomeScreen(),
-                  binding: BindingsBuilder(
-                    getHomeViewModelBinding,
-                  ),
-                );
-              },
-              child: const AppleLoginWidget(),
-            ),
           ],
         ),
       ),
