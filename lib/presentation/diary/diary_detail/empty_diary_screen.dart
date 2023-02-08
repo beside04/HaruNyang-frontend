@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:get/get.dart';
@@ -22,9 +23,14 @@ class EmptyDiaryScreen extends StatelessWidget {
       appBar: AppBar(
         elevation: 0,
         title: Text(
-          DateFormat('MM월 dd일').format(date),
+          DateFormat('M월 d일').format(date),
           style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
+        ),
+        leading: BackIcon(
+          onPressed: () {
+            Get.back();
+          },
         ),
       ),
       body: Column(

@@ -5,6 +5,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/login/components/term_check_box.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
@@ -39,14 +40,10 @@ class LoginTermsInformationScreen
               height: 1.0,
             ),
           ),
-          leading: IconButton(
+          leading: BackIcon(
             onPressed: () {
               Get.back();
             },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20.w,
-            ),
           )),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +67,7 @@ class LoginTermsInformationScreen
                   child: Text(
                     '하루냥의 서비스 약관이에요. \n 필수 약관을 동의하셔야 이용할 수 있어요',
                     style: kBody2Style.copyWith(
-                        color: Theme.of(context).colorScheme.textLowEmphasis),
+                        color: Theme.of(context).colorScheme.textSubtitle),
                     textAlign: TextAlign.center,
                   ),
                 ),

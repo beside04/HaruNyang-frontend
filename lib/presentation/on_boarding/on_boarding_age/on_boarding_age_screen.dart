@@ -42,6 +42,9 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 12.h,
+                    ),
                     const OnBoardingStepper(
                       pointNumber: 2,
                     ),
@@ -51,7 +54,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 40.h,
+                            height: 24.h,
                           ),
                           Text(
                             "몇 살이에요?",
@@ -96,7 +99,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                                   : GestureDetector(
                                       child: const Icon(
                                         Icons.cancel,
-                                        color: kGrayColor200,
+                                        color: kBlackColor,
                                         size: 20,
                                       ),
                                       onTap: () => controller
@@ -111,8 +114,8 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           Center(
                             child: SvgPicture.asset(
                               "lib/config/assets/images/character/character4.svg",
-                              width: 300.w,
-                              height: 300.h,
+                              width: 340.w,
+                              height: 340.h,
                             ),
                           ),
                         ],

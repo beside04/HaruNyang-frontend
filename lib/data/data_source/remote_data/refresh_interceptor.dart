@@ -40,7 +40,7 @@ class RefreshInterceptor extends Interceptor {
       //로그인 화면으로 다시 이동
       await tokenUseCase.deleteAllToken();
       Get.offAll(
-            () => const LoginScreen(),
+        () => const LoginScreen(),
         binding: BindingsBuilder(
           getLoginBinding,
         ),
@@ -81,10 +81,10 @@ class RefreshInterceptor extends Interceptor {
         return handler.resolve(response);
       }
     } on DioError catch (e) {
-      //로그인 화면으로 다시 이동
+      // 로그인 화면으로 다시 이동
       await tokenUseCase.deleteAllToken();
       Get.offAll(
-            () => const LoginScreen(),
+        () => const LoginScreen(),
         binding: BindingsBuilder(
           getLoginBinding,
         ),

@@ -64,6 +64,9 @@ class MyApp extends GetView<MainViewModel> {
               statusBarColor: Colors.transparent, // 투명색
               systemNavigationBarColor:
                   controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
+              systemNavigationBarIconBrightness: controller.isDarkMode.value
+                  ? Brightness.light
+                  : Brightness.dark,
               systemNavigationBarDividerColor:
                   controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
             ),

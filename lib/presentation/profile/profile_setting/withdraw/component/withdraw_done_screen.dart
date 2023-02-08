@@ -5,6 +5,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:get/get.dart';
@@ -17,14 +18,17 @@ class WithdrawDoneScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-      ),
-      body: Padding(
-        padding: kPrimaryPadding.copyWith(
-          bottom: 0,
+        leading: BackIcon(
+          onPressed: () {
+            Get.back();
+          },
         ),
-        child: Stack(
-          children: [
-            Center(
+      ),
+      body: Stack(
+        children: [
+          Padding(
+            padding: kPrimaryPadding,
+            child: Center(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -90,19 +94,19 @@ class WithdrawDoneScreen extends StatelessWidget {
                 ],
               ),
             ),
-            BottomButton(
-              title: "첫 화면으로",
-              onTap: () {
-                Get.offAll(
-                  () => const LoginScreen(),
-                  binding: BindingsBuilder(
-                    getLoginBinding,
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+          ),
+          BottomButton(
+            title: "첫 화면으로",
+            onTap: () {
+              Get.offAll(
+                () => const LoginScreen(),
+                binding: BindingsBuilder(
+                  getLoginBinding,
+                ),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

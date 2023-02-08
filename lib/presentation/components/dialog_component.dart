@@ -25,16 +25,19 @@ class DialogComponent extends StatelessWidget {
       ),
       contentPadding: EdgeInsets.only(
         top: 10.h,
-        bottom: 24.h,
+        bottom: 16.h,
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
       ),
-      title: Center(
-        child: Text(
-          title.tr,
-          style: kHeader3Style.copyWith(
-              color: Theme.of(context).colorScheme.textTitle),
+      title: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        child: Center(
+          child: Text(
+            title.tr,
+            style: kHeader3Style.copyWith(
+                color: Theme.of(context).colorScheme.textTitle),
+          ),
         ),
       ),
       content: Column(

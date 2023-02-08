@@ -76,6 +76,9 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                   Center(
                     child: ListView(
                       children: [
+                        SizedBox(
+                          height: 12.h,
+                        ),
                         const OnBoardingStepper(
                           pointNumber: 1,
                         ),
@@ -85,7 +88,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: 40.h,
+                                height: 24.h,
                               ),
                               Text(
                                 "안녕하세요, 저는 하루냥이에요",
@@ -121,7 +124,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                       : GestureDetector(
                                           child: const Icon(
                                             Icons.cancel,
-                                            color: kGrayColor200,
+                                            color: kBlackColor,
                                             size: 20,
                                           ),
                                           onTap: () => controller
@@ -134,14 +137,14 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                 () => controller.isOnKeyboard.value
                                     ? Container()
                                     : SizedBox(
-                                        height: 71.h,
+                                        height: 118.h,
                                       ),
                               ),
                               Center(
                                 child: SvgPicture.asset(
                                   "lib/config/assets/images/character/character8.svg",
-                                  width: 375.w,
-                                  height: 375.h,
+                                  width: 340.w,
+                                  height: 340.h,
                                 ),
                               ),
                             ],

@@ -20,6 +20,8 @@ import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../components/back_icon.dart';
+
 class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   final DateTime date;
   final EmoticonData emotion;
@@ -135,7 +137,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
       },
       child: Scaffold(
         appBar: AppBar(
-          elevation: 0,
+          elevation: 0.5,
           actions: [
             Obx(
               () => TextButton(
@@ -217,11 +219,11 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
             ),
           ],
           title: Text(
-            DateFormat('MM월 dd일').format(date),
+            DateFormat('M월 d일').format(date),
             style: kHeader4Style.copyWith(
                 color: Theme.of(context).colorScheme.textTitle),
           ),
-          leading: IconButton(
+          leading: BackIcon(
             onPressed: () {
               if (controller.diaryEditingController.text.isEmpty) {
                 Get.back();
@@ -308,10 +310,6 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                 );
               }
             },
-            icon: Icon(
-              Icons.arrow_back_ios,
-              size: 20.w,
-            ),
           ),
         ),
         body: SafeArea(
@@ -323,7 +321,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                   child: ListView(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 20.w, top: 8.h),
+                        padding: EdgeInsets.only(left: 20.w, top: 20.h),
                         child: Row(
                           children: [
                             Padding(
@@ -387,11 +385,11 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                         ),
                       ),
                       SizedBox(
-                        height: 32.h,
+                        height: 30.h,
                       ),
                       Divider(
                         height: 1.h,
-                        thickness: 5.h,
+                        thickness: 12.h,
                       ),
                       Container(
                         height: 1.h,
@@ -399,7 +397,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                       Padding(
                         padding: EdgeInsets.only(
                           left: 20.w,
-                          top: 16.h,
+                          top: 20.h,
                         ),
                         child: WeatherEmotionBadgeWritingDiary(
                           emoticon: emotion.emoticon,
@@ -455,7 +453,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       ),
                                       actionContent: [
                                         DialogButton(
-                                          title: "예",
+                                          title: "확인 했어요",
                                           onTap: () {
                                             Get.back();
                                           },

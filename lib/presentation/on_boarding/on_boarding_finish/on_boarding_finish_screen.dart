@@ -38,6 +38,9 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      height: 12.h,
+                    ),
                     const OnBoardingStepper(
                       pointNumber: 4,
                     ),
@@ -47,7 +50,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           SizedBox(
-                            height: 40.h,
+                            height: 24.h,
                           ),
                           Text(
                             "하루냥의",

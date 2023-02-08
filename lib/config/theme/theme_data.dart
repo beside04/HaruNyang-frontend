@@ -3,6 +3,14 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
 ThemeData lightMode(context) => ThemeData(
+      checkboxTheme: CheckboxThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        side: MaterialStateBorderSide.resolveWith(
+          (states) => const BorderSide(width: 1.0, color: Color(0xffdfdfdf)),
+        ),
+      ),
       scaffoldBackgroundColor: kBeigeColor100,
       bottomAppBarColor: kBeigeColor100,
       primaryColor: kOrange300Color,
@@ -41,6 +49,9 @@ ThemeData lightMode(context) => ThemeData(
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: kGrayColor950),
         ),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: kRed300Color),
+        ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: kRed300Color),
         ),
@@ -48,6 +59,14 @@ ThemeData lightMode(context) => ThemeData(
     );
 
 ThemeData darkMode(context) => ThemeData(
+      checkboxTheme: CheckboxThemeData(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+        side: MaterialStateBorderSide.resolveWith(
+          (states) => const BorderSide(width: 1.0, color: Color(0xffdfdfdf)),
+        ),
+      ),
       scaffoldBackgroundColor: kGrayColor950,
       bottomAppBarColor: kGrayColor950,
       primaryColor: kOrange300Color,
@@ -81,6 +100,9 @@ ThemeData darkMode(context) => ThemeData(
         ),
         focusedBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: kGrayColor50),
+        ),
+        errorBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: kRed200Color),
         ),
         focusedErrorBorder: UnderlineInputBorder(
           borderSide: BorderSide(color: kRed200Color),

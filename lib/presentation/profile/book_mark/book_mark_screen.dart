@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/profile/components/book_mark_list.dart';
 import 'package:get/get.dart';
 
@@ -36,13 +37,10 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
             height: 1.0,
           ),
         ),
-        leading: IconButton(
+        leading: BackIcon(
           onPressed: () {
             Get.back();
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
         ),
       ),
       body: SafeArea(

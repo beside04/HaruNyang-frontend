@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/terms/marketing_consent_screen.dart';
 import 'package:frontend/presentation/profile/terms/privacy_policy_screen.dart';
@@ -24,13 +25,10 @@ class TermsScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
-        leading: IconButton(
+        leading: BackIcon(
           onPressed: () {
             Get.back();
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
         ),
       ),
       body: SafeArea(

@@ -9,9 +9,7 @@ import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
-import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
 import 'package:intl/intl.dart';
-import 'package:jiffy/jiffy.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:get/get.dart';
 

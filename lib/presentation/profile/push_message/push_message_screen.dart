@@ -9,6 +9,7 @@ import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/terms/marketing_consent_screen.dart';
@@ -31,13 +32,10 @@ class PushMessageScreen extends StatelessWidget {
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
-        leading: IconButton(
+        leading: BackIcon(
           onPressed: () {
             Get.back();
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
         ),
       ),
       body: SafeArea(
@@ -48,6 +46,8 @@ class PushMessageScreen extends StatelessWidget {
             ),
             Obx(
               () => ProfileButton(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                 icon: FlutterSwitch(
                   padding: 2,
                   width: 52.0.w,
@@ -112,7 +112,7 @@ class PushMessageScreen extends StatelessWidget {
                                         .textSubtitle),
                               ),
                               SizedBox(
-                                height: 32.0.h,
+                                height: 28.0.h,
                               ),
                               BottomButton(
                                 title: '수신 동의',

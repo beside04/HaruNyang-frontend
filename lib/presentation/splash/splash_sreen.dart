@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/result.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';

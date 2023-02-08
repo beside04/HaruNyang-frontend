@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
+import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
-import 'package:frontend/presentation/emotion_stamp/components/swipe_detector.dart';
 import 'package:get/get.dart';
-import 'package:jiffy/jiffy.dart';
 
 class EmotionListWidget extends StatefulWidget {
   const EmotionListWidget({super.key});

@@ -7,6 +7,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/main_view_model.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:get/get.dart';
 import 'package:notification_permissions/notification_permissions.dart';
 
@@ -31,14 +32,10 @@ class MarketingConsentScreen extends StatelessWidget {
         ),
         elevation: 0,
         leading: isProfileScreen
-            ? IconButton(
+            ? BackIcon(
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(
-                  Icons.arrow_back_ios,
-                  size: 20.w,
-                ),
               )
             : null,
         actions: [
@@ -79,8 +76,12 @@ class MarketingConsentScreen extends StatelessWidget {
 
  
 
-Copyright © 하루냥. All rights reserved.''',
+# Copyright © 하루냥. All rights reserved.
+''',
                 styleSheet: MarkdownStyleSheet(
+                  h1: kBody2Style.copyWith(
+                      color: Theme.of(context).colorScheme.textLowEmphasis),
+                  h1Align: WrapAlignment.center,
                   h2: kHeader2Style.copyWith(
                       color: Theme.of(context).colorScheme.textBody),
                   h2Padding: const EdgeInsets.symmetric(

@@ -9,6 +9,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_wise_saying.dart';
@@ -58,7 +59,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
+        elevation: 0.5,
         centerTitle: true,
         actions: [
           Theme(
@@ -197,18 +198,14 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
           ),
         ],
         title: Text(
-          DateFormat('MM월 dd일').format(widget.date),
+          DateFormat('M월 d일').format(widget.date),
           style: kHeader4Style.copyWith(
               color: Theme.of(context).colorScheme.textTitle),
         ),
-        leading: IconButton(
+        leading: BackIcon(
           onPressed: () {
             Get.back(result: true);
           },
-          icon: Icon(
-            Icons.arrow_back_ios,
-            size: 20.w,
-          ),
         ),
       ),
       body: Container(
@@ -230,6 +227,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                         emoticonIndex: widget.diaryData.emoticonIndex,
                         weatherIcon: widget.diaryData.weather,
                         color: Theme.of(context).colorScheme.surface_01,
+                        isEmotionText: true,
                       ),
                       SizedBox(
                         height: 12.h,
@@ -238,6 +236,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                         widget.diaryData.diaryContent,
                         style: kBody1Style.copyWith(
                             color: Theme.of(context).colorScheme.textBody),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 3,
                       ),
                       SizedBox(
                         height: 12.h,
@@ -309,19 +309,6 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(16.w),
                                       ),
-                                      border: Border.all(
-                                        width: 1,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .borderModal,
-                                      ),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.black.withOpacity(0.1),
-                                          blurRadius: 40,
-                                          spreadRadius: 10,
-                                        ),
-                                      ],
                                     ),
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -345,12 +332,14 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                     children: [
                                                       SvgPicture.asset(
                                                         "lib/config/assets/images/character/character11.svg",
-                                                        width: 28.w,
-                                                        height: 28.h,
+                                                        width: 26.w,
+                                                      ),
+                                                      SizedBox(
+                                                        width: 4.w,
                                                       ),
                                                       Text(
                                                         "하루냥",
-                                                        style: kHeader4Style
+                                                        style: kHeader5Style
                                                             .copyWith(
                                                                 color: Theme.of(
                                                                         context)
@@ -378,10 +367,9 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                                           .wiseSayingList[
                                                                       index]);
                                                             },
-                                                            child: const Icon(
-                                                              Icons.bookmark,
-                                                              color:
-                                                                  kOrange300Color,
+                                                            child: SvgPicture
+                                                                .asset(
+                                                              "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
                                                             ),
                                                           )
                                                         : GestureDetector(
@@ -393,8 +381,10 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                                           .wiseSayingList[
                                                                       index]);
                                                             },
-                                                            child: const Icon(Icons
-                                                                .bookmark_border),
+                                                            child: SvgPicture
+                                                                .asset(
+                                                              "lib/config/assets/images/diary/write_diary/bookmark.svg",
+                                                            ),
                                                           ),
                                                   )
                                                 ],

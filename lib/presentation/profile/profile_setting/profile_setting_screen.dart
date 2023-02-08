@@ -12,6 +12,7 @@ import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
+import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
@@ -46,13 +47,10 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               color: Theme.of(context).colorScheme.textTitle),
         ),
         elevation: 0,
-        leading: IconButton(
+        leading: BackIcon(
           onPressed: () {
             Get.back();
           },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-          ),
         ),
       ),
       body: SafeArea(
@@ -239,7 +237,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     : GestureDetector(
                                         child: const Icon(
                                           Icons.cancel,
-                                          color: kGrayColor200,
+                                          color: kBlackColor,
                                           size: 20,
                                         ),
                                         onTap: () => controller
