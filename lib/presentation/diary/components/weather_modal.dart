@@ -33,7 +33,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
                   children: [
                     Text(
                       "날씨",
-                      style: kHeader3Style.copyWith(
+                      style: kHeader4Style.copyWith(
                           color: Theme.of(context).colorScheme.textTitle),
                     ),
                   ],

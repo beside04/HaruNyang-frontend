@@ -42,7 +42,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       children: [
                         Text(
                           "기분",
-                          style: kHeader3Style.copyWith(
+                          style: kHeader4Style.copyWith(
                               color: Theme.of(context).colorScheme.textTitle),
                         ),
                       ],

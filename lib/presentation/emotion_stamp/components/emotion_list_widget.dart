@@ -45,20 +45,30 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                             ),
                             Center(
                               child: SvgPicture.asset(
-                                "lib/config/assets/images/character/character6.svg",
-                                width: 240.w,
-                                height: 240.h,
+                                "lib/config/assets/images/character/character3.svg",
+                                width: 280.w,
+                                height: 280.h,
                               ),
                             ),
                             SizedBox(
-                              height: 45.h,
+                              height: 12.h,
                             ),
                             Text(
                               "작성한 일기가 없어요",
-                              style: kHeader5Style.copyWith(
+                              style: kHeader3Style.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.textTitle),
-                            )
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            Text(
+                              "일기를 쓰고 하루냥의 명언을 받아보세요!",
+                              style: kBody1Style.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .textSubtitle),
+                            ),
                           ],
                         ),
                       ],
