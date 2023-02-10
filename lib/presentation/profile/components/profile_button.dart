@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/main_view_model.dart';
+import 'package:get/get.dart';
 
 class ProfileButton extends StatelessWidget {
   const ProfileButton({
@@ -18,20 +21,27 @@ class ProfileButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainViewController = Get.find<MainViewModel>();
+
     return InkWell(
       onTap: onPressed,
-      child: Padding(
-        padding: padding,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: kHeader5Style.copyWith(
-                  color: Theme.of(context).colorScheme.textTitle),
-            ),
-            icon
-          ],
+      child: Container(
+        color: mainViewController.isDarkMode.value
+            ? kGrayColor950
+            : kBeigeColor100,
+        child: Padding(
+          padding: padding,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: kHeader5Style.copyWith(
+                    color: Theme.of(context).colorScheme.textTitle),
+              ),
+              icon
+            ],
+          ),
         ),
       ),
     );

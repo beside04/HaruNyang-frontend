@@ -7,9 +7,13 @@ ThemeData lightMode(context) => ThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),
         ),
-        side: MaterialStateBorderSide.resolveWith(
-          (states) => const BorderSide(width: 1.0, color: Color(0xffdfdfdf)),
-        ),
+        side: MaterialStateBorderSide.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return const BorderSide(width: 1.0, color: kOrange300Color);
+          } else {
+            return const BorderSide(width: 1.0, color: Color(0xffdfdfdf));
+          }
+        }),
       ),
       scaffoldBackgroundColor: kBeigeColor100,
       bottomAppBarColor: kBeigeColor100,
@@ -63,9 +67,13 @@ ThemeData darkMode(context) => ThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),
         ),
-        side: MaterialStateBorderSide.resolveWith(
-          (states) => const BorderSide(width: 1.0, color: Color(0xffdfdfdf)),
-        ),
+        side: MaterialStateBorderSide.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return const BorderSide(width: 1.0, color: kOrange300Color);
+          } else {
+            return const BorderSide(width: 1.0, color: Color(0xffdfdfdf));
+          }
+        }),
       ),
       scaffoldBackgroundColor: kGrayColor950,
       bottomAppBarColor: kGrayColor950,

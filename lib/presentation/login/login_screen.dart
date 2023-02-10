@@ -34,7 +34,7 @@ class LoginScreen extends GetView<LoginViewModel> {
         backgroundColor: kOrange300Color,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Padding(
               padding: EdgeInsets.only(

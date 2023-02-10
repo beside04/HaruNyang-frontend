@@ -11,6 +11,7 @@ import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -39,7 +40,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    final mainViewController = Get.find<MainViewModel>();
+
     return Scaffold(
+      backgroundColor:
+          mainViewController.isDarkMode.value ? kGrayColor900 : kBeigeColor200,
       appBar: AppBar(
         title: Text(
           '내 정보 관리',

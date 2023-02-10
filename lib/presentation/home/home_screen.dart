@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
               : MediaQuery(
                   data: GetPlatform.isAndroid
                       ? MediaQueryData(padding: EdgeInsets.only(bottom: 10.h))
-                      : MediaQueryData(padding: EdgeInsets.only(bottom: 20.h)),
+                      : MediaQueryData(padding: EdgeInsets.only(bottom: 30.h)),
                   child: Container(
                     decoration: BoxDecoration(
                       color: Colors.transparent,
