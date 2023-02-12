@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -59,12 +57,6 @@ class LoginScreen extends GetView<LoginViewModel> {
             InkWell(
               onTap: () async {
                 await controller.connectKakaoLogin();
-                Get.offAll(
-                  () => const HomeScreen(),
-                  binding: BindingsBuilder(
-                    getHomeViewModelBinding,
-                  ),
-                );
               },
               child: const KakaoLoginWidget(),
             ),
@@ -76,12 +68,6 @@ class LoginScreen extends GetView<LoginViewModel> {
                 : InkWell(
                     onTap: () async {
                       await controller.connectAppleLogin();
-                      Get.offAll(
-                        () => const HomeScreen(),
-                        binding: BindingsBuilder(
-                          getHomeViewModelBinding,
-                        ),
-                      );
                     },
                     child: const AppleLoginWidget(),
                   ),
