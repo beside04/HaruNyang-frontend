@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:bubble/bubble.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -342,42 +341,41 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                             SizedBox(
                               width: 12.w,
                             ),
+                            // padding: const BubbleEdges.all(0),
+                            // margin: const BubbleEdges.all(0),
+                            // radius: const Radius.circular(24),
                             Expanded(
-                              child: Bubble(
-                                alignment: Alignment.topLeft,
-                                nip: BubbleNip.leftTop,
-                                nipOffset: 50.w,
-                                nipWidth: 17.w,
-                                nipHeight: 10.h,
-                                elevation: 0,
-                                padding: const BubbleEdges.all(0),
-                                margin: const BubbleEdges.all(0),
-                                radius: const Radius.circular(24),
-                                color: Theme.of(context).colorScheme.surface_02,
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 24.w,
-                                    top: 12.h,
-                                    bottom: 12.h,
-                                    right: 24.w,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        '오늘 가장 기쁜 일은 \n무엇이었나요?',
-                                        style: kHeader4Style.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .textTitle,
-                                        ),
+                              child: Container(
+                                margin: EdgeInsets.only(
+                                  right: 20.w,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(24.0),
+                                  color:
+                                      Theme.of(context).colorScheme.surface_02,
+                                ),
+                                padding: EdgeInsets.only(
+                                  left: 24.w,
+                                  top: 12.h,
+                                  bottom: 12.h,
+                                  right: 24.w,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      '오늘 가장 기쁜 일은 \n무엇이었나요?',
+                                      style: kHeader4Style.copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .textTitle,
                                       ),
-                                      SvgPicture.asset(
-                                        "lib/config/assets/images/diary/write_diary/refresh.svg",
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                    SvgPicture.asset(
+                                      "lib/config/assets/images/diary/write_diary/refresh.svg",
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

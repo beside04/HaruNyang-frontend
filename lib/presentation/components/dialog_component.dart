@@ -25,6 +25,7 @@ class DialogComponent extends StatelessWidget {
       ),
       contentPadding: EdgeInsets.only(
         top: 4.h,
+        bottom: 10.h,
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
