@@ -152,6 +152,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '내 정보 관리',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(
                   () => ProfileSettingScreen(
@@ -172,6 +173,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '북마크 목록',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(() => const BookMarkScreen());
               },
@@ -186,6 +188,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '푸시 메세지 설정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(() => const PushMessageScreen());
               },
@@ -227,6 +230,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 title: '라이트 다크모드 전환',
+                titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: null,
               ),
             ),
@@ -238,6 +242,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '공지사항',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(() => const NoticeScreen());
               },
@@ -252,6 +257,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '이용약관',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(
                   () => const TermsScreen(),

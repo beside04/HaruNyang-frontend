@@ -42,6 +42,7 @@ class TermsScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '서비스 이용약관',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(
                   () => const TermsOfServiceScreen(
@@ -60,6 +61,7 @@ class TermsScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '개인정보 처리방침',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(
                   () => const PrivacyPolicyScreen(
@@ -78,6 +80,7 @@ class TermsScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '마케팅 정보 수신 동의',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(
                   () => const MarketingConsentScreen(

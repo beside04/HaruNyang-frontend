@@ -73,6 +73,7 @@ dependencies:
   path_provider: ^2.0.11
   notification_permissions: ^0.6.1
   bubble: ^1.2.1
+  timezone: ^0.9.1
 
 dev_dependencies:
   flutter_test:
