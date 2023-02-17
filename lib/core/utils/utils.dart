@@ -26,4 +26,11 @@ class GlobalUtils {
     }
     return true;
   }
+
+  static bool toBoolean(String? str) {
+    if (str == 'true') {
+      return true;
+    }
+    return false;
+  }
 }

@@ -145,7 +145,7 @@ class MarketingConsentScreen extends StatelessWidget {
                                     inactiveColor: kGrayColor250,
                                     toggleSize: 28.0.w,
                                     value: mainViewController
-                                        .pushMessagePermission.value,
+                                        .marketingConsentAgree.value,
                                     borderRadius: 50.0.w,
                                     onToggle: (val) async {
                                       Future<PermissionStatus>
@@ -160,7 +160,7 @@ class MarketingConsentScreen extends StatelessWidget {
                                             .requestNotificationPermissions();
                                       } else {
                                         mainViewController
-                                            .togglePushMessageValue();
+                                            .toggleMarketingConsentCheck();
                                       }
                                     },
                                   ),

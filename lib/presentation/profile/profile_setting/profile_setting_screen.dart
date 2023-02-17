@@ -69,6 +69,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '닉네임 수정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 showModalBottomSheet(
                   backgroundColor:
@@ -171,6 +172,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '나이 수정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 showModalBottomSheet(
                   backgroundColor:
@@ -298,6 +300,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '직업 수정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 controller.jobStatus.value = EnumToString.fromString(
                     Job.values, onBoardingController.state.value.job);
@@ -391,6 +394,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '로그아웃',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () async {
                 showDialog(
                   barrierDismissible: true,

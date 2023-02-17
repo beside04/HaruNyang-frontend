@@ -13,7 +13,7 @@ import 'package:frontend/data/repository/emoticon_weather/emoticon_repository_im
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
-import 'package:frontend/data/repository/push_messge_permission/dark_mode_repository_impl.dart';
+import 'package:frontend/data/repository/push_messge/push_message_repository_impl.dart';
 import 'package:frontend/data/repository/reissu_token/reissue_token_repository_impl.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
@@ -32,7 +32,7 @@ import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
-import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
+import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
 import 'package:frontend/domain/use_case/reissue_token_use_case/reissue_token_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
@@ -54,12 +54,13 @@ import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_jo
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
+import 'package:frontend/presentation/profile/push_message/push_message_view_model.dart';
 import 'package:get/get.dart';
 
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
 final DarkModeRepositoryImpl darkModeRepositoryImpl = DarkModeRepositoryImpl();
-final PushMessagePermissionRepositoryImpl pushMessagePermissionRepositoryImpl =
-    PushMessagePermissionRepositoryImpl();
+final PushMessageRepositoryImpl pushMessagePermissionRepositoryImpl =
+    PushMessageRepositoryImpl();
 
 final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: tokenRepositoryImpl,
@@ -69,8 +70,7 @@ final DarkModeUseCase darkModeUseCase = DarkModeUseCase(
   darkModeRepository: darkModeRepositoryImpl,
 );
 
-final PushMessagePermissionUseCase pushMessagePermissionUseCase =
-    PushMessagePermissionUseCase(
+final PushMessageUseCase pushMessagePermissionUseCase = PushMessageUseCase(
   pushMessagePermissionRepository: pushMessagePermissionRepositoryImpl,
 );
 
@@ -219,6 +219,7 @@ void getLoginTermsInformationBinding() {
   Get.put(LoginTermsInformationViewModel(
     kakaoLoginUseCase: kakaoLoginUseCase,
     appleLoginUseCase: appleLoginUseCase,
+    pushMessagePermissionUseCase: pushMessagePermissionUseCase,
   ));
 }
 
@@ -288,4 +289,8 @@ void getDiaryControllerBinding() {
       getEmotionStampUseCase: getEmotionStampUseCase,
     ),
   );
+}
+
+void getPushMessageControllerBinding() {
+  Get.put(PushMessageViewModel());
 }

@@ -31,6 +31,8 @@ void main() async {
   globalControllerBinding();
   await Get.find<MainViewModel>().getIsDarkMode();
   await Get.find<MainViewModel>().getIsPushMessage();
+  await Get.find<MainViewModel>().getIsMarketingConsentAgree();
+  await Get.find<MainViewModel>().getPushMessageTime();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {
@@ -46,8 +48,6 @@ void globalControllerBinding() {
   getOnBoardingControllerBinding();
   getTokenControllerBinding();
 }
-
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends GetView<MainViewModel> {
   const MyApp({super.key});

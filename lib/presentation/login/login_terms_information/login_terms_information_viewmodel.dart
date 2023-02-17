@@ -1,3 +1,4 @@
+import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
@@ -6,10 +7,12 @@ import 'package:get/get.dart';
 class LoginTermsInformationViewModel extends GetxController {
   final KakaoLoginUseCase kakaoLoginUseCase;
   final AppleLoginUseCase appleLoginUseCase;
+  final PushMessageUseCase pushMessagePermissionUseCase;
 
   LoginTermsInformationViewModel({
     required this.kakaoLoginUseCase,
     required this.appleLoginUseCase,
+    required this.pushMessagePermissionUseCase,
   });
 
   final RxBool isAllCheckAgree = false.obs;
@@ -23,10 +26,12 @@ class LoginTermsInformationViewModel extends GetxController {
       isTermsAgree.value = true;
       isPrivacyPolicyAgree.value = true;
       isMarketingConsentAgree.value = true;
+      pushMessagePermissionUseCase.setMarketingConsentAgree(true.toString());
     } else {
       isTermsAgree.value = false;
       isPrivacyPolicyAgree.value = false;
       isMarketingConsentAgree.value = false;
+      pushMessagePermissionUseCase.setMarketingConsentAgree(false.toString());
     }
   }
 
@@ -39,7 +44,13 @@ class LoginTermsInformationViewModel extends GetxController {
   }
 
   void toggleMarketingConsentCheck() {
-    isMarketingConsentAgree.value = !isMarketingConsentAgree.value;
+    if (isMarketingConsentAgree.value) {
+      isMarketingConsentAgree.value = false;
+      pushMessagePermissionUseCase.setMarketingConsentAgree(false.toString());
+    } else {
+      isMarketingConsentAgree.value = true;
+      pushMessagePermissionUseCase.setMarketingConsentAgree(true.toString());
+    }
   }
 
   void goToLoginScreen() {

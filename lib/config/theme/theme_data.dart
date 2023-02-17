@@ -170,10 +170,3 @@ extension CustomColorScheme on ColorScheme {
   Color get outlineActive =>
       brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
 }
-
-/// Global variables
-/// * [GlobalKey<NavigatorState>]
-class CandyGlobalVariable {
-  static final GlobalKey<NavigatorState> naviagatorState =
-      GlobalKey<NavigatorState>();
-}

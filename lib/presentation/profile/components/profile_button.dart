@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:get/get.dart';
 
@@ -11,6 +10,7 @@ class ProfileButton extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.onPressed,
+    required this.titleColor,
     this.padding = const EdgeInsets.all(20),
   });
 
@@ -18,6 +18,7 @@ class ProfileButton extends StatelessWidget {
   final String title;
   final VoidCallback? onPressed;
   final EdgeInsets padding;
+  final Color titleColor;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +38,8 @@ class ProfileButton extends StatelessWidget {
               Text(
                 title,
                 style: kHeader5Style.copyWith(
-                    color: Theme.of(context).colorScheme.textTitle),
+                  color: titleColor,
+                ),
               ),
               icon
             ],
