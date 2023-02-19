@@ -10,9 +10,12 @@ void toast({
   required BuildContext context,
   required String text,
   required bool isCheckIcon,
+  int milliseconds = 4000,
 }) {
   final fToast = FToast();
   fToast.init(context);
+  fToast.removeCustomToast();
+
   Widget toast = Container(
     width: 335.w,
     height: 64.h,
@@ -42,17 +45,8 @@ void toast({
   );
 
   fToast.showToast(
-      child: toast,
-      toastDuration: const Duration(milliseconds: 4000),
-      positionedToastBuilder: (context, child) {
-        return Stack(
-          alignment: Alignment.center,
-          children: [
-            Positioned(
-              bottom: 60.h,
-              child: child,
-            ),
-          ],
-        );
-      });
+    gravity: ToastGravity.SNACKBAR,
+    child: toast,
+    toastDuration: Duration(milliseconds: milliseconds),
+  );
 }

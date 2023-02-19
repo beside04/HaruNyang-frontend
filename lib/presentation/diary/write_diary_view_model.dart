@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/presentation/components/toast.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
@@ -123,39 +124,38 @@ class WriteDiaryViewModel extends GetxController {
     }
   }
 
-
   void getDefaultTopic(int emoticonId) {
     switch (emoticonId) {
       case 1:
-      //기쁨
+        //기쁨
         topic.value = '오늘 가장 기쁜 일은 \n무엇이었나요?';
         break;
       case 2:
-      //놀람
+        //놀람
         topic.value = '오늘 가장 놀라운 일은 \n무엇이었나요?';
         break;
       case 3:
-      //당황
+        //당황
         topic.value = '오늘 가장 당황한 일은 \n무엇이었나요?';
         break;
       case 4:
-      //슬픔
+        //슬픔
         topic.value = '오늘 가장 슬픈 일은 \n무엇이었나요?';
         break;
       case 5:
-      //신남
+        //신남
         topic.value = '오늘 가장 신난 일은 \n무엇이었나요?';
         break;
       case 6:
-      //우울
+        //우울
         topic.value = '오늘 가장 우울한 일은 \n무엇이었나요?';
         break;
       case 7:
-      //화남
+        //화남
         topic.value = '오늘 가장 화난 일은 \n무엇이었나요?';
         break;
       case 8:
-      //힘듬
+        //힘듬
         topic.value = '오늘 가장 힘든 일은 \n무엇이었나요?';
         break;
       default:
@@ -164,34 +164,34 @@ class WriteDiaryViewModel extends GetxController {
     }
   }
 
-  void getRandomTopic() {
+  void getRandomTopic(context) {
     int randomNumber = Random().nextInt(metaTopic.length);
     topicReset.value -= 1;
-    String message = topicReset.value == 0
-        ? '글감을 더 받을 수 없어요.'
-        : '글감 제공 횟수가 ${topicReset.value}회 남았어요';
 
-    showSnackBar(message);
+    topicReset.value == 0
+        ? toast(
+            context: context,
+            text: '글감을 더 받을 수 없어요.',
+            isCheckIcon: false,
+            milliseconds: 1200,
+          )
+        : toast(
+            context: context,
+            text: '글감 제공 횟수가 ${topicReset.value}회 남았어요',
+            isCheckIcon: true,
+            milliseconds: 1200,
+          );
+
     topic.value = metaTopic[randomNumber];
     metaTopic.removeAt(randomNumber);
   }
 
-  void showSnackBar(String message) {
-    Get.closeAllSnackbars();
-    Get.snackbar(
-      '알림',
-      message,
-      duration: const Duration(
-        milliseconds: 1200,
-      ),
-      snackPosition: SnackPosition.BOTTOM,
-      animationDuration: const Duration(
-        milliseconds: 0,
-      ),
-      margin: const EdgeInsets.symmetric(
-        vertical: 50,
-        horizontal: 30,
-      ),
+  void showSnackBar(String message, context) {
+    toast(
+      context: context,
+      text: message,
+      isCheckIcon: false,
+      milliseconds: 1200,
     );
   }
 }

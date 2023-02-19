@@ -380,11 +380,12 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                       InkWell(
                                         onTap: (controller.topicReset.value > 0)
                                             ? () {
-                                                controller.getRandomTopic();
+                                                controller
+                                                    .getRandomTopic(context);
                                               }
                                             : () {
                                                 controller.showSnackBar(
-                                                    '글감을 더 받을 수 없어요.');
+                                                    '글감을 더 받을 수 없어요.', context);
                                               },
                                         child: SvgPicture.asset(
                                           "lib/config/assets/images/diary/write_diary/refresh.svg",
