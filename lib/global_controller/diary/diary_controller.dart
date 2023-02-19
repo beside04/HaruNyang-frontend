@@ -187,7 +187,9 @@ class DiaryController extends GetxController {
             isEnd = true;
           }
         },
-        error: (message) {},
+        error: (message) {
+          isEnd = true;
+        },
       );
       if (isEnd) {
         break;
