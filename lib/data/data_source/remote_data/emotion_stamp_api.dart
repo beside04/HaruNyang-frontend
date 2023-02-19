@@ -1,26 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 
 class EmotionStampApi {
-  final RefreshInterceptor interceptor;
+  final Dio dio;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
   EmotionStampApi({
-    required this.interceptor,
+    required this.dio,
   });
 
   Future<Result<List<DiaryData>>> getEmotionStamp(
       String from, String to) async {
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
-
     try {
       String emoticonStampUrl = '$_baseUrl/v1/diaries?from=$from&to=$to';
       Response response;

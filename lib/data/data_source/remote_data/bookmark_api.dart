@@ -1,26 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
 
 class BookmarkApi {
-  final RefreshInterceptor interceptor;
+  final Dio dio;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
   BookmarkApi({
-    required this.interceptor,
+    required this.dio,
   });
 
   Future<Result<bool>> saveBookmark(int wiseSayingId) async {
     String bookmarkUrl =
         '$_baseUrl/v1/wise-saying-bookmark?wiseSayingId=$wiseSayingId';
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
     try {
       Response response;
       response = await dio.post(bookmarkUrl);
@@ -51,12 +44,6 @@ class BookmarkApi {
 
   Future<Result<List<BookmarkData>>> getBookmark(int page, int limit) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
     try {
       Response response;
       response = await dio.get(
@@ -93,12 +80,6 @@ class BookmarkApi {
 
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {
     String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark/$bookmarkId';
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
     try {
       Response response;
       response = await dio.delete(
