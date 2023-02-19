@@ -79,6 +79,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                       emoticonIndex:
                           diaryController.state.value.diary!.emoticonIndex,
                       diaryData: diaryController.state.value.diary!,
+                      isEditScreen: true,
                     ),
                   );
                 }

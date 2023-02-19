@@ -10,7 +10,7 @@ void toast({
   required BuildContext context,
   required String text,
   required bool isCheckIcon,
-  int milliseconds = 4000,
+  int milliseconds = 3000,
 }) {
   final fToast = FToast();
   fToast.init(context);
