@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:frontend/data/data_source/remote_data/bookmark_api.dart';
 import 'package:frontend/data/data_source/remote_data/diary_api.dart';
 import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
@@ -73,27 +74,36 @@ final DarkModeUseCase darkModeUseCase = DarkModeUseCase(
 final PushMessageUseCase pushMessagePermissionUseCase = PushMessageUseCase(
   pushMessagePermissionRepository: pushMessagePermissionRepositoryImpl,
 );
+final dio = Dio();
+
+Dio getDio() {
+  dio.interceptors.add(interceptor);
+  dio.options.headers.addAll({
+    'accessToken': 'true',
+  });
+  return dio;
+}
 
 final RefreshInterceptor interceptor = RefreshInterceptor(
   tokenUseCase: tokenUseCase,
 );
 final onBoardingApi = OnBoardingApi(
-  interceptor: interceptor,
+  dio:getDio(),
 );
 final wiseSayingApi = WiseSayingApi(
-  interceptor: interceptor,
+  dio:getDio(),
 );
 final diaryApi = DiaryApi(
-  interceptor: interceptor,
+  dio:getDio(),
 );
 final bookmarkApi = BookmarkApi(
-  interceptor: interceptor,
+  dio:getDio(),
 );
 final withdrawApi = WithdrawApi(
-  interceptor: interceptor,
+  dio:getDio(),
 );
 final emotionStampApi = EmotionStampApi(
-  interceptor: interceptor,
+  dio:getDio(),
 );
 
 final KakaoLoginImpl kakaoLoginImpl = KakaoLoginImpl();

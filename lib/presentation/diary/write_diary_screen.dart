@@ -42,6 +42,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   @override
   Widget build(BuildContext context) {
     getWriteDiaryBinding();
+    controller.getDefaultTopic(emotion.id ?? 0);
 
     if (diaryData != null) {
       controller.setDiaryData(diaryData!);
@@ -360,22 +361,37 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                   bottom: 12.h,
                                   right: 24.w,
                                 ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '오늘 가장 기쁜 일은 \n무엇이었나요?',
-                                      style: kHeader4Style.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .textTitle,
+                                child: Obx(
+                                  () => Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Text(
+                                          controller.topic.value,
+                                          maxLines: 2,
+                                          style: kHeader4Style.copyWith(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .textTitle,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                    SvgPicture.asset(
-                                      "lib/config/assets/images/diary/write_diary/refresh.svg",
-                                    ),
-                                  ],
+                                      InkWell(
+                                        onTap: (controller.topicReset.value > 0)
+                                            ? () {
+                                                controller.getRandomTopic();
+                                              }
+                                            : () {
+                                                controller.showSnackBar(
+                                                    '글감을 더 받을 수 없어요.');
+                                              },
+                                        child: SvgPicture.asset(
+                                          "lib/config/assets/images/diary/write_diary/refresh.svg",
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
