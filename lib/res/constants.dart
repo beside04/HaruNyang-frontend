@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
+// ignore: constant_identifier_names
+const int APP_BUILD_NUMBER = 1;
+
 enum Job {
   student,
   officeWorkers,

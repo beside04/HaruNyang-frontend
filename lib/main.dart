@@ -17,6 +17,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'presentation/home/home_screen.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -71,6 +73,7 @@ class MyApp extends GetView<MainViewModel> {
                   controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
             ),
             child: GetMaterialApp(
+              navigatorKey: navigatorKey,
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
               initialRoute: '/',

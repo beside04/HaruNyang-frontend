@@ -87,7 +87,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                   showDialog(
                     barrierDismissible: true,
                     context: context,
-                    builder: (ctx) {
+                    builder: (context) {
                       return DialogComponent(
                         title: "삭제 하실래요?",
                         content: Text(
@@ -117,6 +117,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                               Get.back();
                               await diaryController.deleteDiary(
                                   diaryController.state.value.diary!.id ?? '');
+                              // ignore: use_build_context_synchronously
                               showDialog(
                                 barrierDismissible: false,
                                 context: context,

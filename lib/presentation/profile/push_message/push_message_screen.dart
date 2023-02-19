@@ -79,6 +79,7 @@ class PushMessageScreen extends GetView<PushMessageViewModel> {
                     } else {
                       if (!mainViewController.marketingConsentAgree.value &&
                           !mainViewController.pushMessagePermission.value) {
+                        // ignore: use_build_context_synchronously
                         showModalBottomSheet(
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(

@@ -273,7 +273,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                         );
 
                                         Get.back();
-
+                                        // ignore: use_build_context_synchronously
                                         toast(
                                           context: context,
                                           text: '변경을 완료했어요.',
@@ -371,7 +371,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     );
 
                                     Get.back();
-
+                                    // ignore: use_build_context_synchronously
                                     toast(
                                       context: context,
                                       text: '변경을 완료했어요.',
