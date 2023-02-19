@@ -13,6 +13,7 @@ import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
+import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/push_message/push_message_view_model.dart';
 import 'package:frontend/presentation/profile/terms/marketing_consent_screen.dart';
@@ -192,6 +193,12 @@ class PushMessageScreen extends GetView<PushMessageViewModel> {
 
                         controller.dailyAtTimeNotification(
                           Time(date.hour, date.minute, 00),
+                        );
+
+                        toast(
+                          context: context,
+                          text: '변경을 완료했어요.',
+                          isCheckIcon: true,
                         );
                       },
                       currentTime: mainViewController.pushMessageTime.value,
