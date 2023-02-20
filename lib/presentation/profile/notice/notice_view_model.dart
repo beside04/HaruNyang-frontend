@@ -7,9 +7,11 @@ class NoticeViewModel extends GetxController {
 
   NoticeViewModel({
     required this.getNoticeUseCase,
-  });
+  }) {
+    getNotice();
+  }
 
-  List<NoticeData> noticeData = <NoticeData>[].obs;
+  RxList<NoticeData> noticeData = <NoticeData>[].obs;
 
   Future<void> getNotice() async {
     int page = 0;
@@ -19,7 +21,7 @@ class NoticeViewModel extends GetxController {
 
     result.when(
       success: (data) {
-        noticeData = data;
+        noticeData.value = data;
       },
       error: (message) {},
     );
