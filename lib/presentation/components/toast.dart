@@ -45,8 +45,20 @@ void toast({
   );
 
   fToast.showToast(
-    gravity: ToastGravity.SNACKBAR,
     child: toast,
     toastDuration: Duration(milliseconds: milliseconds),
+    positionedToastBuilder: (context, child) {
+      return Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned(
+            bottom: MediaQuery.of(context).viewInsets.bottom + 80.h,
+            child: Container(
+              child: child,
+            ),
+          ),
+        ],
+      );
+    },
   );
 }
