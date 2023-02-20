@@ -10,6 +10,7 @@ class BookmarkData with _$BookmarkData {
   factory BookmarkData({
     @JsonKey(name: 'id') @Default(0) int id,
     @JsonKey(name: 'wise_saying') required WiseSayingData wiseSaying,
+    @JsonKey(name: 'created_at') required String createdAt,
   }) = _BookmarkData;
 
   factory BookmarkData.fromJson(Map<String, dynamic> json) =>

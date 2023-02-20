@@ -55,6 +55,7 @@ class BookmarkApi {
       );
 
       final Iterable bookmarkIterable = response.data['data']['data'];
+      print(response.data['data']['data']);
 
       final List<BookmarkData> bookmarkList =
           bookmarkIterable.map((e) => BookmarkData.fromJson(e)).toList();
