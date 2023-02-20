@@ -153,10 +153,11 @@ class _HomeScreenState extends State<HomeScreen> {
           bottomNavigationBar: controller.selectedIndex.value == 1
               ? null
               : MediaQuery(
-                  data: GetPlatform.isAndroid
-                      ? MediaQueryData(padding: EdgeInsets.only(bottom: 10.h))
-                      : MediaQueryData(padding: EdgeInsets.only(bottom: 30.h)),
+                  data: MediaQueryData(padding: EdgeInsets.only(bottom: 0.h)),
                   child: Container(
+                    padding: GetPlatform.isAndroid
+                        ? EdgeInsets.only(bottom: 10.h)
+                        : EdgeInsets.only(bottom: 30.h),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
                       border: Border(
