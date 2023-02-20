@@ -27,6 +27,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
   final String weather;
   final int emoticonIndex;
   final DiaryData? diaryData;
+  final bool isEditScreen;
 
   WriteDiaryScreen({
     Key? key,
@@ -34,6 +35,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
     required this.emotion,
     required this.weather,
     required this.emoticonIndex,
+    this.isEditScreen = false,
     this.diaryData,
   }) : super(key: key);
 
@@ -342,9 +344,6 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                             SizedBox(
                               width: 12.w,
                             ),
-                            // padding: const BubbleEdges.all(0),
-                            // margin: const BubbleEdges.all(0),
-                            // radius: const Radius.circular(24),
                             Expanded(
                               child: Container(
                                 margin: EdgeInsets.only(
@@ -377,19 +376,25 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                           ),
                                         ),
                                       ),
-                                      InkWell(
-                                        onTap: (controller.topicReset.value > 0)
-                                            ? () {
-                                                controller.getRandomTopic();
-                                              }
-                                            : () {
-                                                controller.showSnackBar(
-                                                    '글감을 더 받을 수 없어요.');
-                                              },
-                                        child: SvgPicture.asset(
-                                          "lib/config/assets/images/diary/write_diary/refresh.svg",
-                                        ),
-                                      ),
+                                      isEditScreen
+                                          ? Container()
+                                          : InkWell(
+                                              onTap: (controller
+                                                          .topicReset.value >
+                                                      0)
+                                                  ? () {
+                                                      controller.getRandomTopic(
+                                                          context);
+                                                    }
+                                                  : () {
+                                                      controller.showSnackBar(
+                                                          '글감을 더 받을 수 없어요.',
+                                                          context);
+                                                    },
+                                              child: SvgPicture.asset(
+                                                "lib/config/assets/images/diary/write_diary/refresh.svg",
+                                              ),
+                                            ),
                                     ],
                                   ),
                                 ),

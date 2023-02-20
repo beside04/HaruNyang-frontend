@@ -16,7 +16,7 @@ ThemeData lightMode(context) => ThemeData(
         }),
       ),
       scaffoldBackgroundColor: kBeigeColor100,
-      bottomAppBarColor: kBeigeColor100,
+      bottomAppBarTheme: const BottomAppBarTheme(color: kBeigeColor100),
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor400,
       dividerTheme: const DividerThemeData(
@@ -76,7 +76,7 @@ ThemeData darkMode(context) => ThemeData(
         }),
       ),
       scaffoldBackgroundColor: kGrayColor950,
-      bottomAppBarColor: kGrayColor950,
+      bottomAppBarTheme: const BottomAppBarTheme(color: kGrayColor950),
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor600,
       dividerTheme: const DividerThemeData(
