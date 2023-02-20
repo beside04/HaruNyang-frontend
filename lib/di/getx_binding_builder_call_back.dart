@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:frontend/data/data_source/remote_data/bookmark_api.dart';
 import 'package:frontend/data/data_source/remote_data/diary_api.dart';
 import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
+import 'package:frontend/data/data_source/remote_data/notice_api.dart';
 import 'package:frontend/data/data_source/remote_data/on_boarding_api.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/data/data_source/remote_data/reissue_token_api.dart';
@@ -12,6 +13,7 @@ import 'package:frontend/data/repository/dark_mode/dark_mode_repository_impl.dar
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
 import 'package:frontend/data/repository/emoticon_weather/emoticon_repository_impl.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
+import 'package:frontend/data/repository/notice/notice_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/data/repository/push_messge/push_message_repository_impl.dart';
@@ -32,6 +34,7 @@ import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
+import 'package:frontend/domain/use_case/notice_use_case/get_notice_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
 import 'package:frontend/domain/use_case/reissue_token_use_case/reissue_token_use_case.dart';
@@ -53,6 +56,7 @@ import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
+import 'package:frontend/presentation/profile/notice/notice_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/push_message/push_message_view_model.dart';
@@ -88,22 +92,22 @@ final RefreshInterceptor interceptor = RefreshInterceptor(
   tokenUseCase: tokenUseCase,
 );
 final onBoardingApi = OnBoardingApi(
-  dio:getDio(),
+  dio: getDio(),
 );
 final wiseSayingApi = WiseSayingApi(
-  dio:getDio(),
+  dio: getDio(),
 );
 final diaryApi = DiaryApi(
-  dio:getDio(),
+  dio: getDio(),
 );
 final bookmarkApi = BookmarkApi(
-  dio:getDio(),
+  dio: getDio(),
 );
 final withdrawApi = WithdrawApi(
-  dio:getDio(),
+  dio: getDio(),
 );
 final emotionStampApi = EmotionStampApi(
-  dio:getDio(),
+  dio: getDio(),
 );
 
 final KakaoLoginImpl kakaoLoginImpl = KakaoLoginImpl();
@@ -128,6 +132,11 @@ final bookmarkRepository = BookmarkRepositoryImpl(
 final reissueTokenRepository = ReissueTokenRepositoryImpl(
   dataSource: ReissueTokenApi(),
 );
+
+final noticeRepository = NoticeRepositoryImpl(
+  noticeApi: NoticeApi(),
+);
+
 //use case
 final KakaoLoginUseCase kakaoLoginUseCase = KakaoLoginUseCase(
   socialLoginRepository: kakaoLoginImpl,
@@ -161,6 +170,10 @@ final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
 
 final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
   wiseSayingRepository: wiseSayingRepositoryImpl,
+);
+
+final GetNoticeUseCase getNoticeUseCase = GetNoticeUseCase(
+  noticeRepository: noticeRepository,
 );
 
 final GetEmoticonUseCase getEmoticonUseCase =
@@ -303,4 +316,10 @@ void getDiaryControllerBinding() {
 
 void getPushMessageControllerBinding() {
   Get.put(PushMessageViewModel());
+}
+
+void getNoticeViewModelBinding() {
+  Get.put(NoticeViewModel(
+    getNoticeUseCase: getNoticeUseCase,
+  ));
 }

@@ -87,7 +87,7 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
                       )
                     : Obx(
                         () => BookMarkList(
-                          date: DateTime(2022, 12, 15),
+                          date: DateTime.parse(diaryController.state.value.bookmarkList[index].createdAt),
                           isBookMark: false,
                           title: diaryController.state.value.bookmarkList[index]
                               .wiseSaying.message,
