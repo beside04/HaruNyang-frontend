@@ -67,6 +67,11 @@ class MainViewModel extends GetxController {
         await pushMessagePermissionUseCase.getIsMarketingConsentAgree()));
   }
 
+  Future<void> setPushMessageTime(String date) async {
+    pushMessageTime.value = DateTime.parse(date);
+    await pushMessagePermissionUseCase.setPushMessageTime(date);
+  }
+
   Future<void> getPushMessageTime() async {
     pushMessageTime.value = DateTime.parse(
         await pushMessagePermissionUseCase.getPushMessageTime() ??

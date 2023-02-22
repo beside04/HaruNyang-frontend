@@ -189,7 +189,7 @@ class PushMessageScreen extends GetView<PushMessageViewModel> {
                       context,
                       showTitleActions: true,
                       onConfirm: (date) {
-                        mainViewController.pushMessageTime.value = date;
+                        mainViewController.setPushMessageTime(date.toString());
 
                         controller.dailyAtTimeNotification(
                           Time(date.hour, date.minute, 00),
