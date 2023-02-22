@@ -10,15 +10,23 @@ class DialogComponent extends StatelessWidget {
     required this.title,
     this.content,
     required this.actionContent,
+    this.titlePadding = const EdgeInsets.only(
+      left: 24.0,
+      top: 24.0,
+      right: 24.0,
+      bottom: 20,
+    ),
   });
 
   final String title;
   final Widget? content;
   final List<Widget> actionContent;
+  final EdgeInsetsGeometry titlePadding;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      titlePadding: titlePadding,
       backgroundColor: Theme.of(context).colorScheme.backgroundModal,
       insetPadding: EdgeInsets.symmetric(
         horizontal: 20.w,

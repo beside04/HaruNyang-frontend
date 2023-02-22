@@ -61,11 +61,32 @@ class HomeViewModel extends GetxController {
         context: navigatorKey.currentContext!,
         builder: (context) {
           return DialogComponent(
-            title: "업데이트가 필요합니다.",
-            content: Text(
-              "필수 업데이트를 해야만 앱을 이용할 수 있습니다.",
-              style: kHeader6Style.copyWith(
-                  color: Theme.of(context).colorScheme.textSubtitle),
+            titlePadding: EdgeInsets.zero,
+            title: "",
+            content: Column(
+              children: [
+                Image.asset(
+                  "lib/config/assets/images/character/update1.png",
+                  width: 120.w,
+                  height: 120.h,
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                Text(
+                  "업데이트가 필요합니다.",
+                  style: kHeader3Style.copyWith(
+                      color: Theme.of(context).colorScheme.textTitle),
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                Text(
+                  "필수 업데이트를 해야만 앱을 이용할 수 있습니다.",
+                  style: kHeader6Style.copyWith(
+                      color: Theme.of(context).colorScheme.textSubtitle),
+                ),
+              ],
             ),
             actionContent: [
               DialogButton(
@@ -96,11 +117,32 @@ class HomeViewModel extends GetxController {
         context: navigatorKey.currentContext!,
         builder: (context) {
           return DialogComponent(
-            title: "새로운 버전이 있습니다.",
-            content: Text(
-              "업데이트 하고 새로운 기능을 만나보세요.",
-              style: kHeader6Style.copyWith(
-                  color: Theme.of(context).colorScheme.textSubtitle),
+            titlePadding: EdgeInsets.zero,
+            title: "",
+            content: Column(
+              children: [
+                Image.asset(
+                  "lib/config/assets/images/character/update2.png",
+                  width: 120.w,
+                  height: 120.h,
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                Text(
+                  "새로운 버전이 있습니다.",
+                  style: kHeader3Style.copyWith(
+                      color: Theme.of(context).colorScheme.textTitle),
+                ),
+                SizedBox(
+                  height: 4.h,
+                ),
+                Text(
+                  "업데이트하고 새로운 기능을 만나보세요.",
+                  style: kHeader6Style.copyWith(
+                      color: Theme.of(context).colorScheme.textSubtitle),
+                ),
+              ],
             ),
             actionContent: [
               DialogButton(
