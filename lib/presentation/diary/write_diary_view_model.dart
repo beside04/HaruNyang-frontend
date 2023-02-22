@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/topic/topic_data.dart';
 import 'package:frontend/presentation/components/toast.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -22,22 +23,64 @@ class WriteDiaryViewModel extends GetxController {
   bool isUpdated = false;
   int randomImageNumber = 1;
   Rx<int> topicReset = 3.obs;
-  Rx<String> topic = ''.obs;
+  Rx<TopicData> topic = TopicData(
+    id: 0,
+    value: '',
+  ).obs;
 
-  List<String> metaTopic = [
-    '요즘 힘든 점이 있어요?\n',
-    '고민거리가 뭐에요?\n',
-    '오늘 점심은 뭘 먹었어요?\n',
-    '다가오는 주말에 뭘 할거에요?\n',
-    '오늘 가장 재밌는 일은 뭐였어요?\n',
-    '오늘 어떤 커피를 먹었어요?\n',
-    '무엇이 나를 힘들게 해요?\n',
-    '무엇이 나를 설레게 해요?\n',
-    '내일 하고 싶은게 뭐에요?\n',
-    '요즘 자주 듣는 음악이 뭐에요?\n',
-    '먹고 싶은 음식이 있나요?\n',
-    '지금 받고 싶은 선물이 뭐에요?\n',
-    '쉬는 날에 어디 가고 싶어요?\n',
+  List<TopicData> metaTopic = [
+    TopicData(
+      id: 10,
+      value: '요즘 힘든 점이 있어요?',
+    ),
+    TopicData(
+      id: 11,
+      value: '고민거리가 뭐에요?',
+    ),
+    TopicData(
+      id: 12,
+      value: '오늘 점심은 뭘 먹었어요?',
+    ),
+    TopicData(
+      id: 13,
+      value: '다가오는 주말에 뭘 할거에요?',
+    ),
+    TopicData(
+      id: 14,
+      value: '오늘 가장 재밌는 일은 뭐였어요?',
+    ),
+    TopicData(
+      id: 15,
+      value: '오늘 어떤 커피를 먹었어요?',
+    ),
+    TopicData(
+      id: 16,
+      value: '무엇이 나를 힘들게 해요?',
+    ),
+    TopicData(
+      id: 17,
+      value: '무엇이 나를 설레게 해요?',
+    ),
+    TopicData(
+      id: 18,
+      value: '내일 하고 싶은게 뭐에요?',
+    ),
+    TopicData(
+      id: 19,
+      value: '요즘 자주 듣는 음악이 뭐에요?',
+    ),
+    TopicData(
+      id: 20,
+      value: '먹고 싶은 음식이 있나요?',
+    ),
+    TopicData(
+      id: 21,
+      value: '지금 받고 싶은 선물이 뭐에요?',
+    ),
+    TopicData(
+      id: 22,
+      value: '쉬는 날에 어디 가고 싶어요?',
+    ),
   ];
 
   @override
@@ -128,38 +171,65 @@ class WriteDiaryViewModel extends GetxController {
     switch (emoticonId) {
       case 1:
         //기쁨
-        topic.value = '오늘 가장 기쁜 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 1,
+          value: '오늘 가장 기쁜 일은 무엇이었나요?',
+        );
         break;
       case 2:
         //놀람
-        topic.value = '오늘 가장 놀라운 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 2,
+          value: '오늘 가장 놀라운 일은 무엇이었나요?',
+        );
         break;
       case 3:
         //당황
-        topic.value = '오늘 가장 당황한 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 3,
+          value: '오늘 가장 당황스러운 일은 무엇이었나요?',
+        );
         break;
       case 4:
         //슬픔
-        topic.value = '오늘 가장 슬픈 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 4,
+          value: '오늘 가장 슬픈 일은 무엇이었나요?',
+        );
         break;
       case 5:
         //신남
-        topic.value = '오늘 가장 신난 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 5,
+          value: '오늘 가장 신난 일은 무엇이었나요?',
+        );
         break;
       case 6:
         //우울
-        topic.value = '오늘 가장 우울한 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 6,
+          value: '오늘 가장 우울한 일은 무엇이었나요?',
+        );
         break;
       case 7:
         //화남
-        topic.value = '오늘 가장 화난 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 7,
+          value: '오늘 가장 화난 일은 무엇이었나요?',
+        );
         break;
       case 8:
         //힘듬
-        topic.value = '오늘 가장 힘든 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 8,
+          value: '오늘 가장 힘들었던 일은 무엇이었나요?',
+        );
         break;
       default:
-        topic.value = '오늘 가장 기억에 남는 일은 \n무엇이었나요?';
+        topic.value = TopicData(
+          id: 9,
+          value: '오늘 가장 기억에 남는 일은 무엇이었나요?',
+        );
         break;
     }
   }

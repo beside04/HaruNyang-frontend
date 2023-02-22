@@ -196,6 +196,8 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                 weather: weather,
                                                 images: [],
                                                 wiseSayings: [],
+                                                writingTopic:
+                                                    controller.topic.value,
                                               ),
                                         imageFile: controller.croppedFile.value,
                                       ),
@@ -354,31 +356,41 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                   color:
                                       Theme.of(context).colorScheme.surface_02,
                                 ),
-                                padding: EdgeInsets.only(
-                                  left: 24.w,
-                                  top: 12.h,
-                                  bottom: 12.h,
-                                  right: 24.w,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 20.w,
+                                  vertical: 12.h,
                                 ),
-                                child: Obx(
-                                  () => Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          controller.topic.value,
-                                          maxLines: 2,
-                                          style: kHeader4Style.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .textTitle,
-                                          ),
-                                        ),
-                                      ),
-                                      isEditScreen
-                                          ? Container()
-                                          : InkWell(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: isEditScreen
+                                          ? Text(
+                                              diaryData!.writingTopic.value,
+                                              maxLines: 2,
+                                              style: kHeader4Style.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .textTitle,
+                                              ),
+                                            )
+                                          : Obx(
+                                              () => Text(
+                                                controller.topic.value.value,
+                                                maxLines: 2,
+                                                style: kHeader4Style.copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .textTitle,
+                                                ),
+                                              ),
+                                            ),
+                                    ),
+                                    isEditScreen
+                                        ? Container()
+                                        : Obx(
+                                            () => InkWell(
                                               onTap: (controller
                                                           .topicReset.value >
                                                       0)
@@ -395,8 +407,8 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                                 "lib/config/assets/images/diary/write_diary/refresh.svg",
                                               ),
                                             ),
-                                    ],
-                                  ),
+                                          ),
+                                  ],
                                 ),
                               ),
                             ),
