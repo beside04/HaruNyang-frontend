@@ -1,24 +1,15 @@
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/main.dart';
 import 'package:frontend/main_view_model.dart';
-import 'package:frontend/presentation/components/dialog_button.dart';
-import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
-import 'package:frontend/presentation/login/login_screen.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
-import 'package:url_launcher/url_launcher.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends GetView<HomeViewModel> {
   final bool isFirstUser;
 
   const HomeScreen({
@@ -27,120 +18,14 @@ class HomeScreen extends StatefulWidget {
   });
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
+  Widget build(BuildContext context) {
+    getHomeViewModelBinding();
 
-class _HomeScreenState extends State<HomeScreen> {
-  late final HomeViewModel controller;
-
-  @override
-  void initState() {
-    Get.delete<HomeViewModel>();
-    controller = getHomeViewModelBinding();
-
-    if (widget.isFirstUser) {
+    if (isFirstUser) {
       //처음 가입한 유저라면 일기쓰기 화면으로 이동
       controller.selectedIndex.value = 1;
     }
 
-    initUpdatePopup();
-
-    super.initState();
-  }
-
-  void initUpdatePopup() async {
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.fetchAndActivate();
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(seconds: 1),
-      minimumFetchInterval: const Duration(seconds: 1),
-    ));
-
-    if (APP_BUILD_NUMBER < remoteConfig.getInt("min_build_number")) {
-      showDialog(
-        barrierDismissible: false,
-        context: navigatorKey.currentContext!,
-        builder: (context) {
-          return DialogComponent(
-            title: "업데이트가 필요합니다.",
-            content: Text(
-              "필수 업데이트를 해야만 앱을 이용할 수 있습니다.",
-              style: kHeader6Style.copyWith(
-                  color: Theme.of(context).colorScheme.textSubtitle),
-            ),
-            actionContent: [
-              DialogButton(
-                title: "업데이트",
-                onTap: () async {
-                  Get.offAll(() => const LoginScreen());
-
-                  GetPlatform.isAndroid
-                      ? await launchUrl(
-                          Uri.parse(
-                              "https://play.google.com/store/apps/details?id=com.beside04.haruNyang"),
-                        )
-                      : await launchUrl(
-                          Uri.parse("https://apps.apple.com/app/id6444657575"),
-                        );
-                },
-                backgroundColor: kOrange200Color,
-                textStyle: kHeader4Style.copyWith(color: kWhiteColor),
-              ),
-            ],
-          );
-        },
-      );
-    } else if (APP_BUILD_NUMBER <
-        remoteConfig.getInt("recommend_build_number")) {
-      showDialog(
-        barrierDismissible: true,
-        context: navigatorKey.currentContext!,
-        builder: (context) {
-          return DialogComponent(
-            title: "새로운 버전이 있습니다.",
-            content: Text(
-              "업데이트 하고 새로운 기능을 만나보세요.",
-              style: kHeader6Style.copyWith(
-                  color: Theme.of(context).colorScheme.textSubtitle),
-            ),
-            actionContent: [
-              DialogButton(
-                title: "다음에",
-                onTap: () async {
-                  Get.back();
-                },
-                backgroundColor: Theme.of(context).colorScheme.secondaryColor,
-                textStyle: kHeader4Style.copyWith(
-                    color: Theme.of(context).colorScheme.textSubtitle),
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              DialogButton(
-                title: "업데이트",
-                onTap: () async {
-                  Get.offAll(() => const LoginScreen());
-                  GetPlatform.isAndroid
-                      ? await launchUrl(
-                          Uri.parse(
-                              "https://play.google.com/store/apps/details?id=com.beside04.haruNyang"),
-                        )
-                      : await launchUrl(
-                          Uri.parse("https://apps.apple.com/app/id6444657575"),
-                        );
-                },
-                backgroundColor: kOrange200Color,
-                textStyle: kHeader4Style.copyWith(color: kWhiteColor),
-              ),
-            ],
-          );
-        },
-      );
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final mainViewController = Get.find<MainViewModel>();
 
     return WillPopScope(
