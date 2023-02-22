@@ -324,6 +324,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                         padding: kPrimaryPadding,
                                         child: Obx(
                                           () => Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
                                                 mainAxisAlignment:
