@@ -28,6 +28,7 @@ class DiaryApi {
               .map((e) => e.id)
               .toList(),
           "written_at": diary.createTime,
+          "writing_topic_id": diary.writingTopic.id,
         },
       );
 

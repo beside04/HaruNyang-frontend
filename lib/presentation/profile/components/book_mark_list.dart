@@ -40,6 +40,7 @@ class BookMarkList extends StatelessWidget {
           child: Padding(
             padding: kPrimaryPadding,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

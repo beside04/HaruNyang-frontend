@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
@@ -43,8 +42,8 @@ class EmptyDiaryScreen extends StatelessWidget {
                   height: 121.h,
                 ),
                 Center(
-                  child: SvgPicture.asset(
-                    "lib/config/assets/images/character/character3.svg",
+                  child: Image.asset(
+                    "lib/config/assets/images/character/box.png",
                     width: 280.w,
                     height: 280.h,
                   ),
