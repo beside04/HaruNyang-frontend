@@ -5,6 +5,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
+import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
@@ -18,18 +19,36 @@ import 'package:url_launcher/url_launcher.dart';
 
 class HomeViewModel extends GetxController {
   final GetEmotionStampUseCase getEmotionStampUseCase;
+  final PopUpUseCase popUpUseCase;
 
   HomeViewModel({
     required this.getEmotionStampUseCase,
+    required this.popUpUseCase,
   });
 
   RxInt selectedIndex = 0.obs;
+  bool isOpenPopup = false;
+  String? lastPopupDate;
 
   @override
   void onInit() {
     super.onInit();
 
+    getLastDate();
+
     initUpdatePopup();
+  }
+
+  getLastDate() async {
+    lastPopupDate = await popUpUseCase.getLastPopUpDate();
+
+    if (lastPopupDate != null) {
+      DateTime now = DateTime.now();
+      int timeDifference =
+          now.difference(DateTime.parse(lastPopupDate!)).inDays;
+
+      if (timeDifference < 30) isOpenPopup = true;
+    }
   }
 
   Future<bool> onItemTapped(int index) async {
@@ -110,10 +129,10 @@ class HomeViewModel extends GetxController {
           );
         },
       );
-    } else if (APP_BUILD_NUMBER <
-        remoteConfig.getInt("recommend_build_number")) {
+    } else if (!isOpenPopup &&
+        APP_BUILD_NUMBER < remoteConfig.getInt("recommend_build_number")) {
       showDialog(
-        barrierDismissible: true,
+        barrierDismissible: false,
         context: navigatorKey.currentContext!,
         builder: (context) {
           return DialogComponent(
@@ -149,6 +168,9 @@ class HomeViewModel extends GetxController {
                 title: "다음에",
                 onTap: () async {
                   Get.back();
+                  String time = DateTime.now().toIso8601String();
+                  isOpenPopup = true;
+                  await popUpUseCase.setLastPopUpDate(time);
                 },
                 backgroundColor: Theme.of(context).colorScheme.secondaryColor,
                 textStyle: kHeader4Style.copyWith(

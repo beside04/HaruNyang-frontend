@@ -14,7 +14,7 @@ class DialogComponent extends StatelessWidget {
       left: 24.0,
       top: 24.0,
       right: 24.0,
-      bottom: 20,
+      bottom: 0,
     ),
   });
 
