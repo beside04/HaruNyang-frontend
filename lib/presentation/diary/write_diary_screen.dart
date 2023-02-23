@@ -328,19 +328,16 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                         padding: EdgeInsets.only(left: 20.w, top: 20.h),
                         child: Row(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.only(top: 6.0.h),
-                              child: Container(
-                                padding: const EdgeInsets.all(6),
-                                decoration: const BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: kOrange300Color,
-                                ),
-                                child: SvgPicture.asset(
-                                  "lib/config/assets/images/character/character${controller.randomImageNumber}.svg",
-                                  width: 48.w,
-                                  height: 48.h,
-                                ),
+                            Container(
+                              padding: EdgeInsets.all(6.h),
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: kOrange300Color,
+                              ),
+                              child: SvgPicture.asset(
+                                "lib/config/assets/images/character/character${controller.randomImageNumber}.svg",
+                                width: 48.w,
+                                height: 48.h,
                               ),
                             ),
                             SizedBox(
@@ -348,6 +345,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                             ),
                             Expanded(
                               child: Container(
+                                height: 70.h,
                                 margin: EdgeInsets.only(
                                   right: 20.w,
                                 ),
