@@ -16,6 +16,7 @@ import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_
 import 'package:frontend/data/repository/notice/notice_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/core/utils/notification_controller.dart';
+import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
 import 'package:frontend/data/repository/push_messge/push_message_repository_impl.dart';
 import 'package:frontend/data/repository/reissu_token/reissue_token_repository_impl.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
@@ -36,6 +37,7 @@ import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_u
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/notice_use_case/get_notice_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
+import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
 import 'package:frontend/domain/use_case/reissue_token_use_case/reissue_token_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
@@ -66,6 +68,7 @@ final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
 final DarkModeRepositoryImpl darkModeRepositoryImpl = DarkModeRepositoryImpl();
 final PushMessageRepositoryImpl pushMessagePermissionRepositoryImpl =
     PushMessageRepositoryImpl();
+final PopUpRepositoryImpl popupRepositoryImpl = PopUpRepositoryImpl();
 
 final TokenUseCase tokenUseCase = TokenUseCase(
   tokenRepository: tokenRepositoryImpl,
@@ -77,6 +80,10 @@ final DarkModeUseCase darkModeUseCase = DarkModeUseCase(
 
 final PushMessageUseCase pushMessagePermissionUseCase = PushMessageUseCase(
   pushMessagePermissionRepository: pushMessagePermissionRepositoryImpl,
+);
+
+final PopUpUseCase popUpUseCase = PopUpUseCase(
+  popUpRepository: popupRepositoryImpl,
 );
 final dio = Dio();
 
@@ -262,6 +269,7 @@ HomeViewModel getHomeViewModelBinding() {
   return Get.put(
     HomeViewModel(
       getEmotionStampUseCase: getEmotionStampUseCase,
+      popUpUseCase: popUpUseCase,
     ),
   );
 }

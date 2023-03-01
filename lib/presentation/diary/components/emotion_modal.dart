@@ -90,9 +90,9 @@ class EmotionModal extends GetView<DiaryViewModel> {
                                   emotion: controller.selectedEmotion.value,
                                   weather:
                                       controller.selectedWeather.value.image,
-                                  emoticonIndex:
-                                      (controller.emotionNumberValue.value * 10)
-                                          .toInt(),
+                                  emoticonIndex: controller
+                                      .emotionNumberValue.value
+                                      .toInt(),
                                 ),
                               );
                             },
@@ -134,8 +134,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
               () => Slider(
                 value: controller.emotionNumberValue.value,
                 min: 0,
-                max: 10,
-                divisions: 10,
+                max: 3,
+                divisions: 3,
                 onChanged: (value) {
                   controller.emotionNumberValue.value = value;
                   controller.getEmotionValue();

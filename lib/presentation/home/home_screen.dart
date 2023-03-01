@@ -112,6 +112,7 @@ class HomeScreen extends GetView<HomeViewModel> {
                       ],
                       currentIndex: controller.selectedIndex.value,
                       onTap: (index) async {
+                        getHomeViewModelBinding();
                         final result = await controller.onItemTapped(index);
 
                         if (!result) {
