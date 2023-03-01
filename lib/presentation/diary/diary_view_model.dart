@@ -21,7 +21,7 @@ class DiaryViewModel extends GetxController
 
   final nowDate = DateTime.now().obs;
   final isEmotionModal = true.obs;
-  final emotionNumberValue = 6.0.obs;
+  final emotionNumberValue = 0.0.obs;
   final emotionTextValue = '맞아!'.obs;
 
   final RxList<EmoticonData> emoticonDataList = <EmoticonData>[].obs;
@@ -42,11 +42,11 @@ class DiaryViewModel extends GetxController
   }
 
   getEmotionValue() {
-    if (emotionNumberValue.value < 2.0) {
+    if (emotionNumberValue.value < 1.0) {
       emotionTextValue.value = '조금?';
-    } else if (emotionNumberValue.value < 5.0) {
+    } else if (emotionNumberValue.value < 2.0) {
       emotionTextValue.value = '그럭저럭';
-    } else if (emotionNumberValue.value < 7.0) {
+    } else if (emotionNumberValue.value < 3.0) {
       emotionTextValue.value = '맞아!';
     } else {
       emotionTextValue.value = '진짜 엄청 대박!!';
