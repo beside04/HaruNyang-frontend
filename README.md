@@ -1,6 +1,9 @@
-# beside04_front Documentation
-# 프로젝트 설명
-프로젝트 아이템 논의가 마치고 결정이 되면 수정 예정입니다.
+# HaruNyang front Documentation
+### 프로젝트 설명
+
+일기를 작성하면 일기의 단어를 매칭하여 명언 또는 명대사를 추천해주는 일기 앱입니다.
+
+<img src="https://user-images.githubusercontent.com/73716178/222867930-be759be5-1876-409c-b973-1c22e6ef5497.png" width="500" height="1000"/>
 
 ### 사용중인 상태관리, 디자인 패턴
 Getx 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나인 mvvm 디자인 패턴을 채택하여 프로젝트를 구성 할 계획입니다.
@@ -37,8 +40,8 @@ Getx 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나
 - 추출 후 `build/app/outputs/bundle/release` 에서 추출된 appbundle 확인이 가능합니다.
 
 ## Git Flow Rules
-- 이니셜-2022-xx-xx 를 develop branch 기준으로 분기합니다.
-    - ex ) JGW-2022-11-13/feature main screen
+- 기능/이니션-개발내용을 develop branch 기준으로 분기합니다.
+    - ex ) feature/jgw-login-screen
 - 한번 커밋은 하나의 기능 개발을 목표로 합니다.
 - 상대방에게 코드리뷰를 부탁하고 develop branch 로 merge 합니다.
     - 개인 branch 에서 develop branch 로는 squash merge
@@ -178,12 +181,3 @@ class Dice {
      - component(widget) : 공통된 위젯 컴포넌트
    - viewmodel : View상태를 유지/관리하는 곳
 
-# 사용중인 패키지
-
-프로젝트를 구성할때 필요한 패키지 입니다.
-
-패키지가 추가 되거나, 변경이 되면 상시 수정 예정입니다.
-
-| 패키지 | 버전 | 사용 목적(이유) | 링크 |
-| --- | --- | --- | --- |
-| get(예시) | ^4.6.5 | 상태관리 라이브러리 | https://pub.dev/packages/get |
