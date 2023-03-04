@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,7 @@ void globalControllerBinding() {
 
 class MyApp extends GetView<MainViewModel> {
   const MyApp({super.key});
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +75,9 @@ class MyApp extends GetView<MainViewModel> {
                   controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
             ),
             child: GetMaterialApp(
+              navigatorObservers: [
+                FirebaseAnalyticsObserver(analytics: analytics),
+              ],
               navigatorKey: navigatorKey,
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
