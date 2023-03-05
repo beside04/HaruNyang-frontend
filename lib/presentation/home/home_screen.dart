@@ -17,9 +17,11 @@ class HomeScreen extends GetView<HomeViewModel> {
   @override
   Widget build(BuildContext context) {
     //처음 가입한 유저라면 일기쓰기 화면으로 이동
-    Get.arguments == null
-        ? controller.selectedIndex.value = 0
-        : controller.selectedIndex.value = Get.arguments['index'];
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.arguments == null
+          ? controller.selectedIndex.value = 0
+          : controller.selectedIndex.value = Get.arguments['index'];
+    });
 
     final mainViewController = Get.find<MainViewModel>();
 
