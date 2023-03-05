@@ -15,7 +15,6 @@ import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -54,6 +53,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
       onWillPop: () async {
         if (controller.diaryEditingController.text.isEmpty) {
           Get.back();
+          FocusManager.instance.primaryFocus?.unfocus();
         } else if (diaryData?.diaryContent !=
             controller.diaryEditingController.text) {
           showDialog(
@@ -86,6 +86,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                     onTap: () {
                       Get.back();
                       Get.back();
+                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                     backgroundColor: kOrange200Color,
                     textStyle: kHeader4Style.copyWith(color: kWhiteColor),
@@ -125,6 +126,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                     onTap: () {
                       Get.back();
                       Get.back();
+                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                     backgroundColor: kOrange200Color,
                     textStyle: kHeader4Style.copyWith(color: kWhiteColor),
@@ -171,12 +173,11 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                   DialogButton(
                                     title: "예",
                                     onTap: () {
-                                      Get.offAll(
-                                        () => const HomeScreen(),
-                                        binding: BindingsBuilder(
-                                          getHomeViewModelBinding,
-                                        ),
-                                      );
+                                      Get.offNamed("/home",
+                                          arguments: {"index": 0});
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+
                                       Get.to(
                                         () => DiaryDetailScreen(
                                           date: date,
@@ -276,6 +277,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                             onTap: () {
                               Get.back();
                               Get.back();
+                              FocusManager.instance.primaryFocus?.unfocus();
                             },
                             backgroundColor: kOrange200Color,
                             textStyle:
@@ -318,6 +320,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                             onTap: () {
                               Get.back();
                               Get.back();
+                              FocusManager.instance.primaryFocus?.unfocus();
                             },
                             backgroundColor: kOrange200Color,
                             textStyle:

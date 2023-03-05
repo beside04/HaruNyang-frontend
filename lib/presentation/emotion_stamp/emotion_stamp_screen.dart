@@ -48,6 +48,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         elevation: 0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(0),

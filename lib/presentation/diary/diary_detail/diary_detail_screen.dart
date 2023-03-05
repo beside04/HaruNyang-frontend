@@ -9,6 +9,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
@@ -117,10 +118,10 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                               Get.back();
                               await diaryController.deleteDiary(
                                   diaryController.state.value.diary!.id ?? '');
-                              // ignore: use_build_context_synchronously
-                              showDialog(
+
+                              await showDialog(
                                 barrierDismissible: false,
-                                context: context,
+                                context: navigatorKey.currentContext!,
                                 builder: (ctx) {
                                   return WillPopScope(
                                     onWillPop: () async => false,
