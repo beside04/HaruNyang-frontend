@@ -15,7 +15,6 @@ import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
@@ -171,12 +170,9 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                   DialogButton(
                                     title: "예",
                                     onTap: () {
-                                      Get.offAll(
-                                        () => const HomeScreen(),
-                                        binding: BindingsBuilder(
-                                          getHomeViewModelBinding,
-                                        ),
-                                      );
+                                      Get.offNamed("/home",
+                                          arguments: {"index": 0});
+
                                       Get.to(
                                         () => DiaryDetailScreen(
                                           date: date,

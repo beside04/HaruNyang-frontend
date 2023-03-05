@@ -10,21 +10,16 @@ import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:get/get.dart';
 
 class HomeScreen extends GetView<HomeViewModel> {
-  final bool isFirstUser;
-
   const HomeScreen({
     super.key,
-    this.isFirstUser = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    getHomeViewModelBinding();
-
-    if (isFirstUser) {
-      //처음 가입한 유저라면 일기쓰기 화면으로 이동
-      controller.selectedIndex.value = 1;
-    }
+    //처음 가입한 유저라면 일기쓰기 화면으로 이동
+    Get.arguments == null
+        ? controller.selectedIndex.value = 0
+        : controller.selectedIndex.value = Get.arguments['index'];
 
     final mainViewController = Get.find<MainViewModel>();
 
@@ -52,78 +47,80 @@ class HomeScreen extends GetView<HomeViewModel> {
                         ),
                       ),
                     ),
-                    child: BottomNavigationBar(
-                      elevation: 0,
-                      items: [
-                        BottomNavigationBarItem(
-                          icon: controller.selectedIndex.value == 0
-                              ? mainViewController.isDarkMode.value
-                                  ? SvgPicture.asset(
-                                      "lib/config/assets/images/home/dark_mode/tap_emotion_stamp.svg",
-                                    )
-                                  : SvgPicture.asset(
-                                      "lib/config/assets/images/home/light_mode/tap_emotion_stamp.svg",
-                                    )
-                              : mainViewController.isDarkMode.value
-                                  ? SvgPicture.asset(
-                                      "lib/config/assets/images/home/dark_mode/emotion_stamp.svg",
-                                    )
-                                  : SvgPicture.asset(
-                                      "lib/config/assets/images/home/light_mode/emotion_stamp.svg",
-                                    ),
-                          label: '감정캘린더',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: controller.selectedIndex.value == 1
-                              ? mainViewController.isDarkMode.value
-                                  ? SvgPicture.asset(
-                                      "lib/config/assets/images/home/dark_mode/tap_pen.svg",
-                                    )
-                                  : SvgPicture.asset(
-                                      "lib/config/assets/images/home/light_mode/tap_pen.svg",
-                                    )
-                              : mainViewController.isDarkMode.value
-                                  ? SvgPicture.asset(
-                                      "lib/config/assets/images/home/dark_mode/pen.svg",
-                                    )
-                                  : SvgPicture.asset(
-                                      "lib/config/assets/images/home/light_mode/pen.svg",
-                                    ),
-                          label: '일기쓰기',
-                        ),
-                        BottomNavigationBarItem(
-                          icon: controller.selectedIndex.value == 2
-                              ? mainViewController.isDarkMode.value
-                                  ? SvgPicture.asset(
-                                      "lib/config/assets/images/home/dark_mode/tap_profile.svg",
-                                    )
-                                  : SvgPicture.asset(
-                                      "lib/config/assets/images/home/light_mode/tap_profile.svg",
-                                    )
-                              : mainViewController.isDarkMode.value
-                                  ? SvgPicture.asset(
-                                      "lib/config/assets/images/home/dark_mode/profile.svg",
-                                    )
-                                  : SvgPicture.asset(
-                                      "lib/config/assets/images/home/light_mode/profile.svg",
-                                    ),
-                          label: '프로필',
-                        ),
-                      ],
-                      currentIndex: controller.selectedIndex.value,
-                      onTap: (index) async {
-                        getHomeViewModelBinding();
-                        final result = await controller.onItemTapped(index);
+                    child: Obx(
+                      () => BottomNavigationBar(
+                        elevation: 0,
+                        items: [
+                          BottomNavigationBarItem(
+                            icon: controller.selectedIndex.value == 0
+                                ? mainViewController.isDarkMode.value
+                                    ? SvgPicture.asset(
+                                        "lib/config/assets/images/home/dark_mode/tap_emotion_stamp.svg",
+                                      )
+                                    : SvgPicture.asset(
+                                        "lib/config/assets/images/home/light_mode/tap_emotion_stamp.svg",
+                                      )
+                                : mainViewController.isDarkMode.value
+                                    ? SvgPicture.asset(
+                                        "lib/config/assets/images/home/dark_mode/emotion_stamp.svg",
+                                      )
+                                    : SvgPicture.asset(
+                                        "lib/config/assets/images/home/light_mode/emotion_stamp.svg",
+                                      ),
+                            label: '감정캘린더',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: controller.selectedIndex.value == 1
+                                ? mainViewController.isDarkMode.value
+                                    ? SvgPicture.asset(
+                                        "lib/config/assets/images/home/dark_mode/tap_pen.svg",
+                                      )
+                                    : SvgPicture.asset(
+                                        "lib/config/assets/images/home/light_mode/tap_pen.svg",
+                                      )
+                                : mainViewController.isDarkMode.value
+                                    ? SvgPicture.asset(
+                                        "lib/config/assets/images/home/dark_mode/pen.svg",
+                                      )
+                                    : SvgPicture.asset(
+                                        "lib/config/assets/images/home/light_mode/pen.svg",
+                                      ),
+                            label: '일기쓰기',
+                          ),
+                          BottomNavigationBarItem(
+                            icon: controller.selectedIndex.value == 2
+                                ? mainViewController.isDarkMode.value
+                                    ? SvgPicture.asset(
+                                        "lib/config/assets/images/home/dark_mode/tap_profile.svg",
+                                      )
+                                    : SvgPicture.asset(
+                                        "lib/config/assets/images/home/light_mode/tap_profile.svg",
+                                      )
+                                : mainViewController.isDarkMode.value
+                                    ? SvgPicture.asset(
+                                        "lib/config/assets/images/home/dark_mode/profile.svg",
+                                      )
+                                    : SvgPicture.asset(
+                                        "lib/config/assets/images/home/light_mode/profile.svg",
+                                      ),
+                            label: '프로필',
+                          ),
+                        ],
+                        currentIndex: controller.selectedIndex.value,
+                        onTap: (index) async {
+                          getHomeViewModelBinding();
+                          final result = await controller.onItemTapped(index);
 
-                        if (!result) {
-                          // ignore: use_build_context_synchronously
-                          toast(
-                            context: context,
-                            text: '일기는 하루에 한번만 작성 할 수 있어요.',
-                            isCheckIcon: false,
-                          );
-                        }
-                      },
+                          if (!result) {
+                            // ignore: use_build_context_synchronously
+                            toast(
+                              context: context,
+                              text: '일기는 하루에 한번만 작성 할 수 있어요.',
+                              isCheckIcon: false,
+                            );
+                          }
+                        },
+                      ),
                     ),
                   ),
                 ),
