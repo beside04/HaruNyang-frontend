@@ -77,7 +77,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                         child: Center(
                           child: Text(
                             '탈퇴 전 확인하세요!',
-                            style: kHeader2Style.copyWith(
+                            style: kHeader3Style.copyWith(
                                 color: Theme.of(context).colorScheme.textTitle),
                           ),
                         ),

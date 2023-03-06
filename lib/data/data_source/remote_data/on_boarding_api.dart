@@ -1,28 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/my_information.dart';
 
 class OnBoardingApi {
-  final RefreshInterceptor interceptor;
+  final Dio dio;
   String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
   OnBoardingApi({
-    required this.interceptor,
+    required this.dio,
   });
 
   Future<Result<MyInformation>> getMyInformation() async {
     String myInformationUrl = '$baseUrl/v1/me';
-
-    //var dio = await interceptor.refreshInterceptor(isMoveToLoginPage: false);
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
-
     try {
       Response response;
       response = await dio.get(myInformationUrl);
@@ -54,14 +44,6 @@ class OnBoardingApi {
     required age,
   }) async {
     String myInformationUrl = '$baseUrl/v1/members';
-
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
-
     try {
       Response response;
       response = await dio.put(

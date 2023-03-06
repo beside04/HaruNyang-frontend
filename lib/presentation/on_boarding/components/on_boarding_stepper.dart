@@ -18,7 +18,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: pointNumber >= 1 ? kOrange200Color : kGrayColor200,
+              color: pointNumber >= 1 ? kOrange300Color : kGrayColor200,
             ),
           ),
         ),
@@ -26,7 +26,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: pointNumber >= 2 ? kOrange200Color : kGrayColor200,
+              color: pointNumber >= 2 ? kOrange300Color : kGrayColor200,
             ),
           ),
         ),
@@ -34,7 +34,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: pointNumber >= 3 ? kOrange200Color : kGrayColor200,
+              color: pointNumber >= 3 ? kOrange300Color : kGrayColor200,
             ),
           ),
         ),
@@ -42,7 +42,7 @@ class OnBoardingStepper extends StatelessWidget {
           child: Container(
             height: 4.h,
             decoration: BoxDecoration(
-              color: pointNumber >= 4 ? kOrange200Color : kGrayColor200,
+              color: pointNumber >= 4 ? kOrange300Color : kGrayColor200,
             ),
           ),
         ),

@@ -42,7 +42,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       children: [
                         Text(
                           "기분",
-                          style: kHeader3Style.copyWith(
+                          style: kHeader4Style.copyWith(
                               color: Theme.of(context).colorScheme.textTitle),
                         ),
                       ],
@@ -72,7 +72,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                   ),
                   Obx(
                     () => Padding(
-                      padding: EdgeInsets.only(left: 6.w, top: 180.h),
+                      padding: EdgeInsets.only(left: 6.w, top: 190.h),
                       child: controller.selectedEmotion.value.emoticon.isEmpty
                           ? Container()
                           : buildSlider(context),
@@ -90,9 +90,9 @@ class EmotionModal extends GetView<DiaryViewModel> {
                                   emotion: controller.selectedEmotion.value,
                                   weather:
                                       controller.selectedWeather.value.image,
-                                  emoticonIndex:
-                                      (controller.emotionNumberValue.value * 10)
-                                          .toInt(),
+                                  emoticonIndex: controller
+                                      .emotionNumberValue.value
+                                      .toInt(),
                                 ),
                               );
                             },
@@ -134,8 +134,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
               () => Slider(
                 value: controller.emotionNumberValue.value,
                 min: 0,
-                max: 10,
-                divisions: 10,
+                max: 3,
+                divisions: 3,
                 onChanged: (value) {
                   controller.emotionNumberValue.value = value;
                   controller.getEmotionValue();

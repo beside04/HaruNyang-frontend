@@ -1,25 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 
 class DiaryApi {
-  final RefreshInterceptor interceptor;
+  final Dio dio;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
   DiaryApi({
-    required this.interceptor,
+    required this.dio,
   });
 
   Future<Result<String>> saveDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary';
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
     try {
       Response response;
       response = await dio.post(
@@ -35,6 +28,7 @@ class DiaryApi {
               .map((e) => e.id)
               .toList(),
           "written_at": diary.createTime,
+          "writing_topic_id": diary.writingTopic.id,
         },
       );
 
@@ -59,12 +53,6 @@ class DiaryApi {
 
   Future<Result<bool>> updateDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v1/diary/${diary.id}';
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
     try {
       Response response;
       response = await dio.put(diaryUrl, data: {
@@ -102,12 +90,6 @@ class DiaryApi {
 
   Future<Result<bool>> deleteDiary(String diaryId) async {
     String diaryUrl = '$_baseUrl/v1/diary/$diaryId';
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
     try {
       Response response;
       response = await dio.delete(

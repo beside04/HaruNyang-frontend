@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +18,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'presentation/home/home_screen.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -31,6 +34,8 @@ void main() async {
   globalControllerBinding();
   await Get.find<MainViewModel>().getIsDarkMode();
   await Get.find<MainViewModel>().getIsPushMessage();
+  await Get.find<MainViewModel>().getIsMarketingConsentAgree();
+  await Get.find<MainViewModel>().getPushMessageTime();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {
@@ -47,10 +52,9 @@ void globalControllerBinding() {
   getTokenControllerBinding();
 }
 
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
 class MyApp extends GetView<MainViewModel> {
   const MyApp({super.key});
+  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +75,10 @@ class MyApp extends GetView<MainViewModel> {
                   controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
             ),
             child: GetMaterialApp(
+              navigatorObservers: [
+                FirebaseAnalyticsObserver(analytics: analytics),
+              ],
+              navigatorKey: navigatorKey,
               title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,
               initialRoute: '/',

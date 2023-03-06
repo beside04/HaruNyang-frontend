@@ -8,14 +8,6 @@ import 'package:get/get.dart';
 
 class DiaryViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
-  List<String> weatherInfo = [
-    'sunny',
-    'rainy',
-    'cloudy',
-    'snow',
-    'windy',
-    'thunder'
-  ];
   final GetEmoticonUseCase getEmoticonUseCase;
   final GetWeatherUseCase getWeatherUseCase;
 
@@ -29,7 +21,7 @@ class DiaryViewModel extends GetxController
 
   final nowDate = DateTime.now().obs;
   final isEmotionModal = true.obs;
-  final emotionNumberValue = 6.0.obs;
+  final emotionNumberValue = 2.0.obs;
   final emotionTextValue = '맞아!'.obs;
 
   final RxList<EmoticonData> emoticonDataList = <EmoticonData>[].obs;
@@ -50,11 +42,11 @@ class DiaryViewModel extends GetxController
   }
 
   getEmotionValue() {
-    if (emotionNumberValue.value < 2.0) {
+    if (emotionNumberValue.value < 1.0) {
       emotionTextValue.value = '조금?';
-    } else if (emotionNumberValue.value < 5.0) {
+    } else if (emotionNumberValue.value < 2.0) {
       emotionTextValue.value = '그럭저럭';
-    } else if (emotionNumberValue.value < 7.0) {
+    } else if (emotionNumberValue.value < 3.0) {
       emotionTextValue.value = '맞아!';
     } else {
       emotionTextValue.value = '진짜 엄청 대박!!';
@@ -89,23 +81,8 @@ class DiaryViewModel extends GetxController
 
     await result.when(
       success: (data) async {
-        List<WeatherData> weathers = [];
-
-        for (int i = 0; i < weatherInfo.length; i++) {
-          for (int j = 0; j < data.length; j++) {
-            if (weatherInfo[i] == data[j].value) {
-              weathers.add(
-                data[j].copyWith(
-                  value: getWeatherNameKorean(data[j].value),
-                ),
-              );
-              break;
-            }
-          }
-        }
-
-        weatherDataList.value = weathers;
-        for (final weather in weathers) {
+        weatherDataList.value = data;
+        for (final weather in data) {
           await precachePicture(
               NetworkPicture(
                 SvgPicture.svgByteDecoderBuilder,
@@ -122,24 +99,5 @@ class DiaryViewModel extends GetxController
 
   void setSelectedEmoticon(EmoticonData emoticon) {
     selectedEmotion.value = emoticon;
-  }
-
-  String getWeatherNameKorean(String value) {
-    switch (value) {
-      case 'sunny':
-        return '맑음';
-      case 'rainy':
-        return '비';
-      case 'cloudy':
-        return '흐림';
-      case 'snow':
-        return '눈';
-      case 'windy':
-        return '바람';
-      case 'thunder':
-        return '천둥';
-      default:
-        return '';
-    }
   }
 }

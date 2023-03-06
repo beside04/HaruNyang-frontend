@@ -1,25 +1,17 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
 
 class WithdrawApi {
-  final RefreshInterceptor interceptor;
+  final Dio dio;
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
 
   WithdrawApi({
-    required this.interceptor,
+    required this.dio,
   });
 
   Future<Result<bool>> withdrawUser() async {
     String withdrawUrl = '$_baseUrl/v1/withdraw';
-    //var dio = await interceptor.refreshInterceptor();
-    final dio = Dio();
-    dio.interceptors.add(interceptor);
-    dio.options.headers.addAll({
-      'accessToken': 'true',
-    });
-
     try {
       Response response;
       response = await dio.delete(

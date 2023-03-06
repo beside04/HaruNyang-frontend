@@ -90,6 +90,7 @@ class OnBoardingController extends GetxController {
               nickname: nickname,
             ));
       } else {
+        // ignore: use_build_context_synchronously
         toast(
           context: context,
           text: '변경을 완료했어요.',
@@ -127,10 +128,10 @@ class OnBoardingController extends GetxController {
   Future<bool> reissueToken(String refreshToken) async {
     bool result = false;
     final newToken = await reissueTokenUseCase(refreshToken);
-    newToken.when(
-      success: (data) {
-        tokenUseCase.setAccessToken(data.accessToken);
-        tokenUseCase.setRefreshToken(data.refreshToken);
+    await newToken.when(
+      success: (data) async {
+        await tokenUseCase.setAccessToken(data.accessToken);
+        await tokenUseCase.setRefreshToken(data.refreshToken);
         result = true;
       },
       error: (message) {},

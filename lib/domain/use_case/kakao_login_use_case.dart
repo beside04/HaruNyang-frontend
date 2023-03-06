@@ -11,12 +11,12 @@ class KakaoLoginUseCase {
   Future<OAuthToken?> login() async {
     final OAuthToken? result = await repository.login();
     if (result != null) {
-      print('check access token : ${result.accessToken}');
-      print('check refresh token : ${result.refreshToken}');
-      User user = await UserApi.instance.me();
-      print('사용자 정보'
-          '\n회원번호: ${user.id}'
-          '\n이메일: ${user.kakaoAccount?.email}');
+      // print('check access token : ${result.accessToken}');
+      // print('check refresh token : ${result.refreshToken}');
+      // User user = await UserApi.instance.me();
+      // print('사용자 정보'
+      //     '\n회원번호: ${user.id}'
+      //     '\n이메일: ${user.kakaoAccount?.email}');
     }
 
     return result;

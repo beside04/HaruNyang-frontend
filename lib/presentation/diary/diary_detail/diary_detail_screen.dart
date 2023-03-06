@@ -9,6 +9,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
@@ -79,6 +80,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                       emoticonIndex:
                           diaryController.state.value.diary!.emoticonIndex,
                       diaryData: diaryController.state.value.diary!,
+                      isEditScreen: true,
                     ),
                   );
                 }
@@ -86,7 +88,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                   showDialog(
                     barrierDismissible: true,
                     context: context,
-                    builder: (ctx) {
+                    builder: (context) {
                       return DialogComponent(
                         title: "삭제 하실래요?",
                         content: Text(
@@ -116,9 +118,10 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                               Get.back();
                               await diaryController.deleteDiary(
                                   diaryController.state.value.diary!.id ?? '');
-                              showDialog(
+
+                              await showDialog(
                                 barrierDismissible: false,
-                                context: context,
+                                context: navigatorKey.currentContext!,
                                 builder: (ctx) {
                                   return WillPopScope(
                                     onWillPop: () async => false,
@@ -236,8 +239,6 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                         widget.diaryData.diaryContent,
                         style: kBody1Style.copyWith(
                             color: Theme.of(context).colorScheme.textBody),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
                       ),
                       SizedBox(
                         height: 12.h,
@@ -322,6 +323,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                         padding: kPrimaryPadding,
                                         child: Obx(
                                           () => Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
                                               Row(
                                                 mainAxisAlignment:

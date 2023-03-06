@@ -106,66 +106,72 @@ class MarketingConsentScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Theme.of(context).colorScheme.border,
-                        width: 1.0,
-                      ),
-                      top: BorderSide(
-                        color: Theme.of(context).colorScheme.border,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
-                  child: Padding(
-                    padding: kPrimaryPadding,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "하루냥의 마케팅 소식을 받아볼게요.",
-                          style: kSubtitle1Style.copyWith(
-                              color: Theme.of(context).colorScheme.textTitle),
-                        ),
-                        SizedBox(
-                          height: 32.0.h,
-                          child: Obx(
-                            () => FlutterSwitch(
-                              padding: 2,
-                              width: 52.0.w,
-                              activeColor: Theme.of(context).primaryColor,
-                              inactiveColor: kGrayColor250,
-                              toggleSize: 28.0.w,
-                              value: mainViewController
-                                  .pushMessagePermission.value,
-                              borderRadius: 50.0.w,
-                              onToggle: (val) async {
-                                Future<PermissionStatus> permissionStatus =
-                                    NotificationPermissions
-                                        .getNotificationPermissionStatus();
-                                if (await permissionStatus ==
-                                        PermissionStatus.denied ||
-                                    await permissionStatus ==
-                                        PermissionStatus.unknown) {
-                                  permissionStatus = NotificationPermissions
-                                      .requestNotificationPermissions();
-                                } else {
-                                  mainViewController.togglePushMessageValue();
-                                }
-                              },
+              isProfileScreen
+                  ? Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border(
+                            bottom: BorderSide(
+                              color: Theme.of(context).colorScheme.border,
+                              width: 1.0,
+                            ),
+                            top: BorderSide(
+                              color: Theme.of(context).colorScheme.border,
+                              width: 1.0,
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+                        child: Padding(
+                          padding: kPrimaryPadding,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "하루냥의 마케팅 소식을 받아볼게요.",
+                                style: kSubtitle1Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textTitle),
+                              ),
+                              SizedBox(
+                                height: 32.0.h,
+                                child: Obx(
+                                  () => FlutterSwitch(
+                                    padding: 2,
+                                    width: 52.0.w,
+                                    activeColor: Theme.of(context).primaryColor,
+                                    inactiveColor: kGrayColor250,
+                                    toggleSize: 28.0.w,
+                                    value: mainViewController
+                                        .marketingConsentAgree.value,
+                                    borderRadius: 50.0.w,
+                                    onToggle: (val) async {
+                                      Future<PermissionStatus>
+                                          permissionStatus =
+                                          NotificationPermissions
+                                              .getNotificationPermissionStatus();
+                                      if (await permissionStatus ==
+                                              PermissionStatus.denied ||
+                                          await permissionStatus ==
+                                              PermissionStatus.unknown) {
+                                        permissionStatus = NotificationPermissions
+                                            .requestNotificationPermissions();
+                                      } else {
+                                        mainViewController
+                                            .toggleMarketingConsentCheck();
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
             ],
           ),
         ),

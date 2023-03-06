@@ -28,106 +28,115 @@ class ProfileScreen extends StatelessWidget {
     final onBoardingController = Get.find<OnBoardingController>();
 
     return Scaffold(
+      backgroundColor:
+          mainViewController.isDarkMode.value ? kGrayColor900 : kBeigeColor200,
       body: SafeArea(
         child: ListView(
           children: [
-            Padding(
-              padding: kPrimarySidePadding,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  Container(
-                    width: 60.w,
-                    height: 60.h,
-                    decoration: BoxDecoration(
-                      color: kOrange300Color,
-                      shape: BoxShape.circle,
-                      border: Border.all(width: 0.5, color: Colors.transparent),
+            Container(
+              color: mainViewController.isDarkMode.value
+                  ? kGrayColor950
+                  : kBeigeColor100,
+              child: Padding(
+                padding: kPrimarySidePadding,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: 20.h,
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.all(6.w),
-                      child: Center(
-                        child: SvgPicture.asset(
-                          "lib/config/assets/images/character/character1.svg",
-                          width: 48.w,
-                          height: 48.h,
+                    Container(
+                      width: 60.w,
+                      height: 60.h,
+                      decoration: BoxDecoration(
+                        color: kOrange300Color,
+                        shape: BoxShape.circle,
+                        border:
+                            Border.all(width: 0.5, color: Colors.transparent),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(6.w),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            "lib/config/assets/images/character/character1.svg",
+                            width: 48.w,
+                            height: 48.h,
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 12.h,
-                  ),
-                  Obx(
-                    () => Text(
-                      '${onBoardingController.state.value.nickname}님 반가워요!',
-                      style: kHeader2Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle),
+                    SizedBox(
+                      height: 12.h,
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Obx(
-                    () => Row(
-                      children: [
-                        onBoardingController.state.value.loginType == "KAKAO"
-                            ? Container(
-                                width: 20.w,
-                                height: 20.h,
-                                decoration: const BoxDecoration(
-                                  color: Color(0xffffe818),
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                      child: SvgPicture.asset(
-                                        'lib/config/assets/images/login/kakao_logo.svg',
-                                        width: 10.w,
-                                        height: 10.h,
+                    Obx(
+                      () => Text(
+                        '${onBoardingController.state.value.nickname}님 반가워요!',
+                        style: kHeader2Style.copyWith(
+                            color: Theme.of(context).colorScheme.textTitle),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    Obx(
+                      () => Row(
+                        children: [
+                          onBoardingController.state.value.loginType == "KAKAO"
+                              ? Container(
+                                  width: 20.w,
+                                  height: 20.h,
+                                  decoration: const BoxDecoration(
+                                    color: Color(0xffffe818),
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: SvgPicture.asset(
+                                          'lib/config/assets/images/login/kakao_logo.svg',
+                                          width: 10.w,
+                                          height: 10.h,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                              )
-                            : Container(
-                                width: 20.w,
-                                height: 20.h,
-                                decoration: const BoxDecoration(
-                                  color: kBlackColor,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Stack(
-                                  children: [
-                                    Center(
-                                      child: SvgPicture.asset(
-                                        'lib/config/assets/images/login/apple_logo.svg',
-                                        width: 10.w,
-                                        height: 10.h,
+                                    ],
+                                  ),
+                                )
+                              : Container(
+                                  width: 20.w,
+                                  height: 20.h,
+                                  decoration: const BoxDecoration(
+                                    color: kBlackColor,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Center(
+                                        child: SvgPicture.asset(
+                                          'lib/config/assets/images/login/apple_logo.svg',
+                                          width: 10.w,
+                                          height: 10.h,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                        Obx(
-                          () => Text(
-                            " ${onBoardingController.state.value.email}",
-                            style: kBody2Style.copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.textSubtitle),
+                          Obx(
+                            () => Text(
+                              " ${onBoardingController.state.value.email}",
+                              style: kBody2Style.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .textSubtitle),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                ],
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -143,6 +152,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '내 정보 관리',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(
                   () => ProfileSettingScreen(
@@ -163,6 +173,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '북마크 목록',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(() => const BookMarkScreen());
               },
@@ -177,6 +188,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '푸시 메세지 설정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(() => const PushMessageScreen());
               },
@@ -218,6 +230,7 @@ class ProfileScreen extends StatelessWidget {
                   ),
                 ),
                 title: '라이트 다크모드 전환',
+                titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: null,
               ),
             ),
@@ -229,6 +242,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '공지사항',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(() => const NoticeScreen());
               },
@@ -243,6 +257,7 @@ class ProfileScreen extends StatelessWidget {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '이용약관',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 Get.to(
                   () => const TermsScreen(),

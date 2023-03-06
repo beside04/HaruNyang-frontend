@@ -1,6 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
+// ignore: constant_identifier_names
+const int APP_BUILD_NUMBER = 1;
+
 enum Job {
   student,
   officeWorkers,
@@ -66,11 +69,11 @@ List<JobData> jobList = [
 ];
 
 Widget getEmotionTextWidget(int value, TextStyle style) {
-  if (value < 20.0) {
+  if (value < 1.0) {
     return Text("조금", style: style);
-  } else if (value < 50.0) {
+  } else if (value < 2.0) {
     return Text("그럭저럭", style: style);
-  } else if (value < 70.0) {
+  } else if (value < 3.0) {
     return Text("맞아!", style: style);
   } else {
     return Text("진짜 엄청 대박!!", style: style);

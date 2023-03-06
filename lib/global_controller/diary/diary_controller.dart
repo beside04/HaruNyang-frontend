@@ -187,7 +187,9 @@ class DiaryController extends GetxController {
             isEnd = true;
           }
         },
-        error: (message) {},
+        error: (message) {
+          isEnd = true;
+        },
       );
       if (isEnd) {
         break;
@@ -277,7 +279,7 @@ class DiaryController extends GetxController {
         _makeDiaryCardDataList(result);
       },
       error: (message) {
-        Get.snackbar('알림', '데이터를 불러오는데 실패했습니다.');
+        Get.snackbar('알림', '다이어리 목록을 불러오는데 실패했습니다.');
       },
     );
 

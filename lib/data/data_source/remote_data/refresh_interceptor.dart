@@ -38,6 +38,7 @@ class RefreshInterceptor extends Interceptor {
 
     if (refreshToken == null) {
       //로그인 화면으로 다시 이동
+      Get.snackbar('알림', '세션이 만료되었습니다.');
       await tokenUseCase.deleteAllToken();
       Get.offAll(
         () => const LoginScreen(),
@@ -82,6 +83,7 @@ class RefreshInterceptor extends Interceptor {
       }
     } on DioError catch (e) {
       // 로그인 화면으로 다시 이동
+      Get.snackbar('알림', '세션이 만료되었습니다.');
       await tokenUseCase.deleteAllToken();
       Get.offAll(
         () => const LoginScreen(),

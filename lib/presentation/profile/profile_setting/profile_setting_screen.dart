@@ -11,6 +11,7 @@ import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/age_text_field.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -39,7 +40,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    final mainViewController = Get.find<MainViewModel>();
+
     return Scaffold(
+      backgroundColor:
+          mainViewController.isDarkMode.value ? kGrayColor900 : kBeigeColor200,
       appBar: AppBar(
         title: Text(
           '내 정보 관리',
@@ -64,6 +69,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '닉네임 수정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 showModalBottomSheet(
                   backgroundColor:
@@ -166,6 +172,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '나이 수정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 showModalBottomSheet(
                   backgroundColor:
@@ -266,7 +273,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                         );
 
                                         Get.back();
-
+                                        // ignore: use_build_context_synchronously
                                         toast(
                                           context: context,
                                           text: '변경을 완료했어요.',
@@ -293,6 +300,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '직업 수정',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () {
                 controller.jobStatus.value = EnumToString.fromString(
                     Job.values, onBoardingController.state.value.job);
@@ -363,7 +371,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     );
 
                                     Get.back();
-
+                                    // ignore: use_build_context_synchronously
                                     toast(
                                       context: context,
                                       text: '변경을 완료했어요.',
@@ -386,6 +394,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 "lib/config/assets/images/profile/navigate_next.svg",
               ),
               title: '로그아웃',
+              titleColor: Theme.of(context).colorScheme.textTitle,
               onPressed: () async {
                 showDialog(
                   barrierDismissible: true,

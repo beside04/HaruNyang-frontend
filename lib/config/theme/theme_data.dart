@@ -7,12 +7,16 @@ ThemeData lightMode(context) => ThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),
         ),
-        side: MaterialStateBorderSide.resolveWith(
-          (states) => const BorderSide(width: 1.0, color: Color(0xffdfdfdf)),
-        ),
+        side: MaterialStateBorderSide.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return const BorderSide(width: 1.0, color: kOrange300Color);
+          } else {
+            return const BorderSide(width: 1.0, color: Color(0xffdfdfdf));
+          }
+        }),
       ),
       scaffoldBackgroundColor: kBeigeColor100,
-      bottomAppBarColor: kBeigeColor100,
+      bottomAppBarTheme: const BottomAppBarTheme(color: kBeigeColor100),
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor400,
       dividerTheme: const DividerThemeData(
@@ -63,12 +67,16 @@ ThemeData darkMode(context) => ThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),
         ),
-        side: MaterialStateBorderSide.resolveWith(
-          (states) => const BorderSide(width: 1.0, color: Color(0xffdfdfdf)),
-        ),
+        side: MaterialStateBorderSide.resolveWith((states) {
+          if (states.contains(MaterialState.selected)) {
+            return const BorderSide(width: 1.0, color: kOrange300Color);
+          } else {
+            return const BorderSide(width: 1.0, color: Color(0xffdfdfdf));
+          }
+        }),
       ),
       scaffoldBackgroundColor: kGrayColor950,
-      bottomAppBarColor: kGrayColor950,
+      bottomAppBarTheme: const BottomAppBarTheme(color: kGrayColor950),
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor600,
       dividerTheme: const DividerThemeData(
@@ -161,11 +169,4 @@ extension CustomColorScheme on ColorScheme {
       brightness == Brightness.light ? kGrayColor50 : kGrayColor850;
   Color get outlineActive =>
       brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
-}
-
-/// Global variables
-/// * [GlobalKey<NavigatorState>]
-class CandyGlobalVariable {
-  static final GlobalKey<NavigatorState> naviagatorState =
-      GlobalKey<NavigatorState>();
 }

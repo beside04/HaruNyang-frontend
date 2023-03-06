@@ -39,7 +39,7 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
           width: 8.w,
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 4.h, horizontal: 12.w),
+          padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 12.w),
           decoration: BoxDecoration(
             color: color,
             borderRadius: BorderRadius.circular(100.0.w),

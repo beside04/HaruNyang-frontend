@@ -8,7 +8,7 @@ import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/repository/social_login_repository/apple_login_repository.dart';
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
-import 'package:frontend/domain/use_case/push_message_permission/push_message_permission_use_case.dart';
+import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -19,7 +19,7 @@ class AppleLoginUseCase {
   final TokenRepository tokenRepository;
   final DarkModeUseCase darkModeUseCase;
   final OnBoardingRepository onBoardingRepository;
-  final PushMessagePermissionUseCase pushMessagePermissionUseCase;
+  final PushMessageUseCase pushMessagePermissionUseCase;
 
   AppleLoginUseCase({
     required this.socialLoginRepository,
@@ -111,6 +111,8 @@ class AppleLoginUseCase {
     onBoardingRepository.clearMyInformation();
     await darkModeUseCase.deleteDarkModeData();
     await pushMessagePermissionUseCase.deletePushMessagePermissionData();
+    await pushMessagePermissionUseCase.deleteMarketingConsentAgree();
+    await pushMessagePermissionUseCase.deletePushMessageTime();
 
     return await socialLoginRepository.withdrawal();
   }
