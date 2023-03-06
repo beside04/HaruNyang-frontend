@@ -239,8 +239,6 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                         widget.diaryData.diaryContent,
                         style: kBody1Style.copyWith(
                             color: Theme.of(context).colorScheme.textBody),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 3,
                       ),
                       SizedBox(
                         height: 12.h,

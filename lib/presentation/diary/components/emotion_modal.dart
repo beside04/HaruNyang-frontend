@@ -72,7 +72,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                   ),
                   Obx(
                     () => Padding(
-                      padding: EdgeInsets.only(left: 6.w, top: 180.h),
+                      padding: EdgeInsets.only(left: 6.w, top: 190.h),
                       child: controller.selectedEmotion.value.emoticon.isEmpty
                           ? Container()
                           : buildSlider(context),

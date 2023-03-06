@@ -21,7 +21,7 @@ class DiaryViewModel extends GetxController
 
   final nowDate = DateTime.now().obs;
   final isEmotionModal = true.obs;
-  final emotionNumberValue = 0.0.obs;
+  final emotionNumberValue = 2.0.obs;
   final emotionTextValue = '맞아!'.obs;
 
   final RxList<EmoticonData> emoticonDataList = <EmoticonData>[].obs;
