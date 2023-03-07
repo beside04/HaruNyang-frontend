@@ -17,6 +17,7 @@ import 'package:frontend/presentation/components/weather_emotion_badge_wise_sayi
 import 'package:frontend/presentation/diary/components/diary_loading_widget.dart';
 import 'package:frontend/presentation/diary/components/diary_popup_menu_item.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
+import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -46,6 +47,9 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
+      // 일기 작성 페이지 컨트롤러 초기화
+      Get.delete<WriteDiaryViewModel>();
+
       if (widget.isStamp) {
         diaryController.setCalendarData(widget.diaryData);
       } else {

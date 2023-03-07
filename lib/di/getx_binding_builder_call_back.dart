@@ -27,6 +27,8 @@ import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart
 
 import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
@@ -239,9 +241,9 @@ void getDiaryBinding() {
   );
 }
 
-void getWriteDiaryBinding() {
+void getWriteDiaryBinding(EmoticonData emotion, DiaryData? diaryData) {
   Get.put(
-    WriteDiaryViewModel(),
+    WriteDiaryViewModel(emotion: emotion, diaryData: diaryData),
   );
 }
 

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/topic/topic_data.dart';
 import 'package:frontend/presentation/components/toast.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,13 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
 
 class WriteDiaryViewModel extends GetxController {
+  final EmoticonData emotion;
+  final DiaryData? diaryData;
+  WriteDiaryViewModel({
+    required this.emotion,
+    this.diaryData,
+  });
+
   final TextEditingController diaryEditingController = TextEditingController();
   final RxString diaryValue = ''.obs;
   final pickedFile = Rx<XFile?>(null);
@@ -90,6 +98,14 @@ class WriteDiaryViewModel extends GetxController {
 
     diaryEditingController.addListener(() {
       diaryValue.value = diaryEditingController.text;
+    });
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      getDefaultTopic(emotion.id ?? 0);
+
+      if (diaryData != null) {
+        setDiaryData(diaryData!);
+      }
     });
   }
 

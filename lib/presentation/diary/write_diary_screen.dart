@@ -42,12 +42,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
 
   @override
   Widget build(BuildContext context) {
-    getWriteDiaryBinding();
-    controller.getDefaultTopic(emotion.id ?? 0);
-
-    if (diaryData != null) {
-      controller.setDiaryData(diaryData!);
-    }
+    getWriteDiaryBinding(emotion, diaryData);
 
     return WillPopScope(
       onWillPop: () async {
