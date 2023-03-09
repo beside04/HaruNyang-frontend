@@ -358,7 +358,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                               ),
                               Expanded(
                                 child: Container(
-                                  height: 70.h,
+                                  height: 80.h,
                                   margin: EdgeInsets.only(
                                     right: 20.w,
                                   ),

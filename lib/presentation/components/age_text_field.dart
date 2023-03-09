@@ -27,7 +27,9 @@ class AgeTextField extends StatelessWidget {
       name: 'age',
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        helperText: "",
+        helperText: "필수 정보가 아니라 다음에 작성해도 좋아요!",
+        helperStyle: kBody2Style.copyWith(
+            color: Theme.of(context).colorScheme.textTitle),
         counterText: "",
         hintText: 'YYYY-MM-DD 입력',
         hintStyle: kSubtitle1Style.copyWith(
@@ -41,11 +43,6 @@ class AgeTextField extends StatelessWidget {
         ),
         suffixIcon: suffixIcon,
       ),
-      validator: FormBuilderValidators.compose([
-        FormBuilderValidators.required(
-          errorText: '생년월일을 입력해주세요.',
-        ),
-      ]),
     );
   }
 }

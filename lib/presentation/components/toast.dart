@@ -18,13 +18,13 @@ void toast({
 
   Widget toast = Container(
     width: 335.w,
-    height: 64.h,
     padding: kPrimaryPadding,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(8.0),
       color: kBlackColor,
     ),
     child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         isCheckIcon
             ? SvgPicture.asset(

@@ -220,7 +220,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     controller.getBirthDateFormat(date);
                                   },
                                   currentTime: DateTime.parse(
-                                    onBoardingController.state.value.age,
+                                    onBoardingController.state.value.age == ''
+                                        ? "2000-01-01"
+                                        : onBoardingController.state.value.age!,
                                   ),
                                   locale: LocaleType.ko,
                                   theme: DatePickerTheme(
