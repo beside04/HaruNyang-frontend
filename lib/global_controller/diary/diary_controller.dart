@@ -44,12 +44,6 @@ class DiaryController extends GetxController {
   Rx<DiaryState> get state => _state;
   int currentPageCount = 250;
 
-  @override
-  void onInit() {
-    initPage();
-    super.onInit();
-  }
-
   Future<void> saveDiary(
       DiaryData diary, CroppedFile? imageFile, DateTime writeDate) async {
     //데이터 초기화
