@@ -124,26 +124,22 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                   ],
                 ),
               ),
-              Obx(
-                () => BottomButton(
-                  title: '다음',
-                  onTap: controller.ageValue.value.isEmpty
-                      ? null
-                      : () {
-                          var key = _fbKey.currentState!;
-                          if (key.saveAndValidate()) {
-                            FocusScope.of(context).unfocus();
-                            Get.to(
-                              () => OnBoardingJobScreen(
-                                nickname: nickname,
-                                birth: controller.ageValue.value,
-                              ),
-                              transition: Transition.cupertino,
-                            );
-                          }
-                        },
-                ),
-              )
+              BottomButton(
+                title: '다음',
+                onTap: () {
+                  var key = _fbKey.currentState!;
+                  if (key.saveAndValidate()) {
+                    FocusScope.of(context).unfocus();
+                    Get.to(
+                      () => OnBoardingJobScreen(
+                        nickname: nickname,
+                        birth: controller.ageValue.value,
+                      ),
+                      transition: Transition.cupertino,
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

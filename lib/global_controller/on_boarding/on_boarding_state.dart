@@ -8,7 +8,7 @@ part 'on_boarding_state.g.dart';
 class OnBoardingState with _$OnBoardingState {
   factory OnBoardingState({
     @Default('') String job,
-    @Default('') String age,
+    @Default('') String? age,
     @Default('') String socialId,
     @Default('') String nickname,
     @Default('') String loginType,

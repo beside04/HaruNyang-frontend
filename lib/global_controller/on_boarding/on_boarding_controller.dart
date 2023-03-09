@@ -31,13 +31,11 @@ class OnBoardingController extends GetxController {
 
     myInfo.when(
       success: (data) {
-        if (data.job != null && data.nickname != null && data.age != null) {
-          if (data.job!.isNotEmpty &&
-              data.nickname!.isNotEmpty &&
-              data.age!.isNotEmpty) {
+        if (data.job != null && data.nickname != null) {
+          if (data.job!.isNotEmpty && data.nickname!.isNotEmpty) {
             _state.value = state.value.copyWith(
               job: data.job!,
-              age: data.age!,
+              age: data.age,
               nickname: data.nickname!,
               loginType: data.loginType,
               email: data.email,

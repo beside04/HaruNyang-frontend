@@ -16,7 +16,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
   final String nickname;
-  final String birth;
+  final String? birth;
 
   OnBoardingJobScreen({
     Key? key,
