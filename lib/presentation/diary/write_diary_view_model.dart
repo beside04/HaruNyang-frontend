@@ -38,6 +38,10 @@ class WriteDiaryViewModel extends GetxController {
 
   List<TopicData> metaTopic = [
     TopicData(
+      id: 9,
+      value: '오늘 가장 기억에 남는 일은 무엇이었나요?',
+    ),
+    TopicData(
       id: 10,
       value: '요즘 힘든 점이 있어요?',
     ),
@@ -239,6 +243,13 @@ class WriteDiaryViewModel extends GetxController {
         topic.value = TopicData(
           id: 8,
           value: '오늘 가장 힘들었던 일은 무엇이었나요?',
+        );
+        break;
+      case 9:
+        //설렘
+        topic.value = TopicData(
+          id: 24,
+          value: '오늘 가장 설레었던 일은 무엇이었나요?',
         );
         break;
       default:
