@@ -50,3 +50,9 @@ app.*.map.json
 
 *.g.dart
 *.freezed.dart
+
+# fastlane
+ios/*.mobileprovision
+ios/*.cer
+ios/*.dSYM.zip
+ios/fastlane/README.md

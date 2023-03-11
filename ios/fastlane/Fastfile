@@ -1,0 +1,84 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  def updateVersion(options)
+    if options[:version]
+      version = options[:version]
+    else
+      version = prompt(text: "Enter the version type or specific version\n(major, minor, patch or 1.0.0): ")
+    end
+
+    re = /\d+.\d+.\d+/
+    versionNum = version[re, 0]
+
+    if versionNum
+      increment_version_number(
+        version_number: versionNum
+      )
+    elsif version == 'major' || version == 'minor' || version == 'patch'
+      increment_version_number(
+        bump_type: version
+      )
+    else
+      UI.user_error!('[ERROR] Wrong version!!!!!!')
+    end
+  end
+
+  lane :version do |options|
+    updateVersion(options)
+    increment_build_number(xcodeproj: 'Runner.xcodeproj')
+    end
+
+  lane :beta do |options|
+
+  flutter_build_ios
+
+   build_app(
+    workspace: 'Runner.xcworkspace',
+    scheme: 'Runner',
+  )
+
+  upload_to_testflight()
+
+  send_slack_message(msg: "🚀 Successfully distributed a new build ✨")
+  end
+
+  # Send slack message
+  lane :send_slack_message do |options|
+    version = get_version_number(xcodeproj: "Runner.xcodeproj")
+    build_number = get_build_number(xcodeproj: "Runner.xcodeproj")
+    slack(
+      message: options[:msg],
+      payload: {
+        "Version" => version,
+        "Build" => build_number
+      },
+    )
+  end
+
+    # Flutter build iOS
+  lane :flutter_build_ios do
+    sh("cd", "..")
+
+    puts "Flutter clean"
+    sh("flutter", "clean")
+
+    puts "Flutter build iOS"
+    sh("flutter", "build", "ios", "--no-codesign", "-t", "lib/main.dart")
+  end
+end
