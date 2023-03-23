@@ -19,7 +19,6 @@ class DiaryViewModel extends GetxController
     getWeatherData();
   }
 
-  final nowDate = DateTime.now().obs;
   final isEmotionModal = true.obs;
   final emotionNumberValue = 2.0.obs;
   final emotionTextValue = '맞아!'.obs;

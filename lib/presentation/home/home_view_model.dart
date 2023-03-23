@@ -34,6 +34,13 @@ class HomeViewModel extends GetxController {
   void onInit() {
     super.onInit();
 
+    // 처음 가입한 유저라면 일기쓰기 화면으로 이동
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.arguments == null
+          ? selectedIndex.value = 0
+          : selectedIndex.value = Get.arguments['index'];
+    });
+
     getLastDate();
 
     initUpdatePopup();

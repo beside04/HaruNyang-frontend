@@ -79,7 +79,7 @@ class NoticeDetailScreen extends StatelessWidget {
                     height: 9.h,
                   ),
                   Text(
-                    content,
+                    content.replaceAll(r'\n', '\n'),
                     style: kBody1Style.copyWith(
                         color: Theme.of(context).colorScheme.textBody),
                   ),

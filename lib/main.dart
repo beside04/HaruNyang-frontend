@@ -59,6 +59,7 @@ class MyApp extends GetView<MainViewModel> {
   @override
   Widget build(BuildContext context) {
     final controller = Get.find<MainViewModel>();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {

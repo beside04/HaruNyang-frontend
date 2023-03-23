@@ -270,8 +270,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           DialogButton(
                             title: "예",
                             onTap: () {
-                              Get.back();
-                              Get.back();
+                              Get.offNamed("/home", arguments: {"index": 0});
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                             backgroundColor: kOrange200Color,
@@ -313,8 +312,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           DialogButton(
                             title: "예",
                             onTap: () {
-                              Get.back();
-                              Get.back();
+                              Get.offNamed("/home", arguments: {"index": 0});
                               FocusManager.instance.primaryFocus?.unfocus();
                             },
                             backgroundColor: kOrange200Color,
