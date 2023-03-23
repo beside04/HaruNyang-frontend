@@ -62,385 +62,401 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        elevation: 0.5,
-        centerTitle: true,
-        actions: [
-          Theme(
-            data: Theme.of(context).copyWith(
-              dividerTheme: DividerThemeData(
-                color: Theme.of(context).colorScheme.border,
+    return WillPopScope(
+      onWillPop: () async {
+        Get.offAll(
+          () => const HomeScreen(),
+          binding: BindingsBuilder(
+            getHomeViewModelBinding,
+          ),
+        );
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0.5,
+          centerTitle: true,
+          actions: [
+            Theme(
+              data: Theme.of(context).copyWith(
+                dividerTheme: DividerThemeData(
+                  color: Theme.of(context).colorScheme.border,
+                ),
               ),
-            ),
-            child: PopupMenuButton(
-              onSelected: (id) {
-                if (id == 'edit') {
-                  Get.to(
-                    () => WriteDiaryScreen(
-                      date: widget.date,
-                      weather: diaryController.state.value.diary!.weather,
-                      emotion: diaryController.state.value.diary!.emotion,
-                      emoticonIndex:
-                          diaryController.state.value.diary!.emoticonIndex,
-                      diaryData: diaryController.state.value.diary!,
-                      isEditScreen: true,
-                    ),
-                  );
-                }
-                if (id == 'delete') {
-                  showDialog(
-                    barrierDismissible: true,
-                    context: context,
-                    builder: (context) {
-                      return DialogComponent(
-                        title: "삭제 하실래요?",
-                        content: Text(
-                          "삭제 후 일기를 복원 할 수 없어요",
-                          style: kHeader6Style.copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.textSubtitle),
-                        ),
-                        actionContent: [
-                          DialogButton(
-                            title: "아니요",
-                            onTap: () {
-                              Get.back();
-                            },
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondaryColor,
-                            textStyle: kHeader4Style.copyWith(
+              child: PopupMenuButton(
+                onSelected: (id) {
+                  if (id == 'edit') {
+                    Get.to(
+                      () => WriteDiaryScreen(
+                        date: widget.date,
+                        weather: diaryController.state.value.diary!.weather,
+                        emotion: diaryController.state.value.diary!.emotion,
+                        emoticonIndex:
+                            diaryController.state.value.diary!.emoticonIndex,
+                        diaryData: diaryController.state.value.diary!,
+                        isEditScreen: true,
+                      ),
+                    );
+                  }
+                  if (id == 'delete') {
+                    showDialog(
+                      barrierDismissible: true,
+                      context: context,
+                      builder: (context) {
+                        return DialogComponent(
+                          title: "삭제 하실래요?",
+                          content: Text(
+                            "삭제 후 일기를 복원 할 수 없어요",
+                            style: kHeader6Style.copyWith(
                                 color:
                                     Theme.of(context).colorScheme.textSubtitle),
                           ),
-                          SizedBox(
-                            width: 12.w,
-                          ),
-                          DialogButton(
-                            title: "예",
-                            onTap: () async {
-                              Get.back();
-                              await diaryController.deleteDiary(
-                                  diaryController.state.value.diary!.id ?? '');
+                          actionContent: [
+                            DialogButton(
+                              title: "아니요",
+                              onTap: () {
+                                Get.back();
+                              },
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.secondaryColor,
+                              textStyle: kHeader4Style.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .textSubtitle),
+                            ),
+                            SizedBox(
+                              width: 12.w,
+                            ),
+                            DialogButton(
+                              title: "예",
+                              onTap: () async {
+                                Get.back();
+                                await diaryController.deleteDiary(
+                                    diaryController.state.value.diary!.id ??
+                                        '');
 
-                              await showDialog(
-                                barrierDismissible: false,
-                                context: navigatorKey.currentContext!,
-                                builder: (ctx) {
-                                  return WillPopScope(
-                                    onWillPop: () async => false,
-                                    child: DialogComponent(
-                                      title: "삭제 완료",
-                                      content: Text(
-                                        "일기를 삭제했어요.",
-                                        style: kHeader6Style.copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .textSubtitle),
-                                      ),
-                                      actionContent: [
-                                        DialogButton(
-                                          title: "확인",
-                                          onTap: () {
-                                            Get.offAll(
-                                              () => const HomeScreen(),
-                                              binding: BindingsBuilder(
-                                                getHomeViewModelBinding,
-                                              ),
-                                            );
-                                          },
-                                          backgroundColor: kOrange200Color,
-                                          textStyle: kHeader4Style.copyWith(
-                                              color: kWhiteColor),
+                                await showDialog(
+                                  barrierDismissible: false,
+                                  context: navigatorKey.currentContext!,
+                                  builder: (ctx) {
+                                    return WillPopScope(
+                                      onWillPop: () async => false,
+                                      child: DialogComponent(
+                                        title: "삭제 완료",
+                                        content: Text(
+                                          "일기를 삭제했어요.",
+                                          style: kHeader6Style.copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .textSubtitle),
                                         ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            backgroundColor: kOrange200Color,
-                            textStyle:
-                                kHeader4Style.copyWith(color: kWhiteColor),
-                          ),
-                        ],
-                      );
-                    },
+                                        actionContent: [
+                                          DialogButton(
+                                            title: "확인",
+                                            onTap: () {
+                                              Get.offAll(
+                                                () => const HomeScreen(),
+                                                binding: BindingsBuilder(
+                                                  getHomeViewModelBinding,
+                                                ),
+                                              );
+                                            },
+                                            backgroundColor: kOrange200Color,
+                                            textStyle: kHeader4Style.copyWith(
+                                                color: kWhiteColor),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                              backgroundColor: kOrange200Color,
+                              textStyle:
+                                  kHeader4Style.copyWith(color: kWhiteColor),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+                offset: Offset(0.0, AppBar().preferredSize.height),
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(16.0),
+                    bottomRight: Radius.circular(16.0),
+                    topLeft: Radius.circular(16.0),
+                    topRight: Radius.circular(16.0),
+                  ),
+                ),
+                itemBuilder: (context) {
+                  final list = <PopupMenuEntry>[];
+                  list.add(
+                    diaryPopUpMenuItem(
+                      'edit',
+                      '일기 수정',
+                      context,
+                    ),
                   );
-                }
-              },
-              offset: Offset(0.0, AppBar().preferredSize.height),
-              shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(16.0),
-                  bottomRight: Radius.circular(16.0),
-                  topLeft: Radius.circular(16.0),
-                  topRight: Radius.circular(16.0),
-                ),
+                  list.add(
+                    const PopupMenuDivider(
+                      height: 10,
+                    ),
+                  );
+                  list.add(
+                    diaryPopUpMenuItem(
+                      'delete',
+                      '일기 삭제',
+                      context,
+                    ),
+                  );
+                  return list;
+                },
               ),
-              itemBuilder: (context) {
-                final list = <PopupMenuEntry>[];
-                list.add(
-                  diaryPopUpMenuItem(
-                    'edit',
-                    '일기 수정',
-                    context,
-                  ),
-                );
-                list.add(
-                  const PopupMenuDivider(
-                    height: 10,
-                  ),
-                );
-                list.add(
-                  diaryPopUpMenuItem(
-                    'delete',
-                    '일기 삭제',
-                    context,
-                  ),
-                );
-                return list;
-              },
             ),
+          ],
+          title: Text(
+            DateFormat('M월 d일').format(widget.date),
+            style: kHeader4Style.copyWith(
+                color: Theme.of(context).colorScheme.textTitle),
           ),
-        ],
-        title: Text(
-          DateFormat('M월 d일').format(widget.date),
-          style: kHeader4Style.copyWith(
-              color: Theme.of(context).colorScheme.textTitle),
+          leading: BackIcon(
+            onPressed: () {
+              Get.offAll(
+                () => const HomeScreen(),
+                binding: BindingsBuilder(
+                  getHomeViewModelBinding,
+                ),
+              );
+            },
+          ),
         ),
-        leading: BackIcon(
-          onPressed: () {
-            Get.back(result: true);
-          },
-        ),
-      ),
-      body: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        child: SafeArea(
-          child: Obx(
-            () => ListView(
-              children: [
-                SizedBox(
-                  height: 6.h,
-                ),
-                Padding(
-                  padding: kPrimaryPadding,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      WeatherEmotionBadgeWiseSaying(
-                        emoticon: widget.diaryData.emotion.emoticon,
-                        emoticonIndex: widget.diaryData.emoticonIndex,
-                        weatherIcon: widget.diaryData.weather,
-                        color: Theme.of(context).colorScheme.surface_01,
-                        isEmotionText: true,
-                      ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      Text(
-                        widget.diaryData.diaryContent,
-                        style: kBody1Style.copyWith(
-                            color: Theme.of(context).colorScheme.textBody),
-                      ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      diaryController.state.value.networkImage.isNotEmpty
-                          ? Column(
-                              children: [
-                                Center(
-                                  child: Image.network(
-                                    diaryController.state.value.networkImage,
-                                    width: double.infinity,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 12.h,
-                                ),
-                              ],
-                            )
-                          : Container(),
-                    ],
+        body: Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: SafeArea(
+            child: Obx(
+              () => ListView(
+                children: [
+                  SizedBox(
+                    height: 6.h,
                   ),
-                ),
-                Divider(
-                  thickness: 8.h,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 25.w, top: 20.h),
-                  child: Text(
-                    "하루냥의 명언",
-                    style: kHeader4Style.copyWith(
-                        color: Theme.of(context).colorScheme.textTitle),
-                  ),
-                ),
-                Obx(
-                  () => SizedBox(
-                    height: diaryController.state.value.isLoading ? 36.h : 16.h,
-                  ),
-                ),
-                Obx(
-                  () {
-                    if (diaryController.state.value.isLoading) {
-                      return const DiaryLoadingWidget();
-                    } else {
-                      return AnimationLimiter(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(left: 20.w, right: 20.w),
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemCount: diaryController
-                                      .state.value.wiseSayingList.length <
-                                  3
-                              ? diaryController
-                                  .state.value.wiseSayingList.length
-                              : 3,
-                          itemBuilder: (BuildContext context, int index) {
-                            return AnimationConfiguration.staggeredList(
-                              position: index,
-                              delay: const Duration(milliseconds: 100),
-                              child: SlideAnimation(
-                                duration: const Duration(milliseconds: 2500),
-                                curve: Curves.fastLinearToSlowEaseIn,
-                                child: FadeInAnimation(
-                                  curve: Curves.fastLinearToSlowEaseIn,
-                                  duration: const Duration(milliseconds: 2500),
-                                  child: Container(
-                                    margin: EdgeInsets.only(bottom: 12.h),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(16.w),
-                                      ),
+                  Padding(
+                    padding: kPrimaryPadding,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        WeatherEmotionBadgeWiseSaying(
+                          emoticon: widget.diaryData.emotion.emoticon,
+                          emoticonIndex: widget.diaryData.emoticonIndex,
+                          weatherIcon: widget.diaryData.weather,
+                          color: Theme.of(context).colorScheme.surface_01,
+                          isEmotionText: true,
+                        ),
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        Text(
+                          widget.diaryData.diaryContent,
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textBody),
+                        ),
+                        SizedBox(
+                          height: 12.h,
+                        ),
+                        diaryController.state.value.networkImage.isNotEmpty
+                            ? Column(
+                                children: [
+                                  Center(
+                                    child: Image.network(
+                                      diaryController.state.value.networkImage,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 12.h,
+                                  ),
+                                ],
+                              )
+                            : Container(),
+                      ],
+                    ),
+                  ),
+                  Divider(
+                    thickness: 8.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 25.w, top: 20.h),
+                    child: Text(
+                      "하루냥의 명언",
+                      style: kHeader4Style.copyWith(
+                          color: Theme.of(context).colorScheme.textTitle),
+                    ),
+                  ),
+                  Obx(
+                    () => SizedBox(
+                      height:
+                          diaryController.state.value.isLoading ? 36.h : 16.h,
+                    ),
+                  ),
+                  Obx(
+                    () {
+                      if (diaryController.state.value.isLoading) {
+                        return const DiaryLoadingWidget();
+                      } else {
+                        return AnimationLimiter(
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            padding: EdgeInsets.only(left: 20.w, right: 20.w),
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: diaryController
+                                        .state.value.wiseSayingList.length <
+                                    3
+                                ? diaryController
+                                    .state.value.wiseSayingList.length
+                                : 3,
+                            itemBuilder: (BuildContext context, int index) {
+                              return AnimationConfiguration.staggeredList(
+                                position: index,
+                                delay: const Duration(milliseconds: 100),
+                                child: SlideAnimation(
+                                  duration: const Duration(milliseconds: 2500),
+                                  curve: Curves.fastLinearToSlowEaseIn,
+                                  child: FadeInAnimation(
+                                    curve: Curves.fastLinearToSlowEaseIn,
+                                    duration:
+                                        const Duration(milliseconds: 2500),
                                     child: Container(
+                                      margin: EdgeInsets.only(bottom: 12.h),
                                       decoration: BoxDecoration(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .surface_01,
-                                        borderRadius:
-                                            BorderRadius.circular(16.0),
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(16.w),
+                                        ),
                                       ),
-                                      child: Padding(
-                                        padding: kPrimaryPadding,
-                                        child: Obx(
-                                          () => Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      SvgPicture.asset(
-                                                        "lib/config/assets/images/character/character11.svg",
-                                                        width: 26.w,
-                                                      ),
-                                                      SizedBox(
-                                                        width: 4.w,
-                                                      ),
-                                                      Text(
-                                                        "하루냥",
-                                                        style: kHeader5Style
-                                                            .copyWith(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .colorScheme
-                                                                    .textTitle),
-                                                      )
-                                                    ],
-                                                  ),
-                                                  Obx(
-                                                    () => diaryController
-                                                            .isBookmarked(
-                                                                diaryController
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .surface_01,
+                                          borderRadius:
+                                              BorderRadius.circular(16.0),
+                                        ),
+                                        child: Padding(
+                                          padding: kPrimaryPadding,
+                                          child: Obx(
+                                            () => Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Row(
+                                                      children: [
+                                                        SvgPicture.asset(
+                                                          "lib/config/assets/images/character/character11.svg",
+                                                          width: 26.w,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 4.w,
+                                                        ),
+                                                        Text(
+                                                          "하루냥",
+                                                          style: kHeader5Style.copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .textTitle),
+                                                        )
+                                                      ],
+                                                    ),
+                                                    Obx(
+                                                      () => diaryController.isBookmarked(
+                                                              diaryController
+                                                                      .state
+                                                                      .value
+                                                                      .wiseSayingList[
+                                                                          index]
+                                                                      .id ??
+                                                                  0)
+                                                          ? GestureDetector(
+                                                              onTap: () {
+                                                                diaryController.deleteBookmarkByWiseSaying(
+                                                                    diaryController
                                                                         .state
                                                                         .value
-                                                                        .wiseSayingList[
-                                                                            index]
-                                                                        .id ??
-                                                                    0)
-                                                        ? GestureDetector(
-                                                            onTap: () {
-                                                              diaryController.deleteBookmarkByWiseSaying(
-                                                                  diaryController
-                                                                          .state
-                                                                          .value
-                                                                          .wiseSayingList[
-                                                                      index]);
-                                                            },
-                                                            child: SvgPicture
-                                                                .asset(
-                                                              "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
+                                                                        .wiseSayingList[index]);
+                                                              },
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
+                                                              ),
+                                                            )
+                                                          : GestureDetector(
+                                                              onTap: () {
+                                                                diaryController.saveBookmark(
+                                                                    diaryController
+                                                                        .state
+                                                                        .value
+                                                                        .wiseSayingList[index]);
+                                                              },
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                "lib/config/assets/images/diary/write_diary/bookmark.svg",
+                                                              ),
                                                             ),
-                                                          )
-                                                        : GestureDetector(
-                                                            onTap: () {
-                                                              diaryController.saveBookmark(
-                                                                  diaryController
-                                                                          .state
-                                                                          .value
-                                                                          .wiseSayingList[
-                                                                      index]);
-                                                            },
-                                                            child: SvgPicture
-                                                                .asset(
-                                                              "lib/config/assets/images/diary/write_diary/bookmark.svg",
-                                                            ),
-                                                          ),
-                                                  )
-                                                ],
-                                              ),
-                                              SizedBox(
-                                                height: 12.h,
-                                              ),
-                                              Text(
-                                                diaryController
-                                                    .state
-                                                    .value
-                                                    .wiseSayingList[index]
-                                                    .message,
-                                                style: kBody1Style.copyWith(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .textBody),
-                                              ),
-                                              Align(
-                                                alignment:
-                                                    Alignment.centerRight,
-                                                child: Text(
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 12.h,
+                                                ),
+                                                Text(
                                                   diaryController
                                                       .state
                                                       .value
                                                       .wiseSayingList[index]
-                                                      .author,
-                                                  style: kBody2Style.copyWith(
+                                                      .message,
+                                                  style: kBody1Style.copyWith(
                                                       color: Theme.of(context)
                                                           .colorScheme
-                                                          .textSubtitle),
+                                                          .textBody),
                                                 ),
-                                              )
-                                            ],
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                  child: Text(
+                                                    diaryController
+                                                        .state
+                                                        .value
+                                                        .wiseSayingList[index]
+                                                        .author,
+                                                    style: kBody2Style.copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .textSubtitle),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      );
-                    }
-                  },
-                ),
-              ],
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

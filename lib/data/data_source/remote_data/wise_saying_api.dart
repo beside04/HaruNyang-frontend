@@ -62,6 +62,10 @@ class WiseSayingApi {
         final List<WiseSayingData> wiseSayingList =
             wiseSayingIterable.map((e) => WiseSayingData.fromJson(e)).toList();
 
+        wiseSayingList.sort((a, b) {
+          return a.id!.compareTo(b.id!);
+        });
+
         return Result.success(wiseSayingList);
       } else {
         return Result.error(

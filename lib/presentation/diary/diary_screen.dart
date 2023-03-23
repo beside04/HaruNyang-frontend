@@ -41,9 +41,6 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.date != null) {
-      controller.nowDate.value = widget.date!;
-    }
     return WillPopScope(
       onWillPop: () async {
         controller.isEmotionModal.value
@@ -134,7 +131,10 @@ class _DiaryScreenState extends State<DiaryScreen> {
                         ),
                       ),
                       const WeatherModal(),
-                      const EmotionModal(),
+                      EmotionModal(
+                        date:
+                            widget.date != null ? widget.date! : DateTime.now(),
+                      ),
                     ],
                   ),
                 );
