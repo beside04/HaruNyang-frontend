@@ -74,7 +74,7 @@ class NoticeButton extends StatelessWidget {
                   ),
                   Text(
                     DateFormat('yyyy.MM.dd').format(date),
-                    style: kBody2Style.copyWith(
+                    style: kBody3Style.copyWith(
                         color: Theme.of(context).colorScheme.textLowEmphasis),
                   ),
                 ],

@@ -198,7 +198,7 @@ class TermsOfServiceScreen extends StatelessWidget {
 # Copyright © 하루냥. All rights reserved.
 ''',
             styleSheet: MarkdownStyleSheet(
-              h1: kBody2Style.copyWith(
+              h1: kBody3Style.copyWith(
                   color: Theme.of(context).colorScheme.textLowEmphasis),
               h1Align: WrapAlignment.center,
               h2: kHeader2Style.copyWith(
@@ -213,7 +213,7 @@ class TermsOfServiceScreen extends StatelessWidget {
               ),
               h4: kHeader4Style.copyWith(
                   color: Theme.of(context).colorScheme.textBody),
-              p: kBody1Style.copyWith(
+              p: kBody2Style.copyWith(
                   color: Theme.of(context).colorScheme.textBody),
               horizontalRuleDecoration: BoxDecoration(
                 border: Border(

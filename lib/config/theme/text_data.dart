@@ -71,13 +71,21 @@ TextStyle kSubtitle1Style = const TextStyle(
 //Body1 Style
 TextStyle kBody1Style = const TextStyle(
   fontFamily: pretendard,
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+  height: 1.5,
+);
+
+//Body2 Style
+TextStyle kBody2Style = const TextStyle(
+  fontFamily: pretendard,
   fontSize: 14,
   fontWeight: FontWeight.w400,
   height: 1.4285,
 );
 
-//Body2 Style
-TextStyle kBody2Style = const TextStyle(
+//Body3 Style
+TextStyle kBody3Style = const TextStyle(
   fontFamily: pretendard,
   fontSize: 12,
   fontWeight: FontWeight.w400,

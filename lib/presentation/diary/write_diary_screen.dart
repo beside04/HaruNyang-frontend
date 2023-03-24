@@ -361,7 +361,11 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                     right: 20.w,
                                   ),
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(24.0),
+                                    borderRadius: const BorderRadius.only(
+                                      topRight: Radius.circular(24),
+                                      bottomRight: Radius.circular(24),
+                                      bottomLeft: Radius.circular(24),
+                                    ),
                                     color: Theme.of(context)
                                         .colorScheme
                                         .surface_02,
@@ -463,7 +467,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                           decoration: InputDecoration(
                             helperText: "",
                             counterText: "",
-                            hintText: '오늘 있었던 일과 기분을 자유롭게 말해보세요!',
+                            hintText: '오늘 있었던 일과 기분을 자유롭게 말해보세요',
                             hintStyle:
                                 kBody1Style.copyWith(color: kGrayColor400),
                             contentPadding: const EdgeInsets.only(

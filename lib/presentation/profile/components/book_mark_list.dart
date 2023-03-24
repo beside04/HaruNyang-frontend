@@ -81,14 +81,14 @@ class BookMarkList extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: kBody1Style.copyWith(
+                  style: kBody2Style.copyWith(
                       color: Theme.of(context).colorScheme.textBody),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
                     name,
-                    style: kBody2Style.copyWith(
+                    style: kBody3Style.copyWith(
                         color: Theme.of(context).colorScheme.textSubtitle),
                   ),
                 )

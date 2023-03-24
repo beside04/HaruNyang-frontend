@@ -407,9 +407,9 @@ class _DatePickerState extends State<_DatePickerComponent> {
                 child: Text(
                   content,
                   style: index == currentFirstIndex
-                      ? kSubtitle1Style.copyWith(
+                      ? kHeader5Style.copyWith(
                           color: Theme.of(context).colorScheme.primaryColor)
-                      : kSubtitle1Style.copyWith(
+                      : kHeader5Style.copyWith(
                           color: Theme.of(context).colorScheme.textBody),
                   textAlign: TextAlign.start,
                 ),
@@ -469,9 +469,9 @@ class _DatePickerState extends State<_DatePickerComponent> {
                 child: Text(
                   content,
                   style: index == currentSecondIndex
-                      ? kSubtitle1Style.copyWith(
+                      ? kHeader5Style.copyWith(
                           color: Theme.of(context).colorScheme.primaryColor)
-                      : kSubtitle1Style.copyWith(
+                      : kHeader5Style.copyWith(
                           color: Theme.of(context).colorScheme.textBody),
                   textAlign: TextAlign.start,
                 ),
@@ -532,9 +532,9 @@ class _DatePickerState extends State<_DatePickerComponent> {
                 child: Text(
                   content,
                   style: index == currentThirdIndex
-                      ? kSubtitle1Style.copyWith(
+                      ? kHeader5Style.copyWith(
                           color: Theme.of(context).colorScheme.primaryColor)
-                      : kSubtitle1Style.copyWith(
+                      : kHeader5Style.copyWith(
                           color: Theme.of(context).colorScheme.textBody),
                   textAlign: TextAlign.start,
                 ),

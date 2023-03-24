@@ -123,7 +123,7 @@ class ProfileScreen extends StatelessWidget {
                           Obx(
                             () => Text(
                               " ${onBoardingController.state.value.email}",
-                              style: kBody2Style.copyWith(
+                              style: kBody3Style.copyWith(
                                   color: Theme.of(context)
                                       .colorScheme
                                       .textSubtitle),

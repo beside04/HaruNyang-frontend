@@ -13,7 +13,7 @@ import 'package:frontend/main.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/components/weather_emotion_badge_wise_saying.dart';
+import 'package:frontend/presentation/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/presentation/diary/components/diary_loading_widget.dart';
 import 'package:frontend/presentation/diary/components/diary_popup_menu_item.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
@@ -246,12 +246,11 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        WeatherEmotionBadgeWiseSaying(
+                        WeatherEmotionBadgeWritingDiary(
                           emoticon: widget.diaryData.emotion.emoticon,
                           emoticonIndex: widget.diaryData.emoticonIndex,
                           weatherIcon: widget.diaryData.weather,
                           color: Theme.of(context).colorScheme.surface_01,
-                          isEmotionText: true,
                         ),
                         SizedBox(
                           height: 12.h,
@@ -420,7 +419,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                       .value
                                                       .wiseSayingList[index]
                                                       .message,
-                                                  style: kBody1Style.copyWith(
+                                                  style: kBody2Style.copyWith(
                                                       color: Theme.of(context)
                                                           .colorScheme
                                                           .textBody),
@@ -434,7 +433,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                         .value
                                                         .wiseSayingList[index]
                                                         .author,
-                                                    style: kBody2Style.copyWith(
+                                                    style: kBody3Style.copyWith(
                                                         color: Theme.of(context)
                                                             .colorScheme
                                                             .textSubtitle),

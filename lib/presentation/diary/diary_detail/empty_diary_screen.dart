@@ -61,7 +61,7 @@ class EmptyDiaryScreen extends StatelessWidget {
                 ),
                 Text(
                   "일기를 쓰고 하루냥의 명언을 받아보세요!",
-                  style: kBody1Style.copyWith(
+                  style: kBody2Style.copyWith(
                       color: Theme.of(context).colorScheme.textSubtitle),
                 ),
               ],

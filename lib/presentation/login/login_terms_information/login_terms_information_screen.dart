@@ -66,7 +66,7 @@ class LoginTermsInformationScreen
                   ),
                   child: Text(
                     '하루냥의 서비스 약관이에요. \n 필수 약관을 동의하셔야 이용할 수 있어요',
-                    style: kBody2Style.copyWith(
+                    style: kBody3Style.copyWith(
                         color: Theme.of(context).colorScheme.textSubtitle),
                     textAlign: TextAlign.center,
                   ),
@@ -120,12 +120,12 @@ class LoginTermsInformationScreen
                       children: [
                         Text(
                           '(필수) ',
-                          style: kBody1Style.copyWith(
+                          style: kBody2Style.copyWith(
                               color: Theme.of(context).colorScheme.textPrimary),
                         ),
                         Text(
                           '서비스 이용약관',
-                          style: kBody1Style.copyWith(
+                          style: kBody2Style.copyWith(
                               color: Theme.of(context).colorScheme.textBody),
                         ),
                       ],
@@ -151,12 +151,12 @@ class LoginTermsInformationScreen
                       children: [
                         Text(
                           '(필수) ',
-                          style: kBody1Style.copyWith(
+                          style: kBody2Style.copyWith(
                               color: Theme.of(context).colorScheme.textPrimary),
                         ),
                         Text(
                           '개인정보 처리방침',
-                          style: kBody1Style.copyWith(
+                          style: kBody2Style.copyWith(
                               color: Theme.of(context).colorScheme.textBody),
                         ),
                       ],
@@ -180,7 +180,7 @@ class LoginTermsInformationScreen
                     termValue: controller.isMarketingConsentAgree.value,
                     termTitle: Text(
                       '(선택) 마케팅 정보 수신 동의',
-                      style: kBody1Style.copyWith(
+                      style: kBody2Style.copyWith(
                           color: Theme.of(context).colorScheme.textBody),
                     ),
                     onTap: controller.toggleMarketingConsentCheck,
