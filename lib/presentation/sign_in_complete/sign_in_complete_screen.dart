@@ -46,7 +46,7 @@ class SignInCompleteScreen extends StatelessWidget {
                           ),
                           Text(
                             "이제 하루냥과 함께 하루를 기록해보아요!",
-                            style: kBody1Style.copyWith(
+                            style: kBody2Style.copyWith(
                                 color: Theme.of(context).colorScheme.textTitle),
                           ),
                           SizedBox(

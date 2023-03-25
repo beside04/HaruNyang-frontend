@@ -27,7 +27,7 @@ class AgeTextField extends StatelessWidget {
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         helperText: "필수 정보가 아니라 다음에 작성해도 좋아요!",
-        helperStyle: kBody2Style.copyWith(
+        helperStyle: kBody3Style.copyWith(
             color: Theme.of(context).colorScheme.textTitle),
         counterText: "",
         hintText: 'YYYY-MM-DD 입력',

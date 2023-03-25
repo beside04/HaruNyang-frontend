@@ -79,7 +79,7 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
                           ),
                           Text(
                             "일기를 쓰고 하루냥이 준 위로를 저장해보세요!",
-                            style: kBody1Style.copyWith(
+                            style: kBody2Style.copyWith(
                                 color:
                                     Theme.of(context).colorScheme.textSubtitle),
                           )

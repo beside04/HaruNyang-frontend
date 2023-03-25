@@ -56,7 +56,7 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
               ),
               getEmotionTextWidget(
                 emoticonIndex,
-                kBody1Style.copyWith(
+                kBody2Style.copyWith(
                     color: Theme.of(context).colorScheme.textCaption),
               ),
             ],

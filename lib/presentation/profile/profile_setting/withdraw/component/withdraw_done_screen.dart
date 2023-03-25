@@ -71,12 +71,12 @@ class WithdrawDoneScreen extends StatelessWidget {
                         children: [
                           Text(
                             '나를 성장 시킨건 이별이 아니었다.',
-                            style: kBody1Style.copyWith(
+                            style: kBody2Style.copyWith(
                                 color: Theme.of(context).colorScheme.textTitle),
                           ),
                           Text(
                             '함께했던 시간이었지',
-                            style: kBody1Style.copyWith(
+                            style: kBody2Style.copyWith(
                                 color: Theme.of(context).colorScheme.textTitle),
                           ),
                           SizedBox(
