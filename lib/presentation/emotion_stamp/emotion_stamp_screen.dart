@@ -12,7 +12,9 @@ import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_list_widget.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 
 class YearMonthModel extends DatePickerModel {
@@ -46,6 +48,18 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
 
   @override
   Widget build(BuildContext context) {
+    TargetPlatform os = Theme.of(context).platform;
+
+    BannerAd banner = BannerAd(
+      listener: BannerAdListener(
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {},
+        onAdLoaded: (_) {},
+      ),
+      size: AdSize.banner,
+      adUnitId: UNIT_ID[os == TargetPlatform.iOS ? 'ios' : 'android']!,
+      request: const AdRequest(),
+    )..load();
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -154,6 +168,12 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                           ? const EmotionCalendarWidget()
                           : const EmotionListWidget(),
                 ),
+              ),
+            ),
+            SizedBox(
+              height: 100.h,
+              child: AdWidget(
+                ad: banner,
               ),
             ),
           ],
