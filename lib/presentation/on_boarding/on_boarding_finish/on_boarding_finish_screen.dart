@@ -18,6 +18,8 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
 
   @override
   Widget build(BuildContext context) {
+    getOnBoardingFinishBinding();
+
     return WillPopScope(
       onWillPop: () async {
         Get.offAll(
@@ -84,6 +86,8 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
               BottomButton(
                 title: '시작하기',
                 onTap: () async {
+                  controller.setPushMessage();
+
                   Get.offAll(
                     () => const HomeScreen(),
                     arguments: {"index": 1},
