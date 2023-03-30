@@ -58,6 +58,7 @@ import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_finish/on_boarding_finish_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
 import 'package:frontend/presentation/profile/notice/notice_view_model.dart';
@@ -267,6 +268,12 @@ void getOnBoardingNickNameBinding() {
   Get.put(OnBoardingNicknameViewModel());
 }
 
+void getOnBoardingFinishBinding() {
+  Get.put(OnBoardingFinishViewModel(
+    pushMessagePermissionUseCase: pushMessagePermissionUseCase,
+  ));
+}
+
 HomeViewModel getHomeViewModelBinding() {
   return Get.put(
     HomeViewModel(
@@ -325,7 +332,8 @@ void getDiaryControllerBinding() {
 }
 
 void getPushMessageControllerBinding() {
-  Get.put(PushMessageViewModel());
+  Get.put(PushMessageViewModel(
+      pushMessagePermissionUseCase: pushMessagePermissionUseCase));
 }
 
 void getNoticeViewModelBinding() {
