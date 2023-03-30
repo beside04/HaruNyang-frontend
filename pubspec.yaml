@@ -78,6 +78,7 @@ dependencies:
   firebase_analytics: ^10.1.6
   url_launcher: ^6.1.9
   google_mobile_ads: ^2.4.0
+  in_app_review: ^2.0.6
 
 dev_dependencies:
   flutter_test:

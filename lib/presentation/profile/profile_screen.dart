@@ -13,9 +13,11 @@ import 'package:frontend/presentation/profile/book_mark/book_mark_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 import 'package:frontend/presentation/profile/terms/terms_screen.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 import 'push_message/push_message_screen.dart';
 
@@ -265,9 +267,37 @@ class ProfileScreen extends StatelessWidget {
               },
             ),
             Divider(
+              thickness: 12.h,
+            ),
+            ProfileButton(
+              icon: SvgPicture.asset(
+                "lib/config/assets/images/profile/navigate_next.svg",
+              ),
+              title: '개발자 응원하기',
+              titleColor: Theme.of(context).colorScheme.textTitle,
+              onPressed: () async {
+                final InAppReview inAppReview = InAppReview.instance;
+
+                if (await inAppReview.isAvailable()) {
+                  inAppReview.requestReview();
+                }
+              },
+            ),
+            Divider(
               thickness: 1.h,
               height: 1.h,
               color: Theme.of(context).colorScheme.border,
+            ),
+            ProfileButton(
+              icon: Text(
+                APP_VERSION_NUMBER,
+                style: kBody1Style.copyWith(
+                  color: Theme.of(context).colorScheme.textSubtitle,
+                ),
+              ),
+              title: '앱 버전',
+              titleColor: Theme.of(context).colorScheme.textTitle,
+              onPressed: null,
             ),
           ],
         ),
