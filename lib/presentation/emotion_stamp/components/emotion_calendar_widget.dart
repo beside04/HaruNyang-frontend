@@ -64,6 +64,19 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                   outsideDaysVisible: false,
                 ),
                 calendarBuilders: CalendarBuilders(
+                  dowBuilder: (context, day) {
+                    return Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            DateFormat.E('ko-KR').format(day),
+                            style: kHeader5Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                   markerBuilder: (context, day, events) {
                     return InkWell(
                       onTap: () {
@@ -97,11 +110,11 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                           ),
                           child: Column(
                             children: [
-                              events.isEmpty
+                              DateTime.now().isAfter(day)
                                   ? Container(
                                       padding: context.isTablet
                                           ? EdgeInsets.all(9.w)
-                                          : EdgeInsets.all(14.w),
+                                          : EdgeInsets.all(16.w),
                                       decoration: BoxDecoration(
                                         border: isToday(day)
                                             ? Border.all(
@@ -112,40 +125,51 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                         shape: BoxShape.circle,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .surface_01,
+                                            .surface_02,
                                       ),
                                     )
-                                  : Stack(
-                                      children: [
-                                        Container(
-                                          padding: context.isTablet
-                                              ? EdgeInsets.all(9.w)
-                                              : EdgeInsets.all(14.w),
-                                          decoration: BoxDecoration(
-                                            border: isToday(day)
-                                                ? Border.all(
-                                                    width: 1,
-                                                    color: kOrange300Color,
-                                                  )
-                                                : null,
-                                            shape: BoxShape.circle,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .surface_01,
+                                  : events.isEmpty
+                                      ? Padding(
+                                          padding: EdgeInsets.all(8.0.w),
+                                          child: Text(
+                                            DateFormat('d').format(day),
+                                            style: kBody1Style.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .textSubtitle),
                                           ),
-                                        ),
-                                        Positioned.fill(
-                                          child: Align(
-                                            alignment: Alignment.center,
-                                            child: SvgPicture.network(
-                                              events[0].emotion.emoticon,
-                                              width: 20.w,
-                                              height: 20.h,
+                                        )
+                                      : Stack(
+                                          children: [
+                                            Container(
+                                              padding: context.isTablet
+                                                  ? EdgeInsets.all(9.w)
+                                                  : EdgeInsets.all(16.w),
+                                              decoration: BoxDecoration(
+                                                border: isToday(day)
+                                                    ? Border.all(
+                                                        width: 1,
+                                                        color: kOrange300Color,
+                                                      )
+                                                    : null,
+                                                shape: BoxShape.circle,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .surface_02,
+                                              ),
                                             ),
-                                          ),
+                                            Positioned.fill(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: SvgPicture.network(
+                                                  events[0].emotion.emoticon,
+                                                  width: 20.w,
+                                                  height: 20.h,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
                             ],
                           ),
                         ),
@@ -153,48 +177,37 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                     );
                   },
                   prioritizedBuilder: (context, day, events) {
-                    return isSameDate(
-                            diaryController.state.value.selectedCalendarDate,
-                            day)
+                    return isToday(day)
                         ? Padding(
-                            padding: EdgeInsets.only(
-                              bottom: 5.0.h,
-                            ),
+                            padding: const EdgeInsets.all(7.0),
                             child: Container(
-                              width: 20.w,
+                              width: 30.w,
                               height: 20.h,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10.0),
                                 color: kOrange300Color,
                               ),
                               child: Center(
                                 child: Text(
                                   DateFormat('d').format(day),
-                                  style: kCaption1Style.copyWith(
-                                      color: kWhiteColor),
+                                  style:
+                                      kBody2Style.copyWith(color: kWhiteColor),
                                 ),
                               ),
                             ),
                           )
-                        : isToday(day)
+                        : DateTime.now().isAfter(day)
                             ? Padding(
                                 padding: EdgeInsets.all(8.0.w),
                                 child: Text(
                                   DateFormat('d').format(day),
-                                  style: kCaption1Style.copyWith(
-                                      color: kOrange300Color),
-                                ),
-                              )
-                            : Padding(
-                                padding: EdgeInsets.all(8.0.w),
-                                child: Text(
-                                  DateFormat('d').format(day),
-                                  style: kCaption1Style.copyWith(
+                                  style: kBody2Style.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
                                           .textTitle),
                                 ),
-                              );
+                              )
+                            : Container();
                   },
                 ),
               ),
