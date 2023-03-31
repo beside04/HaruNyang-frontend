@@ -125,7 +125,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                         shape: BoxShape.circle,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .surface_02,
+                                            .secondaryColor,
                                       ),
                                     )
                                   : DateTime.now().isAfter(day)
@@ -145,7 +145,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                                 shape: BoxShape.circle,
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .surface_02,
+                                                    .secondaryColor,
                                               ),
                                             ),
                                             Positioned.fill(
