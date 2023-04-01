@@ -146,7 +146,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                         content: Text(
                                           "일기를 삭제했어요.",
                                           style: kHeader6Style.copyWith(
-                                              color: Theme.of(context)
+                                              color: Theme.of(ctx)
                                                   .colorScheme
                                                   .textSubtitle),
                                         ),
