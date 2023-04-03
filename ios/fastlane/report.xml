@@ -5,49 +5,17 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000203">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000211">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: latest_testflight_build_number" time="4.445834">
+      <testcase classname="fastlane.lanes" name="1: increment_version_number" time="2.384637">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: increment_build_number" time="2.454653">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="3: Switch to ios flutter_build_ios lane" time="0.000147">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="4: cd .." time="0.011544">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="5: flutter clean" time="4.217789">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="6: flutter build ios --no-codesign -t lib/main.dart" time="107.995928">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="7: build_app" time="199.787285">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="8: upload_to_app_store" time="845.479937">
-        
-          <failure message="/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:229:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:229:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:71:in `block (2 levels) in parsing_binding'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/lane.rb:33:in `call'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:49:in `block in execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/lane_manager.rb:47:in `cruise_lane'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/command_line_handler.rb:36:in `handle'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:354:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:43:in `start'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/usr/local/bin/fastlane:23:in `load'&#10;/usr/local/bin/fastlane:23:in `&lt;main&gt;'&#10;&#10;appStoreVersions with id '2788e0b1-1811-4a7b-82f7-1de6a1fca703' is not in valid state. - This resource cannot be reviewed, please check associated errors to see why.&#10;The provided entity is missing a required attribute - You must provide a value for the attribute 'description' with this request&#10;The provided entity is missing a required attribute - You must provide a value for the attribute 'keywords' with this request&#10;The provided entity is missing a required attribute - You must provide a value for the attribute 'supportUrl' with this request&#10;The provided entity is missing a required attribute - You must provide a value for the attribute 'description' with this request&#10;The provided entity is missing a required attribute - You must provide a value for the attribute 'keywords' with this request&#10;The provided entity is missing a required attribute - You must provide a value for the attribute 'supportUrl' with this request" />
+      <testcase classname="fastlane.lanes" name="2: increment_build_number" time="3.083661">
         
       </testcase>
     
