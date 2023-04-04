@@ -68,7 +68,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
       child: WillPopScope(
         onWillPop: () async {
           Get.offAll(
-                () => const HomeScreen(),
+            () => const HomeScreen(),
             binding: BindingsBuilder(
               getHomeViewModelBinding,
             ),
@@ -90,12 +90,12 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                   onSelected: (id) {
                     if (id == 'edit') {
                       Get.to(
-                            () => WriteDiaryScreen(
+                        () => WriteDiaryScreen(
                           date: widget.date,
                           weather: diaryController.state.value.diary!.weather,
                           emotion: diaryController.state.value.diary!.emotion,
                           emoticonIndex:
-                          diaryController.state.value.diary!.emoticonIndex,
+                              diaryController.state.value.diary!.emoticonIndex,
                           diaryData: diaryController.state.value.diary!,
                           isEditScreen: true,
                         ),
@@ -111,8 +111,9 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                             content: Text(
                               "삭제 후 일기를 복원 할 수 없어요",
                               style: kHeader6Style.copyWith(
-                                  color:
-                                  Theme.of(context).colorScheme.textSubtitle),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .textSubtitle),
                             ),
                             actionContent: [
                               DialogButton(
@@ -120,8 +121,9 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                 onTap: () {
                                   Get.back();
                                 },
-                                backgroundColor:
-                                Theme.of(context).colorScheme.secondaryColor,
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryColor,
                                 textStyle: kHeader4Style.copyWith(
                                     color: Theme.of(context)
                                         .colorScheme
@@ -149,7 +151,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                           content: Text(
                                             "일기를 삭제했어요.",
                                             style: kHeader6Style.copyWith(
-                                                color: Theme.of(context)
+                                                color: Theme.of(ctx)
                                                     .colorScheme
                                                     .textSubtitle),
                                           ),
@@ -158,7 +160,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                               title: "확인",
                                               onTap: () {
                                                 Get.offAll(
-                                                      () => const HomeScreen(),
+                                                  () => const HomeScreen(),
                                                   binding: BindingsBuilder(
                                                     getHomeViewModelBinding,
                                                   ),
@@ -176,7 +178,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                 },
                                 backgroundColor: kOrange200Color,
                                 textStyle:
-                                kHeader4Style.copyWith(color: kWhiteColor),
+                                    kHeader4Style.copyWith(color: kWhiteColor),
                               ),
                             ],
                           );
@@ -227,7 +229,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
             leading: BackIcon(
               onPressed: () {
                 Get.offAll(
-                      () => const HomeScreen(),
+                  () => const HomeScreen(),
                   binding: BindingsBuilder(
                     getHomeViewModelBinding,
                   ),
@@ -239,7 +241,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
             color: Theme.of(context).scaffoldBackgroundColor,
             child: SafeArea(
               child: Obx(
-                    () => ListView(
+                () => ListView(
                   children: [
                     SizedBox(
                       height: 6.h,
@@ -268,19 +270,20 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                           ),
                           diaryController.state.value.networkImage.isNotEmpty
                               ? Column(
-                            children: [
-                              Center(
-                                child: Image.network(
-                                  diaryController.state.value.networkImage,
-                                  width: double.infinity,
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              SizedBox(
-                                height: 12.h,
-                              ),
-                            ],
-                          )
+                                  children: [
+                                    Center(
+                                      child: Image.network(
+                                        diaryController
+                                            .state.value.networkImage,
+                                        width: double.infinity,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 12.h,
+                                    ),
+                                  ],
+                                )
                               : Container(),
                         ],
                       ),
@@ -297,13 +300,13 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                       ),
                     ),
                     Obx(
-                          () => SizedBox(
+                      () => SizedBox(
                         height:
-                        diaryController.state.value.isLoading ? 36.h : 16.h,
+                            diaryController.state.value.isLoading ? 36.h : 16.h,
                       ),
                     ),
                     Obx(
-                          () {
+                      () {
                         if (diaryController.state.value.isLoading) {
                           return const DiaryLoadingWidget();
                         } else {
@@ -313,22 +316,23 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                               padding: EdgeInsets.only(left: 20.w, right: 20.w),
                               physics: const NeverScrollableScrollPhysics(),
                               itemCount: diaryController
-                                  .state.value.wiseSayingList.length <
-                                  3
+                                          .state.value.wiseSayingList.length <
+                                      3
                                   ? diaryController
-                                  .state.value.wiseSayingList.length
+                                      .state.value.wiseSayingList.length
                                   : 3,
                               itemBuilder: (BuildContext context, int index) {
                                 return AnimationConfiguration.staggeredList(
                                   position: index,
                                   delay: const Duration(milliseconds: 100),
                                   child: SlideAnimation(
-                                    duration: const Duration(milliseconds: 2500),
+                                    duration:
+                                        const Duration(milliseconds: 2500),
                                     curve: Curves.fastLinearToSlowEaseIn,
                                     child: FadeInAnimation(
                                       curve: Curves.fastLinearToSlowEaseIn,
                                       duration:
-                                      const Duration(milliseconds: 2500),
+                                          const Duration(milliseconds: 2500),
                                       child: Container(
                                         margin: EdgeInsets.only(bottom: 12.h),
                                         decoration: BoxDecoration(
@@ -342,19 +346,19 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                 .colorScheme
                                                 .surface_01,
                                             borderRadius:
-                                            BorderRadius.circular(16.0),
+                                                BorderRadius.circular(16.0),
                                           ),
                                           child: Padding(
                                             padding: kPrimaryPadding,
                                             child: Obx(
-                                                  () => Column(
+                                              () => Column(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Row(
                                                     mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
                                                     children: [
                                                       Row(
                                                         children: [
@@ -369,47 +373,49 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                             "하루냥",
                                                             style: kHeader5Style.copyWith(
                                                                 color: Theme.of(
-                                                                    context)
+                                                                        context)
                                                                     .colorScheme
                                                                     .textTitle),
                                                           )
                                                         ],
                                                       ),
                                                       Obx(
-                                                            () => diaryController.isBookmarked(
-                                                            diaryController
-                                                                .state
-                                                                .value
-                                                                .wiseSayingList[
-                                                            index]
-                                                                .id ??
-                                                                0)
+                                                        () => diaryController.isBookmarked(
+                                                                diaryController
+                                                                        .state
+                                                                        .value
+                                                                        .wiseSayingList[
+                                                                            index]
+                                                                        .id ??
+                                                                    0)
                                                             ? GestureDetector(
-                                                          onTap: () {
-                                                            diaryController.deleteBookmarkByWiseSaying(
-                                                                diaryController
-                                                                    .state
-                                                                    .value
-                                                                    .wiseSayingList[index]);
-                                                          },
-                                                          child: SvgPicture
-                                                              .asset(
-                                                            "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
-                                                          ),
-                                                        )
+                                                                onTap: () {
+                                                                  diaryController.deleteBookmarkByWiseSaying(
+                                                                      diaryController
+                                                                          .state
+                                                                          .value
+                                                                          .wiseSayingList[index]);
+                                                                },
+                                                                child:
+                                                                    SvgPicture
+                                                                        .asset(
+                                                                  "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
+                                                                ),
+                                                              )
                                                             : GestureDetector(
-                                                          onTap: () {
-                                                            diaryController.saveBookmark(
-                                                                diaryController
-                                                                    .state
-                                                                    .value
-                                                                    .wiseSayingList[index]);
-                                                          },
-                                                          child: SvgPicture
-                                                              .asset(
-                                                            "lib/config/assets/images/diary/write_diary/bookmark.svg",
-                                                          ),
-                                                        ),
+                                                                onTap: () {
+                                                                  diaryController.saveBookmark(
+                                                                      diaryController
+                                                                          .state
+                                                                          .value
+                                                                          .wiseSayingList[index]);
+                                                                },
+                                                                child:
+                                                                    SvgPicture
+                                                                        .asset(
+                                                                  "lib/config/assets/images/diary/write_diary/bookmark.svg",
+                                                                ),
+                                                              ),
                                                       )
                                                     ],
                                                   ),
@@ -429,17 +435,19 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                                   ),
                                                   Align(
                                                     alignment:
-                                                    Alignment.centerRight,
+                                                        Alignment.centerRight,
                                                     child: Text(
                                                       diaryController
                                                           .state
                                                           .value
                                                           .wiseSayingList[index]
                                                           .author,
-                                                      style: kBody3Style.copyWith(
-                                                          color: Theme.of(context)
-                                                              .colorScheme
-                                                              .textSubtitle),
+                                                      style:
+                                                          kBody3Style.copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .textSubtitle),
                                                     ),
                                                   )
                                                 ],

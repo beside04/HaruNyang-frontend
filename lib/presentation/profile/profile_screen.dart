@@ -14,9 +14,11 @@ import 'package:frontend/presentation/profile/book_mark/book_mark_screen.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/notice/notice_screen.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_screen.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 import 'package:frontend/presentation/profile/terms/terms_screen.dart';
+import 'package:in_app_review/in_app_review.dart';
 
 import 'push_message/push_message_screen.dart';
 
@@ -31,9 +33,8 @@ class ProfileScreen extends StatelessWidget {
     return DefaultLayout(
       screenName: 'Screen Event : 메인->프로필 Screen',
       child: Scaffold(
-        backgroundColor: mainViewController.isDarkMode.value
-            ? kGrayColor900
-            : kBeigeColor200,
+        backgroundColor:
+        mainViewController.isDarkMode.value ? kGrayColor900 : kBeigeColor200,
         body: SafeArea(
           child: ListView(
             children: [
@@ -56,7 +57,7 @@ class ProfileScreen extends StatelessWidget {
                           color: kOrange300Color,
                           shape: BoxShape.circle,
                           border:
-                              Border.all(width: 0.5, color: Colors.transparent),
+                          Border.all(width: 0.5, color: Colors.transparent),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(6.w),
@@ -73,7 +74,7 @@ class ProfileScreen extends StatelessWidget {
                         height: 12.h,
                       ),
                       Obx(
-                        () => Text(
+                            () => Text(
                           '${onBoardingController.state.value.nickname}님 반가워요!',
                           style: kHeader2Style.copyWith(
                               color: Theme.of(context).colorScheme.textTitle),
@@ -83,50 +84,49 @@ class ProfileScreen extends StatelessWidget {
                         height: 10.h,
                       ),
                       Obx(
-                        () => Row(
+                            () => Row(
                           children: [
-                            onBoardingController.state.value.loginType ==
-                                    "KAKAO"
+                            onBoardingController.state.value.loginType == "KAKAO"
                                 ? Container(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    decoration: const BoxDecoration(
-                                      color: Color(0xffffe818),
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: SvgPicture.asset(
-                                            'lib/config/assets/images/login/kakao_logo.svg',
-                                            width: 10.w,
-                                            height: 10.h,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                : Container(
-                                    width: 20.w,
-                                    height: 20.h,
-                                    decoration: const BoxDecoration(
-                                      color: kBlackColor,
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Stack(
-                                      children: [
-                                        Center(
-                                          child: SvgPicture.asset(
-                                            'lib/config/assets/images/login/apple_logo.svg',
-                                            width: 10.w,
-                                            height: 10.h,
-                                          ),
-                                        ),
-                                      ],
+                              width: 20.w,
+                              height: 20.h,
+                              decoration: const BoxDecoration(
+                                color: Color(0xffffe818),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Center(
+                                    child: SvgPicture.asset(
+                                      'lib/config/assets/images/login/kakao_logo.svg',
+                                      width: 10.w,
+                                      height: 10.h,
                                     ),
                                   ),
+                                ],
+                              ),
+                            )
+                                : Container(
+                              width: 20.w,
+                              height: 20.h,
+                              decoration: const BoxDecoration(
+                                color: kBlackColor,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Stack(
+                                children: [
+                                  Center(
+                                    child: SvgPicture.asset(
+                                      'lib/config/assets/images/login/apple_logo.svg',
+                                      width: 10.w,
+                                      height: 10.h,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Obx(
-                              () => Text(
+                                  () => Text(
                                 " ${onBoardingController.state.value.email}",
                                 style: kBody3Style.copyWith(
                                     color: Theme.of(context)
@@ -160,9 +160,9 @@ class ProfileScreen extends StatelessWidget {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Get.to(
-                    () => ProfileSettingScreen(
+                        () => ProfileSettingScreen(
                       isKakaoLogin:
-                          onBoardingController.state.value.loginType == 'KAKAO',
+                      onBoardingController.state.value.loginType == 'KAKAO',
                     ),
                     binding: BindingsBuilder(
                       getProfileSettingViewModelBinding,
@@ -204,9 +204,9 @@ class ProfileScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.border,
               ),
               Obx(
-                () => ProfileButton(
+                    () => ProfileButton(
                   padding:
-                      const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                  const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   icon: FlutterSwitch(
                     padding: 2,
                     width: 52.0.w,
@@ -265,14 +265,42 @@ class ProfileScreen extends StatelessWidget {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Get.to(
-                    () => const TermsScreen(),
+                        () => const TermsScreen(),
                   );
+                },
+              ),
+              Divider(
+                thickness: 12.h,
+              ),
+              ProfileButton(
+                icon: SvgPicture.asset(
+                  "lib/config/assets/images/profile/navigate_next.svg",
+                ),
+                title: '개발자 응원하기',
+                titleColor: Theme.of(context).colorScheme.textTitle,
+                onPressed: () async {
+                  final InAppReview inAppReview = InAppReview.instance;
+
+                  if (await inAppReview.isAvailable()) {
+                    inAppReview.requestReview();
+                  }
                 },
               ),
               Divider(
                 thickness: 1.h,
                 height: 1.h,
                 color: Theme.of(context).colorScheme.border,
+              ),
+              ProfileButton(
+                icon: Text(
+                  APP_VERSION_NUMBER,
+                  style: kBody1Style.copyWith(
+                    color: Theme.of(context).colorScheme.textSubtitle,
+                  ),
+                ),
+                title: '앱 버전',
+                titleColor: Theme.of(context).colorScheme.textTitle,
+                onPressed: null,
               ),
             ],
           ),

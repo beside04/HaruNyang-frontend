@@ -45,18 +45,49 @@ platform :ios do
     end
 
   lane :beta do |options|
-
+  increment_build_number(
+      build_number: latest_testflight_build_number + 1,
+      xcodeproj: "Runner.xcodeproj"
+      )
   flutter_build_ios
-
    build_app(
     workspace: 'Runner.xcworkspace',
     scheme: 'Runner',
   )
-
   upload_to_testflight()
-
   send_slack_message(msg: "🚀 Successfully distributed a new build ✨")
   end
+
+   lane :release do |options|
+   increment_build_number(
+         build_number: latest_testflight_build_number + 1,
+         xcodeproj: "Runner.xcodeproj"
+         )
+     flutter_build_ios
+      build_app(
+         workspace: 'Runner.xcworkspace',
+         scheme: 'Runner',
+       )
+      upload_to_app_store(
+        force: true,
+        reject_if_possible: true,
+        skip_metadata: false,
+        skip_screenshots: true,
+        languages: ['en-US', 'ja','ko'],
+        release_notes: {
+          "default" => "버그 수정",
+          "en-US" => "bug fixed",
+          "ja" => "バグ修正",
+          "ko" => "버그 수정"
+        },
+        submit_for_review: true,
+        automatic_release: true,
+        submission_information: {
+        add_id_info_uses_idfa: false,
+        export_compliance_uses_encryption: false }
+      )
+      send_slack_message(msg: "🚀 Successfully distributed a new build ✨")
+    end
 
   # Send slack message
   lane :send_slack_message do |options|

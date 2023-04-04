@@ -17,8 +17,11 @@ import 'package:get/get.dart';
 
 class LoginTermsInformationScreen
     extends GetView<LoginTermsInformationViewModel> {
+  final bool isSocialKakao;
+
   const LoginTermsInformationScreen({
     Key? key,
+    required this.isSocialKakao,
   }) : super(key: key);
 
   @override
@@ -206,7 +209,9 @@ class LoginTermsInformationScreen
                 title: "가입 완료하기",
                 onTap: controller.isTermsAgree.value &&
                     controller.isPrivacyPolicyAgree.value
-                    ? controller.goToLoginScreen
+                    ? () {
+                  controller.goToLoginScreen(isSocialKakao);
+                }
                     : null,
               ),
             ),

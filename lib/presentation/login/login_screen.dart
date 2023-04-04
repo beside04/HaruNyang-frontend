@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -12,16 +13,20 @@ import 'components/apple_login_widget.dart';
 
 class LoginScreen extends GetView<LoginViewModel> {
   final bool isSignup;
+  final bool isSocialKakao;
 
   const LoginScreen({
     Key? key,
     this.isSignup = false,
+    this.isSocialKakao = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    getLoginBinding();
+
     if (isSignup) {
-      controller.signupAndLogin();
+      controller.signupAndLogin(isSocialKakao);
     }
 
     return DefaultLayout(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
@@ -34,20 +35,26 @@ class MainViewModel extends GetxController {
     if (pushMessagePermission.value) {
       pushMessagePermission.value = false;
       pushMessagePermissionUseCase.setPushMessagePermission(false.toString());
+      pushMessagePermissionUseCase.cancelAllNotifications();
     } else {
       pushMessagePermission.value = true;
       pushMessagePermissionUseCase.setPushMessagePermission(true.toString());
+      pushMessagePermissionUseCase.dailyAtTimeNotification(
+        Time(
+          pushMessageTime.value.hour,
+          pushMessageTime.value.minute,
+          pushMessageTime.value.second,
+        ),
+      );
     }
   }
 
   toggleMarketingConsentCheck() {
     if (marketingConsentAgree.value) {
       marketingConsentAgree.value = false;
-      pushMessagePermission.value = false;
       pushMessagePermissionUseCase.setMarketingConsentAgree(false.toString());
     } else {
       marketingConsentAgree.value = true;
-      pushMessagePermission.value = true;
       pushMessagePermissionUseCase.setMarketingConsentAgree(true.toString());
     }
   }
