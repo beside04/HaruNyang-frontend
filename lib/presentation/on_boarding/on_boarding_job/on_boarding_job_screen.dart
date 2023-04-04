@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -30,103 +31,106 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
   Widget build(BuildContext context) {
     getOnBoardingJobBinding();
 
-    return Scaffold(
-      body: SafeArea(
-        bottom: false,
-        child: FormBuilder(
-          key: _fbKey,
-          autovalidateMode: AutovalidateMode.disabled,
-          child: Stack(
-            children: [
-              Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 12.h,
-                    ),
-                    const OnBoardingStepper(
-                      pointNumber: 3,
-                    ),
-                    Padding(
-                      padding: kPrimarySidePadding,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          Text(
-                            "어떤 일을",
-                            style: kHeader2Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle),
-                          ),
-                          SizedBox(
-                            height: 4.h,
-                          ),
-                          Text(
-                            "하고 계세요?",
-                            style: kHeader2Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle),
-                          ),
-                          SizedBox(
-                            height: 40.h,
-                          ),
-                          GridView.builder(
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: jobList.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 0.8.h,
-                            ),
-                            itemBuilder: (BuildContext context, int i) {
-                              return Obx(() => JobButton(
-                                    job: jobList[i].name,
-                                    icon: jobList[i].icon,
-                                    selected: controller.jobStatus.value ==
-                                        Job.values[i],
-                                    onPressed: () {
-                                      controller.jobStatus.value =
-                                          Job.values[i];
-                                    },
-                                  ));
-                            },
-                          ),
-                        ],
+    return DefaultLayout(
+      screenName: 'Screen Event : 온보딩->직업 Screen',
+      child: Scaffold(
+        body: SafeArea(
+          bottom: false,
+          child: FormBuilder(
+            key: _fbKey,
+            autovalidateMode: AutovalidateMode.disabled,
+            child: Stack(
+              children: [
+                Center(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: 12.h,
                       ),
-                    ),
-                  ],
+                      const OnBoardingStepper(
+                        pointNumber: 3,
+                      ),
+                      Padding(
+                        padding: kPrimarySidePadding,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 24.h,
+                            ),
+                            Text(
+                              "어떤 일을",
+                              style: kHeader2Style.copyWith(
+                                  color: Theme.of(context).colorScheme.textTitle),
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            Text(
+                              "하고 계세요?",
+                              style: kHeader2Style.copyWith(
+                                  color: Theme.of(context).colorScheme.textTitle),
+                            ),
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: jobList.length,
+                              gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 3,
+                                childAspectRatio: 0.8.h,
+                              ),
+                              itemBuilder: (BuildContext context, int i) {
+                                return Obx(() => JobButton(
+                                  job: jobList[i].name,
+                                  icon: jobList[i].icon,
+                                  selected: controller.jobStatus.value ==
+                                      Job.values[i],
+                                  onPressed: () {
+                                    controller.jobStatus.value =
+                                    Job.values[i];
+                                  },
+                                ));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Obx(
-                () => BottomButton(
-                  title: '다음',
-                  onTap: controller.jobStatus.value == null
-                      ? null
-                      : () async {
-                          var key = _fbKey.currentState!;
-                          if (key.saveAndValidate()) {
-                            FocusScope.of(context).unfocus();
+                Obx(
+                      () => BottomButton(
+                    title: '다음',
+                    onTap: controller.jobStatus.value == null
+                        ? null
+                        : () async {
+                      var key = _fbKey.currentState!;
+                      if (key.saveAndValidate()) {
+                        FocusScope.of(context).unfocus();
 
-                            await onBoardingController.putMyInformation(
-                              nickname: nickname,
-                              job: controller.jobStatus.value!.name,
-                              age: birth,
-                              isPutNickname: false,
-                              isOnBoarding: false,
-                            );
+                        await onBoardingController.putMyInformation(
+                          nickname: nickname,
+                          job: controller.jobStatus.value!.name,
+                          age: birth,
+                          isPutNickname: false,
+                          isOnBoarding: false,
+                        );
 
-                            Get.to(
+                        Get.to(
                               () => const OnBoardingFinishScreen(),
-                              transition: Transition.cupertino,
-                            );
-                          }
-                        },
+                          transition: Transition.cupertino,
+                        );
+                      }
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

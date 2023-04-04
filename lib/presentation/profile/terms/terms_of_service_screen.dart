@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
@@ -15,42 +16,44 @@ class TermsOfServiceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "서비스 이용약관",
-          style: kHeader4Style.copyWith(
-              color: Theme.of(context).colorScheme.textTitle),
+    return DefaultLayout(
+      screenName: 'Screen Event : 프로필->이용약관->서비스 이용약관 Screen',
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "서비스 이용약관",
+            style: kHeader4Style.copyWith(
+                color: Theme.of(context).colorScheme.textTitle),
+          ),
+          elevation: 0,
+          leading: isProfileScreen
+              ? BackIcon(
+            onPressed: () {
+              Get.back();
+            },
+          )
+              : null,
+          actions: [
+            isProfileScreen
+                ? Container()
+                : IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: const Icon(
+                Icons.close,
+              ),
+            )
+          ],
+          automaticallyImplyLeading: isProfileScreen ? true : false,
         ),
-        elevation: 0,
-        leading: isProfileScreen
-            ? BackIcon(
-                onPressed: () {
-                  Get.back();
-                },
-              )
-            : null,
-        actions: [
-          isProfileScreen
-              ? Container()
-              : IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: const Icon(
-                    Icons.close,
-                  ),
-                )
-        ],
-        automaticallyImplyLeading: isProfileScreen ? true : false,
-      ),
-      body: SafeArea(
-        child: Scrollbar(
-          thumbVisibility: true,
-          thickness: 4.0,
-          radius: const Radius.circular(8.0),
-          child: Markdown(
-            data: '''
+        body: SafeArea(
+          child: Scrollbar(
+            thumbVisibility: true,
+            thickness: 4.0,
+            radius: const Radius.circular(8.0),
+            child: Markdown(
+              data: '''
 ## 제 1 장 총칙
 
 
@@ -197,29 +200,30 @@ class TermsOfServiceScreen extends StatelessWidget {
 
 # Copyright © 하루냥. All rights reserved.
 ''',
-            styleSheet: MarkdownStyleSheet(
-              h1: kBody3Style.copyWith(
-                  color: Theme.of(context).colorScheme.textLowEmphasis),
-              h1Align: WrapAlignment.center,
-              h2: kHeader2Style.copyWith(
-                  color: Theme.of(context).colorScheme.textBody),
-              h2Padding: const EdgeInsets.symmetric(
-                vertical: 10,
-              ),
-              h3: kHeader3Style.copyWith(
-                  color: Theme.of(context).colorScheme.textBody),
-              h3Padding: const EdgeInsets.symmetric(
-                vertical: 10,
-              ),
-              h4: kHeader4Style.copyWith(
-                  color: Theme.of(context).colorScheme.textBody),
-              p: kBody2Style.copyWith(
-                  color: Theme.of(context).colorScheme.textBody),
-              horizontalRuleDecoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    width: 1.0,
-                    color: Theme.of(context).colorScheme.border,
+              styleSheet: MarkdownStyleSheet(
+                h1: kBody3Style.copyWith(
+                    color: Theme.of(context).colorScheme.textLowEmphasis),
+                h1Align: WrapAlignment.center,
+                h2: kHeader2Style.copyWith(
+                    color: Theme.of(context).colorScheme.textBody),
+                h2Padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                h3: kHeader3Style.copyWith(
+                    color: Theme.of(context).colorScheme.textBody),
+                h3Padding: const EdgeInsets.symmetric(
+                  vertical: 10,
+                ),
+                h4: kHeader4Style.copyWith(
+                    color: Theme.of(context).colorScheme.textBody),
+                p: kBody2Style.copyWith(
+                    color: Theme.of(context).colorScheme.textBody),
+                horizontalRuleDecoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      width: 1.0,
+                      color: Theme.of(context).colorScheme.border,
+                    ),
                   ),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
@@ -23,55 +24,58 @@ class LoginScreen extends GetView<LoginViewModel> {
       controller.signupAndLogin();
     }
 
-    return WillPopScope(
-      onWillPop: () async {
-        bool backResult = GlobalUtils.onBackPressed();
-        return await Future.value(backResult);
-      },
-      child: Scaffold(
-        backgroundColor: kOrange300Color,
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: 250.h,
+    return DefaultLayout(
+      screenName: 'Screen Event : 로그인 Screen',
+      child: WillPopScope(
+        onWillPop: () async {
+          bool backResult = GlobalUtils.onBackPressed();
+          return await Future.value(backResult);
+        },
+        child: Scaffold(
+          backgroundColor: kOrange300Color,
+          body: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 250.h,
+                ),
+                child: Center(
+                  child: SvgPicture.asset(
+                    "lib/config/assets/images/login/login_logo.svg",
+                    width: 82.w,
+                  ),
+                ),
               ),
-              child: Center(
+              Center(
                 child: SvgPicture.asset(
-                  "lib/config/assets/images/login/login_logo.svg",
+                  "lib/config/assets/images/character/logo_text.svg",
                   width: 82.w,
                 ),
               ),
-            ),
-            Center(
-              child: SvgPicture.asset(
-                "lib/config/assets/images/character/logo_text.svg",
-                width: 82.w,
+              SizedBox(
+                height: 230.h,
               ),
-            ),
-            SizedBox(
-              height: 230.h,
-            ),
-            InkWell(
-              onTap: () async {
-                await controller.connectKakaoLogin();
-              },
-              child: const KakaoLoginWidget(),
-            ),
-            SizedBox(
-              height: 12.h,
-            ),
-            GetPlatform.isAndroid
-                ? Container()
-                : InkWell(
-                    onTap: () async {
-                      await controller.connectAppleLogin();
-                    },
-                    child: const AppleLoginWidget(),
-                  ),
-          ],
+              InkWell(
+                onTap: () async {
+                  await controller.connectKakaoLogin();
+                },
+                child: const KakaoLoginWidget(),
+              ),
+              SizedBox(
+                height: 12.h,
+              ),
+              GetPlatform.isAndroid
+                  ? Container()
+                  : InkWell(
+                onTap: () async {
+                  await controller.connectAppleLogin();
+                },
+                child: const AppleLoginWidget(),
+              ),
+            ],
+          ),
         ),
       ),
     );

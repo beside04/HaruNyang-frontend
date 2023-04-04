@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
@@ -56,129 +57,132 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
     final controller = Get.find<OnBoardingNicknameViewModel>();
     final onBoardingController = Get.find<OnBoardingController>();
 
-    return WillPopScope(
-      onWillPop: () async {
-        bool backResult = GlobalUtils.onBackPressed();
-        return await Future.value(backResult);
-      },
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
+    return DefaultLayout(
+      screenName: 'Screen Event : 온보딩->이름 Screen',
+      child: WillPopScope(
+        onWillPop: () async {
+          bool backResult = GlobalUtils.onBackPressed();
+          return await Future.value(backResult);
         },
-        child: Scaffold(
-          body: SafeArea(
-            bottom: false,
-            child: FormBuilder(
-              key: _fbKey,
-              autovalidateMode: AutovalidateMode.disabled,
-              child: Stack(
-                children: [
-                  Center(
-                    child: ListView(
-                      children: [
-                        SizedBox(
-                          height: 12.h,
-                        ),
-                        const OnBoardingStepper(
-                          pointNumber: 1,
-                        ),
-                        Padding(
-                          padding: kPrimarySidePadding,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 24.h,
-                              ),
-                              Text(
-                                "안녕하세요, 저는 하루냥이에요",
-                                style: kHeader2Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
-                              ),
-                              SizedBox(
-                                height: 4.h,
-                              ),
-                              Text(
-                                "이름이 뭐에요?",
-                                style: kHeader2Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
-                              ),
-                              SizedBox(
-                                height: 20.h,
-                              ),
-                              NicknameTextField(
-                                nameHintText: '이름',
-                                focus: nicknameFocusNode,
-                                textEditingController:
-                                    controller.nicknameEditingController,
-                                suffixIcon: Obx(
-                                  () => controller.nicknameValue.value.isEmpty
-                                      ? Visibility(
-                                          visible: false,
-                                          child: Container(),
-                                        )
-                                      : GestureDetector(
-                                          child: const Icon(
-                                            Icons.cancel,
-                                            color: kBlackColor,
-                                            size: 20,
-                                          ),
-                                          onTap: () => controller
-                                              .nicknameEditingController
-                                              .clear(),
-                                        ),
-                                ),
-                              ),
-                              Obx(
-                                () => controller.isOnKeyboard.value
-                                    ? Container()
-                                    : SizedBox(
-                                        height: 118.h,
-                                      ),
-                              ),
-                              Center(
-                                child: SvgPicture.asset(
-                                  "lib/config/assets/images/character/character8.svg",
-                                  width: 340.w,
-                                  height: 340.h,
-                                ),
-                              ),
-                            ],
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+            body: SafeArea(
+              bottom: false,
+              child: FormBuilder(
+                key: _fbKey,
+                autovalidateMode: AutovalidateMode.disabled,
+                child: Stack(
+                  children: [
+                    Center(
+                      child: ListView(
+                        children: [
+                          SizedBox(
+                            height: 12.h,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Visibility(
-                    visible: btnVisible,
-                    child: Obx(
-                      () => BottomButton(
-                        title: '다음',
-                        onTap: controller.nicknameValue.value.isEmpty
-                            ? null
-                            : () async {
-                                var key = _fbKey.currentState!;
-                                if (key.saveAndValidate() ||
-                                    onBoardingController
-                                        .isDuplicateNickname.value) {
-                                  FocusScope.of(context).unfocus();
-
-                                  await onBoardingController.putMyInformation(
-                                    nickname: controller.nicknameValue.value,
-                                    isOnBoarding: true,
-                                    isPutNickname: true,
-                                    context: context,
-                                  );
-                                }
-                              },
+                          const OnBoardingStepper(
+                            pointNumber: 1,
+                          ),
+                          Padding(
+                            padding: kPrimarySidePadding,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 24.h,
+                                ),
+                                Text(
+                                  "안녕하세요, 저는 하루냥이에요",
+                                  style: kHeader2Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
+                                ),
+                                SizedBox(
+                                  height: 4.h,
+                                ),
+                                Text(
+                                  "이름이 뭐에요?",
+                                  style: kHeader2Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
+                                ),
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                NicknameTextField(
+                                  nameHintText: '이름',
+                                  focus: nicknameFocusNode,
+                                  textEditingController:
+                                  controller.nicknameEditingController,
+                                  suffixIcon: Obx(
+                                        () => controller.nicknameValue.value.isEmpty
+                                        ? Visibility(
+                                      visible: false,
+                                      child: Container(),
+                                    )
+                                        : GestureDetector(
+                                      child: const Icon(
+                                        Icons.cancel,
+                                        color: kBlackColor,
+                                        size: 20,
+                                      ),
+                                      onTap: () => controller
+                                          .nicknameEditingController
+                                          .clear(),
+                                    ),
+                                  ),
+                                ),
+                                Obx(
+                                      () => controller.isOnKeyboard.value
+                                      ? Container()
+                                      : SizedBox(
+                                    height: 118.h,
+                                  ),
+                                ),
+                                Center(
+                                  child: SvgPicture.asset(
+                                    "lib/config/assets/images/character/character8.svg",
+                                    width: 340.w,
+                                    height: 340.h,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  )
-                ],
+                    Visibility(
+                      visible: btnVisible,
+                      child: Obx(
+                            () => BottomButton(
+                          title: '다음',
+                          onTap: controller.nicknameValue.value.isEmpty
+                              ? null
+                              : () async {
+                            var key = _fbKey.currentState!;
+                            if (key.saveAndValidate() ||
+                                onBoardingController
+                                    .isDuplicateNickname.value) {
+                              FocusScope.of(context).unfocus();
+
+                              await onBoardingController.putMyInformation(
+                                nickname: controller.nicknameValue.value,
+                                isOnBoarding: true,
+                                isPutNickname: true,
+                                context: context,
+                              );
+                            }
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
