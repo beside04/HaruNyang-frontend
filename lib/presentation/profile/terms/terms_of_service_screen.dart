@@ -17,7 +17,7 @@ class TermsOfServiceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->이용약관->서비스 이용약관 Screen',
+      screenName: 'Screen_Event_Profile_Terms_ServiceTerms',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

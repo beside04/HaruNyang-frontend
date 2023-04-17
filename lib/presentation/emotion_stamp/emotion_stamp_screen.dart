@@ -18,6 +18,8 @@ import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/utils/utils.dart';
+
 class YearMonthModel extends DatePickerModel {
   YearMonthModel(
       {required DateTime currentTime,
@@ -62,7 +64,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
     )..load();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 메인->감정 캘린더 Screen',
+      screenName: 'Screen_Event_Main_EmotionCalendar',
       child: Scaffold(
         appBar: AppBar(
           automaticallyImplyLeading: false,
@@ -76,35 +78,37 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
           ),
           actions: [
             Obx(
-                  () => IconButton(
+              () => IconButton(
                 onPressed: () {
                   diaryController.toggleCalendarMode();
                 },
                 icon: diaryController.state.value.isCalendar
                     ? mainViewController.isDarkMode.value
-                    ? SvgPicture.asset(
-                  "lib/config/assets/images/diary/dark_mode/list.svg",
-                )
-                    : SvgPicture.asset(
-                  "lib/config/assets/images/diary/light_mode/list.svg",
-                )
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/diary/dark_mode/list.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/diary/light_mode/list.svg",
+                          )
                     : mainViewController.isDarkMode.value
-                    ? SvgPicture.asset(
-                  "lib/config/assets/images/diary/dark_mode/calendar.svg",
-                )
-                    : SvgPicture.asset(
-                  "lib/config/assets/images/diary/light_mode/calendar.svg",
-                ),
+                        ? SvgPicture.asset(
+                            "lib/config/assets/images/diary/dark_mode/calendar.svg",
+                          )
+                        : SvgPicture.asset(
+                            "lib/config/assets/images/diary/light_mode/calendar.svg",
+                          ),
               ),
             )
           ],
           title: Obx(
-                () => InkWell(
+            () => InkWell(
               onTap: () {
+                GlobalUtils.setAnalyticsCustomEvent('Click_Change_Month');
                 DatePicker.showPicker(
                   context,
                   pickerModel: YearMonthModel(
-                    currentTime: diaryController.state.value.focusedCalendarDate,
+                    currentTime:
+                        diaryController.state.value.focusedCalendarDate,
                     maxTime: DateTime(2099, 12),
                     minTime: DateTime(2000, 1),
                     locale: LocaleType.ko,
@@ -118,7 +122,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                     itemStyle: kSubtitle1Style.copyWith(
                         color: Theme.of(context).colorScheme.textBody),
                     backgroundColor:
-                    Theme.of(context).colorScheme.backgroundModal,
+                        Theme.of(context).colorScheme.backgroundModal,
                     title: "다른 날짜 일기 보기",
                   ),
                 );
@@ -152,11 +156,12 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
           child: Column(
             children: [
               Obx(
-                    () => Expanded(
+                () => Expanded(
                   child: PageTransitionSwitcher(
                     duration: const Duration(milliseconds: 300),
                     reverse: !diaryController.state.value.isCalendar,
-                    transitionBuilder: (Widget child, Animation<double> animation,
+                    transitionBuilder: (Widget child,
+                        Animation<double> animation,
                         Animation<double> secondaryAnimation) {
                       return SharedAxisTransition(
                         animation: animation,
@@ -168,15 +173,20 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                     child: diaryController.state.value.isCalendarLoading
                         ? const Center(child: CircularProgressIndicator())
                         : diaryController.state.value.isCalendar
-                        ? const EmotionCalendarWidget()
-                        : const EmotionListWidget(),
+                            ? const EmotionCalendarWidget()
+                            : const EmotionListWidget(),
                   ),
                 ),
               ),
               SizedBox(
                 height: 100.h,
-                child: AdWidget(
-                  ad: banner,
+                child: GestureDetector(
+                  onTap: () {
+                    GlobalUtils.setAnalyticsCustomEvent('Click_AD');
+                  },
+                  child: AdWidget(
+                    ad: banner,
+                  ),
                 ),
               ),
             ],

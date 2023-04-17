@@ -15,6 +15,8 @@ import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
 
+import '../../core/utils/utils.dart';
+
 class DiaryScreen extends StatefulWidget {
   final DateTime? date;
 
@@ -43,17 +45,21 @@ class _DiaryScreenState extends State<DiaryScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 메인->일기 쓰기 Screen',
+      screenName: 'Screen_Event_Main_WriteDiary',
       child: WillPopScope(
         onWillPop: () async {
-          controller.isEmotionModal.value
-              ? Get.offAll(
-                () => const HomeScreen(),
-            binding: BindingsBuilder(
-              getHomeViewModelBinding,
-            ),
-          )
-              : controller.popUpEmotionModal();
+          if (controller.isEmotionModal.value) {
+            GlobalUtils.setAnalyticsCustomEvent('Click_Diary_BackToEmotionCalendar');
+            Get.offAll(
+                  () => const HomeScreen(),
+              binding: BindingsBuilder(
+                getHomeViewModelBinding,
+              ),
+            );
+          } else {
+            GlobalUtils.setAnalyticsCustomEvent('Click_Diary_BackToWeather');
+            controller.popUpEmotionModal();
+          }
 
           return false;
         },
@@ -69,9 +75,9 @@ class _DiaryScreenState extends State<DiaryScreen> {
                 colors: Get.find<MainViewModel>().isDarkMode.value
                     ? [kGrayColor950, kGrayColor950]
                     : [
-                  const Color(0xffffac60),
-                  const Color(0xffffc793),
-                ],
+                        const Color(0xffffac60),
+                        const Color(0xffffc793),
+                      ],
               ),
             ),
             child: Column(
@@ -86,7 +92,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                   child: Row(
                     children: [
                       Obx(
-                            () => Text(
+                        () => Text(
                           "${onBoardingController.state.value.nickname}님,",
                           style: kHeader2Style.copyWith(
                               color: Theme.of(context).colorScheme.textTitle),
@@ -98,23 +104,23 @@ class _DiaryScreenState extends State<DiaryScreen> {
                 Padding(
                     padding: EdgeInsets.only(left: 24.w),
                     child: Obx(
-                          () => Row(
+                      () => Row(
                         children: [
                           controller.isEmotionModal.value
                               ? Text(
-                            "오늘 날씨 어때요?",
-                            style: kHeader2Style.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .textTitle),
-                          )
+                                  "오늘 날씨 어때요?",
+                                  style: kHeader2Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
+                                )
                               : Text(
-                            "오늘 기분 어때요?",
-                            style: kHeader2Style.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .textTitle),
-                          ),
+                                  "오늘 기분 어때요?",
+                                  style: kHeader2Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
+                                ),
                         ],
                       ),
                     )),
@@ -135,8 +141,9 @@ class _DiaryScreenState extends State<DiaryScreen> {
                         ),
                         const WeatherModal(),
                         EmotionModal(
-                          date:
-                          widget.date != null ? widget.date! : DateTime.now(),
+                          date: widget.date != null
+                              ? widget.date!
+                              : DateTime.now(),
                         ),
                       ],
                     ),

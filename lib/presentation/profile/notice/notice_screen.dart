@@ -20,7 +20,7 @@ class NoticeScreen extends GetView<NoticeViewModel> {
     getNoticeViewModelBinding();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->공지사항 Screen',
+      screenName: 'Screen_Event_Profile_Notice',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

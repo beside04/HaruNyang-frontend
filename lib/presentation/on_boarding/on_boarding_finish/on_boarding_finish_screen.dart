@@ -22,7 +22,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
     getOnBoardingFinishBinding();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 온보딩->완료 Screen',
+      screenName: 'Screen_Event_OnBoarding_Done',
       child: WillPopScope(
         onWillPop: () async {
           Get.offAll(

@@ -30,7 +30,7 @@ class PushMessageScreen extends GetView<PushMessageViewModel> {
     final mainViewController = Get.find<MainViewModel>();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->푸쉬 메세지 설정 Screen',
+      screenName: 'Screen_Event_Profile_PushMessage',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

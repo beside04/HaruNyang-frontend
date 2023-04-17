@@ -107,7 +107,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 스플래쉬 Screen',
+      screenName: 'Screen_Event_Splash',
       child: Lottie.asset(
         'lib/config/assets/lottie/graphic_type.json',
         controller: _controller,

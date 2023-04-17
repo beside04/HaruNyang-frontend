@@ -19,7 +19,7 @@ class _DefaultLayoutState extends State<DefaultLayout> {
   @override
   void initState() {
     super.initState();
-    GlobalUtils.setAnalyticsCustomEvent(widget.screenName);
+    GlobalUtils.setAnalyticsCustomScreenViewEvent(widget.screenName);
   }
 
   @override

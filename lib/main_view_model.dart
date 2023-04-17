@@ -21,10 +21,12 @@ class MainViewModel extends GetxController {
 
   void toggleTheme() {
     if (isDarkMode.value) {
+      GlobalUtils.setAnalyticsCustomEvent('Click_ThemeMode_DarkToLight');
       ThemeMode.light;
       isDarkMode.value = false;
       darkModeUseCase.setDarkMode(false.toString());
     } else {
+      GlobalUtils.setAnalyticsCustomEvent('Click_ThemeMode_LightToDark');
       ThemeMode.dark;
       isDarkMode.value = true;
       darkModeUseCase.setDarkMode(true.toString());
@@ -51,9 +53,11 @@ class MainViewModel extends GetxController {
 
   toggleMarketingConsentCheck() {
     if (marketingConsentAgree.value) {
+      GlobalUtils.setAnalyticsCustomEvent('Click_MarketingToggle_Disagree');
       marketingConsentAgree.value = false;
       pushMessagePermissionUseCase.setMarketingConsentAgree(false.toString());
     } else {
+      GlobalUtils.setAnalyticsCustomEvent('Click_MarketingToggle_Agree');
       marketingConsentAgree.value = true;
       pushMessagePermissionUseCase.setMarketingConsentAgree(true.toString());
     }

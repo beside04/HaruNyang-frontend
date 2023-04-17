@@ -20,6 +20,7 @@ import 'package:get/get.dart';
 import 'package:frontend/presentation/profile/terms/terms_screen.dart';
 import 'package:in_app_review/in_app_review.dart';
 
+import '../../core/utils/utils.dart';
 import 'push_message/push_message_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -31,10 +32,11 @@ class ProfileScreen extends StatelessWidget {
     final onBoardingController = Get.find<OnBoardingController>();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 메인->프로필 Screen',
+      screenName: 'Screen_Event_Main_Profile',
       child: Scaffold(
-        backgroundColor:
-        mainViewController.isDarkMode.value ? kGrayColor900 : kBeigeColor200,
+        backgroundColor: mainViewController.isDarkMode.value
+            ? kGrayColor900
+            : kBeigeColor200,
         body: SafeArea(
           child: ListView(
             children: [
@@ -57,7 +59,7 @@ class ProfileScreen extends StatelessWidget {
                           color: kOrange300Color,
                           shape: BoxShape.circle,
                           border:
-                          Border.all(width: 0.5, color: Colors.transparent),
+                              Border.all(width: 0.5, color: Colors.transparent),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(6.w),
@@ -74,7 +76,7 @@ class ProfileScreen extends StatelessWidget {
                         height: 12.h,
                       ),
                       Obx(
-                            () => Text(
+                        () => Text(
                           '${onBoardingController.state.value.nickname}님 반가워요!',
                           style: kHeader2Style.copyWith(
                               color: Theme.of(context).colorScheme.textTitle),
@@ -84,49 +86,50 @@ class ProfileScreen extends StatelessWidget {
                         height: 10.h,
                       ),
                       Obx(
-                            () => Row(
+                        () => Row(
                           children: [
-                            onBoardingController.state.value.loginType == "KAKAO"
+                            onBoardingController.state.value.loginType ==
+                                    "KAKAO"
                                 ? Container(
-                              width: 20.w,
-                              height: 20.h,
-                              decoration: const BoxDecoration(
-                                color: Color(0xffffe818),
-                                shape: BoxShape.circle,
-                              ),
-                              child: Stack(
-                                children: [
-                                  Center(
-                                    child: SvgPicture.asset(
-                                      'lib/config/assets/images/login/kakao_logo.svg',
-                                      width: 10.w,
-                                      height: 10.h,
+                                    width: 20.w,
+                                    height: 20.h,
+                                    decoration: const BoxDecoration(
+                                      color: Color(0xffffe818),
+                                      shape: BoxShape.circle,
                                     ),
-                                  ),
-                                ],
-                              ),
-                            )
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: SvgPicture.asset(
+                                            'lib/config/assets/images/login/kakao_logo.svg',
+                                            width: 10.w,
+                                            height: 10.h,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
                                 : Container(
-                              width: 20.w,
-                              height: 20.h,
-                              decoration: const BoxDecoration(
-                                color: kBlackColor,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Stack(
-                                children: [
-                                  Center(
-                                    child: SvgPicture.asset(
-                                      'lib/config/assets/images/login/apple_logo.svg',
-                                      width: 10.w,
-                                      height: 10.h,
+                                    width: 20.w,
+                                    height: 20.h,
+                                    decoration: const BoxDecoration(
+                                      color: kBlackColor,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Center(
+                                          child: SvgPicture.asset(
+                                            'lib/config/assets/images/login/apple_logo.svg',
+                                            width: 10.w,
+                                            height: 10.h,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
                             Obx(
-                                  () => Text(
+                              () => Text(
                                 " ${onBoardingController.state.value.email}",
                                 style: kBody3Style.copyWith(
                                     color: Theme.of(context)
@@ -160,9 +163,9 @@ class ProfileScreen extends StatelessWidget {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Get.to(
-                        () => ProfileSettingScreen(
+                    () => ProfileSettingScreen(
                       isKakaoLogin:
-                      onBoardingController.state.value.loginType == 'KAKAO',
+                          onBoardingController.state.value.loginType == 'KAKAO',
                     ),
                     binding: BindingsBuilder(
                       getProfileSettingViewModelBinding,
@@ -204,9 +207,9 @@ class ProfileScreen extends StatelessWidget {
                 color: Theme.of(context).colorScheme.border,
               ),
               Obx(
-                    () => ProfileButton(
+                () => ProfileButton(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                      const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   icon: FlutterSwitch(
                     padding: 2,
                     width: 52.0.w,
@@ -265,7 +268,7 @@ class ProfileScreen extends StatelessWidget {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Get.to(
-                        () => const TermsScreen(),
+                    () => const TermsScreen(),
                   );
                 },
               ),
@@ -279,6 +282,7 @@ class ProfileScreen extends StatelessWidget {
                 title: '개발자 응원하기',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () async {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_CheerUp');
                   final InAppReview inAppReview = InAppReview.instance;
 
                   if (await inAppReview.isAvailable()) {

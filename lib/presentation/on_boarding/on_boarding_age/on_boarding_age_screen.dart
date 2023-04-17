@@ -32,7 +32,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
     getOnBoardingBirthBinding();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 온보딩->나이 Screen',
+      screenName: 'Screen_Event_OnBoarding_Age',
       child: Scaffold(
         body: SafeArea(
           bottom: false,

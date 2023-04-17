@@ -32,7 +32,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
     getOnBoardingJobBinding();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 온보딩->직업 Screen',
+      screenName: 'Screen_Event_OnBoarding_Job',
       child: Scaffold(
         body: SafeArea(
           bottom: false,

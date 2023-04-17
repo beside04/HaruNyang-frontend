@@ -29,7 +29,7 @@ class LoginTermsInformationScreen
     getLoginTermsInformationBinding();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 로그인->약관정보 Screen',
+      screenName: 'Screen_Event_Login_Terms',
       child: Scaffold(
         appBar: AppBar(
             centerTitle: true,

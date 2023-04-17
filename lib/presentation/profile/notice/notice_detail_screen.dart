@@ -23,7 +23,7 @@ class NoticeDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->공지사항->제목: [$title] Screen',
+      screenName: 'Screen_Event_Profile_Notice_${DateFormat('yyyy.MM.dd').format(date)}',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

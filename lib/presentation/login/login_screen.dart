@@ -30,7 +30,7 @@ class LoginScreen extends GetView<LoginViewModel> {
     }
 
     return DefaultLayout(
-      screenName: 'Screen Event : 로그인 Screen',
+      screenName: 'Screen_Event_Login',
       child: WillPopScope(
         onWillPop: () async {
           bool backResult = GlobalUtils.onBackPressed();

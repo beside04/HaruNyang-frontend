@@ -35,9 +35,15 @@ class GlobalUtils {
     return false;
   }
 
+  static setAnalyticsCustomScreenViewEvent(String screenName) async {
+    await FirebaseAnalytics.instance.logEvent(
+      name: screenName,
+    );
+  }
+
   static setAnalyticsCustomEvent(String eventName) async {
     await FirebaseAnalytics.instance.logEvent(
-      name: eventName,
+        name: eventName,
     );
   }
 }

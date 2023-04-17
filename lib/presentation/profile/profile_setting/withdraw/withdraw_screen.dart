@@ -15,6 +15,8 @@ import 'package:frontend/presentation/profile/profile_setting/withdraw/component
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/utils/utils.dart';
+
 class WithdrawScreen extends GetView<WithdrawViewModel> {
   final bool isKakaoLogin;
 
@@ -26,7 +28,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->내 정보 관리->회원탈퇴 Screen',
+      screenName: 'Screen_Event_Profile_MyInformation_Withdraw',
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -153,6 +155,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                 title: "탈퇴하기",
                 onTap: controller.state.value.isAgreeWithdrawTerms
                     ? () {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_Withdraw_Done');
                   showDialog(
                     barrierDismissible: true,
                     context: context,

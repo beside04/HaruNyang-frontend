@@ -9,6 +9,8 @@ import 'package:frontend/presentation/diary/diary_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/utils/utils.dart';
+
 class EmptyDiaryScreen extends StatelessWidget {
   final DateTime date;
 
@@ -20,7 +22,7 @@ class EmptyDiaryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 일기 확인(빈 화면) Screen',
+      screenName: 'Screen_Event_EmptyDiary',
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,
@@ -73,6 +75,7 @@ class EmptyDiaryScreen extends StatelessWidget {
             BottomButton(
               title: '일기쓰기',
               onTap: () {
+                GlobalUtils.setAnalyticsCustomEvent('Click_EmptyDiary_WriteDiary');
                 Get.to(
                       () => DiaryScreen(
                     date: date,

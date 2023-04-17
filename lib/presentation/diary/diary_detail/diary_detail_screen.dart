@@ -24,6 +24,8 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
+import '../../../core/utils/utils.dart';
+
 class DiaryDetailScreen extends StatefulWidget {
   final DateTime date;
   final DiaryData diaryData;
@@ -64,7 +66,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 일기 확인 Screen',
+      screenName: 'Screen_Event_DiaryRead',
       child: WillPopScope(
         onWillPop: () async {
           Get.offAll(
@@ -89,6 +91,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                 child: PopupMenuButton(
                   onSelected: (id) {
                     if (id == 'edit') {
+                      GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Update');
                       Get.to(
                         () => WriteDiaryScreen(
                           date: widget.date,
@@ -102,6 +105,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                       );
                     }
                     if (id == 'delete') {
+                      GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Delete');
                       showDialog(
                         barrierDismissible: true,
                         context: context,

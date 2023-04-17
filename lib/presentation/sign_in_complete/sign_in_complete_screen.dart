@@ -16,7 +16,7 @@ class SignInCompleteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 회원가입 완료 Screen',
+      screenName: 'Screen_Event_SignInComplete',
       child: WillPopScope(
         onWillPop: () async {
           bool backResult = GlobalUtils.onBackPressed();

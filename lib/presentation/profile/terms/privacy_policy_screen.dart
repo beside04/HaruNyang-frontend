@@ -17,7 +17,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->이용약관->개인정보 처리방침 Screen',
+      screenName: 'Screen_Event_Profile_Terms_Privacy',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

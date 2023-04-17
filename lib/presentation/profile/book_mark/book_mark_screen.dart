@@ -24,7 +24,7 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->북마크 Screen',
+      screenName: 'Screen_Event_Profile_Bookmark',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

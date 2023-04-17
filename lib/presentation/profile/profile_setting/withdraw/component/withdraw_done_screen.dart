@@ -17,7 +17,7 @@ class WithdrawDoneScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 회원탈퇴 완료 Screen',
+      screenName: 'Screen_Event_Profile_MyInformation_Withdraw_Done',
       child: Scaffold(
         appBar: AppBar(
           elevation: 0,

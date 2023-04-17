@@ -28,6 +28,8 @@ import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/utils.dart';
+
 class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
   final bool isKakaoLogin;
 
@@ -44,7 +46,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
     final mainViewController = Get.find<MainViewModel>();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->내 정보 관리 Screen',
+      screenName: 'Screen_Event_Profile_MyInformation',
       child: Scaffold(
         backgroundColor:
         mainViewController.isDarkMode.value ? kGrayColor900 : kBeigeColor200,
@@ -74,6 +76,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 title: '닉네임 수정',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_NickNameEdit');
                   showModalBottomSheet(
                     backgroundColor:
                     Theme.of(context).colorScheme.backgroundModal,
@@ -177,6 +180,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 title: '나이 수정',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_AgeEdit');
                   showModalBottomSheet(
                     backgroundColor:
                     Theme.of(context).colorScheme.backgroundModal,
@@ -307,6 +311,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 title: '직업 수정',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_JobEdit');
                   controller.jobStatus.value = EnumToString.fromString(
                       Job.values, onBoardingController.state.value.job);
                   showModalBottomSheet(
@@ -401,6 +406,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 title: '로그아웃',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () async {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_Logout');
                   showDialog(
                     barrierDismissible: true,
                     context: context,
@@ -453,6 +459,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
               ),
               GestureDetector(
                 onTap: () {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_Withdraw');
                   Get.to(
                         () => WithdrawScreen(
                       isKakaoLogin: isKakaoLogin,

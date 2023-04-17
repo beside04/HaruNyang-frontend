@@ -9,6 +9,8 @@ import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/utils.dart';
+
 class EmotionModal extends GetView<DiaryViewModel> {
   final DateTime date;
 
@@ -67,6 +69,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
                             selected: controller.selectedEmotion.value ==
                                 controller.emoticonDataList[i],
                             onPressed: () {
+                              GlobalUtils.setAnalyticsCustomEvent(
+                                  'Click_Diary_Emotion_${controller.emoticonDataList[i].id}');
                               controller.setSelectedEmoticon(
                                   controller.emoticonDataList[i]);
                             },
@@ -89,6 +93,8 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       onTap: controller.selectedEmotion.value.emoticon.isEmpty
                           ? null
                           : () {
+                              GlobalUtils.setAnalyticsCustomEvent(
+                                  'Click_Diary_Next_EmotionToWrite');
                               Get.to(
                                 () => WriteDiaryScreen(
                                   date: date,

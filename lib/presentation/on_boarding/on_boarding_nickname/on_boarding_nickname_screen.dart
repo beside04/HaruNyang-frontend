@@ -58,7 +58,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
     final onBoardingController = Get.find<OnBoardingController>();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 온보딩->이름 Screen',
+      screenName: 'Screen_Event_OnBoarding_NickName',
       child: WillPopScope(
         onWillPop: () async {
           bool backResult = GlobalUtils.onBackPressed();

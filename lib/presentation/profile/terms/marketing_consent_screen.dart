@@ -25,7 +25,7 @@ class MarketingConsentScreen extends StatelessWidget {
     final mainViewController = Get.find<MainViewModel>();
 
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->이용약관->마케팅 정보 수신 동의 Screen',
+      screenName: 'Screen_Event_Profile_Terms_MarketingAgree',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

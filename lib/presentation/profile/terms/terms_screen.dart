@@ -19,7 +19,7 @@ class TermsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
-      screenName: 'Screen Event : 프로필->이용약관 Screen',
+      screenName: 'Screen_Event_Profile_Terms',
       child: Scaffold(
         appBar: AppBar(
           title: Text(
