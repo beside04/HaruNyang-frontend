@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -13,6 +14,8 @@ import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:get/get.dart';
+
+import '../../core/utils/utils.dart';
 
 class DiaryScreen extends StatefulWidget {
   final DateTime? date;
@@ -41,105 +44,113 @@ class _DiaryScreenState extends State<DiaryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        controller.isEmotionModal.value
-            ? Get.offAll(
-                () => const HomeScreen(),
-                binding: BindingsBuilder(
-                  getHomeViewModelBinding,
-                ),
-              )
-            : controller.popUpEmotionModal();
+    return DefaultLayout(
+      screenName: 'Screen_Event_Main_WriteDiary',
+      child: WillPopScope(
+        onWillPop: () async {
+          if (controller.isEmotionModal.value) {
+            GlobalUtils.setAnalyticsCustomEvent('Click_Diary_BackToEmotionCalendar');
+            Get.offAll(
+                  () => const HomeScreen(),
+              binding: BindingsBuilder(
+                getHomeViewModelBinding,
+              ),
+            );
+          } else {
+            GlobalUtils.setAnalyticsCustomEvent('Click_Diary_BackToWeather');
+            controller.popUpEmotionModal();
+          }
 
-        return false;
-      },
-      child: Scaffold(
-        appBar: DiaryAppBar(
-          date: widget.date != null ? widget.date! : DateTime.now(),
-        ),
-        body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: Get.find<MainViewModel>().isDarkMode.value
-                  ? [kGrayColor950, kGrayColor950]
-                  : [
-                      const Color(0xffffac60),
-                      const Color(0xffffc793),
-                    ],
-            ),
+          return false;
+        },
+        child: Scaffold(
+          appBar: DiaryAppBar(
+            date: widget.date != null ? widget.date! : DateTime.now(),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 8.h,
-              ),
-              Padding(
-                padding: EdgeInsets.only(left: 24.w),
-                child: Row(
-                  children: [
-                    Obx(
-                      () => Text(
-                        "${onBoardingController.state.value.nickname}님,",
-                        style: kHeader2Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(left: 24.w),
-                  child: Obx(
-                    () => Row(
-                      children: [
-                        controller.isEmotionModal.value
-                            ? Text(
-                                "오늘 날씨 어때요?",
-                                style: kHeader2Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
-                              )
-                            : Text(
-                                "오늘 기분 어때요?",
-                                style: kHeader2Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
-                              ),
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: Get.find<MainViewModel>().isDarkMode.value
+                    ? [kGrayColor950, kGrayColor950]
+                    : [
+                        const Color(0xffffac60),
+                        const Color(0xffffc793),
                       ],
-                    ),
-                  )),
-              SizedBox(height: 20.h),
-              GetBuilder<DiaryViewModel>(builder: (context) {
-                return Expanded(
-                  child: Stack(
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 8.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 24.w),
+                  child: Row(
                     children: [
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: SvgPicture.asset(
-                          controller.isEmotionModal.value
-                              ? "lib/config/assets/images/character/character7.svg"
-                              : "lib/config/assets/images/character/character4.svg",
-                          width: 320.w,
-                          height: 320.h,
+                      Obx(
+                        () => Text(
+                          "${onBoardingController.state.value.nickname}님,",
+                          style: kHeader2Style.copyWith(
+                              color: Theme.of(context).colorScheme.textTitle),
                         ),
-                      ),
-                      const WeatherModal(),
-                      EmotionModal(
-                        date:
-                            widget.date != null ? widget.date! : DateTime.now(),
                       ),
                     ],
                   ),
-                );
-              }),
-            ],
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 24.w),
+                    child: Obx(
+                      () => Row(
+                        children: [
+                          controller.isEmotionModal.value
+                              ? Text(
+                                  "오늘 날씨 어때요?",
+                                  style: kHeader2Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
+                                )
+                              : Text(
+                                  "오늘 기분 어때요?",
+                                  style: kHeader2Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
+                                ),
+                        ],
+                      ),
+                    )),
+                SizedBox(height: 20.h),
+                GetBuilder<DiaryViewModel>(builder: (context) {
+                  return Expanded(
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: SvgPicture.asset(
+                            controller.isEmotionModal.value
+                                ? "lib/config/assets/images/character/character7.svg"
+                                : "lib/config/assets/images/character/character4.svg",
+                            width: 320.w,
+                            height: 320.h,
+                          ),
+                        ),
+                        const WeatherModal(),
+                        EmotionModal(
+                          date: widget.date != null
+                              ? widget.date!
+                              : DateTime.now(),
+                        ),
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            ),
           ),
         ),
       ),

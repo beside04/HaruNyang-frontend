@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
@@ -105,15 +106,18 @@ class _SplashScreenState extends State<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Lottie.asset(
-      'lib/config/assets/lottie/graphic_type.json',
-      controller: _controller,
-      onLoaded: (composition) {
-        _controller
-          ..duration = composition.duration
-          ..forward();
-      },
-      fit: BoxFit.fill,
+    return DefaultLayout(
+      screenName: 'Screen_Event_Splash',
+      child: Lottie.asset(
+        'lib/config/assets/lottie/graphic_type.json',
+        controller: _controller,
+        onLoaded: (composition) {
+          _controller
+            ..duration = composition.duration
+            ..forward();
+        },
+        fit: BoxFit.fill,
+      ),
     );
   }
 }

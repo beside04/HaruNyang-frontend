@@ -20,6 +20,8 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../../core/utils/utils.dart';
+
 class HomeViewModel extends GetxController {
   final GetEmotionStampUseCase getEmotionStampUseCase;
   final PopUpUseCase popUpUseCase;
@@ -78,6 +80,14 @@ class HomeViewModel extends GetxController {
   }
 
   Future<bool> onItemTapped(int index) async {
+    if (index == 0) {
+      GlobalUtils.setAnalyticsCustomEvent('Click_BottomNav_EmotionCalendar');
+    } else if (index == 1) {
+      GlobalUtils.setAnalyticsCustomEvent('Click_BottomNav_WriteDiary');
+    } else if (index == 2) {
+      GlobalUtils.setAnalyticsCustomEvent('Click_BottomNav_Profile');
+    }
+
     if (index == 1) {
       final result = await getEmotionStampUseCase.hasTodayDiary();
 
