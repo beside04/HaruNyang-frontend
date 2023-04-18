@@ -4,16 +4,17 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 
 class AgeTextField extends StatelessWidget {
-  const AgeTextField({
-    super.key,
-    required this.textEditingController,
-    required this.onTap,
-    required this.suffixIcon,
-  });
+  const AgeTextField(
+      {super.key,
+      required this.textEditingController,
+      required this.onTap,
+      required this.suffixIcon,
+      required this.isSettingAge});
 
   final TextEditingController textEditingController;
   final VoidCallback? onTap;
   final Widget? suffixIcon;
+  final bool isSettingAge;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class AgeTextField extends StatelessWidget {
       name: 'age',
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        helperText: "필수 정보가 아니라 다음에 작성해도 좋아요!",
+        helperText: isSettingAge ? null : "필수 정보가 아니라 다음에 작성해도 좋아요!",
         helperStyle: kBody3Style.copyWith(
             color: Theme.of(context).colorScheme.textTitle),
         counterText: "",

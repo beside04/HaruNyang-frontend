@@ -65,6 +65,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                             height: 40.h,
                           ),
                           AgeTextField(
+                            isSettingAge: false,
                             textEditingController:
                                 controller.ageEditingController,
                             onTap: () {

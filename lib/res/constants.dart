@@ -18,17 +18,6 @@ const Map<String, String> UNIT_ID = kReleaseMode
         'android': 'ca-app-pub-3940256099942544/6300978111',
       };
 
-// ignore: constant_identifier_names
-const Map<String, String> UNIT_ID = kReleaseMode
-    ? {
-        'ios': 'ca-app-pub-8586165570578765/8453529848',
-        'android': 'ca-app-pub-8586165570578765/5103396054',
-      }
-    : {
-        'ios': 'ca-app-pub-3940256099942544/2934735716',
-        'android': 'ca-app-pub-3940256099942544/6300978111',
-      };
-
 enum Job {
   student,
   officeWorkers,

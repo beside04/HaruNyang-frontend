@@ -208,6 +208,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           Padding(
                             padding: EdgeInsets.all(24.w),
                             child: AgeTextField(
+                              isSettingAge: true,
                               textEditingController:
                                   controller.ageEditingController,
                               onTap: () {
