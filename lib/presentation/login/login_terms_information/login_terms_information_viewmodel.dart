@@ -53,10 +53,11 @@ class LoginTermsInformationViewModel extends GetxController {
     }
   }
 
-  void goToLoginScreen() {
+  void goToLoginScreen(bool isSocialKakao) {
     Get.offAll(
-      () => const LoginScreen(
+      () => LoginScreen(
         isSignup: true,
+        isSocialKakao: isSocialKakao,
       ),
     );
   }

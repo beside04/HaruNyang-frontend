@@ -26,7 +26,7 @@ class LoginViewModel extends GetxController {
 
   Future<void> connectKakaoLogin() async {
     //social id 얻기
-    final isSocialIdGet = await _getSocialId(isSocialKakao: true);
+    final isSocialIdGet = await getSocialId(isSocialKakao: true);
     if (!isSocialIdGet) {
       Get.snackbar('알림', '카카오 세션과 연결이 실패했습니다.');
       return;
@@ -52,7 +52,7 @@ class LoginViewModel extends GetxController {
 
         //멤버가 아니면 약관 동의 페이지 이동
         Get.to(
-          const LoginTermsInformationScreen(),
+          () => const LoginTermsInformationScreen(isSocialKakao: true),
         );
         break;
       case SocialIDCheck.error:
@@ -63,7 +63,7 @@ class LoginViewModel extends GetxController {
 
   Future<void> connectAppleLogin() async {
     //social id 얻기
-    final isSocialIdGet = await _getSocialId(isSocialKakao: false);
+    final isSocialIdGet = await getSocialId(isSocialKakao: false);
     if (!isSocialIdGet) {
       Get.snackbar('알림', '애플 세션과 연결이 실패했습니다.');
       return;
@@ -88,7 +88,7 @@ class LoginViewModel extends GetxController {
 
         //멤버가 아니면 약관 동의 페이지 이동
         Get.to(
-          const LoginTermsInformationScreen(),
+          () => const LoginTermsInformationScreen(isSocialKakao: false),
         );
         break;
       case SocialIDCheck.error:
@@ -97,7 +97,7 @@ class LoginViewModel extends GetxController {
     }
   }
 
-  Future<bool> _getSocialId({required isSocialKakao}) async {
+  Future<bool> getSocialId({required isSocialKakao}) async {
     final socialLoginResult = isSocialKakao
         ? await kakaoLoginUseCase.getKakaoSocialId()
         : await appleLoginUseCase.getAppleSocialId();
@@ -111,11 +111,14 @@ class LoginViewModel extends GetxController {
     _state.value = state.value.copyWith(
       socialId: socialId,
       email: email,
+      isSocialKakao: isSocialKakao,
     );
     return true;
   }
 
-  Future<void> signupAndLogin() async {
+  Future<void> signupAndLogin(isSocialKakao) async {
+    await getSocialId(isSocialKakao: isSocialKakao);
+
     //회원가입
     final result = state.value.isSocialKakao
         ? await kakaoLoginUseCase.signup(

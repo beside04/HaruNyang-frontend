@@ -33,7 +33,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: 40.h,
+              top: 20.h,
               left: 5.w,
               right: 5.w,
             ),
@@ -106,11 +106,11 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                       child: Center(
                         child: Container(
                           padding: EdgeInsets.only(
-                            top: 8.h,
+                            top: 4.h,
                           ),
                           child: Column(
                             children: [
-                              DateTime.now().isAfter(day)
+                              events.isEmpty && DateTime.now().isAfter(day)
                                   ? Container(
                                       padding: context.isTablet
                                           ? EdgeInsets.all(9.w)
@@ -125,21 +125,11 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                         shape: BoxShape.circle,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .surface_02,
+                                            .secondaryColor,
                                       ),
                                     )
-                                  : events.isEmpty
-                                      ? Padding(
-                                          padding: EdgeInsets.all(8.0.w),
-                                          child: Text(
-                                            DateFormat('d').format(day),
-                                            style: kBody1Style.copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .textSubtitle),
-                                          ),
-                                        )
-                                      : Stack(
+                                  : DateTime.now().isAfter(day)
+                                      ? Stack(
                                           children: [
                                             Container(
                                               padding: context.isTablet
@@ -155,7 +145,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                                 shape: BoxShape.circle,
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .surface_02,
+                                                    .secondaryColor,
                                               ),
                                             ),
                                             Positioned.fill(
@@ -169,7 +159,17 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                               ),
                                             ),
                                           ],
-                                        ),
+                                        )
+                                      : Padding(
+                                          padding: EdgeInsets.all(8.0.w),
+                                          child: Text(
+                                            DateFormat('d').format(day),
+                                            style: kBody1Style.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .textSubtitle),
+                                          ),
+                                        )
                             ],
                           ),
                         ),

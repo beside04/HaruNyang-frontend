@@ -12,10 +12,12 @@ import 'components/apple_login_widget.dart';
 
 class LoginScreen extends GetView<LoginViewModel> {
   final bool isSignup;
+  final bool isSocialKakao;
 
   const LoginScreen({
     Key? key,
     this.isSignup = false,
+    this.isSocialKakao = false,
   }) : super(key: key);
 
   @override
@@ -23,7 +25,7 @@ class LoginScreen extends GetView<LoginViewModel> {
     getLoginBinding();
 
     if (isSignup) {
-      controller.signupAndLogin();
+      controller.signupAndLogin(isSocialKakao);
     }
 
     return WillPopScope(
