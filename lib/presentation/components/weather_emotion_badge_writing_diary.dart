@@ -39,10 +39,10 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
           width: 8.w,
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 12.w),
+          padding: EdgeInsets.all(6.w),
           decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: color,
-            borderRadius: BorderRadius.circular(100.0.w),
           ),
           child: Row(
             children: [
@@ -50,14 +50,6 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
                 emoticon,
                 width: 24.w,
                 height: 24.h,
-              ),
-              SizedBox(
-                width: 8.w,
-              ),
-              getEmotionTextWidget(
-                emoticonIndex,
-                kBody2Style.copyWith(
-                    color: Theme.of(context).colorScheme.textCaption),
               ),
             ],
           ),
