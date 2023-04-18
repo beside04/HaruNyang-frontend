@@ -1,3 +1,4 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/config/theme/color_data.dart';
@@ -32,5 +33,17 @@ class GlobalUtils {
       return true;
     }
     return false;
+  }
+
+  static setAnalyticsCustomScreenViewEvent(String screenName) async {
+    await FirebaseAnalytics.instance.logEvent(
+      name: screenName,
+    );
+  }
+
+  static setAnalyticsCustomEvent(String eventName) async {
+    await FirebaseAnalytics.instance.logEvent(
+        name: eventName,
+    );
   }
 }

@@ -15,6 +15,8 @@ import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 
+import '../../core/utils/utils.dart';
+
 class DiaryController extends GetxController {
   final FileUploadUseCase fileUploadUseCase;
   final GetWiseSayingUseCase getWiseSayingUseCase;
@@ -392,6 +394,12 @@ class DiaryController extends GetxController {
   }
 
   void toggleCalendarMode() {
+    if (_state.value.isCalendar) {
+      GlobalUtils.setAnalyticsCustomEvent('Click_Toggle_CalendarToList');
+    } else {
+      GlobalUtils.setAnalyticsCustomEvent('Click_Toggle_ListToCalendar');
+    }
+
     _state.value = state.value.copyWith(
       isCalendar: !state.value.isCalendar,
     );

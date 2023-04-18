@@ -2,6 +2,8 @@ import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_state.dart';
 import 'package:get/get.dart';
 
+import '../../../../core/utils/utils.dart';
+
 class WithdrawViewModel extends GetxController {
   final WithdrawUseCase withdrawUseCase;
 
@@ -14,6 +16,8 @@ class WithdrawViewModel extends GetxController {
   Rx<WithdrawState> get state => _state;
 
   void changeWithdrawTerms(bool value) {
+    GlobalUtils.setAnalyticsCustomEvent(
+        'Click_WithdrawTerms_${value.toString()}');
     _state.value = state.value.copyWith(
       isAgreeWithdrawTerms: value,
     );

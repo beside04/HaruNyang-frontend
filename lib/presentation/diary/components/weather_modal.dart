@@ -7,6 +7,8 @@ import 'package:frontend/presentation/diary/components/weather_icon_button.dart'
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:get/get.dart';
 
+import '../../../core/utils/utils.dart';
+
 class WeatherModal extends GetView<DiaryViewModel> {
   const WeatherModal({super.key});
 
@@ -53,6 +55,8 @@ class WeatherModal extends GetView<DiaryViewModel> {
                         selected: controller.selectedWeather.value ==
                             controller.weatherDataList[i],
                         onPressed: () {
+                          GlobalUtils.setAnalyticsCustomEvent(
+                              'Click_Diary_Weather_${controller.weatherDataList[i].id}');
                           controller.selectedWeather.value =
                               controller.weatherDataList[i];
                         },
@@ -67,6 +71,8 @@ class WeatherModal extends GetView<DiaryViewModel> {
                   onTap: controller.selectedWeather.value.image.isEmpty
                       ? null
                       : () {
+                          GlobalUtils.setAnalyticsCustomEvent(
+                              'Click_Diary_Next_WeatherToEmotion');
                           controller.popDownEmotionModal();
                         },
                 ),
