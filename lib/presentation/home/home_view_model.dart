@@ -6,7 +6,9 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
+import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/main.dart';
+import 'package:frontend/presentation/birth_day/birth_day_screen.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/diary/diary_screen.dart';
@@ -15,6 +17,7 @@ import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/profile/profile_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/utils/utils.dart';
@@ -29,8 +32,11 @@ class HomeViewModel extends GetxController {
   });
 
   RxInt selectedIndex = 0.obs;
-  bool isOpenPopup = false;
+  RxBool isOpenPopup = false.obs;
+  RxBool isBirthDayPopup = false.obs;
+
   String? lastPopupDate;
+  String? lastBirthDayPopupDate;
 
   @override
   void onInit() {
@@ -44,6 +50,7 @@ class HomeViewModel extends GetxController {
     });
 
     getLastDate();
+    getLastBirthDayPopUpDate();
 
     initUpdatePopup();
   }
@@ -56,7 +63,19 @@ class HomeViewModel extends GetxController {
       int timeDifference =
           now.difference(DateTime.parse(lastPopupDate!)).inDays;
 
-      if (timeDifference < 30) isOpenPopup = true;
+      if (timeDifference < 30) isOpenPopup.value = true;
+    }
+  }
+
+  getLastBirthDayPopUpDate() async {
+    lastBirthDayPopupDate = await popUpUseCase.getLastBirthDayPopUpDate();
+
+    if (lastBirthDayPopupDate != null) {
+      DateTime now = DateTime.now();
+      int timeDifference =
+          now.difference(DateTime.parse(lastBirthDayPopupDate!)).inDays;
+
+      if (timeDifference < 2) isBirthDayPopup.value = true;
     }
   }
 
@@ -146,7 +165,7 @@ class HomeViewModel extends GetxController {
           );
         },
       );
-    } else if (!isOpenPopup &&
+    } else if (!isOpenPopup.value &&
         APP_BUILD_NUMBER < remoteConfig.getInt("recommend_build_number")) {
       showDialog(
         barrierDismissible: false,
@@ -186,7 +205,7 @@ class HomeViewModel extends GetxController {
                 onTap: () async {
                   Get.back();
                   String time = DateTime.now().toIso8601String();
-                  isOpenPopup = true;
+                  isOpenPopup.value = true;
                   await popUpUseCase.setLastPopUpDate(time);
                 },
                 backgroundColor: Theme.of(context).colorScheme.secondaryColor,
@@ -215,6 +234,26 @@ class HomeViewModel extends GetxController {
             ],
           );
         },
+      );
+    }
+
+    await goToBirthPage();
+  }
+
+  goToBirthPage() async {
+    final now = DateTime.now();
+    final dateFormat = DateFormat('yyyy-MM-dd');
+    final birthday =
+        dateFormat.parse('${Get.find<OnBoardingController>().state.value.age}');
+
+    final nowBirthday = DateTime(now.year, birthday.month, birthday.day);
+
+    if (!isBirthDayPopup.value &&
+        dateFormat.format(nowBirthday) == dateFormat.format(now)) {
+      await Get.to(
+        () => BirthDayScreen(
+          name: Get.find<OnBoardingController>().state.value.nickname,
+        ),
       );
     }
   }

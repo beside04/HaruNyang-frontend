@@ -9,9 +9,22 @@ class PopUpDataSource {
     );
   }
 
+  Future<String?> getLastBirthDayPopUpDate() async {
+    return await localSecureDataSource.loadData(
+      key: 'LAST_BIRTH_DAY_POP_UP_DATE',
+    );
+  }
+
   Future<void> setLastPopUpDate(data) async {
     return await localSecureDataSource.saveData(
       key: 'LAST_POP_UP_DATE',
+      data: data,
+    );
+  }
+
+  Future<void> setLastBirthDayPopUpDate(data) async {
+    return await localSecureDataSource.saveData(
+      key: 'LAST_BIRTH_DAY_POP_UP_DATE',
       data: data,
     );
   }

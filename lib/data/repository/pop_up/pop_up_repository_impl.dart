@@ -10,8 +10,18 @@ class PopUpRepositoryImpl implements PopUpRepository {
   }
 
   @override
+  Future<String?> getLastBirthDayPopUpDate() async {
+    return await _dataSource.getLastBirthDayPopUpDate();
+  }
+
+  @override
   Future<void> setLastPopUpDate(String lastPopUpDate) async {
     await _dataSource.setLastPopUpDate(lastPopUpDate);
+  }
+
+  @override
+  Future<void> setLastBirthDayPopUpDate(String lastPopUpDate) async {
+    return await _dataSource.setLastBirthDayPopUpDate(lastPopUpDate);
   }
 
   @override
