@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 // ignore: constant_identifier_names

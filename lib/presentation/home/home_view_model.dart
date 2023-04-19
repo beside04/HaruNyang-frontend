@@ -18,7 +18,7 @@ import 'package:frontend/presentation/profile/profile_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 import '../../core/utils/utils.dart';
 
@@ -149,14 +149,9 @@ class HomeViewModel extends GetxController {
                 onTap: () async {
                   Get.offAll(() => const LoginScreen());
 
-                  GetPlatform.isAndroid
-                      ? await launchUrl(
-                          Uri.parse(
-                              "https://play.google.com/store/apps/details?id=com.beside04.haruNyang"),
-                        )
-                      : await launchUrl(
-                          Uri.parse("https://apps.apple.com/app/id6444657575"),
-                        );
+                  StoreRedirect.redirect(
+                      androidAppId: "com.beside04.haruNyang",
+                      iOSAppId: "6444657575");
                 },
                 backgroundColor: kOrange200Color,
                 textStyle: kHeader4Style.copyWith(color: kWhiteColor),
@@ -219,14 +214,9 @@ class HomeViewModel extends GetxController {
                 title: "업데이트",
                 onTap: () async {
                   Get.offAll(() => const LoginScreen());
-                  GetPlatform.isAndroid
-                      ? await launchUrl(
-                          Uri.parse(
-                              "https://play.google.com/store/apps/details?id=com.beside04.haruNyang"),
-                        )
-                      : await launchUrl(
-                          Uri.parse("https://apps.apple.com/app/id6444657575"),
-                        );
+                  StoreRedirect.redirect(
+                      androidAppId: "com.beside04.haruNyang",
+                      iOSAppId: "6444657575");
                 },
                 backgroundColor: kOrange200Color,
                 textStyle: kHeader4Style.copyWith(color: kWhiteColor),
