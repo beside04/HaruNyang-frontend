@@ -99,7 +99,7 @@ class HomeScreen extends GetView<HomeViewModel> {
                                     : SvgPicture.asset(
                                         "lib/config/assets/images/home/light_mode/profile.svg",
                                       ),
-                            label: '프로필',
+                            label: '마이',
                           ),
                         ],
                         currentIndex: controller.selectedIndex.value,
