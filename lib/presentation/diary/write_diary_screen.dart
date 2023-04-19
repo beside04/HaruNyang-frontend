@@ -654,7 +654,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                               padding: EdgeInsets.only(
                                   top: 10.h, bottom: 10.h, left: 16.w),
                               child: SvgPicture.asset(
-                                "lib/config/assets/images/diary/write_diary/camera.svg",
+                                "lib/config/assets/images/diary/write_diary/album.svg",
                                 width: 24.w,
                                 height: 24.h,
                               ),
