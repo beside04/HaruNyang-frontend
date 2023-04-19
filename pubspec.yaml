@@ -80,6 +80,7 @@ dependencies:
   google_mobile_ads: ^2.4.0
   in_app_review: ^2.0.6
   store_redirect: ^2.0.1
+  flutter_smartlook: ^4.1.1
 
 dev_dependencies:
   flutter_test:
