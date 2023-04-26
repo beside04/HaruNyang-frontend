@@ -43,7 +43,7 @@ class GlobalUtils {
 
   static setAnalyticsCustomEvent(String eventName) async {
     await FirebaseAnalytics.instance.logEvent(
-        name: eventName,
+      name: eventName,
     );
   }
 }

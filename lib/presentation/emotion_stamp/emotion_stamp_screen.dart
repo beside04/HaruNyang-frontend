@@ -109,7 +109,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   pickerModel: YearMonthModel(
                     currentTime:
                         diaryController.state.value.focusedCalendarDate,
-                    maxTime: DateTime(2099, 12),
+                    maxTime: DateTime.now(),
                     minTime: DateTime(2000, 1),
                     locale: LocaleType.ko,
                   ),
