@@ -23,6 +23,30 @@ class TokenUseCase {
     await tokenRepository.setRefreshToken(token);
   }
 
+  Future<String?> getDeviceId() async {
+    return await tokenRepository.getDeviceId();
+  }
+
+  Future<void> setDeviceId(String id) async {
+    await tokenRepository.setDeviceId(id);
+  }
+
+  Future<String?> getLoginType() async {
+    return await tokenRepository.getLoginType();
+  }
+
+  Future<void> setLoginType(String type) async {
+    await tokenRepository.setLoginType(type);
+  }
+
+  Future<String?> getSocialId() async {
+    return await tokenRepository.getSocialId();
+  }
+
+  Future<void> setSocialId(String id) async {
+    await tokenRepository.setSocialId(id);
+  }
+
   Future<void> deleteAllToken() async {
     await tokenRepository.deleteAllToken();
   }
