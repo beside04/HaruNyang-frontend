@@ -50,7 +50,6 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                 locale: 'ko-KR',
                 daysOfWeekHeight: 30.h,
                 headerVisible: false,
-                availableGestures: AvailableGestures.none,
                 eventLoader: (DateTime day) {
                   return diaryController.state.value.diaryDataList
                       .where(

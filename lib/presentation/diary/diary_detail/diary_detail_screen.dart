@@ -298,7 +298,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                     Padding(
                       padding: EdgeInsets.only(left: 25.w, top: 20.h),
                       child: Text(
-                        "하루냥의 명언",
+                        "하루냥의 한마디",
                         style: kHeader4Style.copyWith(
                             color: Theme.of(context).colorScheme.textTitle),
                       ),

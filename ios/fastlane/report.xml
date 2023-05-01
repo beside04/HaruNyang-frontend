@@ -5,17 +5,67 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000211">
+      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000251">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="1: increment_version_number" time="2.384637">
+      <testcase classname="fastlane.lanes" name="01: latest_testflight_build_number" time="5.330602">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="2: increment_build_number" time="3.083661">
+      <testcase classname="fastlane.lanes" name="02: increment_build_number" time="1.404858">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="03: Switch to ios flutter_build_ios lane" time="0.000165">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="04: cd .." time="0.009649">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="05: flutter clean" time="4.210106">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="06: flutter build ios --no-codesign -t lib/main.dart" time="108.283768">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="07: build_app" time="147.137653">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="08: upload_to_testflight" time="853.085821">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="09: Switch to ios send_slack_message lane" time="0.000179">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="10: get_version_number" time="0.01408">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="11: get_build_number" time="0.826785">
+        
+      </testcase>
+    
+      
+      <testcase classname="fastlane.lanes" name="12: slack" time="0.525372">
         
       </testcase>
     

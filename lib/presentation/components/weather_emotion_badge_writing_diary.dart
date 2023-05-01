@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/res/constants.dart';
 
 class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
   const WeatherEmotionBadgeWritingDiary({
@@ -39,10 +36,10 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
           width: 8.w,
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 12.w),
+          padding: EdgeInsets.all(6.w),
           decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: color,
-            borderRadius: BorderRadius.circular(100.0.w),
           ),
           child: Row(
             children: [
@@ -50,14 +47,6 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
                 emoticon,
                 width: 24.w,
                 height: 24.h,
-              ),
-              SizedBox(
-                width: 8.w,
-              ),
-              getEmotionTextWidget(
-                emoticonIndex,
-                kBody2Style.copyWith(
-                    color: Theme.of(context).colorScheme.textCaption),
               ),
             ],
           ),

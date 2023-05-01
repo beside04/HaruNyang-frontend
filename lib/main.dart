@@ -18,6 +18,7 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'presentation/home/home_screen.dart';
+import 'package:flutter_smartlook/flutter_smartlook.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
@@ -77,24 +78,26 @@ class MyApp extends GetView<MainViewModel> {
               systemNavigationBarDividerColor:
                   controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
             ),
-            child: GetMaterialApp(
-              navigatorObservers: [
-                FirebaseAnalyticsObserver(analytics: analytics),
-              ],
-              navigatorKey: navigatorKey,
-              title: 'Flutter Demo',
-              debugShowCheckedModeBanner: false,
-              initialRoute: '/',
-              getPages: [
-                GetPage(name: '/', page: () => const SplashScreen()),
-                GetPage(name: '/home', page: () => const HomeScreen()),
-              ],
-              themeMode: controller.isDarkMode.value
-                  ? ThemeMode.dark
-                  : ThemeMode.light,
-              theme: lightMode(context),
-              darkTheme: darkMode(context),
-              home: const SplashScreen(),
+            child: SmartlookRecordingWidget(
+              child: GetMaterialApp(
+                navigatorObservers: [
+                  FirebaseAnalyticsObserver(analytics: analytics),
+                ],
+                navigatorKey: navigatorKey,
+                title: 'Flutter Demo',
+                debugShowCheckedModeBanner: false,
+                initialRoute: '/',
+                getPages: [
+                  GetPage(name: '/', page: () => const SplashScreen()),
+                  GetPage(name: '/home', page: () => const HomeScreen()),
+                ],
+                themeMode: controller.isDarkMode.value
+                    ? ThemeMode.dark
+                    : ThemeMode.light,
+                theme: lightMode(context),
+                darkTheme: darkMode(context),
+                home: const SplashScreen(),
+              ),
             ),
           ),
         );

@@ -166,7 +166,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                 return DialogComponent(
                                   title: "작성 완료",
                                   content: Text(
-                                    "하루냥의 명언이 준비됐어요.",
+                                    "하루냥의 한마디가 준비됐어요.",
                                     style: kHeader6Style.copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -654,7 +654,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                               padding: EdgeInsets.only(
                                   top: 10.h, bottom: 10.h, left: 16.w),
                               child: SvgPicture.asset(
-                                "lib/config/assets/images/diary/write_diary/camera.svg",
+                                "lib/config/assets/images/diary/write_diary/album.svg",
                                 width: 24.w,
                                 height: 24.h,
                               ),

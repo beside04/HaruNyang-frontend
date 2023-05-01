@@ -161,7 +161,7 @@ class DiaryController extends GetxController {
         }
       },
       error: (message) {
-        Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
+        Get.snackbar('알림', '한마디를 불러오는데 실패했습니다.');
       },
     );
   }
@@ -176,7 +176,7 @@ class DiaryController extends GetxController {
         );
       },
       error: (message) {
-        Get.snackbar('알림', '명언을 불러오는데 실패했습니다.');
+        Get.snackbar('알림', '한마디를 불러오는데 실패했습니다.');
       },
     );
   }

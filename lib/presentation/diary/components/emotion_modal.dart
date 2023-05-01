@@ -29,10 +29,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
           () => AnimatedContainer(
             duration: const Duration(milliseconds: 200),
             width: MediaQuery.of(context).size.width,
-            height: controller.selectedEmotion.value.emoticon.isEmpty ||
-                    controller.isEmotionModal.value
-                ? 300.h
-                : 375.h,
+            height: 300.h,
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.backgroundModal,
@@ -79,14 +76,14 @@ class EmotionModal extends GetView<DiaryViewModel> {
                       },
                     ),
                   ),
-                  Obx(
-                    () => Padding(
-                      padding: EdgeInsets.only(left: 6.w, top: 190.h),
-                      child: controller.selectedEmotion.value.emoticon.isEmpty
-                          ? Container()
-                          : buildSlider(context),
-                    ),
-                  ),
+                  // Obx(
+                  //   () => Padding(
+                  //     padding: EdgeInsets.only(left: 6.w, top: 190.h),
+                  //     child: controller.selectedEmotion.value.emoticon.isEmpty
+                  //         ? Container()
+                  //         : buildSlider(context),
+                  //   ),
+                  // ),
                   Obx(
                     () => BottomButton(
                       title: '일기쓰기',

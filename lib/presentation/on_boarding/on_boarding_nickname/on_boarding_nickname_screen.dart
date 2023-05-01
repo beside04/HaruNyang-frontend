@@ -104,7 +104,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                   height: 4.h,
                                 ),
                                 Text(
-                                  "이름이 뭐에요?",
+                                  "집사님의 이름이 뭐에요?",
                                   style: kHeader2Style.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -117,31 +117,31 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                   nameHintText: '이름',
                                   focus: nicknameFocusNode,
                                   textEditingController:
-                                  controller.nicknameEditingController,
+                                      controller.nicknameEditingController,
                                   suffixIcon: Obx(
-                                        () => controller.nicknameValue.value.isEmpty
+                                    () => controller.nicknameValue.value.isEmpty
                                         ? Visibility(
-                                      visible: false,
-                                      child: Container(),
-                                    )
+                                            visible: false,
+                                            child: Container(),
+                                          )
                                         : GestureDetector(
-                                      child: const Icon(
-                                        Icons.cancel,
-                                        color: kBlackColor,
-                                        size: 20,
-                                      ),
-                                      onTap: () => controller
-                                          .nicknameEditingController
-                                          .clear(),
-                                    ),
+                                            child: const Icon(
+                                              Icons.cancel,
+                                              color: kBlackColor,
+                                              size: 20,
+                                            ),
+                                            onTap: () => controller
+                                                .nicknameEditingController
+                                                .clear(),
+                                          ),
                                   ),
                                 ),
                                 Obx(
-                                      () => controller.isOnKeyboard.value
+                                  () => controller.isOnKeyboard.value
                                       ? Container()
                                       : SizedBox(
-                                    height: 118.h,
-                                  ),
+                                          height: 118.h,
+                                        ),
                                 ),
                                 Center(
                                   child: SvgPicture.asset(
@@ -159,25 +159,25 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                     Visibility(
                       visible: btnVisible,
                       child: Obx(
-                            () => BottomButton(
+                        () => BottomButton(
                           title: '다음',
                           onTap: controller.nicknameValue.value.isEmpty
                               ? null
                               : () async {
-                            var key = _fbKey.currentState!;
-                            if (key.saveAndValidate() ||
-                                onBoardingController
-                                    .isDuplicateNickname.value) {
-                              FocusScope.of(context).unfocus();
+                                  var key = _fbKey.currentState!;
+                                  if (key.saveAndValidate() ||
+                                      onBoardingController
+                                          .isDuplicateNickname.value) {
+                                    FocusScope.of(context).unfocus();
 
-                              await onBoardingController.putMyInformation(
-                                nickname: controller.nicknameValue.value,
-                                isOnBoarding: true,
-                                isPutNickname: true,
-                                context: context,
-                              );
-                            }
-                          },
+                                    await onBoardingController.putMyInformation(
+                                      nickname: controller.nicknameValue.value,
+                                      isOnBoarding: true,
+                                      isPutNickname: true,
+                                      context: context,
+                                    );
+                                  }
+                                },
                         ),
                       ),
                     )

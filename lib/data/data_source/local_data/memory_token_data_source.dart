@@ -29,6 +29,45 @@ class MemoryTokenDataSource {
     );
   }
 
+  Future<String?> getDeviceId() async {
+    return await localSecureDataSource.loadData(
+      key: 'DEVICE_ID',
+    );
+  }
+
+  Future<void> setDeviceId(data) async {
+    return await localSecureDataSource.saveData(
+      key: 'DEVICE_ID',
+      data: data,
+    );
+  }
+
+  Future<String?> getLoginType() async {
+    return await localSecureDataSource.loadData(
+      key: 'LOGIN_TYPE',
+    );
+  }
+
+  Future<void> setLoginType(data) async {
+    return await localSecureDataSource.saveData(
+      key: 'LOGIN_TYPE',
+      data: data,
+    );
+  }
+
+  Future<String?> getSocialId() async {
+    return await localSecureDataSource.loadData(
+      key: 'SOCIAL_ID',
+    );
+  }
+
+  Future<void> setSocialId(data) async {
+    return await localSecureDataSource.saveData(
+      key: 'SOCIAL_ID',
+      data: data,
+    );
+  }
+
   Future<void> deleteAllToken() async {
     return await localSecureDataSource.deleteAllData();
   }

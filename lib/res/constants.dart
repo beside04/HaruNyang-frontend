@@ -1,22 +1,21 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/widgets.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 // ignore: constant_identifier_names
-const int APP_BUILD_NUMBER = 3;
+const int APP_BUILD_NUMBER = 4;
 // ignore: constant_identifier_names
-const String APP_VERSION_NUMBER = '1.0.7';
+const String APP_VERSION_NUMBER = '1.0.8';
 
 // ignore: constant_identifier_names
 const Map<String, String> UNIT_ID = kReleaseMode
     ? {
-  'ios': 'ca-app-pub-8586165570578765/8453529848',
-  'android': 'ca-app-pub-8586165570578765/5103396054',
-}
+        'ios': 'ca-app-pub-8586165570578765/8453529848',
+        'android': 'ca-app-pub-8586165570578765/5103396054',
+      }
     : {
-  'ios': 'ca-app-pub-3940256099942544/2934735716',
-  'android': 'ca-app-pub-3940256099942544/6300978111',
-};
+        'ios': 'ca-app-pub-3940256099942544/2934735716',
+        'android': 'ca-app-pub-3940256099942544/6300978111',
+      };
 
 enum Job {
   student,
@@ -81,15 +80,3 @@ List<JobData> jobList = [
     value: 'etc',
   ),
 ];
-
-Widget getEmotionTextWidget(int value, TextStyle style) {
-  if (value < 1.0) {
-    return Text("조금", style: style);
-  } else if (value < 2.0) {
-    return Text("그럭저럭", style: style);
-  } else if (value < 3.0) {
-    return Text("맞아!", style: style);
-  } else {
-    return Text("진짜 엄청 대박!!", style: style);
-  }
-}

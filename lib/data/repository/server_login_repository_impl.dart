@@ -1,5 +1,6 @@
 import 'package:frontend/core/result.dart';
 import 'package:frontend/data/data_source/remote_data/login_api.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/res/constants.dart';
@@ -9,6 +10,10 @@ class ServerLoginRepositoryImpl implements ServerLoginRepository {
 
   @override
   Future<Result<LoginTokenData>> login(loginType, socialId, deviceId) async {
+    await tokenUseCase.setDeviceId(deviceId ?? "");
+    await tokenUseCase.setLoginType(loginType);
+    await tokenUseCase.setSocialId(socialId);
+
     return await loginApi.login(loginType, socialId, deviceId);
   }
 
