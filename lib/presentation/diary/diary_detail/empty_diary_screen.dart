@@ -65,7 +65,7 @@ class EmptyDiaryScreen extends StatelessWidget {
                     height: 4.h,
                   ),
                   Text(
-                    "일기를 쓰고 하루냥의 명언을 받아보세요!",
+                    "일기를 쓰고 하루냥의 한마디를 받아보세요!",
                     style: kBody2Style.copyWith(
                         color: Theme.of(context).colorScheme.textSubtitle),
                   ),
@@ -75,9 +75,10 @@ class EmptyDiaryScreen extends StatelessWidget {
             BottomButton(
               title: '일기쓰기',
               onTap: () {
-                GlobalUtils.setAnalyticsCustomEvent('Click_EmptyDiary_WriteDiary');
+                GlobalUtils.setAnalyticsCustomEvent(
+                    'Click_EmptyDiary_WriteDiary');
                 Get.to(
-                      () => DiaryScreen(
+                  () => DiaryScreen(
                     date: date,
                   ),
                 );

@@ -1,7 +1,7 @@
 # HaruNyang front Documentation
 ### 프로젝트 설명
 
-일기를 작성하면 일기의 단어를 매칭하여 명언 또는 명대사를 추천해주는 일기 앱입니다.
+일기를 작성하면 일기의 단어를 매칭하여 한마디 또는 명대사를 추천해주는 일기 앱입니다.
 
 <img src="https://user-images.githubusercontent.com/73716178/222867930-be759be5-1876-409c-b973-1c22e6ef5497.png" width="500" height="1000"/>
 

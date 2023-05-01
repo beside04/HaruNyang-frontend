@@ -59,7 +59,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                               height: 4.h,
                             ),
                             Text(
-                              "일기를 쓰고 하루냥의 명언을 받아보세요!",
+                              "일기를 쓰고 하루냥의 한마디를 받아보세요!",
                               style: kBody2Style.copyWith(
                                   color: Theme.of(context)
                                       .colorScheme
