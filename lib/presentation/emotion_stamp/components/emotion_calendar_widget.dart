@@ -109,7 +109,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                           ),
                           child: Column(
                             children: [
-                              events.isEmpty && DateTime.now().isAfter(day)
+                              events.isEmpty && isToday(day)
                                   ? Container(
                                       padding: context.isTablet
                                           ? EdgeInsets.all(9.w)
@@ -127,7 +127,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                             .secondaryColor,
                                       ),
                                     )
-                                  : DateTime.now().isAfter(day)
+                                  : isToday(day)
                                       ? Stack(
                                           children: [
                                             Container(
@@ -159,16 +159,71 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                             ),
                                           ],
                                         )
-                                      : Padding(
-                                          padding: EdgeInsets.all(8.0.w),
-                                          child: Text(
-                                            DateFormat('d').format(day),
-                                            style: kBody1Style.copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .textSubtitle),
-                                          ),
-                                        )
+                                      : events.isNotEmpty
+                                          ? Stack(
+                                              children: [
+                                                Container(
+                                                  padding: context.isTablet
+                                                      ? EdgeInsets.all(9.w)
+                                                      : EdgeInsets.all(16.w),
+                                                  decoration: BoxDecoration(
+                                                    border: isToday(day)
+                                                        ? Border.all(
+                                                            width: 1,
+                                                            color:
+                                                                kOrange300Color,
+                                                          )
+                                                        : null,
+                                                    shape: BoxShape.circle,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondaryColor,
+                                                  ),
+                                                ),
+                                                Positioned.fill(
+                                                  child: Align(
+                                                    alignment: Alignment.center,
+                                                    child: SvgPicture.network(
+                                                      events[0]
+                                                          .emotion
+                                                          .emoticon,
+                                                      width: 20.w,
+                                                      height: 20.h,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : DateTime.now().isAfter(day)
+                                              ? Container(
+                                                  padding: context.isTablet
+                                                      ? EdgeInsets.all(9.w)
+                                                      : EdgeInsets.all(16.w),
+                                                  decoration: BoxDecoration(
+                                                    border: isToday(day)
+                                                        ? Border.all(
+                                                            width: 1,
+                                                            color:
+                                                                kOrange300Color,
+                                                          )
+                                                        : null,
+                                                    shape: BoxShape.circle,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondaryColor,
+                                                  ),
+                                                )
+                                              : Padding(
+                                                  padding:
+                                                      EdgeInsets.all(8.0.w),
+                                                  child: Text(
+                                                    DateFormat('d').format(day),
+                                                    style: kBody1Style.copyWith(
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .textSubtitle),
+                                                  ),
+                                                )
                             ],
                           ),
                         ),
