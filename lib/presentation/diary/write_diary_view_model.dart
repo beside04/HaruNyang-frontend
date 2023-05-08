@@ -193,69 +193,69 @@ class WriteDiaryViewModel extends GetxController {
         //기쁨
         topic.value = TopicData(
           id: 1,
-          value: '오늘 가장 기쁜 일은 무엇이었나요?',
+          value: '오늘 가장 기쁜 일은\n 무엇이었나요?',
         );
         break;
       case 2:
         //놀람
         topic.value = TopicData(
           id: 2,
-          value: '오늘 가장 놀라운 일은 무엇이었나요?',
+          value: '오늘 가장 놀라운 일은\n 무엇이었나요?',
         );
         break;
       case 3:
         //당황
         topic.value = TopicData(
           id: 3,
-          value: '오늘 가장 당황스러운 일은 무엇이었나요?',
+          value: '오늘 가장 당황스러운 일은\n 무엇이었나요?',
         );
         break;
       case 4:
         //슬픔
         topic.value = TopicData(
           id: 4,
-          value: '오늘 가장 슬픈 일은 무엇이었나요?',
+          value: '오늘 가장 슬픈 일은\n 무엇이었나요?',
         );
         break;
       case 5:
         //신남
         topic.value = TopicData(
           id: 5,
-          value: '오늘 가장 신난 일은 무엇이었나요?',
+          value: '오늘 가장 신난 일은\n 무엇이었나요?',
         );
         break;
       case 6:
         //우울
         topic.value = TopicData(
           id: 6,
-          value: '오늘 가장 우울한 일은 무엇이었나요?',
+          value: '오늘 가장 우울한 일은\n 무엇이었나요?',
         );
         break;
       case 7:
         //화남
         topic.value = TopicData(
           id: 7,
-          value: '오늘 가장 화난 일은 무엇이었나요?',
+          value: '오늘 가장 화난 일은\n 무엇이었나요?',
         );
         break;
       case 8:
         //힘듬
         topic.value = TopicData(
           id: 8,
-          value: '오늘 가장 힘들었던 일은 무엇이었나요?',
+          value: '오늘 가장 힘들었던 일은\n 무엇이었나요?',
         );
         break;
       case 9:
         //설렘
         topic.value = TopicData(
           id: 24,
-          value: '오늘 가장 설레었던 일은 무엇이었나요?',
+          value: '오늘 가장 설레었던 일은\n 무엇이었나요?',
         );
         break;
       default:
         topic.value = TopicData(
           id: 9,
-          value: '오늘 가장 기억에 남는 일은 무엇이었나요?',
+          value: '오늘 가장 기억에 남는 일은\n 무엇이었나요?',
         );
         break;
     }

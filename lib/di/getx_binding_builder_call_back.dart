@@ -54,6 +54,7 @@ import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
+import 'package:frontend/presentation/diary/write_diary_view_model_test.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -245,6 +246,12 @@ void getDiaryBinding() {
 void getWriteDiaryBinding(EmoticonData emotion, DiaryData? diaryData) {
   Get.put(
     WriteDiaryViewModel(emotion: emotion, diaryData: diaryData),
+  );
+}
+
+void getWriteDiaryBindingTest(EmoticonData emotion, DiaryData? diaryData) {
+  Get.put(
+    WriteDiaryViewModelTest(emotion: emotion, diaryData: diaryData),
   );
 }
 
