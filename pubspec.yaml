@@ -45,7 +45,7 @@ dependencies:
   flutter_form_builder: ^7.6.0
   form_builder_validators: ^8.3.0
   flutter_datetime_picker: ^1.5.1
-  flutter_screenutil: ^5.6.0
+  flutter_screenutil: ^5.7.0
   flutter_svg: ^1.1.6
   flutter_dotenv: ^5.0.2
   http: ^0.13.5
