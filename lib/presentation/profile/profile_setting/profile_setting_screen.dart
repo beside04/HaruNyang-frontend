@@ -7,7 +7,8 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart'
+    as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -48,8 +49,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
     return DefaultLayout(
       screenName: 'Screen_Event_Profile_MyInformation',
       child: Scaffold(
-        backgroundColor:
-        mainViewController.isDarkMode.value ? kGrayColor900 : kBeigeColor200,
+        backgroundColor: mainViewController.isDarkMode.value
+            ? kGrayColor900
+            : kBeigeColor200,
         appBar: AppBar(
           title: Text(
             '내 정보 관리',
@@ -76,10 +78,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 title: '닉네임 수정',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
-                  GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_NickNameEdit');
+                  GlobalUtils.setAnalyticsCustomEvent(
+                      'Click_MyInfo_NickNameEdit');
                   showModalBottomSheet(
                     backgroundColor:
-                    Theme.of(context).colorScheme.backgroundModal,
+                        Theme.of(context).colorScheme.backgroundModal,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(25.0),
@@ -104,61 +107,62 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               child: Text(
                                 "닉네임 변경",
                                 style: kHeader4Style.copyWith(
-                                    color:
-                                    Theme.of(context).colorScheme.textTitle),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textTitle),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(24.w),
                               child: NicknameTextField(
                                 nameHintText:
-                                onBoardingController.state.value.nickname,
+                                    onBoardingController.state.value.nickname,
                                 textEditingController:
-                                controller.nicknameEditingController,
+                                    controller.nicknameEditingController,
                                 suffixIcon: Obx(
-                                      () => controller.nicknameValue.value.isEmpty
+                                  () => controller.nicknameValue.value.isEmpty
                                       ? Visibility(
-                                    visible: false,
-                                    child: Container(),
-                                  )
+                                          visible: false,
+                                          child: Container(),
+                                        )
                                       : GestureDetector(
-                                    child: Icon(
-                                      Icons.cancel,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .iconColor,
-                                      size: 20,
-                                    ),
-                                    onTap: () => controller
-                                        .nicknameEditingController
-                                        .clear(),
-                                  ),
+                                          child: Icon(
+                                            Icons.cancel,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .iconColor,
+                                            size: 20,
+                                          ),
+                                          onTap: () => controller
+                                              .nicknameEditingController
+                                              .clear(),
+                                        ),
                                 ),
                               ),
                             ),
                             Obx(
-                                  () => BottomButton(
+                              () => BottomButton(
                                 title: '변경하기',
                                 onTap: controller.nicknameValue.value.isEmpty
                                     ? null
                                     : () async {
-                                  var key = _fbKey.currentState!;
+                                        var key = _fbKey.currentState!;
 
-                                  if (key.saveAndValidate() ||
-                                      onBoardingController
-                                          .isDuplicateNickname.value) {
-                                    FocusScope.of(context).unfocus();
+                                        if (key.saveAndValidate() ||
+                                            onBoardingController
+                                                .isDuplicateNickname.value) {
+                                          FocusScope.of(context).unfocus();
 
-                                    await onBoardingController
-                                        .putMyInformation(
-                                      nickname:
-                                      controller.nicknameValue.value,
-                                      isOnBoarding: false,
-                                      isPutNickname: true,
-                                      context: context,
-                                    );
-                                  }
-                                },
+                                          await onBoardingController
+                                              .putMyInformation(
+                                            nickname:
+                                                controller.nicknameValue.value,
+                                            isOnBoarding: false,
+                                            isPutNickname: true,
+                                            context: context,
+                                          );
+                                        }
+                                      },
                               ),
                             ),
                           ],
@@ -183,7 +187,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                   GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_AgeEdit');
                   showModalBottomSheet(
                     backgroundColor:
-                    Theme.of(context).colorScheme.backgroundModal,
+                        Theme.of(context).colorScheme.backgroundModal,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(25.0),
@@ -208,16 +212,17 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               child: Text(
                                 "날짜 변경",
                                 style: kHeader4Style.copyWith(
-                                    color:
-                                    Theme.of(context).colorScheme.textTitle),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textTitle),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(24.w),
                               child: AgeTextField(
-                               isSettingAge: true,
+                                isSettingAge: true,
                                 textEditingController:
-                                controller.ageEditingController,
+                                    controller.ageEditingController,
                                 onTap: () {
                                   DatePicker.showDatePicker(
                                     context,
@@ -230,10 +235,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     currentTime: DateTime.parse(
                                       onBoardingController.state.value.age == ''
                                           ? "2000-01-01"
-                                          : onBoardingController.state.value.age!,
+                                          : onBoardingController
+                                              .state.value.age!,
                                     ),
                                     locale: LocaleType.ko,
-                                    theme: DatePickerTheme(
+                                    theme: picker_theme.DatePickerTheme(
                                       itemStyle: kSubtitle1Style.copyWith(
                                           color: Theme.of(context)
                                               .colorScheme
@@ -246,51 +252,51 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                   );
                                 },
                                 suffixIcon: Obx(
-                                      () => controller.ageValue.value.isEmpty
+                                  () => controller.ageValue.value.isEmpty
                                       ? Visibility(
-                                    visible: false,
-                                    child: Container(),
-                                  )
+                                          visible: false,
+                                          child: Container(),
+                                        )
                                       : GestureDetector(
-                                    child: const Icon(
-                                      Icons.cancel,
-                                      color: kBlackColor,
-                                      size: 20,
-                                    ),
-                                    onTap: () => controller
-                                        .ageEditingController
-                                        .clear(),
-                                  ),
+                                          child: const Icon(
+                                            Icons.cancel,
+                                            color: kBlackColor,
+                                            size: 20,
+                                          ),
+                                          onTap: () => controller
+                                              .ageEditingController
+                                              .clear(),
+                                        ),
                                 ),
                               ),
                             ),
                             Obx(
-                                  () => BottomButton(
+                              () => BottomButton(
                                 title: '변경하기',
                                 onTap: controller.ageValue.value.isEmpty
                                     ? null
                                     : () async {
-                                  var key = _fbKey.currentState!;
-                                  if (key.saveAndValidate()) {
-                                    FocusScope.of(context).unfocus();
+                                        var key = _fbKey.currentState!;
+                                        if (key.saveAndValidate()) {
+                                          FocusScope.of(context).unfocus();
 
-                                    await onBoardingController
-                                        .putMyInformation(
-                                      age: controller.ageValue.value,
-                                      isOnBoarding: false,
-                                      isPutNickname: false,
-                                      context: context,
-                                    );
+                                          await onBoardingController
+                                              .putMyInformation(
+                                            age: controller.ageValue.value,
+                                            isOnBoarding: false,
+                                            isPutNickname: false,
+                                            context: context,
+                                          );
 
-                                    Get.back();
-                                    // ignore: use_build_context_synchronously
-                                    toast(
-                                      context: context,
-                                      text: '변경을 완료했어요.',
-                                      isCheckIcon: true,
-                                    );
-                                  }
-                                },
+                                          Get.back();
+                                          // ignore: use_build_context_synchronously
+                                          toast(
+                                            context: context,
+                                            text: '변경을 완료했어요.',
+                                            isCheckIcon: true,
+                                          );
+                                        }
+                                      },
                               ),
                             ),
                           ],
@@ -317,7 +323,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                       Job.values, onBoardingController.state.value.job);
                   showModalBottomSheet(
                     backgroundColor:
-                    Theme.of(context).colorScheme.backgroundModal,
+                        Theme.of(context).colorScheme.backgroundModal,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(25.0),
@@ -340,56 +346,57 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             child: Text(
                               "직업 변경",
                               style: kHeader4Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                           ),
                           Padding(
-
                             padding: EdgeInsets.symmetric(vertical: 20.0.h),
                             child: GridView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: jobList.length,
                               gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 childAspectRatio: 0.8.h,
                               ),
                               itemBuilder: (BuildContext context, int i) {
                                 return Obx(() => JobButton(
-                                  job: jobList[i].name,
-                                  icon: jobList[i].icon,
-                                  selected: controller.jobStatus.value ==
-                                      Job.values[i],
-                                  onPressed: () {
-                                    controller.jobStatus.value =
-                                    Job.values[i];
-                                  },
-                                ));
+                                      job: jobList[i].name,
+                                      icon: jobList[i].icon,
+                                      selected: controller.jobStatus.value ==
+                                          Job.values[i],
+                                      onPressed: () {
+                                        controller.jobStatus.value =
+                                            Job.values[i];
+                                      },
+                                    ));
                               },
                             ),
                           ),
                           Obx(
-                                () => BottomButton(
+                            () => BottomButton(
                               title: '변경하기',
                               onTap: controller.jobStatus.value == null
                                   ? null
                                   : () async {
-                                await onBoardingController.putMyInformation(
-                                  job: controller.jobStatus.value!.name,
-                                  isOnBoarding: false,
-                                  isPutNickname: false,
-                                  context: context,
-                                );
+                                      await onBoardingController
+                                          .putMyInformation(
+                                        job: controller.jobStatus.value!.name,
+                                        isOnBoarding: false,
+                                        isPutNickname: false,
+                                        context: context,
+                                      );
 
-                                Get.back();
-                                // ignore: use_build_context_synchronously
-                                toast(
-                                  context: context,
-                                  text: '변경을 완료했어요.',
-                                  isCheckIcon: true,
-                                );
-                              },
+                                      Get.back();
+                                      // ignore: use_build_context_synchronously
+                                      toast(
+                                        context: context,
+                                        text: '변경을 완료했어요.',
+                                        isCheckIcon: true,
+                                      );
+                                    },
                             ),
                           )
                         ],
@@ -418,7 +425,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                         content: Text(
                           "다음에 또 만나요!",
                           style: kHeader6Style.copyWith(
-                              color: Theme.of(context).colorScheme.textSubtitle),
+                              color:
+                                  Theme.of(context).colorScheme.textSubtitle),
                         ),
                         actionContent: [
                           DialogButton(
@@ -427,10 +435,10 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               Get.back();
                             },
                             backgroundColor:
-                            Theme.of(context).colorScheme.secondaryColor,
+                                Theme.of(context).colorScheme.secondaryColor,
                             textStyle: kHeader4Style.copyWith(
                                 color:
-                                Theme.of(context).colorScheme.textSubtitle),
+                                    Theme.of(context).colorScheme.textSubtitle),
                           ),
                           SizedBox(
                             width: 12.w,
@@ -451,7 +459,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               );
                             },
                             backgroundColor: kOrange200Color,
-                            textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                            textStyle:
+                                kHeader4Style.copyWith(color: kWhiteColor),
                           ),
                         ],
                       );
@@ -463,7 +472,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 onTap: () {
                   GlobalUtils.setAnalyticsCustomEvent('Click_Withdraw');
                   Get.to(
-                        () => WithdrawScreen(
+                    () => WithdrawScreen(
                       isKakaoLogin: isKakaoLogin,
                     ),
                     binding: BindingsBuilder(

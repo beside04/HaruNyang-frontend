@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> init() async {
-    await Future.delayed(const Duration(seconds: 5), () async {
+    await Future.delayed(const Duration(milliseconds: 1500), () async {
       String? accessToken = await tokenController.getAccessToken();
       String? refreshToken = await tokenController.getRefreshToken();
 
@@ -109,7 +109,7 @@ class _SplashScreenState extends State<SplashScreen>
     return DefaultLayout(
       screenName: 'Screen_Event_Splash',
       child: Lottie.asset(
-        'lib/config/assets/lottie/graphic_type.json',
+        'lib/config/assets/lottie/graphic_type2.json',
         controller: _controller,
         onLoaded: (composition) {
           _controller
