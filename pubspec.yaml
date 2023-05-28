@@ -74,7 +74,7 @@ dependencies:
   bubble: ^1.2.1
   timezone: ^0.9.1
   firebase_remote_config: ^3.0.12
-  firebase_analytics: ^10.1.6
+  firebase_analytics: ^10.4.1
   url_launcher: ^6.1.9
   google_mobile_ads: ^2.4.0
   in_app_review: ^2.0.6
