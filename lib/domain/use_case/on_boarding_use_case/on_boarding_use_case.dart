@@ -12,6 +12,8 @@ class OnBoardingUseCase {
   Future<Result<MyInformation>> getMyInformation() async {
     final result = await onBoardingRepository.getMyInformation();
 
+    print("result: ${result}");
+
     return result;
   }
 

@@ -8,11 +8,19 @@ class TokenController extends GetxController {
     required this.tokenUseCase,
   });
 
-  Future<String?> getAccessToken() async {
-    return await tokenUseCase.getAccessToken();
+  String? accessToken = "";
+
+  @override
+  void onInit() {
+    init();
+    super.onInit();
   }
 
-  Future<String?> getRefreshToken() async {
-    return await tokenUseCase.getRefreshToken();
+  init() async {
+    accessToken = await tokenUseCase.getAccessToken();
+  }
+
+  Future<String?> getAccessToken() async {
+    return await tokenUseCase.getAccessToken();
   }
 }

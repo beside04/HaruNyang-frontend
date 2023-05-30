@@ -30,39 +30,39 @@ class EmotionCardDiaryWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  DateFormat('M월 d일 E요일', 'ko_KR')
-                      .format(DateTime.parse(diaryData.writtenAt)),
-                  style: kHeader5Style.copyWith(
-                      color: Theme.of(context).colorScheme.textTitle),
-                ),
-                WeatherEmotionBadge(
-                  emoticon: diaryData.emotion.emoticon,
-                  emoticonIndex: diaryData.emoticonIndex,
-                  weatherIcon: diaryData.weather,
-                  color: Theme.of(context).colorScheme.surfaceModal,
-                )
+                // Text(
+                //   DateFormat('M월 d일 E요일', 'ko_KR')
+                //       .format(DateTime.parse(diaryData.writtenAt)),
+                //   style: kHeader5Style.copyWith(
+                //       color: Theme.of(context).colorScheme.textTitle),
+                // ),
+                // WeatherEmotionBadge(
+                //   emoticon: diaryData.emotion.emoticon,
+                //   emoticonIndex: diaryData.emoticonIndex,
+                //   weatherIcon: diaryData.weather,
+                //   color: Theme.of(context).colorScheme.surfaceModal,
+                // )
               ],
             ),
             SizedBox(
               height: 12.h,
             ),
-            diaryData.images[0] == ""
-                ? Container()
-                : Column(
-                    children: [
-                      Center(
-                        child: Image.network(
-                          diaryData.images[0],
-                          width: double.infinity,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                    ],
-                  ),
+            // diaryData.images[0] == ""
+            //     ? Container()
+            //     : Column(
+            //         children: [
+            //           Center(
+            //             child: Image.network(
+            //               diaryData.images[0],
+            //               width: double.infinity,
+            //               fit: BoxFit.cover,
+            //             ),
+            //           ),
+            //           SizedBox(
+            //             height: 12.h,
+            //           ),
+            //         ],
+            //       ),
             Text(
               diaryData.diaryContent,
               style: kBody2Style.copyWith(

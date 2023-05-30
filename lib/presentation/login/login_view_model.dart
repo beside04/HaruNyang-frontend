@@ -1,3 +1,4 @@
+import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
@@ -32,33 +33,38 @@ class LoginViewModel extends GetxController {
       return;
     }
 
-    //멤버 조회
-    final checkMemberResult =
-        await kakaoLoginUseCase.checkMember(state.value.socialId);
-
-    //조회 결과
-    switch (checkMemberResult) {
-      case SocialIDCheck.existMember:
-        //로그인
-        final loginResult = await _onLogin(isSocialKakao: true);
-        if (loginResult) {
-          await _loginDone();
-        }
-        break;
-      case SocialIDCheck.notMember:
-        _state.value = state.value.copyWith(
-          isSocialKakao: true,
-        );
-
-        //멤버가 아니면 약관 동의 페이지 이동
-        Get.to(
-          () => const LoginTermsInformationScreen(isSocialKakao: true),
-        );
-        break;
-      case SocialIDCheck.error:
-        Get.snackbar('알림', '서버와의 연결이 실패했습니다.');
-        return;
+    final loginResult = await onLogin(isSocialKakao: true);
+    if (loginResult) {
+      await loginDone();
     }
+
+    // //멤버 조회
+    // final checkMemberResult =
+    //     await kakaoLoginUseCase.checkMember(state.value.socialId);
+
+    // //조회 결과
+    // switch (checkMemberResult) {
+    //   case SocialIDCheck.existMember:
+    //     //로그인
+    //     final loginResult = await _onLogin(isSocialKakao: true);
+    //     if (loginResult) {
+    //       await _loginDone();
+    //     }
+    //     break;
+    //   case SocialIDCheck.notMember:
+    //     _state.value = state.value.copyWith(
+    //       isSocialKakao: true,
+    //     );
+    //
+    //     //멤버가 아니면 약관 동의 페이지 이동
+    //     Get.to(
+    //       () => const LoginTermsInformationScreen(isSocialKakao: true),
+    //     );
+    //     break;
+    //   case SocialIDCheck.error:
+    //     Get.snackbar('알림', '서버와의 연결이 실패했습니다.');
+    //     return;
+    // }
   }
 
   Future<void> connectAppleLogin() async {
@@ -68,33 +74,38 @@ class LoginViewModel extends GetxController {
       Get.snackbar('알림', '애플 세션과 연결이 실패했습니다.');
       return;
     }
-    //멤버 조회
-    final checkMemberResult =
-        await appleLoginUseCase.checkMember(state.value.socialId);
+
+    final loginResult = await onLogin(isSocialKakao: false);
+    if (loginResult) {
+      await loginDone();
+    }
+    // //멤버 조회
+    // final checkMemberResult =
+    //     await appleLoginUseCase.checkMember(state.value.socialId);
 
     //조회 결과
-    switch (checkMemberResult) {
-      case SocialIDCheck.existMember:
-        //이미 가입한 회원이므로 로그인
-        final loginResult = await _onLogin(isSocialKakao: false);
-        if (loginResult) {
-          await _loginDone();
-        }
-        break;
-      case SocialIDCheck.notMember:
-        _state.value = state.value.copyWith(
-          isSocialKakao: false,
-        );
-
-        //멤버가 아니면 약관 동의 페이지 이동
-        Get.to(
-          () => const LoginTermsInformationScreen(isSocialKakao: false),
-        );
-        break;
-      case SocialIDCheck.error:
-        Get.snackbar('알림', '서버와의 연결이 실패했습니다.');
-        return;
-    }
+    // switch (checkMemberResult) {
+    //   case SocialIDCheck.existMember:
+    //     //이미 가입한 회원이므로 로그인
+    //     final loginResult = await _onLogin(isSocialKakao: false);
+    //     if (loginResult) {
+    //       await _loginDone();
+    //     }
+    //     break;
+    //   case SocialIDCheck.notMember:
+    //     _state.value = state.value.copyWith(
+    //       isSocialKakao: false,
+    //     );
+    //
+    //     //멤버가 아니면 약관 동의 페이지 이동
+    //     Get.to(
+    //       () => const LoginTermsInformationScreen(isSocialKakao: false),
+    //     );
+    //     break;
+    //   case SocialIDCheck.error:
+    //     Get.snackbar('알림', '서버와의 연결이 실패했습니다.');
+    //     return;
+    // }
   }
 
   Future<bool> getSocialId({required isSocialKakao}) async {
@@ -119,18 +130,19 @@ class LoginViewModel extends GetxController {
   Future<void> signupAndLogin(isSocialKakao) async {
     await getSocialId(isSocialKakao: isSocialKakao);
 
+    var deviceToken = Get.find<NotificationController>().token;
     //회원가입
     final result = state.value.isSocialKakao
         ? await kakaoLoginUseCase.signup(
-            state.value.email, state.value.socialId)
+            state.value.email, state.value.socialId, deviceToken)
         : await appleLoginUseCase.signup(
-            state.value.email, state.value.socialId);
+            state.value.email, state.value.socialId, deviceToken);
     if (!result) {
       Get.snackbar('알림', '회원가입에 실패했습니다.');
     } else {
       // //회원 가입 완료 되었으므로 로그인
       final loginResult =
-          await _onLogin(isSocialKakao: state.value.isSocialKakao);
+          await onLogin(isSocialKakao: state.value.isSocialKakao);
       if (loginResult) {
         //회원가입 완료 페이지로 이동
         Get.offAll(
@@ -142,7 +154,7 @@ class LoginViewModel extends GetxController {
     }
   }
 
-  Future<bool> _onLogin({required isSocialKakao}) async {
+  Future<bool> onLogin({required isSocialKakao}) async {
     bool result = false;
     final loginResult = isSocialKakao
         ? await kakaoLoginUseCase.login(state.value.socialId)
@@ -169,7 +181,7 @@ class LoginViewModel extends GetxController {
     );
   }
 
-  Future<void> _loginDone() async {
+  Future<void> loginDone() async {
     //캘린더 업데이트
     Get.find<DiaryController>().initPage();
 

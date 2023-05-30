@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/my_information.dart';
+import 'package:frontend/global_controller/token/token_controller.dart';
+import 'package:frontend/presentation/login/login_view_model.dart';
+import 'package:get/get.dart' hide Response;
 
 class OnBoardingApi {
   final Dio dio;
@@ -12,22 +15,27 @@ class OnBoardingApi {
   });
 
   Future<Result<MyInformation>> getMyInformation() async {
-    String myInformationUrl = '$baseUrl/v1/me';
+    String myInformationUrl = '$baseUrl/v2/users';
+
     try {
       Response response;
-      response = await dio.get(myInformationUrl);
+      response = await dio.get(
+        myInformationUrl,
+        options: Options(headers: {
+          "Cookie": Get.find<TokenController>().accessToken,
+        }),
+      );
 
-      final json = response.data['data'];
+      final json = response.data;
+
       MyInformation result = MyInformation.fromJson(json);
 
       return Result.success(result);
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
-        if (e.response!.statusCode == 401) {
-          errMessage = '401';
-        } else {
-          errMessage = e.response!.data['message'];
+        if (e.response!.statusCode == 403) {
+          Get.find<LoginViewModel>().connectKakaoLogin();
         }
       } else {
         errMessage = '401';

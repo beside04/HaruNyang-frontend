@@ -10,11 +10,9 @@ import 'package:get/get.dart';
 
 class OnBoardingController extends GetxController {
   final OnBoardingUseCase onBoardingUseCase;
-  final ReissueTokenUseCase reissueTokenUseCase;
 
   OnBoardingController({
     required this.onBoardingUseCase,
-    required this.reissueTokenUseCase,
   });
 
   final Rx<OnBoardingState> _state = OnBoardingState().obs;
@@ -37,7 +35,6 @@ class OnBoardingController extends GetxController {
               job: data.job!,
               age: data.age,
               nickname: data.nickname!,
-              loginType: data.loginType,
               email: data.email,
             );
             check = true;
@@ -123,18 +120,18 @@ class OnBoardingController extends GetxController {
     await getMyInformation();
   }
 
-  Future<bool> reissueToken(String refreshToken) async {
-    bool result = false;
-    final newToken = await reissueTokenUseCase(refreshToken);
-    await newToken.when(
-      success: (data) async {
-        await tokenUseCase.setAccessToken(data.accessToken);
-        await tokenUseCase.setRefreshToken(data.refreshToken);
-        result = true;
-      },
-      error: (message) {},
-    );
-
-    return result;
-  }
+  // Future<bool> reissueToken(String refreshToken) async {
+  //   bool result = false;
+  //   final newToken = await reissueTokenUseCase(refreshToken);
+  //   await newToken.when(
+  //     success: (data) async {
+  //       await tokenUseCase.setAccessToken(data.accessToken);
+  //       await tokenUseCase.setRefreshToken(data.refreshToken);
+  //       result = true;
+  //     },
+  //     error: (message) {},
+  //   );
+  //
+  //   return result;
+  // }
 }

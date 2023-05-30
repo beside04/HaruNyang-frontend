@@ -6,7 +6,8 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart'
+    as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
@@ -118,7 +119,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                     diaryController.onPageChanged(date);
                   },
                   locale: LocaleType.ko,
-                  theme: DatePickerTheme(
+                  theme: picker_theme.DatePickerTheme(
                     itemStyle: kSubtitle1Style.copyWith(
                         color: Theme.of(context).colorScheme.textBody),
                     backgroundColor:

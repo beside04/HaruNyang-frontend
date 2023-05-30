@@ -15,7 +15,6 @@ class DiaryViewModel extends GetxController
     required this.getEmoticonUseCase,
     required this.getWeatherUseCase,
   }) {
-    getEmoticonData();
     getWeatherData();
   }
 
@@ -23,7 +22,54 @@ class DiaryViewModel extends GetxController
   final emotionNumberValue = 2.0.obs;
   final emotionTextValue = '맞아!'.obs;
 
-  final RxList<EmoticonData> emoticonDataList = <EmoticonData>[].obs;
+  final RxList<EmoticonData> emoticonDataList = <EmoticonData>[
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/happy.png',
+      value: 'SAD',
+      desc: '기뻐',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/sad2.png',
+      value: 'SAD',
+      desc: '슬퍼',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/angry.png',
+      value: 'SAD',
+      desc: '화나',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/excited.png',
+      value: 'SAD',
+      desc: '신나',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/tired.png',
+      value: 'SAD',
+      desc: '힘들어',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/amazed.png',
+      value: 'SAD',
+      desc: '놀랐어',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/soso.png',
+      value: 'SAD',
+      desc: '그저그래',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/blushed.png',
+      value: 'SAD',
+      desc: '설레',
+    ),
+    EmoticonData(
+      emoticon: 'lib/config/assets/images/character/molra.png',
+      value: 'SAD',
+      desc: '몰라',
+    ),
+  ].obs;
+
   final Rx<EmoticonData> selectedEmotion =
       EmoticonData(emoticon: '', value: '', desc: '').obs;
 

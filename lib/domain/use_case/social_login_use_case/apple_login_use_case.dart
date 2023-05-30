@@ -60,21 +60,24 @@ class AppleLoginUseCase {
     );
   }
 
-  Future<SocialIDCheck> checkMember(String socialId) async {
-    //멤버 조회
-    return await serverLoginRepository.checkMember(socialId);
-  }
-
   Future<Result<String>> login(String socialId) async {
     //social id를 사용하여 서버에 login
     final loginResult = await loginProcess(socialId);
     return loginResult;
   }
 
-  Future<bool> signup(String email, String socialId) async {
+  Future<bool> signup(
+      String email, String socialId, String? deviceToken) async {
     //social id를 사용하여 회원 가입
-    final bool result =
-        await serverLoginRepository.signup(email, 'APPLE', socialId);
+    final bool result = await serverLoginRepository.signup(
+      email: email,
+      loginType: 'APPLE',
+      socialId: socialId,
+      deviceToken: deviceToken,
+      nickname: null,
+      job: null,
+      birthDate: null,
+    );
 
     return result;
   }
@@ -90,7 +93,6 @@ class AppleLoginUseCase {
     return await loginResult.when(
       success: (loginData) async {
         await tokenRepository.setAccessToken(loginData.accessToken);
-        await tokenRepository.setRefreshToken(loginData.refreshToken);
         return Result.success(accessToken);
       },
       error: (message) {

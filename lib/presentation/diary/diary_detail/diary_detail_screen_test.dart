@@ -370,7 +370,7 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest>
                                         const SizedBox(
                                           width: 4,
                                         ),
-                                        Text("비"),
+                                        Text(widget.diaryData.weather),
                                       ],
                                     ),
                                   ),
@@ -387,11 +387,11 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest>
                                     ),
                                     child: Row(
                                       children: [
-                                        SvgPicture.network(
-                                          widget.diaryData.emotion.emoticon,
-                                          width: 24.w,
-                                          height: 24.h,
-                                        ),
+                                        // SvgPicture.network(
+                                        //   widget.diaryData.emotion.emoticon,
+                                        //   width: 24.w,
+                                        //   height: 24.h,
+                                        // ),
                                         SizedBox(
                                           width: 4,
                                         ),
@@ -418,20 +418,20 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest>
                                     onTap: () {
                                       GlobalUtils.setAnalyticsCustomEvent(
                                           'Click_Diary_Update');
-                                      Get.to(
-                                        () => WriteDiaryScreenTest(
-                                          date: widget.date,
-                                          weather: diaryController
-                                              .state.value.diary!.weather,
-                                          emotion: diaryController
-                                              .state.value.diary!.emotion,
-                                          emoticonIndex: diaryController
-                                              .state.value.diary!.emoticonIndex,
-                                          diaryData: diaryController
-                                              .state.value.diary!,
-                                          isEditScreen: true,
-                                        ),
-                                      );
+                                      // Get.to(
+                                      //   () => WriteDiaryScreenTest(
+                                      //     date: widget.date,
+                                      //     weather: diaryController
+                                      //         .state.value.diary!.weather,
+                                      //     emotion: diaryController
+                                      //         .state.value.diary!.emotion,
+                                      //     emoticonIndex: diaryController
+                                      //         .state.value.diary!.emoticonIndex,
+                                      //     diaryData: diaryController
+                                      //         .state.value.diary!,
+                                      //     isEditScreen: true,
+                                      //   ),
+                                      // );
                                     },
                                     child: Padding(
                                       padding: EdgeInsets.only(
@@ -479,14 +479,14 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest>
                                                 title: "예",
                                                 onTap: () async {
                                                   Get.back();
-                                                  await diaryController
-                                                      .deleteDiary(
-                                                          diaryController
-                                                                  .state
-                                                                  .value
-                                                                  .diary!
-                                                                  .id ??
-                                                              '');
+                                                  // await diaryController
+                                                  //     .deleteDiary(
+                                                  //         diaryController
+                                                  //                 .state
+                                                  //                 .value
+                                                  //                 .diary!
+                                                  //                 .id ??
+                                                  //             '');
 
                                                   await showDialog(
                                                     barrierDismissible: false,

@@ -92,16 +92,16 @@ final PopUpUseCase popUpUseCase = PopUpUseCase(
 final dio = Dio();
 
 Dio getDio() {
-  dio.interceptors.add(interceptor);
+  // dio.interceptors.add(interceptor);
   dio.options.headers.addAll({
     'accessToken': 'true',
   });
   return dio;
 }
 
-final RefreshInterceptor interceptor = RefreshInterceptor(
-  tokenUseCase: tokenUseCase,
-);
+// final RefreshInterceptor interceptor = RefreshInterceptor(
+//   tokenUseCase: tokenUseCase,
+// );
 final onBoardingApi = OnBoardingApi(
   dio: getDio(),
 );
@@ -140,9 +140,9 @@ final diaryRepository = DiaryRepositoryImpl(
 final bookmarkRepository = BookmarkRepositoryImpl(
   bookmarkApi: bookmarkApi,
 );
-final reissueTokenRepository = ReissueTokenRepositoryImpl(
-  dataSource: ReissueTokenApi(),
-);
+// final reissueTokenRepository = ReissueTokenRepositoryImpl(
+//   dataSource: ReissueTokenApi(),
+// );
 
 final noticeRepository = NoticeRepositoryImpl(
   noticeApi: NoticeApi(),
@@ -215,9 +215,9 @@ final bookmarkUseCase = BookmarkUseCase(
   bookmarkRepository: bookmarkRepository,
 );
 
-final reissueTokenUseCase = ReissueTokenUseCase(
-  reissueTokenRepository: reissueTokenRepository,
-);
+// final reissueTokenUseCase = ReissueTokenUseCase(
+//   reissueTokenRepository: reissueTokenRepository,
+// );
 
 void getMainBinding() {
   Get.put(MainViewModel(
@@ -311,7 +311,7 @@ void getOnBoardingControllerBinding() {
   Get.put(
     OnBoardingController(
       onBoardingUseCase: onBoardingUseCase,
-      reissueTokenUseCase: reissueTokenUseCase,
+      // reissueTokenUseCase: reissueTokenUseCase,
     ),
   );
 }

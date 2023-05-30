@@ -202,11 +202,11 @@ class WriteDiaryViewModelTest extends GetxController
   void setDiaryData(DiaryData diaryData) {
     if (!isUpdated) {
       diaryEditingController.value.text = diaryData.diaryContent;
-      networkImage.value = diaryData.images.isEmpty
-          ? null
-          : diaryData.images.first.isEmpty
-              ? null
-              : diaryData.images.first;
+      // networkImage.value = diaryData.images.isEmpty
+      //     ? null
+      //     : diaryData.images.first.isEmpty
+      //         ? null
+      //         : diaryData.images.first;
 
       isUpdated = true;
     }

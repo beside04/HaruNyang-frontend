@@ -12,23 +12,19 @@ class DiaryApi {
   });
 
   Future<Result<String>> saveDiary(DiaryData diary) async {
-    String diaryUrl = '$_baseUrl/v1/diary';
+    String diaryUrl = '$_baseUrl/v2/diaries';
     try {
       Response response;
       response = await dio.post(
         diaryUrl,
         data: {
-          "diary_content": diary.diaryContent,
-          "emotion_id": diary.emotion.id,
-          "emotion_index": diary.emoticonIndex, //감정 강도
-          "images": diary.images,
+          "content": diary.diaryContent,
+          "feeling": diary.feeling,
+          "feelingScore": diary.feelingScore,
           "weather": diary.weather,
-          "wise_saying_ids": diary.wiseSayings
-              .where((element) => element.id != null)
-              .map((e) => e.id)
-              .toList(),
-          "written_at": diary.createTime,
-          "writing_topic_id": diary.writingTopic.id,
+          "topic": diary,
+          "image": diary,
+          "targetDate": diary.diaryContent,
         },
       );
 
@@ -52,16 +48,17 @@ class DiaryApi {
   }
 
   Future<Result<bool>> updateDiary(DiaryData diary) async {
-    String diaryUrl = '$_baseUrl/v1/diary/${diary.id}';
+    String diaryUrl = '$_baseUrl/v2/diaries/${diary.id}';
     try {
       Response response;
-      response = await dio.put(diaryUrl, data: {
-        "diary_content": diary.diaryContent,
-        "images": diary.images,
-        "wise_saying_ids": diary.wiseSayings
-            .where((element) => element.id != null)
-            .map((e) => e.id)
-            .toList(),
+      response = await dio.post(diaryUrl, data: {
+        "content": diary.diaryContent,
+        "feeling": diary.feeling,
+        "feelingScore": diary.feelingScore,
+        "weather": diary.weather,
+        "topic": diary,
+        "image": diary,
+        "targetDate": diary.diaryContent,
       });
 
       final bool resultData = response.data['data'];

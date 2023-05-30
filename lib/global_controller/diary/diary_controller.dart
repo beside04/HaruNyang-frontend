@@ -68,47 +68,48 @@ class DiaryController extends GetxController {
       _state.value = state.value.copyWith(
         networkImage: image,
       );
-    } else if (diary.images.isNotEmpty) {
-      _state.value = state.value.copyWith(
-        networkImage: diary.images.first,
-      );
     }
+    // else if (diary.images.isNotEmpty) {
+    //   _state.value = state.value.copyWith(
+    //     networkImage: diary.images.first,
+    //   );
+    // }
 
     //명언 받아오기
-    await getWiseSayingList(diary.emotion.id!, diary.diaryContent);
+    // await getWiseSayingList(diary.emotion.id!, diary.diaryContent);
 
     //새로운 diary Data
-    final newDiary = diary.copyWith(
-      images: [state.value.networkImage],
-      wiseSayings: state.value.wiseSayingList,
-      createTime: DateFormat('yyyy-MM-dd').format(writeDate),
-    );
+    // final newDiary = diary.copyWith(
+    //   images: [state.value.networkImage],
+    //   wiseSayings: state.value.wiseSayingList,
+    //   createTime: DateFormat('yyyy-MM-dd').format(writeDate),
+    // );
 
-    if (diary.id != null) {
-      //다이어리 업데이트
-      await updateDiaryUseCase(
-        newDiary,
-      );
-      _state.value = state.value.copyWith(
-        diary: newDiary,
-      );
-    } else {
-      //다이어리 저장
-      final result = await saveDiaryUseCase(newDiary);
-      result.when(
-        success: (diaryId) {
-          _state.value = state.value.copyWith(
-            diary: newDiary.copyWith(id: diaryId),
-          );
-        },
-        error: (message) {
-          Get.snackbar(
-            '알림',
-            message,
-          );
-        },
-      );
-    }
+    // if (diary.id != null) {
+    //   //다이어리 업데이트
+    //   await updateDiaryUseCase(
+    //     newDiary,
+    //   );
+    //   _state.value = state.value.copyWith(
+    //     diary: newDiary,
+    //   );
+    // } else {
+    //   //다이어리 저장
+    //   final result = await saveDiaryUseCase(newDiary);
+    //   result.when(
+    //     success: (diaryId) {
+    //       _state.value = state.value.copyWith(
+    //         diary: newDiary.copyWith(id: diaryId),
+    //       );
+    //     },
+    //     error: (message) {
+    //       Get.snackbar(
+    //         '알림',
+    //         message,
+    //       );
+    //     },
+    //   );
+    // }
 
     getEmotionStampList();
     _state.value = state.value.copyWith(
@@ -122,14 +123,14 @@ class DiaryController extends GetxController {
   }
 
   void setCalendarData(DiaryData diaryData) {
-    String networkImage =
-        (diaryData.images.isNotEmpty) ? diaryData.images.first : '';
+    // String networkImage =
+    //     (diaryData.images.isNotEmpty) ? diaryData.images.first : '';
 
     _state.value = state.value.copyWith(
       isLoading: false,
       diary: diaryData,
-      wiseSayingList: diaryData.wiseSayings,
-      networkImage: networkImage,
+      // wiseSayingList: diaryData.wiseSayings,
+      // networkImage: networkImage,
     );
   }
 
@@ -279,9 +280,9 @@ class DiaryController extends GetxController {
 
     result.when(
       success: (result) {
-        result.sort((a, b) {
-          return b.writtenAt.compareTo(a.writtenAt);
-        });
+        // result.sort((a, b) {
+        //   return b.writtenAt.compareTo(a.writtenAt);
+        // });
 
         _state.value = state.value.copyWith(
           diaryDataList: result,
@@ -302,13 +303,13 @@ class DiaryController extends GetxController {
     List<DiaryCardData> diaryCardDataList = [];
     Map<String, List<DiaryData>> weekName = {};
     for (int i = 0; i < diaries.length; i++) {
-      String title =
-          _weekOfMonthForSimple(DateTime.parse(diaries[i].writtenAt));
-      if (weekName.containsKey(title)) {
-        weekName[title]!.add(diaries[i]);
-      } else {
-        weekName[title] = [diaries[i]];
-      }
+      // String title =
+      //     _weekOfMonthForSimple(DateTime.parse(diaries[i].writtenAt));
+      // if (weekName.containsKey(title)) {
+      //   weekName[title]!.add(diaries[i]);
+      // } else {
+      //   weekName[title] = [diaries[i]];
+      // }
     }
     for (var title in weekName.keys) {
       diaryCardDataList

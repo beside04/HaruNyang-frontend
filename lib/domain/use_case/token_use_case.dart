@@ -15,14 +15,6 @@ class TokenUseCase {
     await tokenRepository.setAccessToken(token);
   }
 
-  Future<String?> getRefreshToken() async {
-    return await tokenRepository.getRefreshToken();
-  }
-
-  Future<void> setRefreshToken(String token) async {
-    await tokenRepository.setRefreshToken(token);
-  }
-
   Future<String?> getDeviceId() async {
     return await tokenRepository.getDeviceId();
   }

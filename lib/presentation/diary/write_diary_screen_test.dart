@@ -11,6 +11,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
+import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_writing_diary.dart';
@@ -166,32 +167,32 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                             Get.offNamed("/home", arguments: {"index": 0});
                             FocusManager.instance.primaryFocus?.unfocus();
 
-                            Get.to(
-                              () => DiaryDetailScreenTest(
-                                date: date,
-                                isStamp: false,
-                                diaryData: diaryData != null
-                                    ? diaryData!.copyWith(
-                                        diaryContent: controller
-                                            .diaryEditingController.value.text,
-                                        images: controller.networkImage.value !=
-                                                null
-                                            ? [controller.networkImage.value!]
-                                            : [],
-                                      )
-                                    : DiaryData(
-                                        emotion: emotion,
-                                        diaryContent: controller
-                                            .diaryEditingController.value.text,
-                                        emoticonIndex: emoticonIndex,
-                                        weather: weather,
-                                        images: [],
-                                        wiseSayings: [],
-                                        writingTopic: controller.topic.value,
-                                      ),
-                                imageFile: controller.croppedFile.value,
-                              ),
-                            );
+                            // Get.to(
+                            //   () => DiaryDetailScreenTest(
+                            //     date: date,
+                            //     isStamp: false,
+                            //     diaryData: diaryData != null
+                            //         ? diaryData!.copyWith(
+                            //             diaryContent: controller
+                            //                 .diaryEditingController.value.text,
+                            //             images: controller.networkImage.value !=
+                            //                     null
+                            //                 ? [controller.networkImage.value!]
+                            //                 : [],
+                            //           )
+                            //         : DiaryData(
+                            //             emotion: emotion,
+                            //             diaryContent: controller
+                            //                 .diaryEditingController.value.text,
+                            //             emoticonIndex: emoticonIndex,
+                            //             weather: weather,
+                            //             images: [],
+                            //             wiseSayings: [],
+                            //             writingTopic: controller.topic.value,
+                            //           ),
+                            //     imageFile: controller.croppedFile.value,
+                            //   ),
+                            // );
 
                             Get.to(() => WriteDiaryLoadingScreen());
                           },
@@ -319,7 +320,8 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                             children: [
                               Center(
                                 child: Image.asset(
-                                  "lib/config/assets/images/character/rain_character1.png",
+                                  "lib/config/assets/images/character/rainy.png",
+                                  height: 200.h,
                                 ),
                               ),
                               // Lottie.asset(
@@ -338,37 +340,12 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                               ),
                             ],
                           ),
-                          // isEditScreen
-                          //     ? Container()
-                          //     : Obx(
-                          //         () => InkWell(
-                          //           onTap: (controller.topicReset.value > 0)
-                          //               ? () {
-                          //                   GlobalUtils
-                          //                       .setAnalyticsCustomEvent(
-                          //                           'Click_Diary_Get_Topic');
-                          //                   controller
-                          //                       .getRandomTopic(context);
-                          //                 }
-                          //               : () {
-                          //                   GlobalUtils.setAnalyticsCustomEvent(
-                          //                       'Click_Diary_Get_Topic_Fail');
-                          //                   controller.showSnackBar(
-                          //                       '글감을 더 받을 수 없어요.', context);
-                          //                 },
-                          //           child: SvgPicture.asset(
-                          //             "lib/config/assets/images/diary/write_diary/refresh.svg",
-                          //           ),
-                          //         ),
-                          //       ),
-                          Container(
-                            height: 12.h,
-                          ),
                           Center(
                             child: isEditScreen
                                 ? Text(
                                     textAlign: TextAlign.center,
-                                    diaryData!.writingTopic.value,
+                                    // diaryData!.writingTopic.value,
+                                    "ㅇㄴㅁㅁ",
                                     maxLines: 2,
                                     style: kHeader3Style.copyWith(
                                       color: Theme.of(context)
@@ -392,58 +369,12 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                           Container(
                             height: 12.h,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                padding: EdgeInsets.all(6.w),
-                                decoration: BoxDecoration(
-                                  // borderRadius: const BorderRadius.all(
-                                  //   Radius.circular(24),
-                                  // ),
-                                  borderRadius: BorderRadius.circular(24),
-                                  color:
-                                      Theme.of(context).colorScheme.surface_01,
-                                ),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.network(
-                                      weather,
-                                      width: 24.w,
-                                      height: 24.h,
-                                    ),
-                                    const SizedBox(
-                                      width: 4,
-                                    ),
-                                    Text("비"),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(6.w),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(24),
-                                  color:
-                                      Theme.of(context).colorScheme.surface_01,
-                                ),
-                                child: Row(
-                                  children: [
-                                    SvgPicture.network(
-                                      emotion.emoticon,
-                                      width: 24.w,
-                                      height: 24.h,
-                                    ),
-                                    SizedBox(
-                                      width: 4,
-                                    ),
-                                    Text("그저그래"),
-                                  ],
-                                ),
-                              ),
-                            ],
+                          WeatherEmotionBadgeWritingDiary(
+                            emoticon: emotion.emoticon,
+                            emoticonDesc: emotion.desc,
+                            weatherIcon: weather,
+                            weatherIconDesc: weather,
+                            color: Theme.of(context).colorScheme.surface_01,
                           ),
                           FormBuilderTextField(
                             maxLength: 500,
@@ -509,18 +440,6 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                                   : null;
                             },
                           ),
-                          // Obx(
-                          //   () => AnimatedOpacity(
-                          //     opacity:
-                          //         controller.shouldShowWidget.value ? 1.0 : 0.0,
-                          //     duration: const Duration(milliseconds: 500),
-                          //     child: Container(
-                          //       width: 200.0,
-                          //       height: 200.0,
-                          //       color: Colors.green,
-                          //     ),
-                          //   ),
-                          // ),
                           Obx(
                             () => (controller.croppedFile.value != null ||
                                     controller.pickedFile.value != null ||

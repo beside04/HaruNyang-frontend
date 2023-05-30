@@ -34,11 +34,12 @@ class _SplashScreenState extends State<SplashScreen>
   }
 
   Future<void> init() async {
-    await Future.delayed(const Duration(seconds: 5), () async {
+    await Future.delayed(const Duration(milliseconds: 1500), () async {
       String? accessToken = await tokenController.getAccessToken();
-      String? refreshToken = await tokenController.getRefreshToken();
 
-      if (accessToken == null || refreshToken == null) {
+      print(accessToken);
+
+      if (accessToken == null) {
         //token이 없으면 로그인 화면 이동
         Get.offAll(
           () => const LoginScreen(),
@@ -47,14 +48,13 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         );
       } else {
-        //reissue token 실행
-        final bool res = await onBoardingController.reissueToken(refreshToken);
-
-        if (res) {
+        {
           //에러 없으면 user 정보 가져온다
           bool isOnBoardingDone = false;
           bool isError = false;
           final getMyInfoResult = await onBoardingController.getMyInformation();
+
+          print("getMyInfoResult: ${getMyInfoResult}");
           getMyInfoResult.when(
             success: (data) {
               isOnBoardingDone = data;
@@ -85,14 +85,6 @@ class _SplashScreenState extends State<SplashScreen>
               );
             }
           }
-        } else {
-          //에러 있으면 로그인 화면으로 이동
-          Get.offAll(
-            () => const LoginScreen(),
-            binding: BindingsBuilder(
-              getLoginBinding,
-            ),
-          );
         }
       }
     });
@@ -109,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen>
     return DefaultLayout(
       screenName: 'Screen_Event_Splash',
       child: Lottie.asset(
-        'lib/config/assets/lottie/graphic_type.json',
+        'lib/config/assets/lottie/graphic_type2.json',
         controller: _controller,
         onLoaded: (composition) {
           _controller

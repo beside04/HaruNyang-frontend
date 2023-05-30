@@ -92,14 +92,14 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        Get.to(
-                                          () => DiaryDetailScreen(
-                                            date:
-                                                DateTime.parse(diary.writtenAt),
-                                            isStamp: true,
-                                            diaryData: diary,
-                                          ),
-                                        );
+                                        // Get.to(
+                                        //   () => DiaryDetailScreen(
+                                        //     date:
+                                        //         DateTime.parse(diary.writtenAt),
+                                        //     isStamp: true,
+                                        //     diaryData: diary,
+                                        //   ),
+                                        // );
                                       },
                                       child: EmotionCardDiaryWidget(
                                         diaryData: diary,

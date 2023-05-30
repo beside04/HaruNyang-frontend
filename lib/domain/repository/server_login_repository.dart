@@ -8,7 +8,13 @@ abstract class ServerLoginRepository {
 
   Future<void> logout();
 
-  Future<SocialIDCheck> checkMember(String socialId);
-
-  Future<bool> signup(String email, String loginType, String socialId);
+  Future<bool> signup({
+    required email,
+    required loginType,
+    required socialId,
+    required deviceToken,
+    required nickname,
+    required job,
+    required birthDate,
+  });
 }

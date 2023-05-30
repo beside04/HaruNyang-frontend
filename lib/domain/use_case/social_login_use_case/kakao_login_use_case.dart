@@ -28,6 +28,8 @@ class KakaoLoginUseCase {
     required this.pushMessagePermissionUseCase,
   });
 
+  var deviceToken = Get.find<NotificationController>().token;
+
   Future<SocialLoginResult> getKakaoSocialId() async {
     //카카오 social id 및 email 얻기
     String email = '';
@@ -47,28 +49,30 @@ class KakaoLoginUseCase {
     );
   }
 
-  Future<SocialIDCheck> checkMember(String socialId) async {
-    //멤버 조회
-    return await serverLoginRepository.checkMember(socialId);
-  }
-
   Future<Result<String>> login(String socialId) async {
     //social id를 사용하여 서버에 login
     final loginResult = await loginProcess(socialId);
     return loginResult;
   }
 
-  Future<bool> signup(String email, String socialId) async {
+  Future<bool> signup(
+      String email, String socialId, String? deviceToken) async {
     //social id를 사용하여 회원 가입
-    final bool result =
-        await serverLoginRepository.signup(email, 'KAKAO', socialId);
+    final bool result = await serverLoginRepository.signup(
+      email: email,
+      loginType: 'KAKAO',
+      socialId: socialId,
+      deviceToken: deviceToken,
+      nickname: null,
+      job: null,
+      birthDate: null,
+    );
 
     return result;
   }
 
   Future<Result<String>> loginProcess(String socialId) async {
     String accessToken = '';
-    var deviceToken = Get.find<NotificationController>().token;
 
     //로그인 api 호출
     final loginResult =
@@ -77,7 +81,6 @@ class KakaoLoginUseCase {
     return await loginResult.when(
       success: (loginData) async {
         await tokenRepository.setAccessToken(loginData.accessToken);
-        await tokenRepository.setRefreshToken(loginData.refreshToken);
         return Result.success(accessToken);
       },
       error: (message) {

@@ -53,7 +53,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                 eventLoader: (DateTime day) {
                   return diaryController.state.value.diaryDataList
                       .where(
-                          (element) => element.writtenAt == format.format(day))
+                          (element) => element.targetDate == format.format(day))
                       .toList();
                 },
                 calendarStyle: CalendarStyle(
@@ -83,17 +83,17 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                         diaryController.setFocusDay(day);
 
                         if ((DateTime.now().isAfter(day) || isToday(day))) {
-                          events.isEmpty
-                              ? Get.to(() => EmptyDiaryScreen(
-                                    date: day,
-                                  ))
-                              : Get.to(
-                                  () => DiaryDetailScreen(
-                                    date: day,
-                                    isStamp: true,
-                                    diaryData: events[0],
-                                  ),
-                                );
+                          // events.isEmpty
+                          //     ? Get.to(() => EmptyDiaryScreen(
+                          //           date: day,
+                          //         ))
+                          //     : Get.to(
+                          //         () => DiaryDetailScreen(
+                          //           date: day,
+                          //           isStamp: true,
+                          //           diaryData: events[0],
+                          //         ),
+                          //       );
                         } else {
                           toast(
                             context: context,
@@ -147,52 +147,26 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                                     .secondaryColor,
                                               ),
                                             ),
-                                            Positioned.fill(
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: SvgPicture.network(
-                                                  events[0].emotion.emoticon,
-                                                  width: 20.w,
-                                                  height: 20.h,
-                                                ),
-                                              ),
-                                            ),
+                                            Text("${events[0].feeling}"),
+                                            // Positioned.fill(
+                                            //   child: Align(
+                                            //     alignment: Alignment.center,
+                                            //     child: SvgPicture.network(
+                                            //       events[0].feeling,
+                                            //       width: 20.w,
+                                            //       height: 20.h,
+                                            //     ),
+                                            //   ),
+                                            // ),
                                           ],
                                         )
                                       : events.isNotEmpty
-                                          ? Stack(
-                                              children: [
-                                                Container(
-                                                  padding: context.isTablet
-                                                      ? EdgeInsets.all(9.w)
-                                                      : EdgeInsets.all(16.w),
-                                                  decoration: BoxDecoration(
-                                                    border: isToday(day)
-                                                        ? Border.all(
-                                                            width: 1,
-                                                            color:
-                                                                kOrange300Color,
-                                                          )
-                                                        : null,
-                                                    shape: BoxShape.circle,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .secondaryColor,
-                                                  ),
-                                                ),
-                                                Positioned.fill(
-                                                  child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: SvgPicture.network(
-                                                      events[0]
-                                                          .emotion
-                                                          .emoticon,
-                                                      width: 20.w,
-                                                      height: 20.h,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                          ? Align(
+                                              alignment: Alignment.center,
+                                              child: Image.asset(
+                                                "lib/config/assets/images/character/sad2.png",
+                                                width: 32.w,
+                                              ),
                                             )
                                           : DateTime.now().isAfter(day)
                                               ? Container(

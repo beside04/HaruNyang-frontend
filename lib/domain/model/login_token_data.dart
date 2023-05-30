@@ -7,8 +7,7 @@ part 'login_token_data.g.dart';
 @freezed
 class LoginTokenData with _$LoginTokenData {
   factory LoginTokenData({
-    @Default('') @JsonKey(name: 'access_token') String accessToken,
-    @Default('') @JsonKey(name: 'refresh_token') String refreshToken,
+    @Default('') String accessToken,
   }) = _LoginTokenData;
 
   factory LoginTokenData.fromJson(Map<String, dynamic> json) =>

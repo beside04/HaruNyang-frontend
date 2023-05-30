@@ -6,7 +6,8 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart'
+    as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -62,7 +63,8 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                             Text(
                               "몇 살이에요?",
                               style: kHeader2Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 40.h,
@@ -70,7 +72,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                             AgeTextField(
                               isSettingAge: false,
                               textEditingController:
-                              controller.ageEditingController,
+                                  controller.ageEditingController,
                               onTap: () {
                                 DatePicker.showDatePicker(
                                   context,
@@ -82,7 +84,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                                   },
                                   currentTime: DateTime(2000, 01, 01),
                                   locale: LocaleType.ko,
-                                  theme: DatePickerTheme(
+                                  theme: picker_theme.DatePickerTheme(
                                     itemStyle: kSubtitle1Style.copyWith(
                                         color: Theme.of(context)
                                             .colorScheme
@@ -95,21 +97,21 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                                 );
                               },
                               suffixIcon: Obx(
-                                    () => controller.ageValue.value.isEmpty
+                                () => controller.ageValue.value.isEmpty
                                     ? Visibility(
-                                  visible: false,
-                                  child: Container(),
-                                )
+                                        visible: false,
+                                        child: Container(),
+                                      )
                                     : GestureDetector(
-                                  child: const Icon(
-                                    Icons.cancel,
-                                    color: kBlackColor,
-                                    size: 20,
-                                  ),
-                                  onTap: () => controller
-                                      .ageEditingController
-                                      .clear(),
-                                ),
+                                        child: const Icon(
+                                          Icons.cancel,
+                                          color: kBlackColor,
+                                          size: 20,
+                                        ),
+                                        onTap: () => controller
+                                            .ageEditingController
+                                            .clear(),
+                                      ),
                               ),
                             ),
                             SizedBox(
@@ -135,7 +137,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                     if (key.saveAndValidate()) {
                       FocusScope.of(context).unfocus();
                       Get.to(
-                            () => OnBoardingJobScreen(
+                        () => OnBoardingJobScreen(
                           nickname: nickname,
                           birth: controller.ageValue.value,
                         ),
