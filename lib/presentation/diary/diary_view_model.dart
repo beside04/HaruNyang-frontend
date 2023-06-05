@@ -25,47 +25,47 @@ class DiaryViewModel extends GetxController
   final RxList<EmoticonData> emoticonDataList = <EmoticonData>[
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/happy.png',
-      value: 'SAD',
+      value: 'HAPPINESS',
       desc: '기뻐',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/sad2.png',
-      value: 'SAD',
+      value: 'SADNESS',
       desc: '슬퍼',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/angry.png',
-      value: 'SAD',
+      value: 'ANGRY',
       desc: '화나',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/excited.png',
-      value: 'SAD',
+      value: 'EXCITED',
       desc: '신나',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/tired.png',
-      value: 'SAD',
+      value: 'TIRED',
       desc: '힘들어',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/amazed.png',
-      value: 'SAD',
+      value: 'SURPRISED',
       desc: '놀랐어',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/soso.png',
-      value: 'SAD',
+      value: 'NEUTRAL',
       desc: '그저그래',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/blushed.png',
-      value: 'SAD',
+      value: 'FLUTTER',
       desc: '설레',
     ),
     EmoticonData(
       emoticon: 'lib/config/assets/images/character/molra.png',
-      value: 'SAD',
+      value: 'UNCERTAIN',
       desc: '몰라',
     ),
   ].obs;
@@ -73,8 +73,40 @@ class DiaryViewModel extends GetxController
   final Rx<EmoticonData> selectedEmotion =
       EmoticonData(emoticon: '', value: '', desc: '').obs;
 
-  final RxList<WeatherData> weatherDataList = <WeatherData>[].obs;
-  final Rx<WeatherData> selectedWeather = WeatherData(image: '', value: '').obs;
+  final RxList<WeatherData> weatherDataList = <WeatherData>[
+    WeatherData(
+      weather: 'lib/config/assets/images/diary/weather/sunny.svg',
+      value: 'SUNNY',
+      desc: '맑음',
+    ),
+    WeatherData(
+      weather: 'lib/config/assets/images/diary/weather/cloudy.svg',
+      value: 'CLOUDY',
+      desc: '흐림',
+    ),
+    WeatherData(
+      weather: 'lib/config/assets/images/diary/weather/rainy.svg',
+      value: 'RAINY',
+      desc: '비',
+    ),
+    WeatherData(
+      weather: 'lib/config/assets/images/diary/weather/snow.svg',
+      value: 'SNOWY',
+      desc: '눈',
+    ),
+    WeatherData(
+      weather: 'lib/config/assets/images/diary/weather/windy.svg',
+      value: 'WINDY',
+      desc: '바람',
+    ),
+    WeatherData(
+      weather: 'lib/config/assets/images/diary/weather/thunder.svg',
+      value: 'THUNDER',
+      desc: '번개',
+    ),
+  ].obs;
+  final Rx<WeatherData> selectedWeather =
+      WeatherData(weather: '', value: '', desc: '').obs;
 
   void popDownEmotionModal() {
     isEmotionModal.value = false;
@@ -131,7 +163,7 @@ class DiaryViewModel extends GetxController
           await precachePicture(
               NetworkPicture(
                 SvgPicture.svgByteDecoderBuilder,
-                weather.image,
+                weather.weather,
               ),
               null);
         }

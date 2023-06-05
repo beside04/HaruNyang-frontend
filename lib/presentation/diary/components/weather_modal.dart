@@ -50,8 +50,8 @@ class WeatherModal extends GetView<DiaryViewModel> {
                   itemBuilder: (BuildContext context, int i) {
                     return Obx(
                       () => WeatherIconButton(
-                        name: controller.weatherDataList[i].value,
-                        icon: controller.weatherDataList[i].image,
+                        name: controller.weatherDataList[i].desc,
+                        icon: controller.weatherDataList[i].weather,
                         selected: controller.selectedWeather.value ==
                             controller.weatherDataList[i],
                         onPressed: () {
@@ -68,7 +68,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
               Obx(
                 () => BottomButton(
                   title: '다음으로',
-                  onTap: controller.selectedWeather.value.image.isEmpty
+                  onTap: controller.selectedWeather.value.weather.isEmpty
                       ? null
                       : () {
                           GlobalUtils.setAnalyticsCustomEvent(

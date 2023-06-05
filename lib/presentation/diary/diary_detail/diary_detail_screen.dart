@@ -19,7 +19,7 @@
 // import 'package:frontend/presentation/diary/components/diary_popup_menu_item.dart';
 // import 'package:frontend/presentation/diary/write_diary_screen.dart';
 // import 'package:frontend/presentation/diary/write_diary_screen_test.dart';
-// import 'package:frontend/presentation/diary/write_diary_view_model.dart';
+// import 'package:frontend/presentation/diary/diary_detail_view_model.dart';
 // import 'package:frontend/presentation/home/home_screen.dart';
 // import 'package:get/get.dart';
 // import 'package:image_cropper/image_cropper.dart';

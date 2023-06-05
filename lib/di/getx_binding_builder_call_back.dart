@@ -32,6 +32,7 @@ import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
+import 'package:frontend/domain/use_case/diary/get_diary_detail_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
@@ -53,6 +54,7 @@ import 'package:frontend/global_controller/on_boarding/on_boarding_controller.da
 import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
+import 'package:frontend/presentation/diary/write_diary_loading_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model_test.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
@@ -199,6 +201,9 @@ final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
   ),
 );
 
+final GetDiaryDetailUseCase getDiaryDetailUseCase =
+    GetDiaryDetailUseCase(diaryRepository: diaryRepository);
+
 final FileUploadUseCase fileUploadUseCase =
     FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
 final saveDiaryUseCase = SaveDiaryUseCase(
@@ -249,9 +254,17 @@ void getWriteDiaryBinding(EmoticonData emotion, DiaryData? diaryData) {
   );
 }
 
-void getWriteDiaryBindingTest(EmoticonData emotion, DiaryData? diaryData) {
+void getWriteDiaryBindingTest(String emotion, DiaryData? diaryData) {
   Get.put(
     WriteDiaryViewModelTest(emotion: emotion, diaryData: diaryData),
+  );
+}
+
+void getWriteDiaryLoadingBinding() {
+  Get.put(
+    WriteDiaryLoadingViewModel(
+        saveDiaryUseCase: saveDiaryUseCase,
+        updateDiaryUseCase: updateDiaryUseCase),
   );
 }
 

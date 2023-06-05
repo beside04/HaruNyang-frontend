@@ -14,6 +14,7 @@ class DiaryData with _$DiaryData {
     @JsonKey(name: 'content') required String diaryContent,
     @JsonKey(name: 'feeling') required String feeling,
     @JsonKey(name: 'feelingScore') required int feelingScore,
+    @Default('') String? topic,
     @JsonKey(name: 'weather') required String weather,
     @JsonKey(name: 'targetDate') required String targetDate,
   }) = _DiaryData;

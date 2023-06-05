@@ -15,8 +15,8 @@ class CommentData with _$CommentData {
     @Default('') @JsonKey(name: 'message') String message,
     @Default('') @JsonKey(name: 'author') String author,
     @Default(false) @JsonKey(name: 'isFavorite') bool isFavorite,
-    @Default('') @JsonKey(name: 'createAt') String createTime,
-    @Default('') @JsonKey(name: 'updateAt') String updateTime,
+    @Default('') @JsonKey(name: 'createAt') String createAt,
+    @Default('') @JsonKey(name: 'updateAt') String updateAt,
   }) = _CommentData;
 
   factory CommentData.fromJson(Map<String, dynamic> json) =>

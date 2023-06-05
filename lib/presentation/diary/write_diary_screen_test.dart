@@ -20,6 +20,7 @@ import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_tes
 import 'package:frontend/presentation/diary/write_diary_loading_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model_test.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
@@ -29,9 +30,8 @@ import '../components/back_icon.dart';
 
 class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
   final DateTime date;
-  final EmoticonData emotion;
+  final String emotion;
   final String weather;
-  final int emoticonIndex;
   final DiaryData? diaryData;
   final bool isEditScreen;
 
@@ -40,7 +40,6 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
     required this.date,
     required this.emotion,
     required this.weather,
-    required this.emoticonIndex,
     this.isEditScreen = false,
     this.diaryData,
   }) : super(key: key);
@@ -162,39 +161,30 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                     onPressed: controller.diaryValue.value.isEmpty
                         ? null
                         : () {
+                            getWriteDiaryLoadingBinding();
                             GlobalUtils.setAnalyticsCustomEvent(
                                 'Click_Diary_Register');
                             Get.offNamed("/home", arguments: {"index": 0});
                             FocusManager.instance.primaryFocus?.unfocus();
 
-                            // Get.to(
-                            //   () => DiaryDetailScreenTest(
-                            //     date: date,
-                            //     isStamp: false,
-                            //     diaryData: diaryData != null
-                            //         ? diaryData!.copyWith(
-                            //             diaryContent: controller
-                            //                 .diaryEditingController.value.text,
-                            //             images: controller.networkImage.value !=
-                            //                     null
-                            //                 ? [controller.networkImage.value!]
-                            //                 : [],
-                            //           )
-                            //         : DiaryData(
-                            //             emotion: emotion,
-                            //             diaryContent: controller
-                            //                 .diaryEditingController.value.text,
-                            //             emoticonIndex: emoticonIndex,
-                            //             weather: weather,
-                            //             images: [],
-                            //             wiseSayings: [],
-                            //             writingTopic: controller.topic.value,
-                            //           ),
-                            //     imageFile: controller.croppedFile.value,
-                            //   ),
-                            // );
-
-                            Get.to(() => WriteDiaryLoadingScreen());
+                            print(diaryData!.id);
+                            Get.to(
+                              () => WriteDiaryLoadingScreen(
+                                diaryData: DiaryData(
+                                  id: diaryData!.id,
+                                  diaryContent: controller
+                                      .diaryEditingController.value.text,
+                                  feeling: emotion,
+                                  feelingScore: 1,
+                                  weather: weather,
+                                  targetDate:
+                                      DateFormat('yyyy-MM-dd').format(date),
+                                  topic: controller.topic.value.value,
+                                ),
+                                date: date,
+                                isEditScreen: isEditScreen,
+                              ),
+                            );
                           },
                     child: Text(
                       '등록',
@@ -341,39 +331,26 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                             ],
                           ),
                           Center(
-                            child: isEditScreen
-                                ? Text(
-                                    textAlign: TextAlign.center,
-                                    // diaryData!.writingTopic.value,
-                                    "ㅇㄴㅁㅁ",
-                                    maxLines: 2,
-                                    style: kHeader3Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textTitle,
-                                    ),
-                                  )
-                                : Obx(
-                                    () => Text(
-                                      textAlign: TextAlign.center,
-                                      controller.topic.value.value,
-                                      maxLines: 2,
-                                      style: kHeader3Style.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .textTitle,
-                                      ),
-                                    ),
-                                  ),
+                            child: Obx(
+                              () => Text(
+                                textAlign: TextAlign.center,
+                                controller.topic.value.value,
+                                maxLines: 2,
+                                style: kHeader3Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle,
+                                ),
+                              ),
+                            ),
                           ),
                           Container(
                             height: 12.h,
                           ),
                           WeatherEmotionBadgeWritingDiary(
-                            emoticon: emotion.emoticon,
-                            emoticonDesc: emotion.desc,
-                            weatherIcon: weather,
-                            weatherIconDesc: weather,
+                            emoticon: getEmoticonImage(emotion),
+                            emoticonDesc: getEmoticonValue(emotion),
+                            weatherIcon: getWeatherImage(weather),
+                            weatherIconDesc: getWeatherValue(weather),
                             color: Theme.of(context).colorScheme.surface_01,
                           ),
                           FormBuilderTextField(

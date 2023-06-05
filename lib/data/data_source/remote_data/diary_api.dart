@@ -2,6 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
+import 'package:frontend/global_controller/token/token_controller.dart';
+import 'package:get/get.dart' hide Response;
 
 class DiaryApi {
   final Dio dio;
@@ -11,25 +14,57 @@ class DiaryApi {
     required this.dio,
   });
 
-  Future<Result<String>> saveDiary(DiaryData diary) async {
+  Future<Result<DiaryDetailData>> getDiaryDetail(int id) async {
+    String bookmarkUrl = '$_baseUrl/v2/diaries/$id';
+    try {
+      Response response;
+      response = await dio.get(
+        bookmarkUrl,
+        options: Options(headers: {
+          "Cookie": Get.find<TokenController>().accessToken,
+        }),
+      );
+
+      return Result.success(DiaryDetailData.fromJson(response.data));
+    } on DioError catch (e) {
+      String errMessage = '';
+
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data['message'];
+        }
+      } else {
+        errMessage = '401';
+      }
+      return Result.error(errMessage);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
+  }
+
+  Future<Result<DiaryDetailData>> saveDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v2/diaries';
     try {
       Response response;
       response = await dio.post(
         diaryUrl,
+        options: Options(headers: {
+          "Cookie": Get.find<TokenController>().accessToken,
+        }),
         data: {
           "content": diary.diaryContent,
           "feeling": diary.feeling,
           "feelingScore": diary.feelingScore,
           "weather": diary.weather,
-          "topic": diary,
-          "image": diary,
-          "targetDate": diary.diaryContent,
+          "topic": diary.topic,
+          "image": "",
+          "targetDate": diary.targetDate,
         },
       );
 
-      final String diaryId = response.data['data'];
-      return Result.success(diaryId);
+      return Result.success(DiaryDetailData.fromJson(response.data));
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
@@ -47,26 +82,25 @@ class DiaryApi {
     }
   }
 
-  Future<Result<bool>> updateDiary(DiaryData diary) async {
+  Future<Result<DiaryDetailData>> updateDiary(DiaryData diary) async {
     String diaryUrl = '$_baseUrl/v2/diaries/${diary.id}';
     try {
       Response response;
-      response = await dio.post(diaryUrl, data: {
-        "content": diary.diaryContent,
-        "feeling": diary.feeling,
-        "feelingScore": diary.feelingScore,
-        "weather": diary.weather,
-        "topic": diary,
-        "image": diary,
-        "targetDate": diary.diaryContent,
-      });
+      response = await dio.post(diaryUrl,
+          options: Options(headers: {
+            "Cookie": Get.find<TokenController>().accessToken,
+          }),
+          data: {
+            "content": diary.diaryContent,
+            "feeling": diary.feeling,
+            "feelingScore": diary.feelingScore,
+            "weather": diary.weather,
+            "topic": diary.topic,
+            "image": "",
+            "targetDate": diary.targetDate,
+          });
 
-      final bool resultData = response.data['data'];
-      if (resultData) {
-        return const Result.success(true);
-      } else {
-        return const Result.error('일기 수정이 실패 했습니다.');
-      }
+      return Result.success(DiaryDetailData.fromJson(response.data));
     } on DioError catch (e) {
       String errMessage = '';
 
@@ -85,15 +119,18 @@ class DiaryApi {
     }
   }
 
-  Future<Result<bool>> deleteDiary(String diaryId) async {
-    String diaryUrl = '$_baseUrl/v1/diary/$diaryId';
+  Future<Result<bool>> deleteDiary(int diaryId) async {
+    String diaryUrl = '$_baseUrl/v2/diaries/$diaryId';
     try {
       Response response;
       response = await dio.delete(
         diaryUrl,
+        options: Options(headers: {
+          "Cookie": Get.find<TokenController>().accessToken,
+        }),
       );
 
-      final bool resultData = response.data['data'];
+      final bool resultData = response.data;
       if (resultData) {
         return const Result.success(true);
       } else {

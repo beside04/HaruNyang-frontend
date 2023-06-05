@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
@@ -117,7 +119,7 @@ class DiaryController extends GetxController {
     );
   }
 
-  Future<void> deleteDiary(String diaryID) async {
+  Future<void> deleteDiary(int diaryID) async {
     await deleteDiaryUseCase(diaryID);
     getEmotionStampList();
   }
@@ -280,13 +282,14 @@ class DiaryController extends GetxController {
 
     result.when(
       success: (result) {
-        // result.sort((a, b) {
-        //   return b.writtenAt.compareTo(a.writtenAt);
-        // });
+        result.sort((a, b) {
+          return b.targetDate.compareTo(a.targetDate);
+        });
 
         _state.value = state.value.copyWith(
           diaryDataList: result,
         );
+
         _makeDiaryCardDataList(result);
       },
       error: (message) {
@@ -303,13 +306,13 @@ class DiaryController extends GetxController {
     List<DiaryCardData> diaryCardDataList = [];
     Map<String, List<DiaryData>> weekName = {};
     for (int i = 0; i < diaries.length; i++) {
-      // String title =
-      //     _weekOfMonthForSimple(DateTime.parse(diaries[i].writtenAt));
-      // if (weekName.containsKey(title)) {
-      //   weekName[title]!.add(diaries[i]);
-      // } else {
-      //   weekName[title] = [diaries[i]];
-      // }
+      String title =
+          _weekOfMonthForSimple(DateTime.parse(diaries[i].targetDate));
+      if (weekName.containsKey(title)) {
+        weekName[title]!.add(diaries[i]);
+      } else {
+        weekName[title] = [diaries[i]];
+      }
     }
     for (var title in weekName.keys) {
       diaryCardDataList
@@ -410,5 +413,20 @@ class DiaryController extends GetxController {
     _state.value = state.value.copyWith(
       selectedCalendarDate: date,
     );
+  }
+
+  Rxn<DiaryDetailData> diaryDetailData = Rxn<DiaryDetailData>();
+
+  Future<void> getDiaryDetail(id) async {
+    final result = await getDiaryDetailUseCase(id);
+
+    result.when(
+      success: (data) {
+        diaryDetailData.value = data;
+      },
+      error: (message) {},
+    );
+    await getEmotionStampList();
+    await getEmotionStampList();
   }
 }

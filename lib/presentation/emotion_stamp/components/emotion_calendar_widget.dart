@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/toast.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:get/get.dart';
@@ -83,17 +84,16 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                         diaryController.setFocusDay(day);
 
                         if ((DateTime.now().isAfter(day) || isToday(day))) {
-                          // events.isEmpty
-                          //     ? Get.to(() => EmptyDiaryScreen(
-                          //           date: day,
-                          //         ))
-                          //     : Get.to(
-                          //         () => DiaryDetailScreen(
-                          //           date: day,
-                          //           isStamp: true,
-                          //           diaryData: events[0],
-                          //         ),
-                          //       );
+                          events.isEmpty
+                              ? Get.to(() => EmptyDiaryScreen(
+                                    date: day,
+                                  ))
+                              : Get.to(
+                                  () => DiaryDetailScreenTest(
+                                    date: day,
+                                    diaryData: events[0],
+                                  ),
+                                );
                         } else {
                           toast(
                             context: context,
@@ -147,24 +147,25 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                                     .secondaryColor,
                                               ),
                                             ),
-                                            Text("${events[0].feeling}"),
-                                            // Positioned.fill(
-                                            //   child: Align(
-                                            //     alignment: Alignment.center,
-                                            //     child: SvgPicture.network(
-                                            //       events[0].feeling,
-                                            //       width: 20.w,
-                                            //       height: 20.h,
-                                            //     ),
-                                            //   ),
-                                            // ),
+                                            Positioned.fill(
+                                              child: Align(
+                                                alignment: Alignment.center,
+                                                child: Image.asset(
+                                                  getEmoticonImage(
+                                                      events[0].feeling),
+                                                  width: 20.w,
+                                                  height: 20.h,
+                                                ),
+                                              ),
+                                            ),
                                           ],
                                         )
                                       : events.isNotEmpty
                                           ? Align(
                                               alignment: Alignment.center,
                                               child: Image.asset(
-                                                "lib/config/assets/images/character/sad2.png",
+                                                getEmoticonImage(
+                                                    events[0].feeling),
                                                 width: 32.w,
                                               ),
                                             )

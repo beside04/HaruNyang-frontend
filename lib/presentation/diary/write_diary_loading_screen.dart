@@ -2,28 +2,48 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/presentation/diary/write_diary_loading_view_model.dart';
+import 'package:frontend/presentation/diary/write_diary_success_screen.dart';
 import 'package:get/get.dart';
 
 class WriteDiaryLoadingScreen extends StatefulWidget {
+  final DiaryData diaryData;
+  final DateTime date;
+  final bool isEditScreen;
+
+  WriteDiaryLoadingScreen({
+    Key? key,
+    required this.diaryData,
+    required this.date,
+    this.isEditScreen = false,
+  }) : super(key: key);
+
   @override
   _WriteDiaryLoadingScreenState createState() =>
       _WriteDiaryLoadingScreenState();
 }
 
 class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
+  final diaryController = Get.find<WriteDiaryLoadingViewModel>();
+
   Timer? _timer;
   bool _shouldShowWidget = false;
 
   @override
   void initState() {
     super.initState();
+
+    if (widget.isEditScreen) {
+      diaryController.updateDiaryDetail(widget.diaryData, widget.date);
+    } else {
+      diaryController.saveDiaryDetail(widget.diaryData, widget.date);
+    }
+
     _timer = Timer(Duration(seconds: 1), () {
       setState(() {
         _shouldShowWidget = true;
       });
-    });
-    Timer(Duration(seconds: 3), () {
-      Get.back();
     });
   }
 
@@ -68,7 +88,7 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                         ),
                       ),
                       Text(
-                        "물고 오는 중이에요",
+                        "준비하고 있어요",
                         style: kHeader3Style.copyWith(
                           color: Theme.of(context).colorScheme.textTitle,
                         ),

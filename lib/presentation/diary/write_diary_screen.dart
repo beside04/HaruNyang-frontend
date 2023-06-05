@@ -15,7 +15,7 @@
 // import 'package:frontend/presentation/components/dialog_component.dart';
 // import 'package:frontend/presentation/components/weather_emotion_badge_writing_diary.dart';
 // import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
-// import 'package:frontend/presentation/diary/write_diary_view_model.dart';
+// import 'package:frontend/presentation/diary/diary_detail_view_model.dart';
 // import 'package:get/get.dart';
 // import 'package:intl/intl.dart';
 //
@@ -181,43 +181,43 @@
 //                                         FocusManager.instance.primaryFocus
 //                                             ?.unfocus();
 //
-//                                         Get.to(
-//                                           () => DiaryDetailScreen(
-//                                             date: date,
-//                                             isStamp: false,
-//                                             diaryData: diaryData != null
-//                                                 ? diaryData!.copyWith(
-//                                                     diaryContent: controller
-//                                                         .diaryEditingController
-//                                                         .text,
-//                                                     images: controller
-//                                                                 .networkImage
-//                                                                 .value !=
-//                                                             null
-//                                                         ? [
-//                                                             controller
-//                                                                 .networkImage
-//                                                                 .value!
-//                                                           ]
-//                                                         : [],
-//                                                   )
-//                                                 : DiaryData(
-//                                                     emotion: emotion,
-//                                                     diaryContent: controller
-//                                                         .diaryEditingController
-//                                                         .text,
-//                                                     emoticonIndex:
-//                                                         emoticonIndex,
-//                                                     weather: weather,
-//                                                     images: [],
-//                                                     wiseSayings: [],
-//                                                     writingTopic:
-//                                                         controller.topic.value,
-//                                                   ),
-//                                             imageFile:
-//                                                 controller.croppedFile.value,
-//                                           ),
-//                                         );
+//                                         // Get.to(
+//                                         //   () => DiaryDetailScreen(
+//                                         //     date: date,
+//                                         //     isStamp: false,
+//                                         //     diaryData: diaryData != null
+//                                         //         ? diaryData!.copyWith(
+//                                         //             diaryContent: controller
+//                                         //                 .diaryEditingController
+//                                         //                 .text,
+//                                         //             images: controller
+//                                         //                         .networkImage
+//                                         //                         .value !=
+//                                         //                     null
+//                                         //                 ? [
+//                                         //                     controller
+//                                         //                         .networkImage
+//                                         //                         .value!
+//                                         //                   ]
+//                                         //                 : [],
+//                                         //           )
+//                                         //         : DiaryData(
+//                                         //             emotion: emotion,
+//                                         //             diaryContent: controller
+//                                         //                 .diaryEditingController
+//                                         //                 .text,
+//                                         //             emoticonIndex:
+//                                         //                 emoticonIndex,
+//                                         //             weather: weather,
+//                                         //             images: [],
+//                                         //             wiseSayings: [],
+//                                         //             writingTopic:
+//                                         //                 controller.topic.value,
+//                                         //           ),
+//                                         //     imageFile:
+//                                         //         controller.croppedFile.value,
+//                                         //   ),
+//                                         // );
 //                                       },
 //                                       backgroundColor: kOrange200Color,
 //                                       textStyle: kHeader4Style.copyWith(

@@ -34,6 +34,9 @@ class OnBoardingApi {
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          // Get.find<LoginViewModel>().connectKakaoLogin();
+        }
         if (e.response!.statusCode == 403) {
           Get.find<LoginViewModel>().connectKakaoLogin();
         }

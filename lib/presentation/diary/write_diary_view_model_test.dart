@@ -16,7 +16,7 @@ import 'package:path_provider/path_provider.dart';
 
 class WriteDiaryViewModelTest extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final EmoticonData emotion;
+  final String emotion;
   final DiaryData? diaryData;
   WriteDiaryViewModelTest({
     required this.emotion,
@@ -114,7 +114,7 @@ class WriteDiaryViewModelTest extends GetxController
     timer = Timer(Duration(seconds: 5), _onTimerFinished);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      getDefaultTopic(emotion.id ?? 0);
+      getDefaultTopic(emotion);
 
       if (diaryData != null) {
         setDiaryData(diaryData!);
@@ -212,69 +212,61 @@ class WriteDiaryViewModelTest extends GetxController
     }
   }
 
-  void getDefaultTopic(int emoticonId) {
-    switch (emoticonId) {
-      case 1:
+  void getDefaultTopic(String emoticon) {
+    switch (emoticon) {
+      case "HAPPINESS":
         //기쁨
         topic.value = TopicData(
           id: 1,
           value: '오늘 가장 기쁜 일은\n 무엇이었나요?',
         );
         break;
-      case 2:
+      case "SURPRISED":
         //놀람
         topic.value = TopicData(
           id: 2,
           value: '오늘 가장 놀라운 일은\n 무엇이었나요?',
         );
         break;
-      case 3:
-        //당황
-        topic.value = TopicData(
-          id: 3,
-          value: '오늘 가장 당황스러운 일은\n 무엇이었나요?',
-        );
-        break;
-      case 4:
+      case "SADNESS":
         //슬픔
         topic.value = TopicData(
           id: 4,
           value: '오늘 가장 슬픈 일은\n 무엇이었나요?',
         );
         break;
-      case 5:
+      case "EXCITED":
         //신남
         topic.value = TopicData(
           id: 5,
           value: '오늘 가장 신난 일은\n 무엇이었나요?',
         );
         break;
-      case 6:
-        //우울
-        topic.value = TopicData(
-          id: 6,
-          value: '오늘 가장 우울한 일은\n 무엇이었나요?',
-        );
-        break;
-      case 7:
+      case "ANGRY":
         //화남
         topic.value = TopicData(
           id: 7,
           value: '오늘 가장 화난 일은\n 무엇이었나요?',
         );
         break;
-      case 8:
+      case "TIRED":
         //힘듬
         topic.value = TopicData(
           id: 8,
           value: '오늘 가장 힘들었던 일은\n 무엇이었나요?',
         );
         break;
-      case 9:
+      case "FLUTTER":
         //설렘
         topic.value = TopicData(
           id: 24,
           value: '오늘 가장 설레었던 일은\n 무엇이었나요?',
+        );
+        break;
+      case "NEUTRAL, UNCERTAIN":
+        topic.value = TopicData(
+          id: 9,
+          value: '오늘 가장 기억에 남는 일은\n 무엇이었나요?',
         );
         break;
       default:

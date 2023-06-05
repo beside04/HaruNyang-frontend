@@ -27,22 +27,16 @@ class EmotionStampApi {
         }),
       );
 
-      if (response.data['status'] == 200) {
-        // print(response.data['data']);
-        final Iterable emotionStampIterable = response.data;
+      final Iterable emotionStampIterable = response.data;
 
-        final List<DiaryData> emotionStampList =
-            emotionStampIterable.map((e) => DiaryData.fromJson(e)).toList();
+      final List<DiaryData> emotionStampList =
+          emotionStampIterable.map((e) => DiaryData.fromJson(e)).toList();
 
-        emotionStampList.sort((a, b) {
-          return a.id!.compareTo(b.id!);
-        });
+      emotionStampList.sort((a, b) {
+        return a.id!.compareTo(b.id!);
+      });
 
-        return Result.success(emotionStampList);
-      } else {
-        return Result.error(
-            '서버 error : status code : ${response.data['status']}');
-      }
+      return Result.success(emotionStampList);
     } on DioError catch (e) {
       String errMessage = '';
 

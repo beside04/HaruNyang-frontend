@@ -12,13 +12,12 @@ class BookmarkApi {
   });
 
   Future<Result<bool>> saveBookmark(int wiseSayingId) async {
-    String bookmarkUrl =
-        '$_baseUrl/v1/wise-saying-bookmark?wiseSayingId=$wiseSayingId';
+    String bookmarkUrl = '$_baseUrl/v2/comments/$wiseSayingId/favorite';
     try {
       Response response;
       response = await dio.post(bookmarkUrl);
 
-      final bool resultData = response.data['data'];
+      final bool resultData = response.data;
       if (resultData) {
         return const Result.success(true);
       } else {
@@ -43,7 +42,7 @@ class BookmarkApi {
   }
 
   Future<Result<List<BookmarkData>>> getBookmark(int page, int limit) async {
-    String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
+    String bookmarkUrl = '$_baseUrl/v2/comments/favorites';
     try {
       Response response;
       response = await dio.get(
@@ -54,7 +53,7 @@ class BookmarkApi {
         },
       );
 
-      final Iterable bookmarkIterable = response.data['data']['data'];
+      final Iterable bookmarkIterable = response.data;
 
       final List<BookmarkData> bookmarkList =
           bookmarkIterable.map((e) => BookmarkData.fromJson(e)).toList();
@@ -79,14 +78,14 @@ class BookmarkApi {
   }
 
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {
-    String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark/$bookmarkId';
+    String bookmarkUrl = '$_baseUrl/v2/comments/$bookmarkId/favorite';
     try {
       Response response;
       response = await dio.delete(
         bookmarkUrl,
       );
 
-      final bool resultData = response.data['data'];
+      final bool resultData = response.data;
       if (resultData) {
         return const Result.success(true);
       } else {
