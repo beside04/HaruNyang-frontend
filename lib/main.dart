@@ -20,8 +20,6 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'presentation/home/home_screen.dart';
 import 'package:flutter_smartlook/flutter_smartlook.dart';
 
-import 'presentation/login/login_view_model.dart';
-
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {

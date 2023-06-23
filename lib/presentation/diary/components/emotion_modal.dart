@@ -6,7 +6,6 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
-import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/diary/write_diary_screen_test.dart';
 import 'package:get/get.dart';
 
@@ -100,6 +99,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                                       controller.selectedEmotion.value.value,
                                   weather:
                                       controller.selectedWeather.value.value,
+                                  isEditScreen: false,
                                 ),
                               );
                             },

@@ -3,8 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
-import 'package:frontend/global_controller/token/token_controller.dart';
-import 'package:get/get.dart' hide Response;
 
 class DiaryApi {
   final Dio dio;
@@ -20,9 +18,6 @@ class DiaryApi {
       Response response;
       response = await dio.get(
         bookmarkUrl,
-        options: Options(headers: {
-          "Cookie": Get.find<TokenController>().accessToken,
-        }),
       );
 
       return Result.success(DiaryDetailData.fromJson(response.data));
@@ -50,16 +45,13 @@ class DiaryApi {
       Response response;
       response = await dio.post(
         diaryUrl,
-        options: Options(headers: {
-          "Cookie": Get.find<TokenController>().accessToken,
-        }),
         data: {
           "content": diary.diaryContent,
           "feeling": diary.feeling,
           "feelingScore": diary.feelingScore,
           "weather": diary.weather,
           "topic": diary.topic,
-          "image": "",
+          "image": diary.image,
           "targetDate": diary.targetDate,
         },
       );
@@ -71,7 +63,7 @@ class DiaryApi {
         if (e.response!.statusCode == 401) {
           errMessage = '401';
         } else {
-          errMessage = e.response!.data['message'];
+          errMessage = e.response!.data;
         }
       } else {
         errMessage = '401';
@@ -86,19 +78,15 @@ class DiaryApi {
     String diaryUrl = '$_baseUrl/v2/diaries/${diary.id}';
     try {
       Response response;
-      response = await dio.post(diaryUrl,
-          options: Options(headers: {
-            "Cookie": Get.find<TokenController>().accessToken,
-          }),
-          data: {
-            "content": diary.diaryContent,
-            "feeling": diary.feeling,
-            "feelingScore": diary.feelingScore,
-            "weather": diary.weather,
-            "topic": diary.topic,
-            "image": "",
-            "targetDate": diary.targetDate,
-          });
+      response = await dio.post(diaryUrl, data: {
+        "content": diary.diaryContent,
+        "feeling": diary.feeling,
+        "feelingScore": diary.feelingScore,
+        "weather": diary.weather,
+        "topic": diary.topic,
+        "image": diary.image,
+        "targetDate": diary.targetDate,
+      });
 
       return Result.success(DiaryDetailData.fromJson(response.data));
     } on DioError catch (e) {
@@ -108,7 +96,7 @@ class DiaryApi {
         if (e.response!.statusCode == 401) {
           errMessage = '401';
         } else {
-          errMessage = e.response!.data['message'];
+          errMessage = e.response!.data;
         }
       } else {
         errMessage = '401';
@@ -125,9 +113,6 @@ class DiaryApi {
       Response response;
       response = await dio.delete(
         diaryUrl,
-        options: Options(headers: {
-          "Cookie": Get.find<TokenController>().accessToken,
-        }),
       );
 
       final bool resultData = response.data;

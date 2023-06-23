@@ -10,20 +10,17 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
-import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
-import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/weather_emotion_badge_writing_diary.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
 import 'package:frontend/presentation/diary/write_diary_loading_screen.dart';
-import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model_test.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:rive/rive.dart';
 
 import '../../core/utils/utils.dart';
 import '../components/back_icon.dart';
@@ -40,7 +37,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
     required this.date,
     required this.emotion,
     required this.weather,
-    this.isEditScreen = false,
+    required this.isEditScreen,
     this.diaryData,
   }) : super(key: key);
 
@@ -57,7 +54,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
           GlobalUtils.setAnalyticsCustomEvent(
               'Click_Diary_Back_WriteToCalendar');
           if (controller.diaryEditingController.value.text.isEmpty) {
-            Get.back();
+            Navigator.pop(context);
             FocusManager.instance.primaryFocus?.unfocus();
           } else if (diaryData?.diaryContent !=
               controller.diaryEditingController.value.text) {
@@ -76,7 +73,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                     DialogButton(
                       title: "아니요",
                       onTap: () {
-                        Get.back();
+                        Navigator.pop(context);
                       },
                       backgroundColor:
                           Theme.of(context).colorScheme.secondaryColor,
@@ -89,8 +86,9 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                     DialogButton(
                       title: "예",
                       onTap: () {
-                        Get.back();
-                        Get.back();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+
                         FocusManager.instance.primaryFocus?.unfocus();
                       },
                       backgroundColor: kOrange200Color,
@@ -116,7 +114,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                     DialogButton(
                       title: "아니요",
                       onTap: () {
-                        Get.back();
+                        Navigator.pop(context);
                       },
                       backgroundColor:
                           Theme.of(context).colorScheme.secondaryColor,
@@ -129,8 +127,9 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                     DialogButton(
                       title: "예",
                       onTap: () {
-                        Get.back();
-                        Get.back();
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+
                         FocusManager.instance.primaryFocus?.unfocus();
                       },
                       backgroundColor: kOrange200Color,
@@ -160,18 +159,48 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                   () => TextButton(
                     onPressed: controller.diaryValue.value.isEmpty
                         ? null
-                        : () {
+                        : () async {
                             getWriteDiaryLoadingBinding();
                             GlobalUtils.setAnalyticsCustomEvent(
                                 'Click_Diary_Register');
+                            if (controller.croppedFile.value != null) {
+                              showDialog(
+                                context: context,
+                                barrierDismissible: false,
+                                builder: (BuildContext context) {
+                                  return WillPopScope(
+                                    onWillPop: () async => false,
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black.withOpacity(0.6),
+                                      ),
+                                      child: Lottie.asset(
+                                        'lib/config/assets/lottie/loading_haru.json',
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                              try {
+                                await controller.uploadImage();
+                                // ignore: use_build_context_synchronously
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                              } catch (e) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                              }
+                            }
+
                             Get.offNamed("/home", arguments: {"index": 0});
                             FocusManager.instance.primaryFocus?.unfocus();
 
-                            print(diaryData!.id);
                             Get.to(
                               () => WriteDiaryLoadingScreen(
                                 diaryData: DiaryData(
-                                  id: diaryData!.id,
+                                  id: diaryData?.id,
                                   diaryContent: controller
                                       .diaryEditingController.value.text,
                                   feeling: emotion,
@@ -180,6 +209,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                                   targetDate:
                                       DateFormat('yyyy-MM-dd').format(date),
                                   topic: controller.topic.value.value,
+                                  image: controller.firebaseImageUrl.value,
                                 ),
                                 date: date,
                                 isEditScreen: isEditScreen,
@@ -205,7 +235,8 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
               leading: BackIcon(
                 onPressed: () {
                   if (controller.diaryEditingController.value.text.isEmpty) {
-                    Get.back();
+                    Navigator.pop(context);
+                    Get.find<DiaryController>().resetDiary();
                   } else if (diaryData?.diaryContent !=
                       controller.diaryEditingController.value.text) {
                     showDialog(
@@ -224,7 +255,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                             DialogButton(
                               title: "아니요",
                               onTap: () {
-                                Get.back();
+                                Navigator.pop(context);
                               },
                               backgroundColor:
                                   Theme.of(context).colorScheme.secondaryColor,
@@ -241,6 +272,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                               onTap: () {
                                 Get.offNamed("/home", arguments: {"index": 0});
                                 FocusManager.instance.primaryFocus?.unfocus();
+                                Get.find<DiaryController>().resetDiary();
                               },
                               backgroundColor: kOrange200Color,
                               textStyle:
@@ -268,7 +300,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                             DialogButton(
                               title: "아니요",
                               onTap: () {
-                                Get.back();
+                                Navigator.pop(context);
                               },
                               backgroundColor:
                                   Theme.of(context).colorScheme.secondaryColor,
@@ -285,6 +317,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                               onTap: () {
                                 Get.offNamed("/home", arguments: {"index": 0});
                                 FocusManager.instance.primaryFocus?.unfocus();
+                                Get.find<DiaryController>().resetDiary();
                               },
                               backgroundColor: kOrange200Color,
                               textStyle:
@@ -310,23 +343,13 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                             children: [
                               Center(
                                 child: Image.asset(
-                                  "lib/config/assets/images/character/rainy.png",
+                                  getWeatherCharacter(weather),
                                   height: 200.h,
                                 ),
                               ),
-                              // Lottie.asset(
-                              //   'lib/config/assets/lottie/graphic_type.json',
-                              //   controller: controller.animationController,
-                              //   onLoaded: (composition) {
-                              //     controller.animationController
-                              //       ..duration = composition.duration
-                              //       ..forward();
-                              //   },
-                              //   repeat: true,
-                              //   fit: BoxFit.fill,
-                              // ),
-                              Image.asset(
-                                "lib/config/assets/images/character/rain.png",
+                              RiveAnimation.asset(
+                                getWeatherAnimation(weather),
+                                fit: BoxFit.fill,
                               ),
                             ],
                           ),
@@ -404,7 +427,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                                             DialogButton(
                                               title: "확인 했어요",
                                               onTap: () {
-                                                Get.back();
+                                                Navigator.pop(context);
                                               },
                                               backgroundColor: kOrange200Color,
                                               textStyle: kHeader4Style.copyWith(
@@ -416,6 +439,62 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                                     )
                                   : null;
                             },
+                          ),
+                          Obx(
+                            () => Get.find<DiaryController>()
+                                        .diaryDetailData
+                                        .value ==
+                                    null
+                                ? Container()
+                                : Get.find<DiaryController>()
+                                            .diaryDetailData
+                                            .value!
+                                            .image ==
+                                        ''
+                                    ? Container()
+                                    : Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 20.0.w,
+                                          ),
+                                          child: Stack(
+                                            children: [
+                                              Image.network(
+                                                Get.find<DiaryController>()
+                                                    .diaryDetailData
+                                                    .value!
+                                                    .image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              Positioned(
+                                                right: 12,
+                                                top: 12,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    controller.clear();
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.all(6),
+                                                    decoration:
+                                                        const BoxDecoration(
+                                                      color: kBlackColor,
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    height: 24.h,
+                                                    width: 24.w,
+                                                    child: const Icon(
+                                                      Icons.close,
+                                                      size: 12,
+                                                      color: kWhiteColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                           ),
                           Obx(
                             () => (controller.croppedFile.value != null ||
@@ -531,7 +610,7 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                                   GlobalUtils.setAnalyticsCustomEvent(
                                       'Click_Diary_Picture');
                                   controller
-                                      .uploadImage()
+                                      .selectDeviceImage()
                                       .then((_) => controller.cropImage());
                                 },
                                 child: Padding(

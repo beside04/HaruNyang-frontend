@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'package:frontend/domain/model/diary/diary_detail_data.dart';
-import 'package:frontend/domain/use_case/diary/get_diary_detail_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
-import 'package:frontend/presentation/diary/write_diary_success_screen.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
 import 'package:get/get.dart';
 
 class WriteDiaryLoadingViewModel extends GetxController {
@@ -15,15 +14,20 @@ class WriteDiaryLoadingViewModel extends GetxController {
     required this.updateDiaryUseCase,
   });
 
+  final diaryController = Get.find<DiaryController>();
+
   Future<void> saveDiaryDetail(diary, date) async {
     final result = await saveDiaryUseCase(diary);
 
     result.when(
-      success: (data) {
+      success: (data) async {
+        await diaryController.getDiaryDetail(data.id);
+
         Get.to(
-          () => WriteDiarySuccessScreen(
+          () => DiaryDetailScreenTest(
+            diaryId: data.id,
             date: date,
-            diaryDetailData: data,
+            diaryData: diary,
           ),
         );
       },
@@ -35,11 +39,14 @@ class WriteDiaryLoadingViewModel extends GetxController {
     final result = await updateDiaryUseCase(diary);
 
     result.when(
-      success: (data) {
+      success: (data) async {
+        await diaryController.getDiaryDetail(data.id);
+
         Get.to(
-          () => WriteDiarySuccessScreen(
+          () => DiaryDetailScreenTest(
+            diaryId: data.id,
             date: date,
-            diaryDetailData: data,
+            diaryData: diary,
           ),
         );
       },

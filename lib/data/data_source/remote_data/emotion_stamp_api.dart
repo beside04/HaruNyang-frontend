@@ -2,7 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
-import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:get/get.dart' hide Response;
 
@@ -20,12 +19,7 @@ class EmotionStampApi {
       String emoticonStampUrl =
           '$_baseUrl/v2/diaries?periodFrom=$from&periodTo=$to';
       Response response;
-      response = await dio.get(
-        emoticonStampUrl,
-        options: Options(headers: {
-          "Cookie": Get.find<TokenController>().accessToken,
-        }),
-      );
+      response = await dio.get(emoticonStampUrl);
 
       final Iterable emotionStampIterable = response.data;
 

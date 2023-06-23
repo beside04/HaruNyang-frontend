@@ -8,6 +8,7 @@ abstract class OnBoardingRepository {
     required nickname,
     required job,
     required age,
+    required email,
   });
 
   void clearMyInformation();

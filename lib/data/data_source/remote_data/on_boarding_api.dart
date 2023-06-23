@@ -2,9 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/my_information.dart';
-import 'package:frontend/global_controller/token/token_controller.dart';
-import 'package:frontend/presentation/login/login_view_model.dart';
-import 'package:get/get.dart' hide Response;
 
 class OnBoardingApi {
   final Dio dio;
@@ -21,9 +18,6 @@ class OnBoardingApi {
       Response response;
       response = await dio.get(
         myInformationUrl,
-        options: Options(headers: {
-          "Cookie": Get.find<TokenController>().accessToken,
-        }),
       );
 
       final json = response.data;
@@ -34,12 +28,6 @@ class OnBoardingApi {
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
-        if (e.response!.statusCode == 401) {
-          // Get.find<LoginViewModel>().connectKakaoLogin();
-        }
-        if (e.response!.statusCode == 403) {
-          Get.find<LoginViewModel>().connectKakaoLogin();
-        }
       } else {
         errMessage = '401';
       }
@@ -53,16 +41,18 @@ class OnBoardingApi {
     required nickname,
     required job,
     required age,
+    required email,
   }) async {
-    String myInformationUrl = '$baseUrl/v1/members';
+    String myInformationUrl = '$baseUrl/v2/users';
     try {
       Response response;
-      response = await dio.put(
+      response = await dio.post(
         myInformationUrl,
         data: {
           'nickname': nickname,
           'job': job,
-          'age': age,
+          'birthDate': age,
+          'email': email,
         },
       );
 

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/toast.dart';
@@ -90,6 +89,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                   ))
                               : Get.to(
                                   () => DiaryDetailScreenTest(
+                                    diaryId: events[0].id!,
                                     date: day,
                                     diaryData: events[0],
                                   ),
@@ -128,37 +128,9 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                       ),
                                     )
                                   : isToday(day)
-                                      ? Stack(
-                                          children: [
-                                            Container(
-                                              padding: context.isTablet
-                                                  ? EdgeInsets.all(9.w)
-                                                  : EdgeInsets.all(16.w),
-                                              decoration: BoxDecoration(
-                                                border: isToday(day)
-                                                    ? Border.all(
-                                                        width: 1,
-                                                        color: kOrange300Color,
-                                                      )
-                                                    : null,
-                                                shape: BoxShape.circle,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondaryColor,
-                                              ),
-                                            ),
-                                            Positioned.fill(
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: Image.asset(
-                                                  getEmoticonImage(
-                                                      events[0].feeling),
-                                                  width: 20.w,
-                                                  height: 20.h,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                      ? Image.asset(
+                                          getEmoticonImage(events[0].feeling),
+                                          width: 32.w,
                                         )
                                       : events.isNotEmpty
                                           ? Align(

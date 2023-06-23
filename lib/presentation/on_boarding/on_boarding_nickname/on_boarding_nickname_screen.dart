@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
@@ -12,6 +11,7 @@ import 'package:frontend/global_controller/on_boarding/on_boarding_controller.da
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
+import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -19,8 +19,15 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
 class OnBoardingNicknameScreen extends StatefulWidget {
+  final String? email;
+  final String loginType;
+  final String socialId;
+
   const OnBoardingNicknameScreen({
     Key? key,
+    required this.email,
+    required this.loginType,
+    required this.socialId,
   }) : super(key: key);
 
   @override
@@ -144,8 +151,8 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                         ),
                                 ),
                                 Center(
-                                  child: SvgPicture.asset(
-                                    "lib/config/assets/images/character/character8.svg",
+                                  child: Image.asset(
+                                    "lib/config/assets/images/character/character4.png",
                                     width: 340.w,
                                     height: 340.h,
                                   ),
@@ -170,12 +177,22 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                           .isDuplicateNickname.value) {
                                     FocusScope.of(context).unfocus();
 
-                                    await onBoardingController.putMyInformation(
-                                      nickname: controller.nicknameValue.value,
-                                      isOnBoarding: true,
-                                      isPutNickname: true,
-                                      context: context,
+                                    Get.to(
+                                      () => OnBoardingAgeScreen(
+                                        nickname:
+                                            controller.nicknameValue.value,
+                                        email: widget.email,
+                                        loginType: widget.loginType,
+                                        socialId: widget.socialId,
+                                      ),
                                     );
+
+                                    // await onBoardingController.putMyInformation(
+                                    //   nickname: controller.nicknameValue.value,
+                                    //   isOnBoarding: true,
+                                    //   isPutNickname: true,
+                                    //   context: context,
+                                    // );
                                   }
                                 },
                         ),

@@ -4,15 +4,17 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
-import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/topic/topic_data.dart';
+import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/toast.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class WriteDiaryViewModelTest extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -32,6 +34,8 @@ class WriteDiaryViewModelTest extends GetxController
   final networkImage = Rx<String?>(null);
   Rx<int> diaryValueLength = 0.obs;
   late AnimationController animationController;
+
+  final firebaseImageUrl = Rx<String>('');
 
   bool isUpdated = false;
   int randomImageNumber = 1;
@@ -111,7 +115,7 @@ class WriteDiaryViewModelTest extends GetxController
 
     diaryEditingController.value.addListener(onTextChanged);
 
-    timer = Timer(Duration(seconds: 5), _onTimerFinished);
+    timer = Timer(const Duration(seconds: 5), _onTimerFinished);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       getDefaultTopic(emotion);
@@ -136,7 +140,7 @@ class WriteDiaryViewModelTest extends GetxController
     diaryValue.value = diaryEditingController.value.text;
     if (timer?.isActive ?? false) {
       timer?.cancel();
-      timer = Timer(Duration(seconds: 5), _onTimerFinished);
+      timer = Timer(const Duration(seconds: 5), _onTimerFinished);
     }
   }
 
@@ -186,6 +190,30 @@ class WriteDiaryViewModelTest extends GetxController
   }
 
   Future<void> uploadImage() async {
+    final socialId = await tokenUseCase.getSocialId();
+
+    File file = File(croppedFile.value!.path);
+
+    try {
+      // Use the user's UID and the current timestamp to create a unique path for each image.
+      String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+
+      await FirebaseStorage.instance
+          .ref('uploads/$socialId/$timestamp.png')
+          .putFile(file);
+
+      String downloadURL = await FirebaseStorage.instance
+          .ref('uploads/$socialId/$timestamp.png')
+          .getDownloadURL();
+
+      firebaseImageUrl.value = downloadURL;
+    } on FirebaseException {
+      Get.snackbar('알림', '이미지 업로드에 실패하였습니다.');
+      // e.g, e.code == 'canceled'
+    }
+  }
+
+  Future<void> selectDeviceImage() async {
     final pickedImage = await ImagePicker()
         .pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (pickedImage != null) {
@@ -197,6 +225,8 @@ class WriteDiaryViewModelTest extends GetxController
     pickedFile.value = null;
     croppedFile.value = null;
     networkImage.value = null;
+    Get.find<DiaryController>().diaryDetailData.value =
+        Get.find<DiaryController>().diaryDetailData.value!.copyWith(image: "");
   }
 
   void setDiaryData(DiaryData diaryData) {
@@ -308,4 +338,8 @@ class WriteDiaryViewModelTest extends GetxController
       milliseconds: 1200,
     );
   }
+
+  final storage = FirebaseStorage.instance;
+
+  Future<void> uploadImages() async {}
 }

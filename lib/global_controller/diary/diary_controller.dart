@@ -1,10 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
+import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
-import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
@@ -52,6 +51,17 @@ class DiaryController extends GetxController {
   void onInit() {
     initPage();
     super.onInit();
+  }
+
+  resetDiary() {
+    _state.value = state.value.copyWith(
+      isLoading: true,
+      networkImage: '',
+      diary: null,
+      wiseSayingList: [],
+    );
+
+    Get.find<DiaryController>().diaryDetailData.value = null;
   }
 
   Future<void> saveDiary(
@@ -187,16 +197,21 @@ class DiaryController extends GetxController {
   Future<void> getAllBookmarkData() async {
     int limit = 100;
     int page = 0;
-    List<BookmarkData> bookmarkList = [];
+    List<CommentData> bookmarkList = [];
     bool isEnd = false;
     while (true) {
       final result = await bookmarkUseCase.getBookmark(page, limit);
+
       result.when(
         success: (data) {
           bookmarkList.addAll(data);
           if (data.length < limit) {
             isEnd = true;
           }
+
+          _state.value = state.value.copyWith(
+            bookmarkList: List.from(bookmarkList),
+          );
         },
         error: (message) {
           isEnd = true;
@@ -212,60 +227,42 @@ class DiaryController extends GetxController {
     );
   }
 
-  Future<void> deleteBookmarkByBookmarkId(int bookmarkId) async {
+  Future<void> deleteBookmarkByBookmarkId(int bookmarkId, int index) async {
     final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
     result.when(
-      success: (data) {
-        getAllBookmarkData();
+      success: (data) async {
+        await getAllBookmarkData();
+
+        updateBookmarkComments(index);
       },
       error: (message) {},
     );
   }
 
-  Future<void> deleteBookmarkByWiseSaying(WiseSayingData wiseSaying) async {
-    int bookmarkId = _getBookmarkId(wiseSaying);
-    if (bookmarkId == -1) {
-      return;
+  updateBookmarkComments(int index) {
+    if (diaryDetailData.value != null) {
+      final updatedComments =
+          List<CommentData>.from(diaryDetailData.value!.comments)
+            ..[index] = diaryDetailData.value!.comments[index].copyWith(
+                isFavorite: !diaryDetailData.value!.comments[index].isFavorite);
+
+      final updatedDiaryDetailData =
+          diaryDetailData.value!.copyWith(comments: updatedComments);
+
+      diaryDetailData.value = updatedDiaryDetailData;
     }
-    final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
+  }
+
+  Future<void> saveBookmark(int id, int index) async {
+    final result = await bookmarkUseCase.saveBookmark(id);
     result.when(
-      success: (data) {
-        getAllBookmarkData();
+      success: (data) async {
+        await getAllBookmarkData();
+
+        updateBookmarkComments(index);
       },
       error: (message) {},
     );
-  }
-
-  int _getBookmarkId(WiseSayingData wiseSayingData) {
-    final bookmarkList = state.value.bookmarkList;
-    int bookmarkId = -1;
-    for (int i = 0; i < bookmarkList.length; i++) {
-      if (bookmarkList[i].wiseSaying.id == wiseSayingData.id) {
-        bookmarkId = bookmarkList[i].id;
-      }
-    }
-    return bookmarkId;
-  }
-
-  Future<void> saveBookmark(WiseSayingData wiseSayingData) async {
-    if (!isBookmarked(wiseSayingData.id!)) {
-      if (wiseSayingData.id != null) {
-        await bookmarkUseCase.saveBookmark(wiseSayingData.id!);
-        getAllBookmarkData();
-      }
-    }
-  }
-
-  bool isBookmarked(int wiseSayingId) {
-    bool result = false;
-    final List<BookmarkData> bookmarkList = state.value.bookmarkList;
-    for (int i = 0; i < bookmarkList.length; i++) {
-      if (bookmarkList[i].wiseSaying.id == wiseSayingId) {
-        result = true;
-        break;
-      }
-    }
-    return result;
   }
 
   Future<void> getEmotionStampList() async {
@@ -415,18 +412,17 @@ class DiaryController extends GetxController {
     );
   }
 
-  Rxn<DiaryDetailData> diaryDetailData = Rxn<DiaryDetailData>();
+  final diaryDetailData = Rx<DiaryDetailData?>(null);
 
   Future<void> getDiaryDetail(id) async {
     final result = await getDiaryDetailUseCase(id);
 
     result.when(
-      success: (data) {
+      success: (data) async {
+        await getEmotionStampList();
         diaryDetailData.value = data;
       },
       error: (message) {},
     );
-    await getEmotionStampList();
-    await getEmotionStampList();
   }
 }

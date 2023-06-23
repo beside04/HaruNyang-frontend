@@ -30,7 +30,7 @@ class TermsScreen extends StatelessWidget {
           elevation: 0,
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -48,7 +48,7 @@ class TermsScreen extends StatelessWidget {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Get.to(
-                        () => const TermsOfServiceScreen(
+                    () => const TermsOfServiceScreen(
                       isProfileScreen: true,
                     ),
                   );
@@ -67,7 +67,7 @@ class TermsScreen extends StatelessWidget {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Get.to(
-                        () => const PrivacyPolicyScreen(
+                    () => const PrivacyPolicyScreen(
                       isProfileScreen: true,
                     ),
                   );
@@ -86,7 +86,7 @@ class TermsScreen extends StatelessWidget {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Get.to(
-                        () => const MarketingConsentScreen(
+                    () => const MarketingConsentScreen(
                       isProfileScreen: true,
                     ),
                   );

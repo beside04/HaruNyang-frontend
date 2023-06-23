@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 
@@ -34,7 +33,7 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
           ),
           child: Row(
             children: [
-              SvgPicture.asset(
+              Image.asset(
                 weatherIcon,
                 width: 24.w,
                 height: 24.h,
@@ -66,7 +65,7 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
                 width: 24.w,
                 height: 24.h,
               ),
-              SizedBox(
+              const SizedBox(
                 width: 4,
               ),
               Text(emoticonDesc,

@@ -5,7 +5,6 @@ import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
 import 'package:frontend/data/data_source/remote_data/notice_api.dart';
 import 'package:frontend/data/data_source/remote_data/on_boarding_api.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
-import 'package:frontend/data/data_source/remote_data/reissue_token_api.dart';
 import 'package:frontend/data/data_source/remote_data/wise_saying_api.dart';
 import 'package:frontend/data/data_source/remote_data/withdraw_api.dart';
 import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
@@ -18,7 +17,6 @@ import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repo
 import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
 import 'package:frontend/data/repository/push_messge/push_message_repository_impl.dart';
-import 'package:frontend/data/repository/reissu_token/reissue_token_repository_impl.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
@@ -42,7 +40,6 @@ import 'package:frontend/domain/use_case/notice_use_case/get_notice_use_case.dar
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
-import 'package:frontend/domain/use_case/reissue_token_use_case/reissue_token_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
@@ -94,16 +91,17 @@ final PopUpUseCase popUpUseCase = PopUpUseCase(
 final dio = Dio();
 
 Dio getDio() {
-  // dio.interceptors.add(interceptor);
+  dio.interceptors.add(interceptor);
   dio.options.headers.addAll({
     'accessToken': 'true',
   });
   return dio;
 }
 
-// final RefreshInterceptor interceptor = RefreshInterceptor(
-//   tokenUseCase: tokenUseCase,
-// );
+final RefreshInterceptor interceptor = RefreshInterceptor(
+  tokenUseCase: tokenUseCase,
+  serverLoginRepository: serverLoginImpl,
+);
 final onBoardingApi = OnBoardingApi(
   dio: getDio(),
 );
@@ -324,6 +322,8 @@ void getOnBoardingControllerBinding() {
   Get.put(
     OnBoardingController(
       onBoardingUseCase: onBoardingUseCase,
+      kakaoLoginUseCase: kakaoLoginUseCase,
+      appleLoginUseCase: appleLoginUseCase,
       // reissueTokenUseCase: reissueTokenUseCase,
     ),
   );

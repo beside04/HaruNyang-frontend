@@ -1,7 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
-import 'package:frontend/domain/model/topic/topic_data.dart';
-import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 
 part 'comment_data.freezed.dart';
 

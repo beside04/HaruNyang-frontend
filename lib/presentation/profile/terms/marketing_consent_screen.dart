@@ -37,7 +37,7 @@ class MarketingConsentScreen extends StatelessWidget {
           leading: isProfileScreen
               ? BackIcon(
                   onPressed: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                 )
               : null,
@@ -46,7 +46,7 @@ class MarketingConsentScreen extends StatelessWidget {
                 ? Container()
                 : IconButton(
                     onPressed: () {
-                      Get.back();
+                      Navigator.pop(context);
                     },
                     icon: const Icon(
                       Icons.close,

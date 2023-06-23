@@ -87,7 +87,7 @@ class BirthDayScreen extends StatelessWidget {
                     title: '확인',
                     bottomPadding: 13,
                     onTap: () {
-                      Get.back();
+                      Navigator.pop(context);
                     },
                   ),
                   Align(
@@ -98,7 +98,7 @@ class BirthDayScreen extends StatelessWidget {
                       ),
                       child: InkWell(
                         onTap: () async {
-                          Get.back();
+                          Navigator.pop(context);
                           String time = DateTime.now().toIso8601String();
                           Get.find<HomeViewModel>().isBirthDayPopup.value =
                               true;

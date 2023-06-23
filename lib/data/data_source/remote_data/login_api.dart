@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
@@ -12,6 +10,7 @@ class LoginApi {
   Future<Result<LoginTokenData>> login(
       String loginType, String socialId, String? deviceId) async {
     String loginUrl = '$baseUrl/v2/users/sign-in';
+
     try {
       Response response;
       response = await _client.post(
@@ -34,12 +33,9 @@ class LoginApi {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode != 200) {
-          errMessage =
-              'login api의 응답 코드가 200이 아닙니다. statusCode=${e.response!.statusCode}';
-        }
+        errMessage = e.response!.statusCode!.toString();
       } else {
-        errMessage = e.message;
+        errMessage = e.response!.statusCode!.toString();
       }
       return Result.error(errMessage);
     } catch (e) {

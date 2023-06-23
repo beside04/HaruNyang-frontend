@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
 import 'package:get/get.dart';
 
@@ -92,14 +92,14 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
-                                        // Get.to(
-                                        //   () => DiaryDetailScreen(
-                                        //     date:
-                                        //         DateTime.parse(diary.writtenAt),
-                                        //     isStamp: true,
-                                        //     diaryData: diary,
-                                        //   ),
-                                        // );
+                                        Get.to(
+                                          () => DiaryDetailScreenTest(
+                                            diaryId: diary.id!,
+                                            date: DateTime.parse(
+                                                diary.targetDate),
+                                            diaryData: diary,
+                                          ),
+                                        );
                                       },
                                       child: EmotionCardDiaryWidget(
                                         diaryData: diary,

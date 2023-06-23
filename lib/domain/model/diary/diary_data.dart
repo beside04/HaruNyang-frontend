@@ -1,7 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
-import 'package:frontend/domain/model/topic/topic_data.dart';
-import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 
 part 'diary_data.freezed.dart';
 
@@ -14,6 +11,7 @@ class DiaryData with _$DiaryData {
     @JsonKey(name: 'content') required String diaryContent,
     @JsonKey(name: 'feeling') required String feeling,
     @JsonKey(name: 'feelingScore') required int feelingScore,
+    @Default('') String image,
     @Default('') String? topic,
     @JsonKey(name: 'weather') required String weather,
     @JsonKey(name: 'targetDate') required String targetDate,

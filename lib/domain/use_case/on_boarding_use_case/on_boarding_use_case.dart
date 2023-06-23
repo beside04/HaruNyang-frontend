@@ -12,8 +12,6 @@ class OnBoardingUseCase {
   Future<Result<MyInformation>> getMyInformation() async {
     final result = await onBoardingRepository.getMyInformation();
 
-    print("result: ${result}");
-
     return result;
   }
 
@@ -21,11 +19,13 @@ class OnBoardingUseCase {
     required nickname,
     required job,
     required age,
+    required email,
   }) async {
     final loginResult = await onBoardingRepository.putMyInformation(
       nickname: nickname,
       job: job,
       age: age,
+      email: email,
     );
 
     return await loginResult.when(

@@ -1,9 +1,7 @@
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_use_case.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 
 class DiaryViewModel extends GetxController
@@ -14,9 +12,7 @@ class DiaryViewModel extends GetxController
   DiaryViewModel({
     required this.getEmoticonUseCase,
     required this.getWeatherUseCase,
-  }) {
-    getWeatherData();
-  }
+  });
 
   final isEmotionModal = true.obs;
   final emotionNumberValue = 2.0.obs;
@@ -75,32 +71,32 @@ class DiaryViewModel extends GetxController
 
   final RxList<WeatherData> weatherDataList = <WeatherData>[
     WeatherData(
-      weather: 'lib/config/assets/images/diary/weather/sunny.svg',
+      weather: 'lib/config/assets/images/diary/weather/sunny.png',
       value: 'SUNNY',
       desc: '맑음',
     ),
     WeatherData(
-      weather: 'lib/config/assets/images/diary/weather/cloudy.svg',
+      weather: 'lib/config/assets/images/diary/weather/cloudy.png',
       value: 'CLOUDY',
       desc: '흐림',
     ),
     WeatherData(
-      weather: 'lib/config/assets/images/diary/weather/rainy.svg',
+      weather: 'lib/config/assets/images/diary/weather/rainy.png',
       value: 'RAINY',
       desc: '비',
     ),
     WeatherData(
-      weather: 'lib/config/assets/images/diary/weather/snow.svg',
+      weather: 'lib/config/assets/images/diary/weather/snowy.png',
       value: 'SNOWY',
       desc: '눈',
     ),
     WeatherData(
-      weather: 'lib/config/assets/images/diary/weather/windy.svg',
+      weather: 'lib/config/assets/images/diary/weather/windy.png',
       value: 'WINDY',
       desc: '바람',
     ),
     WeatherData(
-      weather: 'lib/config/assets/images/diary/weather/thunder.svg',
+      weather: 'lib/config/assets/images/diary/weather/thunder.png',
       value: 'THUNDER',
       desc: '번개',
     ),
@@ -128,50 +124,6 @@ class DiaryViewModel extends GetxController
     } else {
       emotionTextValue.value = '진짜 엄청 대박!!';
     }
-  }
-
-  Future<void> getEmoticonData() async {
-    int limit = getEmoticonLimitCount;
-    int page = 0;
-    final result = await getEmoticonUseCase(limit, page);
-
-    await result.when(
-      success: (data) async {
-        emoticonDataList.value = data;
-        for (final emoticon in data) {
-          await precachePicture(
-              NetworkPicture(
-                SvgPicture.svgByteDecoderBuilder,
-                emoticon.emoticon,
-              ),
-              null);
-        }
-      },
-      error: (message) {
-        Get.snackbar('알림', message);
-      },
-    );
-  }
-
-  Future<void> getWeatherData() async {
-    final result = await getWeatherUseCase();
-
-    await result.when(
-      success: (data) async {
-        weatherDataList.value = data;
-        for (final weather in data) {
-          await precachePicture(
-              NetworkPicture(
-                SvgPicture.svgByteDecoderBuilder,
-                weather.weather,
-              ),
-              null);
-        }
-      },
-      error: (message) {
-        Get.snackbar('알림', message);
-      },
-    );
   }
 
   void setSelectedEmoticon(EmoticonData emoticon) {

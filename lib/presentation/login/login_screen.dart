@@ -74,11 +74,11 @@ class LoginScreen extends GetView<LoginViewModel> {
               GetPlatform.isAndroid
                   ? Container()
                   : InkWell(
-                onTap: () async {
-                  await controller.connectAppleLogin();
-                },
-                child: const AppleLoginWidget(),
-              ),
+                      onTap: () async {
+                        await controller.connectAppleLogin();
+                      },
+                      child: const AppleLoginWidget(),
+                    ),
             ],
           ),
         ),

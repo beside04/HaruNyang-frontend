@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 // ignore: constant_identifier_names
-const int APP_BUILD_NUMBER = 4;
+const int APP_BUILD_NUMBER = 5;
 // ignore: constant_identifier_names
-const String APP_VERSION_NUMBER = '1.0.8';
+const String APP_VERSION_NUMBER = '2.0.0';
 
 // ignore: constant_identifier_names
 const Map<String, String> UNIT_ID = kReleaseMode
@@ -134,17 +134,17 @@ String getEmoticonValue(String value) {
 String getWeatherImage(String value) {
   switch (value) {
     case 'SUNNY':
-      return 'lib/config/assets/images/diary/weather/sunny.svg';
+      return 'lib/config/assets/images/diary/weather/sunny.png';
     case 'CLOUDY':
-      return 'lib/config/assets/images/diary/weather/cloudy.svg';
+      return 'lib/config/assets/images/diary/weather/cloudy.png';
     case 'RAINY':
-      return 'lib/config/assets/images/diary/weather/rainy.svg';
+      return 'lib/config/assets/images/diary/weather/rainy.png';
     case 'SNOWY':
-      return 'lib/config/assets/images/diary/weather/snow.svg';
+      return 'lib/config/assets/images/diary/weather/snowy.png';
     case 'WINDY':
-      return 'lib/config/assets/images/diary/weather/windy.svg';
+      return 'lib/config/assets/images/diary/weather/windy.png';
     case 'THUNDER':
-      return 'lib/config/assets/images/diary/weather/thunder.svg';
+      return 'lib/config/assets/images/diary/weather/thunder.png';
     default:
       return '';
   }
@@ -164,6 +164,44 @@ String getWeatherValue(String value) {
       return '바람';
     case 'THUNDER':
       return '번개';
+    default:
+      return '';
+  }
+}
+
+String getWeatherCharacter(String value) {
+  switch (value) {
+    case 'SUNNY':
+      return 'lib/config/assets/images/character/sunny.png';
+    case 'CLOUDY':
+      return 'lib/config/assets/images/character/cloudy.png';
+    case 'RAINY':
+      return 'lib/config/assets/images/character/rainy.png';
+    case 'SNOWY':
+      return 'lib/config/assets/images/character/snowy.png';
+    case 'WINDY':
+      return 'lib/config/assets/images/character/windy.png';
+    case 'THUNDER':
+      return 'lib/config/assets/images/character/thunder.png';
+    default:
+      return '';
+  }
+}
+
+String getWeatherAnimation(String value) {
+  switch (value) {
+    case 'SUNNY':
+      return '';
+    case 'CLOUDY':
+      return '';
+    case 'RAINY':
+      return 'lib/config/assets/images/character/rain.riv';
+    case 'SNOWY':
+      return '';
+    case 'WINDY':
+      return '';
+    case 'THUNDER':
+      return '';
     default:
       return '';
   }

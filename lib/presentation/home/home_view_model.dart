@@ -198,7 +198,7 @@ class HomeViewModel extends GetxController {
               DialogButton(
                 title: "다음에",
                 onTap: () async {
-                  Get.back();
+                  Navigator.pop(context);
                   String time = DateTime.now().toIso8601String();
                   isOpenPopup.value = true;
                   await popUpUseCase.setLastPopUpDate(time);

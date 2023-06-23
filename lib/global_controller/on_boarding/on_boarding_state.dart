@@ -11,7 +11,7 @@ class OnBoardingState with _$OnBoardingState {
     @Default('') String? age,
     @Default('') String socialId,
     @Default('') String nickname,
-    @Default('') String loginType,
+    @Default('') String? loginType,
     String? email,
   }) = _OnBoardingState;
 

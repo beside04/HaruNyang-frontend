@@ -11,7 +11,7 @@ class WithdrawApi {
   });
 
   Future<Result<bool>> withdrawUser() async {
-    String withdrawUrl = '$_baseUrl/v1/withdraw';
+    String withdrawUrl = '$_baseUrl/v2/users';
     try {
       Response response;
       response = await dio.delete(
@@ -29,7 +29,7 @@ class WithdrawApi {
         if (e.response!.statusCode == 401) {
           errMessage = '401';
         } else {
-          errMessage = e.response!.data['message'];
+          errMessage = e.response!.data;
         }
       } else {
         errMessage = '401';
