@@ -9,7 +9,6 @@ import 'package:frontend/domain/repository/social_login_repository/apple_login_r
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -60,21 +59,30 @@ class AppleLoginUseCase {
     );
   }
 
-  Future<SocialIDCheck> checkMember(String socialId) async {
-    //멤버 조회
-    return await serverLoginRepository.checkMember(socialId);
-  }
-
   Future<Result<String>> login(String socialId) async {
     //social id를 사용하여 서버에 login
     final loginResult = await loginProcess(socialId);
     return loginResult;
   }
 
-  Future<bool> signup(String email, String socialId) async {
+  Future<bool> signup({
+    required String email,
+    required String socialId,
+    String? deviceToken,
+    required String nickname,
+    required String job,
+    required String birthDate,
+  }) async {
     //social id를 사용하여 회원 가입
-    final bool result =
-        await serverLoginRepository.signup(email, 'APPLE', socialId);
+    final bool result = await serverLoginRepository.signup(
+      email: email,
+      loginType: 'APPLE',
+      socialId: socialId,
+      deviceToken: deviceToken,
+      nickname: nickname,
+      job: job,
+      birthDate: birthDate,
+    );
 
     return result;
   }
@@ -90,7 +98,6 @@ class AppleLoginUseCase {
     return await loginResult.when(
       success: (loginData) async {
         await tokenRepository.setAccessToken(loginData.accessToken);
-        await tokenRepository.setRefreshToken(loginData.refreshToken);
         return Result.success(accessToken);
       },
       error: (message) {

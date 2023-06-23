@@ -40,7 +40,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
           elevation: 0,
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -83,7 +83,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                             child: Text(
                               '탈퇴 전 확인하세요!',
                               style: kHeader3Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                           ),
                         ),
@@ -101,7 +102,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                             '가입 시 수집한 개인정보(이메일)를 포함하여 작성한\n 일기, 기분, 감정캘린더, 발급받은 감정리포트가\n 영구적으로 삭제되며, 다시는 복구할 수 없습니다.',
                             style: kBody3Style.copyWith(
                                 color:
-                                Theme.of(context).colorScheme.textSubtitle),
+                                    Theme.of(context).colorScheme.textSubtitle),
                             textAlign: TextAlign.center,
                           ),
                         ),
@@ -117,7 +118,7 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Obx(
-                                    () => SizedBox(
+                                () => SizedBox(
                                   width: 20.w,
                                   height: 20.h,
                                   child: Checkbox(
@@ -137,8 +138,9 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                                 child: Text(
                                   '안내사항을 확인하였으며 이에 동의합니다.',
                                   style: kBody2Style.copyWith(
-                                      color:
-                                      Theme.of(context).colorScheme.textBody),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textBody),
                                 ),
                               ),
                             ],
@@ -151,73 +153,75 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
               ),
             ),
             Obx(
-                  () => BottomButton(
+              () => BottomButton(
                 title: "탈퇴하기",
                 onTap: controller.state.value.isAgreeWithdrawTerms
                     ? () {
-                  GlobalUtils.setAnalyticsCustomEvent('Click_Withdraw_Done');
-                  showDialog(
-                    barrierDismissible: true,
-                    context: context,
-                    builder: (context) {
-                      return DialogComponent(
-                        title: "정말 탈퇴 하시겠어요?",
-                        content: Padding(
-                          padding:
-                          const EdgeInsets.symmetric(horizontal: 30.0),
-                          child: Text(
-                            "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
-                            style: kHeader6Style.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .textSubtitle),
-                          ),
-                        ),
-                        actionContent: [
-                          DialogButton(
-                            title: "아니요",
-                            onTap: () {
-                              Get.back();
-                              Get.back();
-                            },
-                            backgroundColor: Theme.of(context)
-                                .colorScheme
-                                .secondaryColor,
-                            textStyle: kHeader4Style.copyWith(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .textSubtitle),
-                          ),
-                          SizedBox(
-                            width: 12.w,
-                          ),
-                          DialogButton(
-                            title: "탈퇴하기",
-                            onTap: () async {
-                              final result = await controller
-                                  .withdrawUser(isKakaoLogin);
-                              if (result) {
-                                Get.find<OnBoardingController>()
-                                    .clearMyInformation();
-                                Get.offAll(
-                                      () => const WithdrawDoneScreen(),
-                                );
-                              } else {
-                                Get.back();
-                                Get.snackbar('알림', '회원 탈퇴에 실패했습니다.');
-                              }
-                            },
-                            backgroundColor:
-                            Theme.of(context).colorScheme.primaryColor,
-                            textStyle: kHeader4Style.copyWith(
-                              color: kWhiteColor,
-                            ),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                }
+                        GlobalUtils.setAnalyticsCustomEvent(
+                            'Click_Withdraw_Done');
+                        showDialog(
+                          barrierDismissible: true,
+                          context: context,
+                          builder: (context) {
+                            return DialogComponent(
+                              title: "정말 탈퇴 하시겠어요?",
+                              content: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 30.0),
+                                child: Text(
+                                  "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
+                                  style: kHeader6Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textSubtitle),
+                                ),
+                              ),
+                              actionContent: [
+                                DialogButton(
+                                  title: "아니요",
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .secondaryColor,
+                                  textStyle: kHeader4Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textSubtitle),
+                                ),
+                                SizedBox(
+                                  width: 12.w,
+                                ),
+                                DialogButton(
+                                  title: "탈퇴하기",
+                                  onTap: () async {
+                                    final result = await controller
+                                        .withdrawUser(isKakaoLogin);
+                                    if (result) {
+                                      Get.find<OnBoardingController>()
+                                          .clearMyInformation();
+                                      Get.offAll(
+                                        () => const WithdrawDoneScreen(),
+                                      );
+                                    } else {
+                                      Get.back();
+                                      Get.snackbar('알림', '회원 탈퇴에 실패했습니다.');
+                                    }
+                                  },
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryColor,
+                                  textStyle: kHeader4Style.copyWith(
+                                    color: kWhiteColor,
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
                     : null,
               ),
             ),

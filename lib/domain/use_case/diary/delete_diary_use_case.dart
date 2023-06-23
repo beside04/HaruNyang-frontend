@@ -8,7 +8,7 @@ class DeleteDiaryUseCase {
     required this.diaryRepository,
   });
 
-  Future<Result<bool>> call(String diaryId) async {
+  Future<Result<bool>> call(int diaryId) async {
     return await diaryRepository.deleteDiary(diaryId);
   }
 }

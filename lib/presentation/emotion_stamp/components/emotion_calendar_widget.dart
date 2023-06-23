@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/toast.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:get/get.dart';
@@ -53,7 +53,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                 eventLoader: (DateTime day) {
                   return diaryController.state.value.diaryDataList
                       .where(
-                          (element) => element.writtenAt == format.format(day))
+                          (element) => element.targetDate == format.format(day))
                       .toList();
                 },
                 calendarStyle: CalendarStyle(
@@ -88,9 +88,9 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                     date: day,
                                   ))
                               : Get.to(
-                                  () => DiaryDetailScreen(
+                                  () => DiaryDetailScreenTest(
+                                    diaryId: events[0].id!,
                                     date: day,
-                                    isStamp: true,
                                     diaryData: events[0],
                                   ),
                                 );
@@ -128,71 +128,18 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                       ),
                                     )
                                   : isToday(day)
-                                      ? Stack(
-                                          children: [
-                                            Container(
-                                              padding: context.isTablet
-                                                  ? EdgeInsets.all(9.w)
-                                                  : EdgeInsets.all(16.w),
-                                              decoration: BoxDecoration(
-                                                border: isToday(day)
-                                                    ? Border.all(
-                                                        width: 1,
-                                                        color: kOrange300Color,
-                                                      )
-                                                    : null,
-                                                shape: BoxShape.circle,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondaryColor,
-                                              ),
-                                            ),
-                                            Positioned.fill(
-                                              child: Align(
-                                                alignment: Alignment.center,
-                                                child: SvgPicture.network(
-                                                  events[0].emotion.emoticon,
-                                                  width: 20.w,
-                                                  height: 20.h,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
+                                      ? Image.asset(
+                                          getEmoticonImage(events[0].feeling),
+                                          width: 32.w,
                                         )
                                       : events.isNotEmpty
-                                          ? Stack(
-                                              children: [
-                                                Container(
-                                                  padding: context.isTablet
-                                                      ? EdgeInsets.all(9.w)
-                                                      : EdgeInsets.all(16.w),
-                                                  decoration: BoxDecoration(
-                                                    border: isToday(day)
-                                                        ? Border.all(
-                                                            width: 1,
-                                                            color:
-                                                                kOrange300Color,
-                                                          )
-                                                        : null,
-                                                    shape: BoxShape.circle,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .secondaryColor,
-                                                  ),
-                                                ),
-                                                Positioned.fill(
-                                                  child: Align(
-                                                    alignment: Alignment.center,
-                                                    child: SvgPicture.network(
-                                                      events[0]
-                                                          .emotion
-                                                          .emoticon,
-                                                      width: 20.w,
-                                                      height: 20.h,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                          ? Align(
+                                              alignment: Alignment.center,
+                                              child: Image.asset(
+                                                getEmoticonImage(
+                                                    events[0].feeling),
+                                                width: 32.w,
+                                              ),
                                             )
                                           : DateTime.now().isAfter(day)
                                               ? Container(

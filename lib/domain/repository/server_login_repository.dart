@@ -1,6 +1,5 @@
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
-import 'package:frontend/res/constants.dart';
 
 abstract class ServerLoginRepository {
   Future<Result<LoginTokenData>> login(
@@ -8,7 +7,13 @@ abstract class ServerLoginRepository {
 
   Future<void> logout();
 
-  Future<SocialIDCheck> checkMember(String socialId);
-
-  Future<bool> signup(String email, String loginType, String socialId);
+  Future<bool> signup({
+    required email,
+    required loginType,
+    required socialId,
+    required deviceToken,
+    required nickname,
+    required job,
+    required birthDate,
+  });
 }

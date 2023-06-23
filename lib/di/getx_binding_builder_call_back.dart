@@ -5,7 +5,6 @@ import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
 import 'package:frontend/data/data_source/remote_data/notice_api.dart';
 import 'package:frontend/data/data_source/remote_data/on_boarding_api.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
-import 'package:frontend/data/data_source/remote_data/reissue_token_api.dart';
 import 'package:frontend/data/data_source/remote_data/wise_saying_api.dart';
 import 'package:frontend/data/data_source/remote_data/withdraw_api.dart';
 import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
@@ -18,7 +17,6 @@ import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repo
 import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
 import 'package:frontend/data/repository/push_messge/push_message_repository_impl.dart';
-import 'package:frontend/data/repository/reissu_token/reissue_token_repository_impl.dart';
 import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
@@ -32,6 +30,7 @@ import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
+import 'package:frontend/domain/use_case/diary/get_diary_detail_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
@@ -41,7 +40,6 @@ import 'package:frontend/domain/use_case/notice_use_case/get_notice_use_case.dar
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
-import 'package:frontend/domain/use_case/reissue_token_use_case/reissue_token_use_case.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
@@ -53,7 +51,9 @@ import 'package:frontend/global_controller/on_boarding/on_boarding_controller.da
 import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
+import 'package:frontend/presentation/diary/write_diary_loading_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
+import 'package:frontend/presentation/diary/write_diary_view_model_test.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -100,6 +100,7 @@ Dio getDio() {
 
 final RefreshInterceptor interceptor = RefreshInterceptor(
   tokenUseCase: tokenUseCase,
+  serverLoginRepository: serverLoginImpl,
 );
 final onBoardingApi = OnBoardingApi(
   dio: getDio(),
@@ -139,9 +140,9 @@ final diaryRepository = DiaryRepositoryImpl(
 final bookmarkRepository = BookmarkRepositoryImpl(
   bookmarkApi: bookmarkApi,
 );
-final reissueTokenRepository = ReissueTokenRepositoryImpl(
-  dataSource: ReissueTokenApi(),
-);
+// final reissueTokenRepository = ReissueTokenRepositoryImpl(
+//   dataSource: ReissueTokenApi(),
+// );
 
 final noticeRepository = NoticeRepositoryImpl(
   noticeApi: NoticeApi(),
@@ -198,6 +199,9 @@ final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
   ),
 );
 
+final GetDiaryDetailUseCase getDiaryDetailUseCase =
+    GetDiaryDetailUseCase(diaryRepository: diaryRepository);
+
 final FileUploadUseCase fileUploadUseCase =
     FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
 final saveDiaryUseCase = SaveDiaryUseCase(
@@ -214,9 +218,9 @@ final bookmarkUseCase = BookmarkUseCase(
   bookmarkRepository: bookmarkRepository,
 );
 
-final reissueTokenUseCase = ReissueTokenUseCase(
-  reissueTokenRepository: reissueTokenRepository,
-);
+// final reissueTokenUseCase = ReissueTokenUseCase(
+//   reissueTokenRepository: reissueTokenRepository,
+// );
 
 void getMainBinding() {
   Get.put(MainViewModel(
@@ -245,6 +249,20 @@ void getDiaryBinding() {
 void getWriteDiaryBinding(EmoticonData emotion, DiaryData? diaryData) {
   Get.put(
     WriteDiaryViewModel(emotion: emotion, diaryData: diaryData),
+  );
+}
+
+void getWriteDiaryBindingTest(String emotion, DiaryData? diaryData) {
+  Get.put(
+    WriteDiaryViewModelTest(emotion: emotion, diaryData: diaryData),
+  );
+}
+
+void getWriteDiaryLoadingBinding() {
+  Get.put(
+    WriteDiaryLoadingViewModel(
+        saveDiaryUseCase: saveDiaryUseCase,
+        updateDiaryUseCase: updateDiaryUseCase),
   );
 }
 
@@ -304,7 +322,9 @@ void getOnBoardingControllerBinding() {
   Get.put(
     OnBoardingController(
       onBoardingUseCase: onBoardingUseCase,
-      reissueTokenUseCase: reissueTokenUseCase,
+      kakaoLoginUseCase: kakaoLoginUseCase,
+      appleLoginUseCase: appleLoginUseCase,
+      // reissueTokenUseCase: reissueTokenUseCase,
     ),
   );
 }

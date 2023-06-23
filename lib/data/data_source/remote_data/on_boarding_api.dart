@@ -12,23 +12,22 @@ class OnBoardingApi {
   });
 
   Future<Result<MyInformation>> getMyInformation() async {
-    String myInformationUrl = '$baseUrl/v1/me';
+    String myInformationUrl = '$baseUrl/v2/users';
+
     try {
       Response response;
-      response = await dio.get(myInformationUrl);
+      response = await dio.get(
+        myInformationUrl,
+      );
 
-      final json = response.data['data'];
+      final json = response.data;
+
       MyInformation result = MyInformation.fromJson(json);
 
       return Result.success(result);
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
-        if (e.response!.statusCode == 401) {
-          errMessage = '401';
-        } else {
-          errMessage = e.response!.data['message'];
-        }
       } else {
         errMessage = '401';
       }
@@ -42,16 +41,18 @@ class OnBoardingApi {
     required nickname,
     required job,
     required age,
+    required email,
   }) async {
-    String myInformationUrl = '$baseUrl/v1/members';
+    String myInformationUrl = '$baseUrl/v2/users';
     try {
       Response response;
-      response = await dio.put(
+      response = await dio.post(
         myInformationUrl,
         data: {
           'nickname': nickname,
           'job': job,
-          'age': age,
+          'birthDate': age,
+          'email': email,
         },
       );
 

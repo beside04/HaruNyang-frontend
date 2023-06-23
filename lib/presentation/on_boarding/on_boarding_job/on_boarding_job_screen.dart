@@ -4,6 +4,7 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/notification_controller.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
@@ -18,11 +19,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
   final String nickname;
   final String? birth;
+  final String? email;
+  final String loginType;
+  final String socialId;
 
   OnBoardingJobScreen({
     Key? key,
     required this.nickname,
     required this.birth,
+    required this.email,
+    required this.loginType,
+    required this.socialId,
   }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
   final onBoardingController = Get.find<OnBoardingController>();
@@ -62,7 +69,8 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                             Text(
                               "어떤 일을",
                               style: kHeader2Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 4.h,
@@ -70,7 +78,8 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                             Text(
                               "하고 계세요?",
                               style: kHeader2Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 40.h,
@@ -80,21 +89,21 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                               shrinkWrap: true,
                               itemCount: jobList.length,
                               gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
+                                  SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 childAspectRatio: 0.8.h,
                               ),
                               itemBuilder: (BuildContext context, int i) {
                                 return Obx(() => JobButton(
-                                  job: jobList[i].name,
-                                  icon: jobList[i].icon,
-                                  selected: controller.jobStatus.value ==
-                                      Job.values[i],
-                                  onPressed: () {
-                                    controller.jobStatus.value =
-                                    Job.values[i];
-                                  },
-                                ));
+                                      job: jobList[i].name,
+                                      icon: jobList[i].icon,
+                                      selected: controller.jobStatus.value ==
+                                          Job.values[i],
+                                      onPressed: () {
+                                        controller.jobStatus.value =
+                                            Job.values[i];
+                                      },
+                                    ));
                               },
                             ),
                           ],
@@ -104,29 +113,36 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                   ),
                 ),
                 Obx(
-                      () => BottomButton(
+                  () => BottomButton(
                     title: '다음',
                     onTap: controller.jobStatus.value == null
                         ? null
                         : () async {
-                      var key = _fbKey.currentState!;
-                      if (key.saveAndValidate()) {
-                        FocusScope.of(context).unfocus();
+                            var key = _fbKey.currentState!;
+                            if (key.saveAndValidate()) {
+                              FocusScope.of(context).unfocus();
 
-                        await onBoardingController.putMyInformation(
-                          nickname: nickname,
-                          job: controller.jobStatus.value!.name,
-                          age: birth,
-                          isPutNickname: false,
-                          isOnBoarding: false,
-                        );
+                              var deviceToken =
+                                  Get.find<NotificationController>().token;
 
-                        Get.to(
-                              () => const OnBoardingFinishScreen(),
-                          transition: Transition.cupertino,
-                        );
-                      }
-                    },
+                              await onBoardingController.postSignUp(
+                                email: email,
+                                loginType: loginType,
+                                socialId: socialId,
+                                deviceId: deviceToken,
+                                nickname: nickname,
+                                job: controller.jobStatus.value!.name,
+                                birthDate: birth,
+                              );
+
+                              await onBoardingController.getMyInformation();
+
+                              Get.to(
+                                () => const OnBoardingFinishScreen(),
+                                transition: Transition.cupertino,
+                              );
+                            }
+                          },
                   ),
                 ),
               ],

@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/presentation/login/login_view_model.dart';
+import 'package:get/get.dart' hide Response;
 
 class EmotionStampApi {
   final Dio dio;
@@ -14,35 +16,27 @@ class EmotionStampApi {
   Future<Result<List<DiaryData>>> getEmotionStamp(
       String from, String to) async {
     try {
-      String emoticonStampUrl = '$_baseUrl/v1/diaries?from=$from&to=$to';
+      String emoticonStampUrl =
+          '$_baseUrl/v2/diaries?periodFrom=$from&periodTo=$to';
       Response response;
-      response = await dio.get(
-        emoticonStampUrl,
-      );
+      response = await dio.get(emoticonStampUrl);
 
-      if (response.data['status'] == 200) {
-        final Iterable emotionStampIterable = response.data['data'];
+      final Iterable emotionStampIterable = response.data;
 
-        final List<DiaryData> emotionStampList =
-            emotionStampIterable.map((e) => DiaryData.fromJson(e)).toList();
+      final List<DiaryData> emotionStampList =
+          emotionStampIterable.map((e) => DiaryData.fromJson(e)).toList();
 
-        emotionStampList.sort((a, b) {
-          return a.id!.compareTo(b.id!);
-        });
+      emotionStampList.sort((a, b) {
+        return a.id!.compareTo(b.id!);
+      });
 
-        return Result.success(emotionStampList);
-      } else {
-        return Result.error(
-            '서버 error : status code : ${response.data['status']}');
-      }
+      return Result.success(emotionStampList);
     } on DioError catch (e) {
       String errMessage = '';
 
       if (e.response != null) {
-        if (e.response!.statusCode == 401) {
-          errMessage = '401';
-        } else {
-          errMessage = e.response!.data['message'];
+        if (e.response!.statusCode == 403) {
+          Get.find<LoginViewModel>().connectKakaoLogin();
         }
       } else {
         errMessage = '401';

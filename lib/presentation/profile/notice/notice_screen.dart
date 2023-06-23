@@ -39,7 +39,7 @@ class NoticeScreen extends GetView<NoticeViewModel> {
           ),
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),

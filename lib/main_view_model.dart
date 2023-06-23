@@ -25,7 +25,7 @@ class MainViewModel extends GetxController {
     super.onInit();
   }
 
-  RxBool isDarkMode = false.obs;
+  RxBool isDarkMode = true.obs;
   final pushMessagePermission = false.obs;
   final marketingConsentAgree = false.obs;
   final pushMessageTime = DateTime(2023, 1, 1, 21, 00).obs;
@@ -75,8 +75,8 @@ class MainViewModel extends GetxController {
   }
 
   Future<void> getIsDarkMode() async {
-    isDarkMode.value =
-        (GlobalUtils.toBoolean(await darkModeUseCase.getIsDarkMode()));
+    isDarkMode.value = (GlobalUtils.toBoolean(
+        await darkModeUseCase.getIsDarkMode() ?? "true"));
   }
 
   Future<void> getIsPushMessage() async {

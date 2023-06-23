@@ -64,8 +64,8 @@ class ProfileScreen extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(6.w),
                           child: Center(
-                            child: SvgPicture.asset(
-                              "lib/config/assets/images/character/character1.svg",
+                            child: Image.asset(
+                              "lib/config/assets/images/character/character1.png",
                               width: 48.w,
                               height: 48.h,
                             ),

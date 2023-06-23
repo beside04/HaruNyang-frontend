@@ -1,4 +1,4 @@
-import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
+import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
@@ -19,7 +19,7 @@ class DiaryState with _$DiaryState {
     @Default(true) bool isCalendar,
     @Default([]) List<DiaryData> diaryDataList,
     @Default([]) List<DiaryCardData> diaryCardDataList,
-    @Default([]) List<BookmarkData> bookmarkList,
+    @Default([]) List<CommentData> bookmarkList,
     required DateTime focusedStartDate,
     required DateTime focusedEndDate,
     required DateTime focusedCalendarDate,

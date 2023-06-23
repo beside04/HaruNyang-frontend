@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
+import 'package:frontend/domain/model/diary/comment_data.dart';
 
 class BookmarkApi {
   final Dio dio;
@@ -12,14 +12,14 @@ class BookmarkApi {
   });
 
   Future<Result<bool>> saveBookmark(int wiseSayingId) async {
-    String bookmarkUrl =
-        '$_baseUrl/v1/wise-saying-bookmark?wiseSayingId=$wiseSayingId';
+    String bookmarkUrl = '$_baseUrl/v2/comments/$wiseSayingId/favorite';
     try {
       Response response;
-      response = await dio.post(bookmarkUrl);
+      response = await dio.post(
+        bookmarkUrl,
+      );
 
-      final bool resultData = response.data['data'];
-      if (resultData) {
+      if (response.statusCode == 200) {
         return const Result.success(true);
       } else {
         return const Result.error('북마크 저장에 실패했습니다.');
@@ -42,8 +42,8 @@ class BookmarkApi {
     }
   }
 
-  Future<Result<List<BookmarkData>>> getBookmark(int page, int limit) async {
-    String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark';
+  Future<Result<List<CommentData>>> getBookmark(int page, int limit) async {
+    String bookmarkUrl = '$_baseUrl/v2/comments/favorites';
     try {
       Response response;
       response = await dio.get(
@@ -54,10 +54,10 @@ class BookmarkApi {
         },
       );
 
-      final Iterable bookmarkIterable = response.data['data']['data'];
+      final Iterable bookmarkIterable = response.data;
 
-      final List<BookmarkData> bookmarkList =
-          bookmarkIterable.map((e) => BookmarkData.fromJson(e)).toList();
+      final List<CommentData> bookmarkList =
+          bookmarkIterable.map((e) => CommentData.fromJson(e)).toList();
 
       return Result.success(bookmarkList);
     } on DioError catch (e) {
@@ -79,15 +79,14 @@ class BookmarkApi {
   }
 
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {
-    String bookmarkUrl = '$_baseUrl/v1/wise-saying-bookmark/$bookmarkId';
+    String bookmarkUrl = '$_baseUrl/v2/comments/$bookmarkId/favorite';
     try {
       Response response;
       response = await dio.delete(
         bookmarkUrl,
       );
 
-      final bool resultData = response.data['data'];
-      if (resultData) {
+      if (response.statusCode == 200) {
         return const Result.success(true);
       } else {
         return const Result.error('북마크를 삭제하는데 실패했습니다.');

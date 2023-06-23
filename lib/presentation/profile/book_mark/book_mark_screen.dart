@@ -42,7 +42,7 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
           ),
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -50,7 +50,7 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
           child: Padding(
             padding: EdgeInsets.only(top: 8.0.h),
             child: Obx(
-                  () => ListView.builder(
+              () => ListView.builder(
                 shrinkWrap: true,
                 itemCount: diaryController.state.value.bookmarkList.isEmpty
                     ? 1
@@ -58,52 +58,56 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
                 itemBuilder: (BuildContext context, int index) {
                   return diaryController.state.value.bookmarkList.isEmpty
                       ? Column(
-                    children: [
-                      SizedBox(
-                        height: 121.h,
-                      ),
-                      Center(
-                        child: SvgPicture.asset(
-                          "lib/config/assets/images/character/character3.svg",
-                          width: 280.w,
-                          height: 280.h,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      Text(
-                        "작성한 내용이 없어요",
-                        style: kHeader3Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
-                      ),
-                      SizedBox(
-                        height: 4.h,
-                      ),
-                      Text(
-                        "일기를 쓰고 하루냥이 준 위로를 저장해보세요!",
-                        style: kBody2Style.copyWith(
-                            color:
-                            Theme.of(context).colorScheme.textSubtitle),
-                      )
-                    ],
-                  )
+                          children: [
+                            SizedBox(
+                              height: 121.h,
+                            ),
+                            Center(
+                              child: SvgPicture.asset(
+                                "lib/config/assets/images/character/character3.svg",
+                                width: 280.w,
+                                height: 280.h,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 12.h,
+                            ),
+                            Text(
+                              "작성한 내용이 없어요",
+                              style: kHeader3Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
+                            ),
+                            SizedBox(
+                              height: 4.h,
+                            ),
+                            Text(
+                              "일기를 쓰고 하루냥이 준 위로를 저장해보세요!",
+                              style: kBody2Style.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .textSubtitle),
+                            )
+                          ],
+                        )
                       : Obx(
-                        () => BookMarkList(
-                      date: DateTime.parse(diaryController
-                          .state.value.bookmarkList[index].createdAt),
-                      isBookMark: true,
-                      title: diaryController.state.value.bookmarkList[index]
-                          .wiseSaying.message,
-                      name: diaryController.state.value.bookmarkList[index]
-                          .wiseSaying.author,
-                      onTap: () {
-                        diaryController.deleteBookmarkByBookmarkId(
-                            diaryController
-                                .state.value.bookmarkList[index].id);
-                      },
-                    ),
-                  );
+                          () => BookMarkList(
+                            date: DateTime.parse(diaryController
+                                .state.value.bookmarkList[index].createAt),
+                            isBookMark: true,
+                            title: diaryController
+                                .state.value.bookmarkList[index].message,
+                            name: diaryController
+                                .state.value.bookmarkList[index].author,
+                            onTap: () {
+                              diaryController.deleteBookmarkByBookmarkId(
+                                diaryController
+                                    .state.value.bookmarkList[index].id!,
+                                index,
+                              );
+                            },
+                          ),
+                        );
                 },
               ),
             ),

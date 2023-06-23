@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
@@ -11,7 +10,16 @@ import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boardi
 import 'package:get/get.dart';
 
 class SignInCompleteScreen extends StatelessWidget {
-  const SignInCompleteScreen({Key? key}) : super(key: key);
+  final String? email;
+  final String loginType;
+  final String socialId;
+
+  const SignInCompleteScreen({
+    Key? key,
+    required this.email,
+    required this.loginType,
+    required this.socialId,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +50,8 @@ class SignInCompleteScreen extends StatelessWidget {
                             Text(
                               "가입완료",
                               style: kHeader2Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 4.h,
@@ -50,14 +59,15 @@ class SignInCompleteScreen extends StatelessWidget {
                             Text(
                               "이제 하루냥과 함께 하루를 기록해보아요!",
                               style: kBody2Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 158.h,
                             ),
                             Center(
-                              child: SvgPicture.asset(
-                                "lib/config/assets/images/character/character5.svg",
+                              child: Image.asset(
+                                "lib/config/assets/images/character/character4.png",
                                 width: 375.w,
                               ),
                             ),
@@ -71,7 +81,11 @@ class SignInCompleteScreen extends StatelessWidget {
                   title: '하루냥 시작하기',
                   onTap: () async {
                     Get.offAll(
-                          () => const OnBoardingNicknameScreen(),
+                      () => OnBoardingNicknameScreen(
+                        email: email,
+                        loginType: loginType,
+                        socialId: socialId,
+                      ),
                     );
                   },
                 ),
@@ -81,6 +95,5 @@ class SignInCompleteScreen extends StatelessWidget {
         ),
       ),
     );
-
   }
 }

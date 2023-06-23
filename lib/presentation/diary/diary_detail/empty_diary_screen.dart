@@ -33,7 +33,7 @@ class EmptyDiaryScreen extends StatelessWidget {
           ),
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),

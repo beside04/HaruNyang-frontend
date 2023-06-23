@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
@@ -49,9 +48,10 @@ class _DiaryScreenState extends State<DiaryScreen> {
       child: WillPopScope(
         onWillPop: () async {
           if (controller.isEmotionModal.value) {
-            GlobalUtils.setAnalyticsCustomEvent('Click_Diary_BackToEmotionCalendar');
+            GlobalUtils.setAnalyticsCustomEvent(
+                'Click_Diary_BackToEmotionCalendar');
             Get.offAll(
-                  () => const HomeScreen(),
+              () => const HomeScreen(),
               binding: BindingsBuilder(
                 getHomeViewModelBinding,
               ),
@@ -131,10 +131,10 @@ class _DiaryScreenState extends State<DiaryScreen> {
                       children: [
                         Align(
                           alignment: Alignment.topCenter,
-                          child: SvgPicture.asset(
+                          child: Image.asset(
                             controller.isEmotionModal.value
-                                ? "lib/config/assets/images/character/character7.svg"
-                                : "lib/config/assets/images/character/character4.svg",
+                                ? "lib/config/assets/images/character/character1.png"
+                                : "lib/config/assets/images/character/character2.png",
                             width: 320.w,
                             height: 320.h,
                           ),

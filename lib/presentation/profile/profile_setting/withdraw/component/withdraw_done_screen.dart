@@ -23,7 +23,7 @@ class WithdrawDoneScreen extends StatelessWidget {
           elevation: 0,
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -75,12 +75,14 @@ class WithdrawDoneScreen extends StatelessWidget {
                             Text(
                               '나를 성장 시킨건 이별이 아니었다.',
                               style: kBody2Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                             Text(
                               '함께했던 시간이었지',
                               style: kBody2Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 6.h,
@@ -88,7 +90,8 @@ class WithdrawDoneScreen extends StatelessWidget {
                             Text(
                               '하상욱',
                               style: kSubtitle1Style.copyWith(
-                                  color: Theme.of(context).colorScheme.textTitle),
+                                  color:
+                                      Theme.of(context).colorScheme.textTitle),
                             )
                           ],
                         ),
@@ -102,7 +105,7 @@ class WithdrawDoneScreen extends StatelessWidget {
               title: "첫 화면으로",
               onTap: () {
                 Get.offAll(
-                      () => const LoginScreen(),
+                  () => const LoginScreen(),
                   binding: BindingsBuilder(
                     getLoginBinding,
                   ),

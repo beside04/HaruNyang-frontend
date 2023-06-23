@@ -48,7 +48,7 @@ class LoginTermsInformationScreen
             ),
             leading: BackIcon(
               onPressed: () {
-                Get.back();
+                Navigator.pop(context);
               },
             )),
         body: Column(
@@ -86,7 +86,7 @@ class LoginTermsInformationScreen
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Obx(
-                              () => SizedBox(
+                          () => SizedBox(
                             width: 20.w,
                             height: 20.h,
                             child: Checkbox(
@@ -120,14 +120,15 @@ class LoginTermsInformationScreen
                     ),
                   ),
                   Obx(
-                        () => TermCheckBox(
+                    () => TermCheckBox(
                       termValue: controller.isTermsAgree.value,
                       termTitle: Row(
                         children: [
                           Text(
                             '(필수) ',
                             style: kBody2Style.copyWith(
-                                color: Theme.of(context).colorScheme.textPrimary),
+                                color:
+                                    Theme.of(context).colorScheme.textPrimary),
                           ),
                           Text(
                             '서비스 이용약관',
@@ -139,7 +140,7 @@ class LoginTermsInformationScreen
                       onTap: controller.toggleTermsCheck,
                       termOnTap: () {
                         Get.to(
-                              () => const TermsOfServiceScreen(
+                          () => const TermsOfServiceScreen(
                             isProfileScreen: false,
                           ),
                           transition: Transition.downToUp,
@@ -151,14 +152,15 @@ class LoginTermsInformationScreen
                     height: 16.h,
                   ),
                   Obx(
-                        () => TermCheckBox(
+                    () => TermCheckBox(
                       termValue: controller.isPrivacyPolicyAgree.value,
                       termTitle: Row(
                         children: [
                           Text(
                             '(필수) ',
                             style: kBody2Style.copyWith(
-                                color: Theme.of(context).colorScheme.textPrimary),
+                                color:
+                                    Theme.of(context).colorScheme.textPrimary),
                           ),
                           Text(
                             '개인정보 처리방침',
@@ -170,7 +172,7 @@ class LoginTermsInformationScreen
                       onTap: controller.togglePrivacyPolicyCheck,
                       termOnTap: () {
                         Get.to(
-                              () => const PrivacyPolicyScreen(
+                          () => const PrivacyPolicyScreen(
                             isProfileScreen: false,
                           ),
                           transition: Transition.downToUp,
@@ -182,7 +184,7 @@ class LoginTermsInformationScreen
                     height: 16.h,
                   ),
                   Obx(
-                        () => TermCheckBox(
+                    () => TermCheckBox(
                       termValue: controller.isMarketingConsentAgree.value,
                       termTitle: Text(
                         '(선택) 마케팅 정보 수신 동의',
@@ -192,7 +194,7 @@ class LoginTermsInformationScreen
                       onTap: controller.toggleMarketingConsentCheck,
                       termOnTap: () {
                         Get.to(
-                              () => const MarketingConsentScreen(
+                          () => const MarketingConsentScreen(
                             isProfileScreen: false,
                           ),
                           transition: Transition.downToUp,
@@ -205,13 +207,13 @@ class LoginTermsInformationScreen
             ),
             const Spacer(),
             Obx(
-                  () => BottomButton(
+              () => BottomButton(
                 title: "가입 완료하기",
                 onTap: controller.isTermsAgree.value &&
-                    controller.isPrivacyPolicyAgree.value
+                        controller.isPrivacyPolicyAgree.value
                     ? () {
-                  controller.goToLoginScreen(isSocialKakao);
-                }
+                        controller.goToLoginScreen(isSocialKakao);
+                      }
                     : null,
               ),
             ),

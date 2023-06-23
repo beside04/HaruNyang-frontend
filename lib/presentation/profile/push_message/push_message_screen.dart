@@ -42,7 +42,7 @@ class PushMessageScreen extends GetView<PushMessageViewModel> {
           elevation: 0,
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),

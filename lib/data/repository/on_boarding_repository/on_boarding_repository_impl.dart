@@ -35,12 +35,14 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
     required nickname,
     required job,
     required age,
+    required email,
   }) async {
     if (myInformation != null) {
       myInformation = myInformation!.copyWith(
         nickname: nickname,
         job: job,
         age: age,
+        email: email,
       );
     }
 
@@ -48,6 +50,7 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
       nickname: nickname,
       job: job,
       age: age,
+      email: email,
     );
   }
 

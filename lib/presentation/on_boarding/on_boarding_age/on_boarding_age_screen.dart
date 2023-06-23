@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
@@ -21,10 +20,16 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
   final String nickname;
+  final String? email;
+  final String loginType;
+  final String socialId;
 
   OnBoardingAgeScreen({
     Key? key,
     required this.nickname,
+    required this.email,
+    required this.loginType,
+    required this.socialId,
   }) : super(key: key);
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
@@ -118,8 +123,8 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                               height: 158.h,
                             ),
                             Center(
-                              child: SvgPicture.asset(
-                                "lib/config/assets/images/character/character4.svg",
+                              child: Image.asset(
+                                "lib/config/assets/images/character/character2.png",
                                 width: 340.w,
                                 height: 340.h,
                               ),
@@ -140,6 +145,9 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                         () => OnBoardingJobScreen(
                           nickname: nickname,
                           birth: controller.ageValue.value,
+                          email: email,
+                          loginType: loginType,
+                          socialId: socialId,
                         ),
                         transition: Transition.cupertino,
                       );

@@ -4,7 +4,6 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
-import 'package:get/get.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {
   final bool isProfileScreen;
@@ -29,7 +28,7 @@ class TermsOfServiceScreen extends StatelessWidget {
           leading: isProfileScreen
               ? BackIcon(
                   onPressed: () {
-                    Get.back();
+                    Navigator.pop(context);
                   },
                 )
               : null,
@@ -38,7 +37,7 @@ class TermsOfServiceScreen extends StatelessWidget {
                 ? Container()
                 : IconButton(
                     onPressed: () {
-                      Get.back();
+                      Navigator.pop(context);
                     },
                     icon: const Icon(
                       Icons.close,

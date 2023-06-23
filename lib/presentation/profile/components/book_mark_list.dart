@@ -87,7 +87,7 @@ class BookMarkList extends StatelessWidget {
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    name,
+                    name == "harunyang" ? "하루냥" : name,
                     style: kBody3Style.copyWith(
                         color: Theme.of(context).colorScheme.textSubtitle),
                   ),

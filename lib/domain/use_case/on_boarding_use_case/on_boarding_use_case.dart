@@ -19,11 +19,13 @@ class OnBoardingUseCase {
     required nickname,
     required job,
     required age,
+    required email,
   }) async {
     final loginResult = await onBoardingRepository.putMyInformation(
       nickname: nickname,
       job: job,
       age: age,
+      email: email,
     );
 
     return await loginResult.when(

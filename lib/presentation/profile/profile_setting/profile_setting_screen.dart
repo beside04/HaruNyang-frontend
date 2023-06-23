@@ -61,7 +61,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
           elevation: 0,
           leading: BackIcon(
             onPressed: () {
-              Get.back();
+              Navigator.pop(context);
             },
           ),
         ),
@@ -288,7 +288,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                             context: context,
                                           );
 
-                                          Get.back();
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.pop(context);
                                           // ignore: use_build_context_synchronously
                                           toast(
                                             context: context,
@@ -389,7 +390,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                         context: context,
                                       );
 
-                                      Get.back();
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.pop(context);
                                       // ignore: use_build_context_synchronously
                                       toast(
                                         context: context,
@@ -432,7 +434,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           DialogButton(
                             title: "아니요",
                             onTap: () {
-                              Get.back();
+                              Navigator.pop(context);
                             },
                             backgroundColor:
                                 Theme.of(context).colorScheme.secondaryColor,

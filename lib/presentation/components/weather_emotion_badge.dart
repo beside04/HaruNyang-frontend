@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 
 class WeatherEmotionBadge extends StatelessWidget {
   const WeatherEmotionBadge({
     super.key,
     required this.weatherIcon,
     required this.emoticon,
-    required this.emoticonIndex,
     required this.color,
   });
 
   final String weatherIcon;
   final String emoticon;
-  final int emoticonIndex;
   final Color color;
 
   @override
@@ -26,7 +23,7 @@ class WeatherEmotionBadge extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-          child: SvgPicture.network(
+          child: Image.asset(
             weatherIcon,
             width: 16.w,
             height: 16.h,
@@ -41,7 +38,7 @@ class WeatherEmotionBadge extends StatelessWidget {
             shape: BoxShape.circle,
             color: color,
           ),
-          child: SvgPicture.network(
+          child: Image.asset(
             emoticon,
             width: 16.w,
             height: 16.h,

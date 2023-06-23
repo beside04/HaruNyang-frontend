@@ -6,7 +6,6 @@ import 'package:frontend/global_controller/on_boarding/on_boarding_controller.da
 import 'package:frontend/global_controller/token/token_controller.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/presentation/login/login_screen.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:get/get.dart';
 
@@ -36,9 +35,8 @@ class _SplashScreenState extends State<SplashScreen>
   Future<void> init() async {
     await Future.delayed(const Duration(milliseconds: 1500), () async {
       String? accessToken = await tokenController.getAccessToken();
-      String? refreshToken = await tokenController.getRefreshToken();
 
-      if (accessToken == null || refreshToken == null) {
+      if (accessToken == null) {
         //token이 없으면 로그인 화면 이동
         Get.offAll(
           () => const LoginScreen(),
@@ -47,53 +45,21 @@ class _SplashScreenState extends State<SplashScreen>
           ),
         );
       } else {
-        //reissue token 실행
-        final bool res = await onBoardingController.reissueToken(refreshToken);
+        //캘린더 업데이트
+        diaryController.initPage();
+        //북마크데이터 업데이트
+        Get.find<DiaryController>().getAllBookmarkData();
 
-        if (res) {
-          //에러 없으면 user 정보 가져온다
-          bool isOnBoardingDone = false;
-          bool isError = false;
-          final getMyInfoResult = await onBoardingController.getMyInformation();
-          getMyInfoResult.when(
-            success: (data) {
-              isOnBoardingDone = data;
-            },
-            error: (message) {
-              isError = true;
-            },
-          );
+        //Home 화면 이동
 
-          if (!isError) {
-            if (isOnBoardingDone == false) {
-              //온보딩 화면 이동
-              Get.offAll(
-                () => const OnBoardingNicknameScreen(),
-              );
-            } else {
-              //캘린더 업데이트
-              diaryController.initPage();
-              //북마크데이터 업데이트
-              Get.find<DiaryController>().getAllBookmarkData();
+        await Get.find<OnBoardingController>().getMyInformation();
 
-              //Home 화면 이동
-              Get.offAll(
-                () => const HomeScreen(),
-                binding: BindingsBuilder(
-                  getHomeViewModelBinding,
-                ),
-              );
-            }
-          }
-        } else {
-          //에러 있으면 로그인 화면으로 이동
-          Get.offAll(
-            () => const LoginScreen(),
-            binding: BindingsBuilder(
-              getLoginBinding,
-            ),
-          );
-        }
+        Get.offAll(
+          () => const HomeScreen(),
+          binding: BindingsBuilder(
+            getHomeViewModelBinding,
+          ),
+        );
       }
     });
   }
