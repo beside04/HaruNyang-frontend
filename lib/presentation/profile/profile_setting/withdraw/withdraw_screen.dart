@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
@@ -59,17 +58,10 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Center(
-                          child: SizedBox(
-                            width: 120.w,
-                            height: 120.h,
-                            child: CircleAvatar(
-                              backgroundColor: kOrange200Color,
-                              child: SvgPicture.asset(
-                                "lib/config/assets/images/character/character9.svg",
-                                width: 100.w,
-                                height: 100.h,
-                              ),
-                            ),
+                          child: Image.asset(
+                            "lib/config/assets/images/character/haru_error_case.png",
+                            width: 160.w,
+                            height: 160.h,
                           ),
                         ),
                         SizedBox(

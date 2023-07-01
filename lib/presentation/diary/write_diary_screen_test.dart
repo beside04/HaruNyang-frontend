@@ -339,19 +339,24 @@ class WriteDiaryScreenTest extends GetView<WriteDiaryViewModelTest> {
                     Expanded(
                       child: ListView(
                         children: [
-                          Stack(
-                            children: [
-                              Center(
-                                child: Image.asset(
-                                  getWeatherCharacter(weather),
-                                  height: 200.h,
+                          SizedBox(
+                            height: 200.h,
+                            child: Stack(
+                              children: [
+                                Center(
+                                  child: Image.asset(
+                                    getWeatherCharacter(weather),
+                                    height: 200.h,
+                                  ),
                                 ),
-                              ),
-                              RiveAnimation.asset(
-                                getWeatherAnimation(weather),
-                                fit: BoxFit.fill,
-                              ),
-                            ],
+                                getWeatherAnimation(weather) == ""
+                                    ? Container()
+                                    : RiveAnimation.asset(
+                                        getWeatherAnimation(weather),
+                                        fit: BoxFit.fill,
+                                      ),
+                              ],
+                            ),
                           ),
                           Center(
                             child: Obx(

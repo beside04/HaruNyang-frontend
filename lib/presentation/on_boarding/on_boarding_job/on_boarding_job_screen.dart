@@ -135,10 +135,10 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                                 birthDate: birth,
                               );
 
-                              await onBoardingController.getMyInformation();
-
                               Get.to(
-                                () => const OnBoardingFinishScreen(),
+                                () => OnBoardingFinishScreen(
+                                  loginType: loginType,
+                                ),
                                 transition: Transition.cupertino,
                               );
                             }

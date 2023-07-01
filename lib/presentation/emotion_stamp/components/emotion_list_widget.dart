@@ -41,7 +41,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                             ),
                             Center(
                               child: Image.asset(
-                                "lib/config/assets/images/character/box.png",
+                                "lib/config/assets/images/character/haru_empty_case.png",
                                 width: 280.w,
                                 height: 280.h,
                               ),
@@ -98,6 +98,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                                             date: DateTime.parse(
                                                 diary.targetDate),
                                             diaryData: diary,
+                                            isNewDiary: false,
                                           ),
                                         );
                                       },

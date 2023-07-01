@@ -75,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen>
     return DefaultLayout(
       screenName: 'Screen_Event_Splash',
       child: Lottie.asset(
-        'lib/config/assets/lottie/graphic_type2.json',
+        'lib/config/assets/lottie/graphic_type.json',
         controller: _controller,
         onLoaded: (composition) {
           _controller

@@ -28,6 +28,7 @@ class WriteDiaryLoadingViewModel extends GetxController {
             diaryId: data.id,
             date: date,
             diaryData: diary,
+            isNewDiary: true,
           ),
         );
       },
@@ -47,6 +48,7 @@ class WriteDiaryLoadingViewModel extends GetxController {
             diaryId: data.id,
             date: date,
             diaryData: diary,
+            isNewDiary: true,
           ),
         );
       },

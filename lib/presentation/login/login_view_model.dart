@@ -138,7 +138,7 @@ class LoginViewModel extends GetxController {
 
     Get.offAll(
       () => SignInCompleteScreen(
-        email: state.value.email,
+        email: state.value.email == "" ? null : state.value.email,
         loginType: state.value.isSocialKakao == true ? "KAKAO" : "APPLE",
         socialId: state.value.socialId,
       ),
@@ -199,13 +199,7 @@ class LoginViewModel extends GetxController {
     //캘린더 업데이트
     Get.find<DiaryController>().initPage();
 
-    final getMyInfoResult =
-        await Get.find<OnBoardingController>().getMyInformation();
-
-    getMyInfoResult.when(
-      success: (data) {},
-      error: (message) {},
-    );
+    await Get.find<OnBoardingController>().getMyInformation();
 
     Get.find<DiaryController>().getAllBookmarkData();
 

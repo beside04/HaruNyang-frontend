@@ -132,15 +132,19 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                         "lib/config/assets/images/character/character7.png",
                         height: 260.h,
                       ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 50.0.h),
+                        padding: EdgeInsets.symmetric(horizontal: 60.0.w),
                         child: FAProgressBar(
                           currentValue: _counterTest,
                           animatedDuration: const Duration(milliseconds: 2500),
                           size: 15,
                           displayText: '',
                           progressColor: kOrange300Color,
-                          backgroundColor: kGrayColor50,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.surface_02,
                         ),
                       ),
                       SizedBox(

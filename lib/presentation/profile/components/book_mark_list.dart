@@ -47,13 +47,6 @@ class BookMarkList extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        SvgPicture.asset(
-                          "lib/config/assets/images/character/character11.svg",
-                          width: 26.w,
-                        ),
-                        SizedBox(
-                          width: 4.w,
-                        ),
                         Text(
                           DateFormat('yyyy.MM.dd').format(date),
                           style: kSubtitle1Style.copyWith(

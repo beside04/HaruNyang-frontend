@@ -92,6 +92,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                     diaryId: events[0].id!,
                                     date: day,
                                     diaryData: events[0],
+                                    isNewDiary: false,
                                   ),
                                 );
                         } else {

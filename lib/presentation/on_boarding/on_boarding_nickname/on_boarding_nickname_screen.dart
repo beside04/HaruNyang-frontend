@@ -111,7 +111,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                   height: 4.h,
                                 ),
                                 Text(
-                                  "집사님의 이름이 뭐에요?",
+                                  "집사님을 어떻게 불러드릴까요?",
                                   style: kHeader2Style.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
@@ -121,7 +121,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                   height: 20.h,
                                 ),
                                 NicknameTextField(
-                                  nameHintText: '이름',
+                                  nameHintText: '닉네임',
                                   focus: nicknameFocusNode,
                                   textEditingController:
                                       controller.nicknameEditingController,

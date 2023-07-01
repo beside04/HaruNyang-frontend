@@ -55,7 +55,7 @@ class KakaoLoginUseCase {
   }
 
   Future<bool> signup({
-    required String email,
+    required String? email,
     required String socialId,
     String? deviceToken,
     required String nickname,

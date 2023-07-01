@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
@@ -54,8 +53,8 @@ class WithdrawDoneScreen extends StatelessWidget {
                       height: 100.h,
                     ),
                     Center(
-                      child: SvgPicture.asset(
-                        "lib/config/assets/images/character/character10.svg",
+                      child: Image.asset(
+                        "lib/config/assets/images/character/haru_withdraw.png",
                         width: 360.w,
                         height: 250.h,
                       ),

@@ -227,7 +227,10 @@ class HomeViewModel extends GetxController {
       );
     }
 
-    await goToBirthPage();
+    Get.find<OnBoardingController>().state.value.age == '' ||
+            Get.find<OnBoardingController>().state.value.age == null
+        ? null
+        : await goToBirthPage();
   }
 
   goToBirthPage() async {

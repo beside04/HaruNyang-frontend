@@ -31,12 +31,14 @@ class DiaryDetailScreenTest extends StatefulWidget {
   final DateTime date;
   final DiaryData diaryData;
   final CroppedFile? imageFile;
+  final bool isNewDiary;
 
   const DiaryDetailScreenTest({
     Key? key,
     required this.diaryId,
     required this.date,
     required this.diaryData,
+    required this.isNewDiary,
     this.imageFile,
   }) : super(key: key);
 
@@ -51,8 +53,177 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest> {
 
   @override
   void initState() {
-    diaryController.getDiaryDetail(widget.diaryId);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      init();
+    });
+
     super.initState();
+  }
+
+  init() async {
+    await diaryController.getDiaryDetail(widget.diaryId);
+
+    widget.isNewDiary
+        // ignore: use_build_context_synchronously
+        ? await showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(20.0),
+              ),
+            ),
+            builder: (BuildContext context) {
+              return ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(20),
+                  topRight: Radius.circular(20),
+                ),
+                child: Container(
+                  padding: const EdgeInsets.all(20),
+                  color: Theme.of(context).colorScheme.surface_01,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: SvgPicture.asset(
+                              "lib/config/assets/images/profile/close.svg",
+                            ),
+                          ),
+                        ],
+                      ),
+                      Image.asset(
+                        "lib/config/assets/images/character/character5.png",
+                        height: 272.h,
+                      ),
+                      CarouselSlider.builder(
+                        options: CarouselOptions(
+                          enableInfiniteScroll: false,
+                          viewportFraction: 1.0,
+                          onPageChanged: (index, reason) {
+                            _counter.value = index;
+                          },
+                        ),
+                        itemCount: diaryController
+                            .diaryDetailData.value!.comments.length,
+                        itemBuilder:
+                            (BuildContext context, int index, int realIndex) {
+                          return ListView(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    diaryController.diaryDetailData.value!
+                                                .comments[index].author ==
+                                            "harunyang"
+                                        ? Text(
+                                            '하루냥',
+                                            style: kHeader5Style.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .textTitle),
+                                          )
+                                        : Text(
+                                            diaryController.diaryDetailData
+                                                .value!.comments[index].author,
+                                            style: kHeader5Style.copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .textTitle),
+                                          ),
+                                    Obx(
+                                      () => diaryController.diaryDetailData
+                                              .value!.comments[index].isFavorite
+                                          ? GestureDetector(
+                                              onTap: () {
+                                                diaryController
+                                                    .deleteBookmarkByBookmarkId(
+                                                  diaryController
+                                                      .diaryDetailData
+                                                      .value!
+                                                      .comments[index]
+                                                      .id!,
+                                                  index,
+                                                );
+                                              },
+                                              child: SvgPicture.asset(
+                                                "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
+                                              ),
+                                            )
+                                          : GestureDetector(
+                                              onTap: () {
+                                                diaryController.saveBookmark(
+                                                  diaryController
+                                                      .diaryDetailData
+                                                      .value!
+                                                      .comments[index]
+                                                      .id!,
+                                                  index,
+                                                );
+                                              },
+                                              child: SvgPicture.asset(
+                                                "lib/config/assets/images/diary/write_diary/bookmark.svg",
+                                              ),
+                                            ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8.0),
+                                child: SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: Text(
+                                      diaryController.diaryDetailData.value!
+                                          .comments[index].message,
+                                      textAlign: TextAlign.start,
+                                      style: kBody1Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textTitle),
+                                    )),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0.h),
+                        child: ValueListenableBuilder<int>(
+                          valueListenable: _counter,
+                          builder: (BuildContext context, int index,
+                                  Widget? child) =>
+                              AnimatedSmoothIndicator(
+                            activeIndex: index,
+                            axisDirection: Axis.horizontal,
+                            count: diaryController
+                                .diaryDetailData.value!.comments.length,
+                            effect: ScrollingDotsEffect(
+                              dotColor: kGrayColor400,
+                              activeDotColor: kOrange300Color,
+                              dotWidth: 6.h,
+                              dotHeight: 6.h,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            },
+          )
+        : null;
   }
 
   @override
@@ -243,7 +414,7 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest> {
             backgroundColor: kOrange300Color,
             child: Center(
               child: Image.asset(
-                "lib/config/assets/images/diary/write_diary/note.png",
+                "lib/config/assets/images/diary/write_diary/letter.png",
                 height: 30.h,
               ),
             ),
@@ -419,19 +590,24 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest> {
             child: SafeArea(
               child: ListView(
                 children: [
-                  Stack(
-                    children: [
-                      Center(
-                        child: Image.asset(
-                          getWeatherCharacter(widget.diaryData.weather),
-                          height: 200.h,
+                  SizedBox(
+                    height: 200.h,
+                    child: Stack(
+                      children: [
+                        Center(
+                          child: Image.asset(
+                            getWeatherCharacter(widget.diaryData.weather),
+                            height: 200.h,
+                          ),
                         ),
-                      ),
-                      RiveAnimation.asset(
-                        getWeatherAnimation(widget.diaryData.weather),
-                        fit: BoxFit.fill,
-                      ),
-                    ],
+                        getWeatherAnimation(widget.diaryData.weather) == ""
+                            ? Container()
+                            : RiveAnimation.asset(
+                                getWeatherAnimation(widget.diaryData.weather),
+                                fit: BoxFit.fill,
+                              ),
+                      ],
+                    ),
                   ),
                   WeatherEmotionBadgeWritingDiary(
                     emoticon: getEmoticonImage(widget.diaryData.feeling),
@@ -448,7 +624,6 @@ class _DiaryDetailScreenTestState extends State<DiaryDetailScreenTest> {
                         left: 20.w, top: 24.h, right: 20.w, bottom: 12.h),
                     child: Text(
                       widget.diaryData.diaryContent,
-                      maxLines: 10,
                       style: kBody1Style.copyWith(
                           color: Theme.of(context).colorScheme.textTitle),
                     ),

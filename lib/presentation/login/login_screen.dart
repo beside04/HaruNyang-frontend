@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -37,7 +36,7 @@ class LoginScreen extends GetView<LoginViewModel> {
           return await Future.value(backResult);
         },
         child: Scaffold(
-          backgroundColor: kOrange300Color,
+          backgroundColor: kGrayColor950,
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -47,16 +46,10 @@ class LoginScreen extends GetView<LoginViewModel> {
                   top: 250.h,
                 ),
                 child: Center(
-                  child: SvgPicture.asset(
-                    "lib/config/assets/images/login/login_logo.svg",
-                    width: 82.w,
+                  child: Image.asset(
+                    "lib/config/assets/images/login/login_logo.png",
+                    width: 92.w,
                   ),
-                ),
-              ),
-              Center(
-                child: SvgPicture.asset(
-                  "lib/config/assets/images/character/logo_text.svg",
-                  width: 82.w,
                 ),
               ),
               SizedBox(
