@@ -117,12 +117,8 @@ flutter:
     - lib/config/assets/images/profile/
     - lib/config/assets/lottie/
     - .env
-  #   - images/a_dot_ham.jpeg
 
   fonts:
-    - family: CustomIcons
-      fonts:
-        - asset: lib/config/assets/font/customIcons/CustomIcons.ttf
     - family: pretendard
       fonts:
         - asset: lib/config/assets/font/pretendard/Pretendard-Bold.otf

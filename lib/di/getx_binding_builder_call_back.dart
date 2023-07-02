@@ -5,12 +5,10 @@ import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
 import 'package:frontend/data/data_source/remote_data/notice_api.dart';
 import 'package:frontend/data/data_source/remote_data/on_boarding_api.dart';
 import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
-import 'package:frontend/data/data_source/remote_data/wise_saying_api.dart';
 import 'package:frontend/data/data_source/remote_data/withdraw_api.dart';
 import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
 import 'package:frontend/data/repository/dark_mode/dark_mode_repository_impl.dart';
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
-import 'package:frontend/data/repository/emoticon_weather/emoticon_repository_impl.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/notice/notice_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
@@ -21,9 +19,6 @@ import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
-import 'package:frontend/data/repository/upload/file_upload_repository_impl.dart';
-
-import 'package:frontend/data/repository/wise_saying/wise_saying_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
@@ -33,8 +28,6 @@ import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/get_diary_detail_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
-import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
-import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/notice_use_case/get_notice_use_case.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
@@ -43,8 +36,6 @@ import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
-import 'package:frontend/domain/use_case/upload/file_upload_use_case.dart';
-import 'package:frontend/domain/use_case/wise_saying_use_case/get_wise_saying_use_case.dart';
 import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
@@ -105,9 +96,6 @@ final RefreshInterceptor interceptor = RefreshInterceptor(
 final onBoardingApi = OnBoardingApi(
   dio: getDio(),
 );
-final wiseSayingApi = WiseSayingApi(
-  dio: getDio(),
-);
 final diaryApi = DiaryApi(
   dio: getDio(),
 );
@@ -121,31 +109,25 @@ final emotionStampApi = EmotionStampApi(
   dio: getDio(),
 );
 
+final noticeApi = NoticeApi(
+  dio: getDio(),
+);
+
 final KakaoLoginImpl kakaoLoginImpl = KakaoLoginImpl();
 final AppleLoginImpl appleLoginImpl = AppleLoginImpl();
 final ServerLoginRepositoryImpl serverLoginImpl = ServerLoginRepositoryImpl();
 final OnBoardingRepositoryImpl onBoardingImpl = OnBoardingRepositoryImpl(
   onBoardingApi: onBoardingApi,
 );
-final WiseSayingRepositoryImpl wiseSayingRepositoryImpl =
-    WiseSayingRepositoryImpl(
-  wiseSayingApi: wiseSayingApi,
-);
-
-final FileUploadRepositoryImpl fileUploadRepositoryImpl =
-    FileUploadRepositoryImpl();
 final diaryRepository = DiaryRepositoryImpl(
   diaryApi: diaryApi,
 );
 final bookmarkRepository = BookmarkRepositoryImpl(
   bookmarkApi: bookmarkApi,
 );
-// final reissueTokenRepository = ReissueTokenRepositoryImpl(
-//   dataSource: ReissueTokenApi(),
-// );
 
 final noticeRepository = NoticeRepositoryImpl(
-  noticeApi: NoticeApi(),
+  noticeApi: noticeApi,
 );
 
 //use case
@@ -179,19 +161,9 @@ final WithdrawUseCase withDrawUseCase = WithdrawUseCase(
   appleLoginUseCase: appleLoginUseCase,
 );
 
-final GetWiseSayingUseCase getWiseSayingUseCase = GetWiseSayingUseCase(
-  wiseSayingRepository: wiseSayingRepositoryImpl,
-);
-
 final GetNoticeUseCase getNoticeUseCase = GetNoticeUseCase(
   noticeRepository: noticeRepository,
 );
-
-final GetEmoticonUseCase getEmoticonUseCase =
-    GetEmoticonUseCase(emoticonRepository: EmoticonRepositoryImpl());
-
-final GetWeatherUseCase getWeatherUseCase =
-    GetWeatherUseCase(weatherRepository: EmoticonRepositoryImpl());
 
 final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
   emotionStampRepository: EmotionStampRepositoryImpl(
@@ -202,8 +174,6 @@ final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
 final GetDiaryDetailUseCase getDiaryDetailUseCase =
     GetDiaryDetailUseCase(diaryRepository: diaryRepository);
 
-final FileUploadUseCase fileUploadUseCase =
-    FileUploadUseCase(fileUploadRepository: fileUploadRepositoryImpl);
 final saveDiaryUseCase = SaveDiaryUseCase(
   diaryRepository: diaryRepository,
 );
@@ -217,10 +187,6 @@ final deleteDiaryUseCase = DeleteDiaryUseCase(
 final bookmarkUseCase = BookmarkUseCase(
   bookmarkRepository: bookmarkRepository,
 );
-
-// final reissueTokenUseCase = ReissueTokenUseCase(
-//   reissueTokenRepository: reissueTokenRepository,
-// );
 
 void getMainBinding() {
   Get.put(MainViewModel(
@@ -239,10 +205,7 @@ void getLoginBinding() {
 
 void getDiaryBinding() {
   Get.put(
-    DiaryViewModel(
-      getEmoticonUseCase: getEmoticonUseCase,
-      getWeatherUseCase: getWeatherUseCase,
-    ),
+    DiaryViewModel(),
   );
 }
 
@@ -324,7 +287,6 @@ void getOnBoardingControllerBinding() {
       onBoardingUseCase: onBoardingUseCase,
       kakaoLoginUseCase: kakaoLoginUseCase,
       appleLoginUseCase: appleLoginUseCase,
-      // reissueTokenUseCase: reissueTokenUseCase,
     ),
   );
 }
@@ -340,8 +302,6 @@ void getTokenControllerBinding() {
 void getDiaryControllerBinding() {
   Get.put(
     DiaryController(
-      fileUploadUseCase: fileUploadUseCase,
-      getWiseSayingUseCase: getWiseSayingUseCase,
       saveDiaryUseCase: saveDiaryUseCase,
       updateDiaryUseCase: updateDiaryUseCase,
       deleteDiaryUseCase: deleteDiaryUseCase,

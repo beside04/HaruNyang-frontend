@@ -43,36 +43,6 @@ class LoginApi {
     }
   }
 
-  // Future<SocialIDCheck> checkMember(String socialId) async {
-  //   String checkMemberUrl = '$baseUrl/v1/members/$socialId';
-  //   try {
-  //     Response response;
-  //     response = await _client.get(
-  //       checkMemberUrl,
-  //     );
-  //     bool result = response.data;
-  //     if (result) {
-  //       return SocialIDCheck.notMember;
-  //     } else {
-  //       return SocialIDCheck.existMember;
-  //     }
-  //   } on DioError catch (e) {
-  //     if (e.response != null) {
-  //       if (e.response!.statusCode == 400) {
-  //         //이미 가입된 회원
-  //         return SocialIDCheck.existMember;
-  //       } else if (e.response!.statusCode != 200) {
-  //         //서버 통신 에러
-  //       }
-  //     } else {
-  //       //서버 통신 에러
-  //     }
-  //   } catch (e) {
-  //     //에러 처리
-  //   }
-  //   return SocialIDCheck.error;
-  // }
-
   Future<bool> signup({
     required email,
     required loginType,

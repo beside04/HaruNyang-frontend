@@ -34,7 +34,7 @@ class LoginTermsInformationScreen
         appBar: AppBar(
             centerTitle: true,
             title: Text(
-              "약관정보",
+              "약관동의",
               style: kHeader4Style.copyWith(
                   color: Theme.of(context).colorScheme.textTitle),
             ),

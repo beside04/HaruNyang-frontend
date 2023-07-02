@@ -1,19 +1,9 @@
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
-import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_emoticon_use_case.dart';
-import 'package:frontend/domain/use_case/emoticon_weather_use_case/get_weather_use_case.dart';
 import 'package:get/get.dart';
 
 class DiaryViewModel extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final GetEmoticonUseCase getEmoticonUseCase;
-  final GetWeatherUseCase getWeatherUseCase;
-
-  DiaryViewModel({
-    required this.getEmoticonUseCase,
-    required this.getWeatherUseCase,
-  });
-
   final isEmotionModal = true.obs;
   final emotionNumberValue = 2.0.obs;
   final emotionTextValue = '맞아!'.obs;

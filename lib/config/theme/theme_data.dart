@@ -43,7 +43,6 @@ ThemeData lightMode(context) => ThemeData(
         ),
         titleTextStyle: kHeader3Style,
       ),
-      //primarySwatch: Colors.blue,
       inputDecorationTheme: const InputDecorationTheme(
         filled: true,
         fillColor: Colors.transparent,

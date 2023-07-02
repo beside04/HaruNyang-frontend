@@ -5,13 +5,17 @@ import 'package:frontend/domain/model/notice/notice_data.dart';
 
 class NoticeApi {
   final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
-  final Dio _client = Dio();
+  final Dio dio;
+
+  NoticeApi({
+    required this.dio,
+  });
 
   Future<Result<List<NoticeData>>> getNotices(int limit, int page) async {
     try {
       String noticeUrl = '$_baseUrl/v2/notices';
       Response response;
-      response = await _client.get(
+      response = await dio.get(
         noticeUrl,
         queryParameters: {
           'limitCount': limit,
