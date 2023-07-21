@@ -43,28 +43,24 @@ class HomeViewModel extends GetxController {
     super.onInit();
 
     // 처음 가입한 유저라면 일기쓰기 화면으로 이동
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       Get.arguments == null
           ? selectedIndex.value = 0
           : selectedIndex.value = Get.arguments['index'];
+
+      print(Get.find<OnBoardingController>().state.value.age);
+      print(Get.find<OnBoardingController>().state.value.age);
+      print(Get.find<OnBoardingController>().state.value.age);
+      print(Get.find<OnBoardingController>().state.value.age);
+
+      // 생일 페이지 거쳐가기
+      Get.find<OnBoardingController>().state.value.age == '' ||
+              Get.find<OnBoardingController>().state.value.age == null
+          ? null
+          : await goToBirthPage();
     });
 
-    getLastDate();
     getLastBirthDayPopUpDate();
-
-    initUpdatePopup();
-  }
-
-  getLastDate() async {
-    lastPopupDate = await popUpUseCase.getLastPopUpDate();
-
-    if (lastPopupDate != null) {
-      DateTime now = DateTime.now();
-      int timeDifference =
-          now.difference(DateTime.parse(lastPopupDate!)).inDays;
-
-      if (timeDifference < 30) isOpenPopup.value = true;
-    }
   }
 
   getLastBirthDayPopUpDate() async {
@@ -102,142 +98,20 @@ class HomeViewModel extends GetxController {
     return true;
   }
 
-  void initUpdatePopup() async {
-    final remoteConfig = FirebaseRemoteConfig.instance;
-    await remoteConfig.fetchAndActivate();
-    await remoteConfig.setConfigSettings(RemoteConfigSettings(
-      fetchTimeout: const Duration(seconds: 1),
-      minimumFetchInterval: const Duration(seconds: 1),
-    ));
-
-    if (APP_BUILD_NUMBER < remoteConfig.getInt("min_build_number")) {
-      showDialog(
-        barrierDismissible: false,
-        context: navigatorKey.currentContext!,
-        builder: (context) {
-          return DialogComponent(
-            titlePadding: EdgeInsets.zero,
-            title: "",
-            content: Column(
-              children: [
-                Image.asset(
-                  "lib/config/assets/images/character/update1.png",
-                  width: 120.w,
-                  height: 120.h,
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                Text(
-                  "업데이트가 필요합니다.",
-                  style: kHeader3Style.copyWith(
-                      color: Theme.of(context).colorScheme.textTitle),
-                ),
-                SizedBox(
-                  height: 4.h,
-                ),
-                Text(
-                  "필수 업데이트를 해야만 앱을 이용할 수 있습니다.",
-                  style: kHeader6Style.copyWith(
-                      color: Theme.of(context).colorScheme.textSubtitle),
-                ),
-              ],
-            ),
-            actionContent: [
-              DialogButton(
-                title: "업데이트",
-                onTap: () async {
-                  Get.offAll(() => const LoginScreen());
-
-                  StoreRedirect.redirect(
-                      androidAppId: "com.beside04.haruNyang",
-                      iOSAppId: "6444657575");
-                },
-                backgroundColor: kOrange200Color,
-                textStyle: kHeader4Style.copyWith(color: kWhiteColor),
-              ),
-            ],
-          );
-        },
-      );
-    } else if (!isOpenPopup.value &&
-        APP_BUILD_NUMBER < remoteConfig.getInt("recommend_build_number")) {
-      showDialog(
-        barrierDismissible: false,
-        context: navigatorKey.currentContext!,
-        builder: (context) {
-          return DialogComponent(
-            titlePadding: EdgeInsets.zero,
-            title: "",
-            content: Column(
-              children: [
-                Image.asset(
-                  "lib/config/assets/images/character/update2.png",
-                  width: 120.w,
-                  height: 120.h,
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                Text(
-                  "새로운 버전이 있습니다.",
-                  style: kHeader3Style.copyWith(
-                      color: Theme.of(context).colorScheme.textTitle),
-                ),
-                SizedBox(
-                  height: 4.h,
-                ),
-                Text(
-                  "업데이트하고 새로운 기능을 만나보세요.",
-                  style: kHeader6Style.copyWith(
-                      color: Theme.of(context).colorScheme.textSubtitle),
-                ),
-              ],
-            ),
-            actionContent: [
-              DialogButton(
-                title: "다음에",
-                onTap: () async {
-                  Navigator.pop(context);
-                  String time = DateTime.now().toIso8601String();
-                  isOpenPopup.value = true;
-                  await popUpUseCase.setLastPopUpDate(time);
-                },
-                backgroundColor: Theme.of(context).colorScheme.secondaryColor,
-                textStyle: kHeader4Style.copyWith(
-                    color: Theme.of(context).colorScheme.textSubtitle),
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              DialogButton(
-                title: "업데이트",
-                onTap: () async {
-                  Get.offAll(() => const LoginScreen());
-                  StoreRedirect.redirect(
-                      androidAppId: "com.beside04.haruNyang",
-                      iOSAppId: "6444657575");
-                },
-                backgroundColor: kOrange200Color,
-                textStyle: kHeader4Style.copyWith(color: kWhiteColor),
-              ),
-            ],
-          );
-        },
-      );
-    }
-
-    Get.find<OnBoardingController>().state.value.age == '' ||
-            Get.find<OnBoardingController>().state.value.age == null
-        ? null
-        : await goToBirthPage();
-  }
-
   goToBirthPage() async {
     final now = DateTime.now();
     final dateFormat = DateFormat('yyyy-MM-dd');
+
     final birthday =
         dateFormat.parse('${Get.find<OnBoardingController>().state.value.age}');
+
+    print(birthday);
+    print(birthday);
+    print(birthday);
+    print(birthday);
+    print(birthday);
+    print(birthday);
+    print(birthday);
 
     final nowBirthday = DateTime(now.year, birthday.month, birthday.day);
 

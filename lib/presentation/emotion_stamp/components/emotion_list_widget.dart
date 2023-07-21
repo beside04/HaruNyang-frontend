@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_card_diary_widget.dart';
 import 'package:get/get.dart';
 
@@ -59,7 +59,7 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                               height: 4.h,
                             ),
                             Text(
-                              "일기를 쓰고 하루냥의 한마디를 받아보세요!",
+                              "일기를 쓰고 하루냥의 쪽지를 받아보세요!",
                               style: kBody2Style.copyWith(
                                   color: Theme.of(context)
                                       .colorScheme
@@ -86,14 +86,14 @@ class _EmotionListWidgetState extends State<EmotionListWidget> {
                               .diaryCardDataList[index].diaryDataList
                               .map((diary) => Padding(
                                     padding: EdgeInsets.only(
-                                      top: 20.h,
+                                      top: 16.h,
                                       left: 20.w,
                                       right: 20.w,
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
                                         Get.to(
-                                          () => DiaryDetailScreenTest(
+                                          () => DiaryDetailScreen(
                                             diaryId: diary.id!,
                                             date: DateTime.parse(
                                                 diary.targetDate),

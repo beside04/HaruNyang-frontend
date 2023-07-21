@@ -372,7 +372,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
       flex: layoutProportion,
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        height: theme.containerHeight,
+        height: theme.containerHeight + 10,
         decoration: BoxDecoration(color: theme.backgroundColor),
         child: NotificationListener(
           onNotification: (ScrollNotification notification) {

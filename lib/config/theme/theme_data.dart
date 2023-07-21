@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
@@ -15,15 +16,19 @@ ThemeData lightMode(context) => ThemeData(
           }
         }),
       ),
-      scaffoldBackgroundColor: kBeigeColor100,
-      bottomAppBarTheme: const BottomAppBarTheme(color: kBeigeColor100),
+      scaffoldBackgroundColor: kWhiteColor,
+      bottomAppBarTheme: const BottomAppBarTheme(color: kWhiteColor),
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor400,
+      popupMenuTheme: PopupMenuThemeData(
+        elevation: 4.0,
+        shadowColor: kBlackColor.withOpacity(0.3),
+      ),
       dividerTheme: const DividerThemeData(
-        color: kBeigeColor200,
+        color: kGrayColor100,
       ),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
-        backgroundColor: kBeigeColor100,
+        backgroundColor: kWhiteColor,
         unselectedItemColor: kGrayColor400,
         selectedItemColor: kBlackColor,
         selectedLabelStyle: kBody3Style,
@@ -36,12 +41,13 @@ ThemeData lightMode(context) => ThemeData(
       ),
       appBarTheme: AppBarTheme(
         centerTitle: true,
-        backgroundColor: kBeigeColor100,
+        backgroundColor: kWhiteColor,
         shadowColor: kGrayColor200,
         iconTheme: const IconThemeData(
           color: kGrayColor950,
         ),
         titleTextStyle: kHeader3Style,
+        toolbarHeight: 48.h,
       ),
       inputDecorationTheme: const InputDecorationTheme(
         filled: true,
@@ -78,6 +84,10 @@ ThemeData darkMode(context) => ThemeData(
       bottomAppBarTheme: const BottomAppBarTheme(color: kGrayColor950),
       primaryColor: kOrange300Color,
       unselectedWidgetColor: kGrayColor600,
+      popupMenuTheme: PopupMenuThemeData(
+        elevation: 4.0,
+        shadowColor: kBlackColor.withOpacity(0.3),
+      ),
       dividerTheme: const DividerThemeData(
         color: kGrayColor900,
       ),
@@ -90,13 +100,14 @@ ThemeData darkMode(context) => ThemeData(
         selectedIconTheme: const IconThemeData(color: kWhiteColor),
         unselectedIconTheme: const IconThemeData(color: kGrayColor600),
       ),
-      appBarTheme: const AppBarTheme(
+      appBarTheme: AppBarTheme(
         centerTitle: true,
         backgroundColor: kGrayColor950,
         shadowColor: kGrayColor850,
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: kGrayColor50,
         ),
+        toolbarHeight: 48.h,
       ),
       brightness: Brightness.dark,
       inputDecorationTheme: const InputDecorationTheme(
@@ -119,13 +130,13 @@ ThemeData darkMode(context) => ThemeData(
 
 extension CustomColorScheme on ColorScheme {
   Color get backgroundColor =>
-      brightness == Brightness.light ? kBeigeColor100 : kGrayColor950;
+      brightness == Brightness.light ? kWhiteColor : kGrayColor950;
   Color get backgroundModal =>
       brightness == Brightness.light ? kWhiteColor : kGrayColor900;
   Color get surface_01 =>
-      brightness == Brightness.light ? kBeigeColor200 : kGrayColor900;
+      brightness == Brightness.light ? kGrayColor50 : kGrayColor900;
   Color get surface_02 =>
-      brightness == Brightness.light ? kBeigeColor300 : kGrayColor850;
+      brightness == Brightness.light ? kGrayColor100 : kGrayColor850;
   Color get surfaceModal =>
       brightness == Brightness.light ? kGrayColor50 : kGrayColor850;
   Color get primaryColor =>
@@ -145,7 +156,7 @@ extension CustomColorScheme on ColorScheme {
   Color get textSubtitle =>
       brightness == Brightness.light ? kGrayColor500 : kGrayColor400;
   Color get textBody =>
-      brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
+      brightness == Brightness.light ? kGrayColor800 : kGrayColor100;
   Color get textLowEmphasis =>
       brightness == Brightness.light ? kGrayColor400 : kGrayColor550;
   Color get textCaption =>
@@ -156,10 +167,12 @@ extension CustomColorScheme on ColorScheme {
       brightness == Brightness.light ? kGrayColor400 : kGrayColor550;
   Color get iconColor =>
       brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
+  Color get iconColorReverse =>
+      brightness == Brightness.light ? kGrayColor50 : kGrayColor950;
   Color get iconSubColor =>
       brightness == Brightness.light ? kGrayColor400 : kGrayColor600;
   Color get border =>
-      brightness == Brightness.light ? kGrayColor200 : kGrayColor850;
+      brightness == Brightness.light ? kGrayColor100 : kGrayColor850;
   Color get borderModal =>
       brightness == Brightness.light ? kGrayColor250 : kGrayColor900;
   Color get outlineDefault =>
@@ -168,4 +181,6 @@ extension CustomColorScheme on ColorScheme {
       brightness == Brightness.light ? kGrayColor50 : kGrayColor850;
   Color get outlineActive =>
       brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
+  Color get backgroundListColor =>
+      brightness == Brightness.light ? kWhiteColor : kGrayColor900;
 }

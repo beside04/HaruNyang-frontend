@@ -49,9 +49,6 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
     return DefaultLayout(
       screenName: 'Screen_Event_Profile_MyInformation',
       child: Scaffold(
-        backgroundColor: mainViewController.isDarkMode.value
-            ? kGrayColor900
-            : kBeigeColor200,
         appBar: AppBar(
           title: Text(
             '내 정보 관리',
@@ -75,7 +72,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
                 ),
-                title: '닉네임 수정',
+                title: '닉네임 변경',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   GlobalUtils.setAnalyticsCustomEvent(
@@ -178,10 +175,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 color: Theme.of(context).colorScheme.border,
               ),
               ProfileButton(
+                isBirth: true,
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
                 ),
-                title: '나이 수정',
+                title: '생일 변경',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_AgeEdit');
@@ -233,7 +231,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       controller.getBirthDateFormat(date);
                                     },
                                     currentTime: DateTime.parse(
-                                      onBoardingController.state.value.age == ''
+                                      onBoardingController.state.value.age ==
+                                                  '' ||
+                                              onBoardingController
+                                                      .state.value.age ==
+                                                  null
                                           ? "2000-01-01"
                                           : onBoardingController
                                               .state.value.age!,
@@ -247,7 +249,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       backgroundColor: Theme.of(context)
                                           .colorScheme
                                           .backgroundModal,
-                                      title: "나이 수정",
+                                      title: "나이 변경",
                                     ),
                                   );
                                 },
@@ -316,7 +318,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
                 ),
-                title: '직업 수정',
+                title: '직업 변경',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_JobEdit');
@@ -469,6 +471,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                     },
                   );
                 },
+              ),
+              Divider(
+                thickness: 1.h,
               ),
               GestureDetector(
                 onTap: () {

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
@@ -39,6 +41,20 @@ class DiaryController extends GetxController {
   Rx<DiaryState> get state => _state;
   int currentPageCount = 250;
 
+  Rx<String> worldViewTopic = "".obs;
+
+  List<String> worldViewTopicList = [
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?1',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?2',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?3',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?4',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?5',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?6',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?7',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?8',
+    '오늘 가장 기억에 남는 일은\n 무엇이었나요?9',
+  ];
+
   @override
   void onInit() {
     initPage();
@@ -59,18 +75,6 @@ class DiaryController extends GetxController {
   Future<void> deleteDiary(int diaryID) async {
     await deleteDiaryUseCase(diaryID);
     getEmotionStampList();
-  }
-
-  void setCalendarData(DiaryData diaryData) {
-    // String networkImage =
-    //     (diaryData.images.isNotEmpty) ? diaryData.images.first : '';
-
-    _state.value = state.value.copyWith(
-      isLoading: false,
-      diary: diaryData,
-      // wiseSayingList: diaryData.wiseSayings,
-      // networkImage: networkImage,
-    );
   }
 
   Future<void> getAllBookmarkData() async {
@@ -303,5 +307,11 @@ class DiaryController extends GetxController {
       },
       error: (message) {},
     );
+  }
+
+  void getRandomWorldViewTopic() {
+    int randomNumber = Random().nextInt(worldViewTopicList.length);
+
+    worldViewTopic.value = worldViewTopicList[randomNumber];
   }
 }

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:get/get.dart';
 
 class WriteDiaryLoadingViewModel extends GetxController {
@@ -24,7 +24,7 @@ class WriteDiaryLoadingViewModel extends GetxController {
         await diaryController.getDiaryDetail(data.id);
 
         Get.to(
-          () => DiaryDetailScreenTest(
+          () => DiaryDetailScreen(
             diaryId: data.id,
             date: date,
             diaryData: diary,
@@ -44,7 +44,7 @@ class WriteDiaryLoadingViewModel extends GetxController {
         await diaryController.getDiaryDetail(data.id);
 
         Get.to(
-          () => DiaryDetailScreenTest(
+          () => DiaryDetailScreen(
             diaryId: data.id,
             date: date,
             diaryData: diary,

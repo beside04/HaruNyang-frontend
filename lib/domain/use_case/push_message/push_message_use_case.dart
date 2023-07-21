@@ -53,7 +53,7 @@ class PushMessageUseCase {
 
   Future dailyAtTimeNotification(Time alarmTime) async {
     const notiTitle = '하루냥은 당신을 기다려요🐱';
-    const notiDesc = '오늘은 어떤 하루였나요? 오늘의 기분을 일기로 남기면, 하루냥이 따듯한 한 마디를 건네줄 거예요.';
+    const notiDesc = '오늘은 어떤 하루였나요? 오늘의 기분을 일기로 남기면, 하루냥이 따듯한 쪽지를 건네줄 거예요.';
 
     final result = GetPlatform.isAndroid
         ? await flutterLocalNotificationsPlugin

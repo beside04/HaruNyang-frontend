@@ -69,7 +69,7 @@ class RefreshInterceptor extends Interceptor {
         await Get.find<OnBoardingController>().getMyInformation();
         await Get.find<DiaryController>().getEmotionStampList();
 
-        Get.snackbar('알림', '로그인이 되었습니다. 다시 이용해주세요.');
+        // Get.snackbar('알림', '로그인이 되었습니다. 다시 이용해주세요.');
 
         Get.offAll(
           () => const HomeScreen(),
@@ -79,7 +79,7 @@ class RefreshInterceptor extends Interceptor {
         );
       } on DioError catch (e) {
         // 로그인 화면으로 다시 이동
-        Get.snackbar('알림', '세션이 만료되었습니다.');
+        // Get.snackbar('알림', '세션이 만료되었습니다.');
         await tokenUseCase.deleteAllToken();
         Get.offAll(
           () => const LoginScreen(),
@@ -92,7 +92,7 @@ class RefreshInterceptor extends Interceptor {
       // Your existing code here
     } else {
       // 로그인 화면으로 다시 이동
-      Get.snackbar('알림', '세션이 만료되었습니다.');
+      // Get.snackbar('알림', '세션이 만료되었습니다.');
       await tokenUseCase.deleteAllToken();
       Get.offAll(
         () => const LoginScreen(),

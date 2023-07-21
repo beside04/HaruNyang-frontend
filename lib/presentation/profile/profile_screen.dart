@@ -34,16 +34,11 @@ class ProfileScreen extends StatelessWidget {
     return DefaultLayout(
       screenName: 'Screen_Event_Main_Profile',
       child: Scaffold(
-        backgroundColor: mainViewController.isDarkMode.value
-            ? kGrayColor900
-            : kBeigeColor200,
         body: SafeArea(
           child: ListView(
             children: [
               Container(
-                color: mainViewController.isDarkMode.value
-                    ? kGrayColor950
-                    : kBeigeColor100,
+                color: Theme.of(context).colorScheme.backgroundColor,
                 child: Padding(
                   padding: kPrimarySidePadding,
                   child: Column(
@@ -217,10 +212,15 @@ class ProfileScreen extends StatelessWidget {
                     activeColor: Theme.of(context).colorScheme.primaryColor,
                     inactiveColor: kGrayColor750,
                     toggleSize: 28.0.w,
-                    value: !mainViewController.isDarkMode.value,
+                    value:
+                        mainViewController.themeMode.value == ThemeMode.light ||
+                            (mainViewController.themeMode.value ==
+                                    ThemeMode.system &&
+                                MediaQuery.of(context).platformBrightness ==
+                                    Brightness.light),
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
-                      mainViewController.toggleTheme();
+                      mainViewController.toggleThemeMode(context);
                     },
                     activeIcon: Center(
                       child: SvgPicture.asset(

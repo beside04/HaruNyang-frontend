@@ -44,7 +44,6 @@ import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_loading_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
-import 'package:frontend/presentation/diary/write_diary_view_model_test.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -56,6 +55,7 @@ import 'package:frontend/presentation/profile/notice/notice_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/push_message/push_message_view_model.dart';
+import 'package:frontend/presentation/splash/splash_view_model.dart';
 import 'package:get/get.dart';
 
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
@@ -209,15 +209,9 @@ void getDiaryBinding() {
   );
 }
 
-void getWriteDiaryBinding(EmoticonData emotion, DiaryData? diaryData) {
+void getWriteDiaryBinding(String emotion, DiaryData? diaryData) {
   Get.put(
     WriteDiaryViewModel(emotion: emotion, diaryData: diaryData),
-  );
-}
-
-void getWriteDiaryBindingTest(String emotion, DiaryData? diaryData) {
-  Get.put(
-    WriteDiaryViewModelTest(emotion: emotion, diaryData: diaryData),
   );
 }
 
@@ -259,6 +253,14 @@ HomeViewModel getHomeViewModelBinding() {
   return Get.put(
     HomeViewModel(
       getEmotionStampUseCase: getEmotionStampUseCase,
+      popUpUseCase: popUpUseCase,
+    ),
+  );
+}
+
+SplashViewModel getSplashViewModelBinding() {
+  return Get.put(
+    SplashViewModel(
       popUpUseCase: popUpUseCase,
     ),
   );

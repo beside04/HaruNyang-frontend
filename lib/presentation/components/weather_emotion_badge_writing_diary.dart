@@ -26,25 +26,26 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Container(
-          padding: EdgeInsets.all(6.w),
+          padding:
+              EdgeInsets.only(left: 8.w, right: 10.w, top: 6.w, bottom: 6.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            color: Theme.of(context).colorScheme.surface_01,
+            color: color,
           ),
           child: Row(
             children: [
               Image.asset(
                 weatherIcon,
-                width: 24.w,
-                height: 24.h,
+                width: 20.w,
+                height: 20.h,
               ),
-              const SizedBox(
-                width: 4,
+              SizedBox(
+                width: 4.w,
               ),
               Text(
                 weatherIconDesc,
                 style: kBody2Style.copyWith(
-                    color: Theme.of(context).colorScheme.textTitle),
+                    color: Theme.of(context).colorScheme.textCaption),
               ),
             ],
           ),
@@ -53,24 +54,25 @@ class WeatherEmotionBadgeWritingDiary extends StatelessWidget {
           width: 8.w,
         ),
         Container(
-          padding: EdgeInsets.all(6.w),
+          padding:
+              EdgeInsets.only(left: 8.w, right: 10.w, top: 6.w, bottom: 6.w),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
-            color: Theme.of(context).colorScheme.surface_01,
+            color: color,
           ),
           child: Row(
             children: [
               Image.asset(
                 emoticon,
-                width: 24.w,
-                height: 24.h,
+                width: 20.w,
+                height: 20.h,
               ),
-              const SizedBox(
-                width: 4,
+              SizedBox(
+                width: 4.w,
               ),
               Text(emoticonDesc,
                   style: kBody2Style.copyWith(
-                      color: Theme.of(context).colorScheme.textTitle)),
+                      color: Theme.of(context).colorScheme.textCaption)),
             ],
           ),
         ),

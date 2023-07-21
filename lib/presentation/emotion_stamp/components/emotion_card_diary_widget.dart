@@ -20,8 +20,16 @@ class EmotionCardDiaryWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface_01,
+        color: Theme.of(context).colorScheme.backgroundListColor,
         borderRadius: BorderRadius.circular(20.0.w),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 10,
+            offset: Offset(0, 5),
+          ),
+        ],
       ),
       child: Padding(
         padding: kPrimaryPadding,
@@ -47,22 +55,6 @@ class EmotionCardDiaryWidget extends StatelessWidget {
             SizedBox(
               height: 12.h,
             ),
-            // diaryData.images[0] == ""
-            //     ? Container()
-            //     : Column(
-            //         children: [
-            //           Center(
-            //             child: Image.network(
-            //               diaryData.images[0],
-            //               width: double.infinity,
-            //               fit: BoxFit.cover,
-            //             ),
-            //           ),
-            //           SizedBox(
-            //             height: 12.h,
-            //           ),
-            //         ],
-            //       ),
             Text(
               diaryData.diaryContent,
               style: kBody2Style.copyWith(

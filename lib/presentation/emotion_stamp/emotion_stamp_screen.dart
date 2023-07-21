@@ -84,20 +84,14 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   diaryController.toggleCalendarMode();
                 },
                 icon: diaryController.state.value.isCalendar
-                    ? mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/diary/dark_mode/list.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/diary/light_mode/list.svg",
-                          )
-                    : mainViewController.isDarkMode.value
-                        ? SvgPicture.asset(
-                            "lib/config/assets/images/diary/dark_mode/calendar.svg",
-                          )
-                        : SvgPicture.asset(
-                            "lib/config/assets/images/diary/light_mode/calendar.svg",
-                          ),
+                    ? SvgPicture.asset(
+                        "lib/config/assets/images/diary/dark_mode/list.svg",
+                        color: Theme.of(context).colorScheme.iconColor,
+                      )
+                    : SvgPicture.asset(
+                        "lib/config/assets/images/diary/dark_mode/calendar.svg",
+                        color: Theme.of(context).colorScheme.iconColor,
+                      ),
               ),
             )
           ],
@@ -156,9 +150,9 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
         body: SafeArea(
           child: Column(
             children: [
-              Obx(
-                () => Expanded(
-                  child: PageTransitionSwitcher(
+              Expanded(
+                child: Obx(
+                  () => PageTransitionSwitcher(
                     duration: const Duration(milliseconds: 300),
                     reverse: !diaryController.state.value.isCalendar,
                     transitionBuilder: (Widget child,

@@ -52,7 +52,7 @@ void toast({
         alignment: Alignment.center,
         children: [
           Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 80.h,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 90.h,
             child: Container(
               child: child,
             ),

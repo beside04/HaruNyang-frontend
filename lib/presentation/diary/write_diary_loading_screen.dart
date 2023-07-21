@@ -40,6 +40,8 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
   void initState() {
     super.initState();
 
+    diaryController.getRandomWorldViewTopic();
+
     if (widget.isEditScreen) {
       writeDiaryLoadingViewModelController.updateDiaryDetail(
           widget.diaryData, widget.date);
@@ -117,7 +119,7 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                   child: Column(
                     children: [
                       Text(
-                        "하루냥이 한 마디를",
+                        "하루냥이 쪽지를",
                         style: kHeader3Style.copyWith(
                           color: Theme.of(context).colorScheme.textTitle,
                         ),
@@ -154,6 +156,16 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                         "집사들이 슬퍼하면 고양이 숲에 비가 온답니다",
                         style: kBody1Style.copyWith(
                             color: Theme.of(context).colorScheme.textTitle),
+                      ),
+                      Obx(
+                        () => Text(
+                          textAlign: TextAlign.center,
+                          diaryController.worldViewTopic.value,
+                          maxLines: 2,
+                          style: kHeader3Style.copyWith(
+                            color: Theme.of(context).colorScheme.textTitle,
+                          ),
+                        ),
                       ),
                     ],
                   ),

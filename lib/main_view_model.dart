@@ -25,22 +25,18 @@ class MainViewModel extends GetxController {
     super.onInit();
   }
 
-  RxBool isDarkMode = true.obs;
+  Rx<ThemeMode> themeMode = ThemeMode.system.obs;
   final pushMessagePermission = false.obs;
   final marketingConsentAgree = false.obs;
   final pushMessageTime = DateTime(2023, 1, 1, 21, 00).obs;
 
-  void toggleTheme() {
-    if (isDarkMode.value) {
+  void toggleThemeMode(context) {
+    if (themeMode.value == ThemeMode.dark) {
       GlobalUtils.setAnalyticsCustomEvent('Click_ThemeMode_DarkToLight');
-      ThemeMode.light;
-      isDarkMode.value = false;
-      darkModeUseCase.setDarkMode(false.toString());
+      themeMode.value = ThemeMode.light;
     } else {
       GlobalUtils.setAnalyticsCustomEvent('Click_ThemeMode_LightToDark');
-      ThemeMode.dark;
-      isDarkMode.value = true;
-      darkModeUseCase.setDarkMode(true.toString());
+      themeMode.value = ThemeMode.dark;
     }
   }
 
@@ -72,11 +68,6 @@ class MainViewModel extends GetxController {
       marketingConsentAgree.value = true;
       pushMessagePermissionUseCase.setMarketingConsentAgree(true.toString());
     }
-  }
-
-  Future<void> getIsDarkMode() async {
-    isDarkMode.value = (GlobalUtils.toBoolean(
-        await darkModeUseCase.getIsDarkMode() ?? "true"));
   }
 
   Future<void> getIsPushMessage() async {

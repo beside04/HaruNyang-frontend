@@ -97,9 +97,8 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                   onTap: () async {
                     controller.setPushMessage();
 
-                    loginType == "KAKAO"
-                        ? await Get.find<LoginViewModel>().connectKakaoLogin()
-                        : await Get.find<LoginViewModel>().connectAppleLogin();
+                    await Get.find<LoginViewModel>().getLoginSuccessData(
+                        isSocialKakao: loginType == "KAKAO" ? true : false);
 
                     Get.offAll(
                       () => const HomeScreen(),

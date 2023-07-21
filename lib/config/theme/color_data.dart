@@ -21,11 +21,6 @@ const kSurfaceLightColor = Color(0xfff5f5f5);
 const kBackGroundDarkColor = Color(0xff1b1b1e);
 const kSurfaceDarkColor = Color(0xff27282e);
 
-//Beige Color
-const kBeigeColor100 = Color(0xfff6f5f4);
-const kBeigeColor200 = Color(0xffedebe8);
-const kBeigeColor300 = Color(0xffe3e1de);
-
 //Gray Scale Color
 const kBlackColor = Color(0xff111111);
 const kGrayColor950 = Color(0xff191919);

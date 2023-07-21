@@ -30,43 +30,7 @@ class LoginViewModel extends GetxController {
       return;
     }
 
-    final loginResult = await onLogin(isSocialKakao: true);
-
-    if (loginResult == 200) {
-      await loginDone();
-    } else if (loginResult == 404) {
-      Get.to(
-        () => const LoginTermsInformationScreen(isSocialKakao: true),
-      );
-    }
-
-    // //멤버 조회
-    // final checkMemberResult =
-    //     await kakaoLoginUseCase.checkMember(state.value.socialId);
-
-    // //조회 결과
-    // switch (checkMemberResult) {
-    //   case SocialIDCheck.existMember:
-    //     //로그인
-    //     final loginResult = await _onLogin(isSocialKakao: true);
-    //     if (loginResult) {
-    //       await _loginDone();
-    //     }
-    //     break;
-    //   case SocialIDCheck.notMember:
-    //     _state.value = state.value.copyWith(
-    //       isSocialKakao: true,
-    //     );
-    //
-    //     //멤버가 아니면 약관 동의 페이지 이동
-    //     Get.to(
-    //       () => const LoginTermsInformationScreen(isSocialKakao: true),
-    //     );
-    //     break;
-    //   case SocialIDCheck.error:
-    //     Get.snackbar('알림', '서버와의 연결이 실패했습니다.');
-    //     return;
-    // }
+    getLoginSuccessData(isSocialKakao: true);
   }
 
   Future<void> connectAppleLogin() async {
@@ -77,41 +41,19 @@ class LoginViewModel extends GetxController {
       return;
     }
 
-    final loginResult = await onLogin(isSocialKakao: false);
+    getLoginSuccessData(isSocialKakao: false);
+  }
+
+  Future<void> getLoginSuccessData({required bool isSocialKakao}) async {
+    final loginResult = await onLogin(isSocialKakao: isSocialKakao);
+
     if (loginResult == 200) {
       await loginDone();
     } else if (loginResult == 404) {
       Get.to(
-        () => const LoginTermsInformationScreen(isSocialKakao: false),
+        () => LoginTermsInformationScreen(isSocialKakao: isSocialKakao),
       );
     }
-    // //멤버 조회
-    // final checkMemberResult =
-    //     await appleLoginUseCase.checkMember(state.value.socialId);
-
-    //조회 결과
-    // switch (checkMemberResult) {
-    //   case SocialIDCheck.existMember:
-    //     //이미 가입한 회원이므로 로그인
-    //     final loginResult = await _onLogin(isSocialKakao: false);
-    //     if (loginResult) {
-    //       await _loginDone();
-    //     }
-    //     break;
-    //   case SocialIDCheck.notMember:
-    //     _state.value = state.value.copyWith(
-    //       isSocialKakao: false,
-    //     );
-    //
-    //     //멤버가 아니면 약관 동의 페이지 이동
-    //     Get.to(
-    //       () => const LoginTermsInformationScreen(isSocialKakao: false),
-    //     );
-    //     break;
-    //   case SocialIDCheck.error:
-    //     Get.snackbar('알림', '서버와의 연결이 실패했습니다.');
-    //     return;
-    // }
   }
 
   Future<bool> getSocialId({required isSocialKakao}) async {
@@ -143,23 +85,6 @@ class LoginViewModel extends GetxController {
         socialId: state.value.socialId,
       ),
     );
-
-    // if (!result) {
-    //   Get.snackbar('알림', '회원가입에 실패했습니다.');
-    // } else {
-    //   // //회원 가입 완료 되었으므로 로그인
-    //   final loginResult =
-    //       await onLogin(isSocialKakao: state.value.isSocialKakao);
-    //
-    //   if (loginResult == 404) {
-    //     //회원가입 완료 페이지로 이동
-    //     Get.offAll(
-    //       () => const SignInCompleteScreen(),
-    //     );
-    //   } else {
-    //     Get.snackbar('알림', '로그인에 실패했습니다.');
-    //   }
-    // }
   }
 
   Future<int> onLogin({required isSocialKakao}) async {
@@ -176,7 +101,7 @@ class LoginViewModel extends GetxController {
         result = int.parse(message);
 
         if (int.parse(message) == 404) {
-          Get.snackbar('알림', '회원가입 되지 않은 유저입니다.');
+          // Get.snackbar('알림', '회원가입 되지 않은 유저입니다.');
         } else {
           Get.snackbar('알림', '로그인이 실패했습니다.');
         }
@@ -204,15 +129,5 @@ class LoginViewModel extends GetxController {
     Get.find<DiaryController>().getAllBookmarkData();
 
     goHome();
-
-    // if (isOnBoardingDone) {
-    //   //홈으로 이동
-    //   goHome();
-    // } else {
-    //   //온보딩 화면으로 이동
-    //   Get.offAll(
-    //     () => const OnBoardingNicknameScreen(),
-    //   );
-    // }
   }
 }

@@ -6,7 +6,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/toast.dart';
-import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen_test.dart';
+import 'package:frontend/presentation/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/presentation/diary/diary_detail/empty_diary_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:intl/intl.dart';
@@ -88,7 +88,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                     date: day,
                                   ))
                               : Get.to(
-                                  () => DiaryDetailScreenTest(
+                                  () => DiaryDetailScreen(
                                     diaryId: events[0].id!,
                                     date: day,
                                     diaryData: events[0],

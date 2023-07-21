@@ -18,30 +18,30 @@ class WeatherEmotionBadge extends StatelessWidget {
     return Row(
       children: [
         Container(
-          padding: EdgeInsets.all(6.w),
+          padding: EdgeInsets.all(4.w),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: color,
           ),
           child: Image.asset(
             weatherIcon,
-            width: 16.w,
-            height: 16.h,
+            width: 20.w,
+            height: 20.h,
           ),
         ),
         SizedBox(
           width: 7.w,
         ),
         Container(
-          padding: EdgeInsets.all(6.w),
+          padding: EdgeInsets.all(4.w),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: color,
           ),
           child: Image.asset(
             emoticon,
-            width: 16.w,
-            height: 16.h,
+            width: 20.w,
+            height: 20.h,
           ),
         ),
       ],

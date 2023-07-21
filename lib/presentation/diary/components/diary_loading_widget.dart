@@ -86,8 +86,8 @@ class _DiaryLoadingWidgetState extends State<DiaryLoadingWidget>
         ),
         Padding(
           padding: EdgeInsets.only(bottom: 40.0.h),
-          child: SvgPicture.asset(
-            "lib/config/assets/images/character/character6.svg",
+          child: Image.asset(
+            "lib/config/assets/images/character/character6.png",
             width: 350.w,
             height: 350.h,
           ),

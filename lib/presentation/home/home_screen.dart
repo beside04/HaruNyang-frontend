@@ -49,14 +49,16 @@ class HomeScreen extends GetView<HomeViewModel> {
                         items: [
                           BottomNavigationBarItem(
                             icon: controller.selectedIndex.value == 0
-                                ? mainViewController.isDarkMode.value
+                                ? mainViewController.themeMode.value ==
+                                        ThemeMode.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/tap_emotion_stamp.svg",
                                       )
                                     : SvgPicture.asset(
                                         "lib/config/assets/images/home/light_mode/tap_emotion_stamp.svg",
                                       )
-                                : mainViewController.isDarkMode.value
+                                : mainViewController.themeMode.value ==
+                                        ThemeMode.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/emotion_stamp.svg",
                                       )
@@ -67,14 +69,16 @@ class HomeScreen extends GetView<HomeViewModel> {
                           ),
                           BottomNavigationBarItem(
                             icon: controller.selectedIndex.value == 1
-                                ? mainViewController.isDarkMode.value
+                                ? mainViewController.themeMode.value ==
+                                        ThemeMode.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/tap_pen.svg",
                                       )
                                     : SvgPicture.asset(
                                         "lib/config/assets/images/home/light_mode/tap_pen.svg",
                                       )
-                                : mainViewController.isDarkMode.value
+                                : mainViewController.themeMode.value ==
+                                        ThemeMode.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/pen.svg",
                                       )
@@ -85,14 +89,16 @@ class HomeScreen extends GetView<HomeViewModel> {
                           ),
                           BottomNavigationBarItem(
                             icon: controller.selectedIndex.value == 2
-                                ? mainViewController.isDarkMode.value
+                                ? mainViewController.themeMode.value ==
+                                        ThemeMode.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/tap_profile.svg",
                                       )
                                     : SvgPicture.asset(
                                         "lib/config/assets/images/home/light_mode/tap_profile.svg",
                                       )
-                                : mainViewController.isDarkMode.value
+                                : mainViewController.themeMode.value ==
+                                        ThemeMode.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/profile.svg",
                                       )

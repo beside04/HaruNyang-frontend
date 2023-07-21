@@ -67,7 +67,7 @@ class WeatherModal extends GetView<DiaryViewModel> {
               ),
               Obx(
                 () => BottomButton(
-                  title: '다음으로',
+                  title: '다음',
                   onTap: controller.selectedWeather.value.weather.isEmpty
                       ? null
                       : () {

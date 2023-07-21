@@ -35,7 +35,6 @@ void main() async {
   KakaoSdk.init(nativeAppKey: appkey);
   getMainBinding();
   globalControllerBinding();
-  await Get.find<MainViewModel>().getIsDarkMode();
   await Get.find<MainViewModel>().getIsPushMessage();
   await Get.find<MainViewModel>().getIsMarketingConsentAgree();
   await Get.find<MainViewModel>().getPushMessageTime();
@@ -68,40 +67,42 @@ class MyApp extends GetView<MainViewModel> {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {
-        return Obx(
-          () => AnnotatedRegion<SystemUiOverlayStyle>(
-            value: SystemUiOverlayStyle(
-              statusBarColor: Colors.transparent, // 투명색
-              systemNavigationBarColor:
-                  controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
-              systemNavigationBarIconBrightness: controller.isDarkMode.value
-                  ? Brightness.light
-                  : Brightness.dark,
-              systemNavigationBarDividerColor:
-                  controller.isDarkMode.value ? kGrayColor950 : kBeigeColor100,
-            ),
-            child: SmartlookRecordingWidget(
-              child: GetMaterialApp(
-                navigatorObservers: [
-                  FirebaseAnalyticsObserver(analytics: analytics),
-                ],
-                navigatorKey: navigatorKey,
-                title: 'Flutter Demo',
-                debugShowCheckedModeBanner: false,
-                initialRoute: '/',
-                getPages: [
-                  GetPage(name: '/', page: () => const SplashScreen()),
-                  GetPage(name: '/home', page: () => const HomeScreen()),
-                ],
-                themeMode: controller.isDarkMode.value
-                    ? ThemeMode.dark
-                    : ThemeMode.light,
-                theme: lightMode(context),
-                darkTheme: darkMode(context),
-                home: const SplashScreen(),
-              ),
-            ),
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            statusBarColor: Colors.transparent, // 투명색
+            systemNavigationBarColor:
+                controller.themeMode.value == ThemeMode.light
+                    ? kGrayColor950
+                    : kWhiteColor,
+            systemNavigationBarIconBrightness:
+                controller.themeMode.value == ThemeMode.light
+                    ? Brightness.light
+                    : Brightness.dark,
+            systemNavigationBarDividerColor:
+                controller.themeMode.value == ThemeMode.light
+                    ? kGrayColor950
+                    : kWhiteColor,
           ),
+          child: SmartlookRecordingWidget(
+              child: Obx(
+            () => GetMaterialApp(
+              navigatorObservers: [
+                FirebaseAnalyticsObserver(analytics: analytics),
+              ],
+              navigatorKey: navigatorKey,
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              initialRoute: '/',
+              getPages: [
+                GetPage(name: '/', page: () => const SplashScreen()),
+                GetPage(name: '/home', page: () => const HomeScreen()),
+              ],
+              themeMode: controller.themeMode.value,
+              theme: lightMode(context),
+              darkTheme: darkMode(context),
+              home: const SplashScreen(),
+            ),
+          )),
         );
       },
     );

@@ -56,7 +56,7 @@ class DiaryViewModel extends GetxController
     ),
   ].obs;
 
-  final Rx<EmoticonData> selectedEmotion =
+  Rx<EmoticonData> selectedEmotion =
       EmoticonData(emoticon: '', value: '', desc: '').obs;
 
   final RxList<WeatherData> weatherDataList = <WeatherData>[
@@ -91,7 +91,7 @@ class DiaryViewModel extends GetxController
       desc: '번개',
     ),
   ].obs;
-  final Rx<WeatherData> selectedWeather =
+  Rx<WeatherData> selectedWeather =
       WeatherData(weather: '', value: '', desc: '').obs;
 
   void popDownEmotionModal() {

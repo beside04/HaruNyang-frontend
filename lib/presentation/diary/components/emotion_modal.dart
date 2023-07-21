@@ -6,7 +6,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/diary/components/emoticon_icon_button.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
-import 'package:frontend/presentation/diary/write_diary_screen_test.dart';
+import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/utils.dart';
@@ -93,7 +93,7 @@ class EmotionModal extends GetView<DiaryViewModel> {
                               GlobalUtils.setAnalyticsCustomEvent(
                                   'Click_Diary_Next_EmotionToWrite');
                               Get.to(
-                                () => WriteDiaryScreenTest(
+                                () => WriteDiaryScreen(
                                   date: date,
                                   emotion:
                                       controller.selectedEmotion.value.value,
