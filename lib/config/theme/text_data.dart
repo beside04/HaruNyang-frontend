@@ -95,7 +95,14 @@ TextStyle kBody3Style = const TextStyle(
 //Caption1 Style
 TextStyle kCaption1Style = const TextStyle(
   fontFamily: pretendard,
-  fontSize: 10,
+  fontSize: 11,
   fontWeight: FontWeight.w600,
+  height: 1.2,
+);
+
+TextStyle kCaption2Style = const TextStyle(
+  fontFamily: pretendard,
+  fontSize: 10,
+  fontWeight: FontWeight.w500,
   height: 1.2,
 );

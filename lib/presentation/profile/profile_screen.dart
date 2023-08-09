@@ -19,6 +19,7 @@ import 'package:get/get.dart';
 
 import 'package:frontend/presentation/profile/terms/terms_screen.dart';
 import 'package:in_app_review/in_app_review.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/utils/utils.dart';
 import 'push_message/push_message_screen.dart';
@@ -221,6 +222,11 @@ class ProfileScreen extends StatelessWidget {
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
                       mainViewController.toggleThemeMode(context);
+                      print(MediaQuery.of(context).platformBrightness);
+                      print(MediaQuery.of(context).platformBrightness);
+                      print(MediaQuery.of(context).platformBrightness);
+                      print(MediaQuery.of(context).platformBrightness);
+                      print(MediaQuery.of(context).platformBrightness);
                     },
                     activeIcon: Center(
                       child: SvgPicture.asset(
@@ -287,6 +293,19 @@ class ProfileScreen extends StatelessWidget {
 
                   if (await inAppReview.isAvailable()) {
                     inAppReview.requestReview();
+                  }
+                },
+              ),
+              ProfileButton(
+                icon: SvgPicture.asset(
+                  "lib/config/assets/images/profile/navigate_next.svg",
+                ),
+                title: '하루냥 인스타 바로가기',
+                titleColor: Theme.of(context).colorScheme.textTitle,
+                onPressed: () async {
+                  if (!await launchUrl(
+                      Uri.parse("https://www.instagram.com/haru__nyang__/"))) {
+                    throw Exception('Could not launch');
                   }
                 },
               ),

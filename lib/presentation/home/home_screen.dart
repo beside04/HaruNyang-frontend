@@ -32,7 +32,7 @@ class HomeScreen extends GetView<HomeViewModel> {
                   data: MediaQueryData(padding: EdgeInsets.only(bottom: 0.h)),
                   child: Container(
                     padding: GetPlatform.isAndroid
-                        ? EdgeInsets.only(bottom: 10.h)
+                        ? EdgeInsets.only(bottom: 0.h)
                         : EdgeInsets.only(bottom: 30.h),
                     decoration: BoxDecoration(
                       color: Colors.transparent,
@@ -49,16 +49,16 @@ class HomeScreen extends GetView<HomeViewModel> {
                         items: [
                           BottomNavigationBarItem(
                             icon: controller.selectedIndex.value == 0
-                                ? mainViewController.themeMode.value ==
-                                        ThemeMode.dark
+                                ? Theme.of(context).colorScheme.brightness ==
+                                        Brightness.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/tap_emotion_stamp.svg",
                                       )
                                     : SvgPicture.asset(
                                         "lib/config/assets/images/home/light_mode/tap_emotion_stamp.svg",
                                       )
-                                : mainViewController.themeMode.value ==
-                                        ThemeMode.dark
+                                : Theme.of(context).colorScheme.brightness ==
+                                        Brightness.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/emotion_stamp.svg",
                                       )
@@ -69,16 +69,16 @@ class HomeScreen extends GetView<HomeViewModel> {
                           ),
                           BottomNavigationBarItem(
                             icon: controller.selectedIndex.value == 1
-                                ? mainViewController.themeMode.value ==
-                                        ThemeMode.dark
+                                ? Theme.of(context).colorScheme.brightness ==
+                                        Brightness.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/tap_pen.svg",
                                       )
                                     : SvgPicture.asset(
                                         "lib/config/assets/images/home/light_mode/tap_pen.svg",
                                       )
-                                : mainViewController.themeMode.value ==
-                                        ThemeMode.dark
+                                : Theme.of(context).colorScheme.brightness ==
+                                        Brightness.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/pen.svg",
                                       )
@@ -89,16 +89,16 @@ class HomeScreen extends GetView<HomeViewModel> {
                           ),
                           BottomNavigationBarItem(
                             icon: controller.selectedIndex.value == 2
-                                ? mainViewController.themeMode.value ==
-                                        ThemeMode.dark
+                                ? Theme.of(context).colorScheme.brightness ==
+                                        Brightness.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/tap_profile.svg",
                                       )
                                     : SvgPicture.asset(
                                         "lib/config/assets/images/home/light_mode/tap_profile.svg",
                                       )
-                                : mainViewController.themeMode.value ==
-                                        ThemeMode.dark
+                                : Theme.of(context).colorScheme.brightness ==
+                                        Brightness.dark
                                     ? SvgPicture.asset(
                                         "lib/config/assets/images/home/dark_mode/profile.svg",
                                       )
@@ -117,7 +117,7 @@ class HomeScreen extends GetView<HomeViewModel> {
                             // ignore: use_build_context_synchronously
                             toast(
                               context: context,
-                              text: '일기는 하루에 한번만 작성 할 수 있어요.',
+                              text: '오늘 날짜에 이미 일기를 작성했어요',
                               isCheckIcon: false,
                             );
                           }

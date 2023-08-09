@@ -6,6 +6,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/login/components/term_check_box.dart';
@@ -85,23 +86,42 @@ class LoginTermsInformationScreen
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Obx(
-                          () => SizedBox(
-                            width: 20.w,
-                            height: 20.h,
-                            child: Checkbox(
-                              activeColor: kOrange300Color,
-                              value: controller.isTermsAgree.value &&
-                                  controller.isPrivacyPolicyAgree.value &&
-                                  controller.isMarketingConsentAgree.value,
-                              onChanged: (value) {
-                                if (value != null) {
-                                  controller.toggleAllCheck();
-                                }
-                              },
-                            ),
-                          ),
-                        ),
+                        Theme.of(context).colorScheme.brightness ==
+                                Brightness.dark
+                            ? Obx(
+                                () => SizedBox(
+                                  width: 24.w,
+                                  height: 24.h,
+                                  child: controller.isTermsAgree.value &&
+                                          controller
+                                              .isPrivacyPolicyAgree.value &&
+                                          controller
+                                              .isMarketingConsentAgree.value
+                                      ? Image.asset(
+                                          "lib/config/assets/images/check/round_check_primary.png",
+                                        )
+                                      : Image.asset(
+                                          "lib/config/assets/images/check/round_check_dark_mode.png",
+                                        ),
+                                ),
+                              )
+                            : Obx(
+                                () => SizedBox(
+                                  width: 24.w,
+                                  height: 24.h,
+                                  child: controller.isTermsAgree.value &&
+                                          controller
+                                              .isPrivacyPolicyAgree.value &&
+                                          controller
+                                              .isMarketingConsentAgree.value
+                                      ? Image.asset(
+                                          "lib/config/assets/images/check/round_check_primary.png",
+                                        )
+                                      : Image.asset(
+                                          "lib/config/assets/images/check/round_check_light_mode.png",
+                                        ),
+                                ),
+                              ),
                         Padding(
                           padding: EdgeInsets.all(8.w),
                           child: Text(

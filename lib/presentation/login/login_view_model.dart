@@ -1,13 +1,26 @@
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
+import 'package:frontend/main.dart';
+import 'package:frontend/presentation/components/dialog_button.dart';
+import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
+import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/login/login_state.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_screen.dart';
 import 'package:frontend/presentation/sign_in_complete/sign_in_complete_screen.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
+import 'package:store_redirect/store_redirect.dart';
 
 class LoginViewModel extends GetxController {
   final KakaoLoginUseCase kakaoLoginUseCase;
@@ -17,6 +30,12 @@ class LoginViewModel extends GetxController {
     required this.kakaoLoginUseCase,
     required this.appleLoginUseCase,
   });
+
+  RxInt selectedIndex = 0.obs;
+  RxBool isOpenPopup = false.obs;
+
+  String? lastPopupDate;
+  String? lastBirthDayPopupDate;
 
   final Rx<LoginState> _state = LoginState().obs;
 

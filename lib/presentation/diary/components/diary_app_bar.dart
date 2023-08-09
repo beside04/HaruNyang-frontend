@@ -26,7 +26,7 @@ class DiaryAppBar extends GetView<DiaryViewModel>
         elevation: 0,
         centerTitle: true,
         backgroundColor:
-            Get.find<MainViewModel>().themeMode.value == ThemeMode.dark
+            Theme.of(context).colorScheme.brightness == Brightness.dark
                 ? kGrayColor950
                 : const Color(0xffffac60),
         title: Text(

@@ -98,7 +98,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  height: 24.h,
+                                  height: 32.h,
                                 ),
                                 Text(
                                   "안녕하세요, 저는 하루냥이에요",
@@ -147,7 +147,7 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                   () => controller.isOnKeyboard.value
                                       ? Container()
                                       : SizedBox(
-                                          height: 118.h,
+                                          height: 124.h,
                                         ),
                                 ),
                                 Center(

@@ -95,6 +95,7 @@ final RefreshInterceptor interceptor = RefreshInterceptor(
 );
 final onBoardingApi = OnBoardingApi(
   dio: getDio(),
+  tokenRepository: tokenRepositoryImpl,
 );
 final diaryApi = DiaryApi(
   dio: getDio(),

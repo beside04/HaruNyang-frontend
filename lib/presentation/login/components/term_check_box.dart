@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:get/get.dart';
 
@@ -30,13 +31,30 @@ class TermCheckBox extends GetView<LoginTermsInformationViewModel> {
               SizedBox(
                 width: 20.w,
                 height: 20.h,
-                child: Checkbox(
-                  activeColor: kOrange300Color,
-                  value: termValue,
-                  onChanged: (value) {
-                    if (value != null) onTap();
-                  },
-                ),
+                child:
+                    Theme.of(context).colorScheme.brightness == Brightness.dark
+                        ? SizedBox(
+                            width: 24.w,
+                            height: 24.h,
+                            child: termValue
+                                ? Image.asset(
+                                    "lib/config/assets/images/check/primary_color_check.png",
+                                  )
+                                : Image.asset(
+                                    "lib/config/assets/images/check/dark_color_check.png",
+                                  ),
+                          )
+                        : SizedBox(
+                            width: 24.w,
+                            height: 24.h,
+                            child: termValue
+                                ? Image.asset(
+                                    "lib/config/assets/images/check/primary_color_check.png",
+                                  )
+                                : Image.asset(
+                                    "lib/config/assets/images/check/light_color_check.png",
+                                  ),
+                          ),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0.w),

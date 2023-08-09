@@ -65,154 +65,203 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
 
     widget.isNewDiary
         // ignore: use_build_context_synchronously
-        ? await showModalBottomSheet(
+        ? await showDialog(
+            barrierDismissible: true,
             context: context,
-            isScrollControlled: true,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                top: Radius.circular(20.0),
-              ),
-            ),
-            builder: (BuildContext context) {
-              return ClipRRect(
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+            builder: (ctx) {
+              return AlertDialog(
+                elevation: 0,
+                titlePadding: EdgeInsets.zero,
+                iconPadding: EdgeInsets.zero,
+                contentPadding: EdgeInsets.zero,
+                actionsPadding: EdgeInsets.zero,
+                insetPadding: EdgeInsets.symmetric(
+                  horizontal: 20.w,
                 ),
-                child: Container(
-                  padding: const EdgeInsets.all(20),
-                  color: Theme.of(context).colorScheme.surface_01,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                title: ClipRRect(
+                  borderRadius: BorderRadius.circular(20.0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          IconButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            icon: SvgPicture.asset(
-                              "lib/config/assets/images/profile/close.svg",
-                            ),
-                          ),
-                        ],
-                      ),
-                      Image.asset(
-                        "lib/config/assets/images/character/character5.png",
-                        height: 272.h,
-                      ),
-                      CarouselSlider.builder(
-                        options: CarouselOptions(
-                          enableInfiniteScroll: false,
-                          viewportFraction: 1.0,
-                          onPageChanged: (index, reason) {
-                            _counter.value = index;
-                          },
-                        ),
-                        itemCount: diaryController
-                            .diaryDetailData.value!.comments.length,
-                        itemBuilder:
-                            (BuildContext context, int index, int realIndex) {
-                          return ListView(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                      SizedBox(
+                        height: 584.h,
+                        child: Container(
+                          color: Theme.of(context).colorScheme.backgroundModal,
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Column(
                                   children: [
-                                    diaryController.diaryDetailData.value!
-                                                .comments[index].author ==
-                                            "harunyang"
-                                        ? Text(
-                                            '하루냥',
-                                            style: kHeader5Style.copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .textTitle),
-                                          )
-                                        : Text(
-                                            diaryController.diaryDetailData
-                                                .value!.comments[index].author,
-                                            style: kHeader5Style.copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .textTitle),
-                                          ),
-                                    Obx(
-                                      () => diaryController.diaryDetailData
-                                              .value!.comments[index].isFavorite
-                                          ? GestureDetector(
-                                              onTap: () {
-                                                diaryController
-                                                    .deleteBookmarkByBookmarkId(
-                                                  diaryController
-                                                      .diaryDetailData
-                                                      .value!
-                                                      .comments[index]
-                                                      .id!,
-                                                  index,
-                                                );
-                                              },
-                                              child: SvgPicture.asset(
-                                                "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
-                                              ),
-                                            )
-                                          : GestureDetector(
-                                              onTap: () {
-                                                diaryController.saveBookmark(
-                                                  diaryController
-                                                      .diaryDetailData
-                                                      .value!
-                                                      .comments[index]
-                                                      .id!,
-                                                  index,
-                                                );
-                                              },
-                                              child: SvgPicture.asset(
-                                                "lib/config/assets/images/diary/write_diary/bookmark.svg",
-                                              ),
+                                    Container(
+                                      color: kModalColor,
+                                      child: Image.asset(
+                                        "lib/config/assets/images/character/character5.png",
+                                        height: 220.h,
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ),
+                                    ),
+                                    Container(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .backgroundModal,
+                                      child: CarouselSlider.builder(
+                                        options: CarouselOptions(
+                                          enableInfiniteScroll: false,
+                                          viewportFraction: 1.0,
+                                          onPageChanged: (index, reason) {
+                                            _counter.value = index;
+                                          },
+                                        ),
+                                        itemCount: diaryController
+                                            .diaryDetailData
+                                            .value!
+                                            .comments
+                                            .length,
+                                        itemBuilder: (BuildContext context,
+                                            int index, int realIndex) {
+                                          return Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 24.0.w,
+                                                right: 24.0.w,
+                                                top: 24.0.h),
+                                            child: ListView(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    diaryController
+                                                                .diaryDetailData
+                                                                .value!
+                                                                .comments[index]
+                                                                .author ==
+                                                            "harunyang"
+                                                        ? Text(
+                                                            '하루냥',
+                                                            style: kHeader5Style.copyWith(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .textSubtitle),
+                                                          )
+                                                        : Text(
+                                                            diaryController
+                                                                .diaryDetailData
+                                                                .value!
+                                                                .comments[index]
+                                                                .author,
+                                                            style: kHeader5Style.copyWith(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .textSubtitle),
+                                                          ),
+                                                    Obx(
+                                                      () => diaryController
+                                                              .diaryDetailData
+                                                              .value!
+                                                              .comments[index]
+                                                              .isFavorite
+                                                          ? GestureDetector(
+                                                              onTap: () {
+                                                                diaryController
+                                                                    .deleteBookmarkByBookmarkId(
+                                                                  diaryController
+                                                                      .diaryDetailData
+                                                                      .value!
+                                                                      .comments[
+                                                                          index]
+                                                                      .id!,
+                                                                  index,
+                                                                );
+                                                              },
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
+                                                              ),
+                                                            )
+                                                          : GestureDetector(
+                                                              onTap: () {
+                                                                diaryController
+                                                                    .saveBookmark(
+                                                                  diaryController
+                                                                      .diaryDetailData
+                                                                      .value!
+                                                                      .comments[
+                                                                          index]
+                                                                      .id!,
+                                                                  index,
+                                                                );
+                                                              },
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                "lib/config/assets/images/diary/write_diary/bookmark.svg",
+                                                              ),
+                                                            ),
+                                                    )
+                                                  ],
+                                                ),
+                                                SizedBox(
+                                                  height: 10.0.h,
+                                                ),
+                                                SizedBox(
+                                                    width:
+                                                        MediaQuery.of(context)
+                                                            .size
+                                                            .width,
+                                                    child: Text(
+                                                      diaryController
+                                                          .diaryDetailData
+                                                          .value!
+                                                          .comments[index]
+                                                          .message,
+                                                      textAlign:
+                                                          TextAlign.start,
+                                                      style:
+                                                          kBody1Style.copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .textBody),
+                                                    )),
+                                              ],
                                             ),
-                                    )
+                                          );
+                                        },
+                                      ),
+                                    ),
                                   ],
                                 ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 8.0),
-                                child: SizedBox(
-                                    width: MediaQuery.of(context).size.width,
-                                    child: Text(
-                                      diaryController.diaryDetailData.value!
-                                          .comments[index].message,
-                                      textAlign: TextAlign.start,
-                                      style: kBody1Style.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .textTitle),
-                                    )),
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                        child: ValueListenableBuilder<int>(
-                          valueListenable: _counter,
-                          builder: (BuildContext context, int index,
-                                  Widget? child) =>
-                              AnimatedSmoothIndicator(
-                            activeIndex: index,
-                            axisDirection: Axis.horizontal,
-                            count: diaryController
-                                .diaryDetailData.value!.comments.length,
-                            effect: ScrollingDotsEffect(
-                              dotColor: kGrayColor400,
-                              activeDotColor: kOrange300Color,
-                              dotWidth: 6.h,
-                              dotHeight: 6.h,
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                      top: 8.0.h, bottom: 16.0.h),
+                                  child: ValueListenableBuilder<int>(
+                                    valueListenable: _counter,
+                                    builder: (BuildContext context, int index,
+                                            Widget? child) =>
+                                        AnimatedSmoothIndicator(
+                                      activeIndex: index,
+                                      axisDirection: Axis.horizontal,
+                                      count: diaryController.diaryDetailData
+                                          .value!.comments.length,
+                                      effect: ScrollingDotsEffect(
+                                        dotColor: kGrayColor400,
+                                        activeDotColor: kOrange300Color,
+                                        dotWidth: 6.h,
+                                        dotHeight: 6.h,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -220,6 +269,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                     ],
                   ),
                 ),
+                content: null,
+                actions: <Widget>[],
               );
             },
           )
@@ -258,162 +309,212 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
               //   ),
               // ],
               onPressed: () {
-                showModalBottomSheet(
+                showDialog(
+                  barrierDismissible: true,
                   context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(20.0),
-                    ),
-                  ),
-                  builder: (BuildContext context) {
-                    return ClipRRect(
-                      borderRadius: const BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+                  builder: (ctx) {
+                    return AlertDialog(
+                      elevation: 0,
+                      titlePadding: EdgeInsets.zero,
+                      iconPadding: EdgeInsets.zero,
+                      contentPadding: EdgeInsets.zero,
+                      actionsPadding: EdgeInsets.zero,
+                      insetPadding: EdgeInsets.symmetric(
+                        horizontal: 20.w,
                       ),
-                      child: Container(
-                        padding: const EdgeInsets.all(20),
-                        color: Theme.of(context).colorScheme.surface_01,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0),
+                      ),
+                      title: ClipRRect(
+                        borderRadius: BorderRadius.circular(20.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: SvgPicture.asset(
-                                    "lib/config/assets/images/profile/close.svg",
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Image.asset(
-                              "lib/config/assets/images/character/character5.png",
-                              height: 272.h,
-                            ),
-                            CarouselSlider.builder(
-                              options: CarouselOptions(
-                                enableInfiniteScroll: false,
-                                viewportFraction: 1.0,
-                                onPageChanged: (index, reason) {
-                                  _counter.value = index;
-                                },
-                              ),
-                              itemCount: diaryController
-                                  .diaryDetailData.value!.comments.length,
-                              itemBuilder: (BuildContext context, int index,
-                                  int realIndex) {
-                                return ListView(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
+                            SizedBox(
+                              height: 584.h,
+                              child: Container(
+                                color: Theme.of(context)
+                                    .colorScheme
+                                    .backgroundModal,
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Column(
                                         children: [
-                                          diaryController.diaryDetailData.value!
-                                                      .comments[index].author ==
-                                                  "harunyang"
-                                              ? Text(
-                                                  '하루냥',
-                                                  style: kHeader5Style.copyWith(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .textTitle),
-                                                )
-                                              : Text(
-                                                  diaryController
-                                                      .diaryDetailData
-                                                      .value!
-                                                      .comments[index]
-                                                      .author,
-                                                  style: kHeader5Style.copyWith(
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .textTitle),
-                                                ),
-                                          Obx(
-                                            () => diaryController
-                                                    .diaryDetailData
-                                                    .value!
-                                                    .comments[index]
-                                                    .isFavorite
-                                                ? GestureDetector(
-                                                    onTap: () {
-                                                      diaryController
-                                                          .deleteBookmarkByBookmarkId(
-                                                        diaryController
-                                                            .diaryDetailData
-                                                            .value!
-                                                            .comments[index]
-                                                            .id!,
-                                                        index,
-                                                      );
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
-                                                    ),
-                                                  )
-                                                : GestureDetector(
-                                                    onTap: () {
-                                                      diaryController
-                                                          .saveBookmark(
-                                                        diaryController
-                                                            .diaryDetailData
-                                                            .value!
-                                                            .comments[index]
-                                                            .id!,
-                                                        index,
-                                                      );
-                                                    },
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/write_diary/bookmark.svg",
-                                                    ),
+                                          Container(
+                                            color: kModalColor,
+                                            child: Image.asset(
+                                              "lib/config/assets/images/character/character5.png",
+                                              height: 220.h,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                            ),
+                                          ),
+                                          Container(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .backgroundModal,
+                                            child: CarouselSlider.builder(
+                                              options: CarouselOptions(
+                                                enableInfiniteScroll: false,
+                                                viewportFraction: 1.0,
+                                                onPageChanged: (index, reason) {
+                                                  _counter.value = index;
+                                                },
+                                              ),
+                                              itemCount: diaryController
+                                                  .diaryDetailData
+                                                  .value!
+                                                  .comments
+                                                  .length,
+                                              itemBuilder:
+                                                  (BuildContext context,
+                                                      int index,
+                                                      int realIndex) {
+                                                return Padding(
+                                                  padding: EdgeInsets.only(
+                                                      left: 24.0.w,
+                                                      right: 24.0.w,
+                                                      top: 24.0.h),
+                                                  child: ListView(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          diaryController
+                                                                      .diaryDetailData
+                                                                      .value!
+                                                                      .comments[
+                                                                          index]
+                                                                      .author ==
+                                                                  "harunyang"
+                                                              ? Text(
+                                                                  '하루냥',
+                                                                  style: kHeader5Style.copyWith(
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .colorScheme
+                                                                          .textSubtitle),
+                                                                )
+                                                              : Text(
+                                                                  diaryController
+                                                                      .diaryDetailData
+                                                                      .value!
+                                                                      .comments[
+                                                                          index]
+                                                                      .author,
+                                                                  style: kHeader5Style.copyWith(
+                                                                      color: Theme.of(
+                                                                              context)
+                                                                          .colorScheme
+                                                                          .textSubtitle),
+                                                                ),
+                                                          Obx(
+                                                            () => diaryController
+                                                                    .diaryDetailData
+                                                                    .value!
+                                                                    .comments[
+                                                                        index]
+                                                                    .isFavorite
+                                                                ? GestureDetector(
+                                                                    onTap: () {
+                                                                      diaryController
+                                                                          .deleteBookmarkByBookmarkId(
+                                                                        diaryController
+                                                                            .diaryDetailData
+                                                                            .value!
+                                                                            .comments[index]
+                                                                            .id!,
+                                                                        index,
+                                                                      );
+                                                                    },
+                                                                    child: SvgPicture
+                                                                        .asset(
+                                                                      "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
+                                                                    ),
+                                                                  )
+                                                                : GestureDetector(
+                                                                    onTap: () {
+                                                                      diaryController
+                                                                          .saveBookmark(
+                                                                        diaryController
+                                                                            .diaryDetailData
+                                                                            .value!
+                                                                            .comments[index]
+                                                                            .id!,
+                                                                        index,
+                                                                      );
+                                                                    },
+                                                                    child: SvgPicture
+                                                                        .asset(
+                                                                      "lib/config/assets/images/diary/write_diary/bookmark.svg",
+                                                                    ),
+                                                                  ),
+                                                          )
+                                                        ],
+                                                      ),
+                                                      SizedBox(
+                                                        height: 10.0.h,
+                                                      ),
+                                                      SizedBox(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          child: Text(
+                                                            diaryController
+                                                                .diaryDetailData
+                                                                .value!
+                                                                .comments[index]
+                                                                .message,
+                                                            textAlign:
+                                                                TextAlign.start,
+                                                            style: kBody1Style.copyWith(
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .colorScheme
+                                                                    .textBody),
+                                                          )),
+                                                    ],
                                                   ),
-                                          )
+                                                );
+                                              },
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8.0),
-                                      child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width,
-                                          child: Text(
-                                            diaryController.diaryDetailData
-                                                .value!.comments[index].message,
-                                            textAlign: TextAlign.start,
-                                            style: kBody1Style.copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .textTitle),
-                                          )),
-                                    ),
-                                  ],
-                                );
-                              },
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0.h),
-                              child: ValueListenableBuilder<int>(
-                                valueListenable: _counter,
-                                builder: (BuildContext context, int index,
-                                        Widget? child) =>
-                                    AnimatedSmoothIndicator(
-                                  activeIndex: index,
-                                  axisDirection: Axis.horizontal,
-                                  count: diaryController
-                                      .diaryDetailData.value!.comments.length,
-                                  effect: ScrollingDotsEffect(
-                                    dotColor: kGrayColor400,
-                                    activeDotColor: kOrange300Color,
-                                    dotWidth: 6.h,
-                                    dotHeight: 6.h,
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 8.0.h, bottom: 16.0.h),
+                                        child: ValueListenableBuilder<int>(
+                                          valueListenable: _counter,
+                                          builder: (BuildContext context,
+                                                  int index, Widget? child) =>
+                                              AnimatedSmoothIndicator(
+                                            activeIndex: index,
+                                            axisDirection: Axis.horizontal,
+                                            count: diaryController
+                                                .diaryDetailData
+                                                .value!
+                                                .comments
+                                                .length,
+                                            effect: ScrollingDotsEffect(
+                                              dotColor: kGrayColor400,
+                                              activeDotColor: kOrange300Color,
+                                              dotWidth: 6.h,
+                                              dotHeight: 6.h,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
@@ -421,6 +522,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                           ],
                         ),
                       ),
+                      content: null,
+                      actions: <Widget>[],
                     );
                   },
                 );
@@ -672,7 +775,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                         ? Container()
                         : Center(
                             child: Padding(
-                              padding: const EdgeInsets.only(bottom: 12.0),
+                              padding: EdgeInsets.only(
+                                  bottom: 12.0, right: 20.w, left: 20.w),
                               child: Image.network(
                                 "${diaryController.diaryDetailData.value?.image}",
                                 width: double.infinity,

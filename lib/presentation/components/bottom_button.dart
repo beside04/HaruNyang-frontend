@@ -9,7 +9,7 @@ class BottomButton extends StatelessWidget {
     super.key,
     required this.title,
     required this.onTap,
-    this.bottomPadding = 37,
+    this.bottomPadding = 47,
   });
 
   final String title;
@@ -34,7 +34,7 @@ class BottomButton extends StatelessWidget {
               shadowColor: Colors.transparent,
               disabledBackgroundColor:
                   Theme.of(context).colorScheme.disabledColor,
-              backgroundColor: Theme.of(context).primaryColor,
+              backgroundColor: Theme.of(context).colorScheme.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(60),
               ),

@@ -64,7 +64,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 24.h,
+                              height: 32.h,
                             ),
                             Text(
                               "어떤 일을",
@@ -92,6 +92,7 @@ class OnBoardingJobScreen extends GetView<OnBoardingJobViewModel> {
                                   SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 childAspectRatio: 0.8.h,
+                                mainAxisSpacing: 20.0.h,
                               ),
                               itemBuilder: (BuildContext context, int i) {
                                 return Obx(() => JobButton(

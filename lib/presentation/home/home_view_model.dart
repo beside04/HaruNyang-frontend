@@ -33,7 +33,7 @@ class HomeViewModel extends GetxController {
 
   RxInt selectedIndex = 0.obs;
   RxBool isOpenPopup = false.obs;
-  RxBool isBirthDayPopup = false.obs;
+  RxBool isNotBirthDayPopup = true.obs;
 
   String? lastPopupDate;
   String? lastBirthDayPopupDate;
@@ -48,19 +48,11 @@ class HomeViewModel extends GetxController {
           ? selectedIndex.value = 0
           : selectedIndex.value = Get.arguments['index'];
 
-      print(Get.find<OnBoardingController>().state.value.age);
-      print(Get.find<OnBoardingController>().state.value.age);
-      print(Get.find<OnBoardingController>().state.value.age);
-      print(Get.find<OnBoardingController>().state.value.age);
-
-      // 생일 페이지 거쳐가기
       Get.find<OnBoardingController>().state.value.age == '' ||
               Get.find<OnBoardingController>().state.value.age == null
           ? null
           : await goToBirthPage();
     });
-
-    getLastBirthDayPopUpDate();
   }
 
   getLastBirthDayPopUpDate() async {
@@ -71,7 +63,9 @@ class HomeViewModel extends GetxController {
       int timeDifference =
           now.difference(DateTime.parse(lastBirthDayPopupDate!)).inDays;
 
-      if (timeDifference < 2) isBirthDayPopup.value = true;
+      if (timeDifference < 1) {
+        isNotBirthDayPopup.value = false;
+      }
     }
   }
 
@@ -105,17 +99,11 @@ class HomeViewModel extends GetxController {
     final birthday =
         dateFormat.parse('${Get.find<OnBoardingController>().state.value.age}');
 
-    print(birthday);
-    print(birthday);
-    print(birthday);
-    print(birthday);
-    print(birthday);
-    print(birthday);
-    print(birthday);
-
     final nowBirthday = DateTime(now.year, birthday.month, birthday.day);
 
-    if (!isBirthDayPopup.value &&
+    await getLastBirthDayPopUpDate();
+
+    if (isNotBirthDayPopup.value &&
         dateFormat.format(nowBirthday) == dateFormat.format(now)) {
       await Get.to(
         () => BirthDayScreen(

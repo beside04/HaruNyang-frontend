@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -106,7 +107,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                 return DialogComponent(
                   title: "뒤로 가시겠어요?",
                   content: Text(
-                    "작성 중인 모든 내용이 삭제되요.",
+                    "작성 중인 모든 내용이 삭제되어요.",
                     style: kHeader6Style.copyWith(
                         color: Theme.of(context).colorScheme.textSubtitle),
                   ),
@@ -183,6 +184,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                   );
                                 },
                               );
+
                               try {
                                 await controller.uploadImage();
                                 // ignore: use_build_context_synchronously
@@ -200,17 +202,23 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                             Get.to(
                               () => WriteDiaryLoadingScreen(
                                 diaryData: DiaryData(
-                                  id: diaryData?.id,
-                                  diaryContent: controller
-                                      .diaryEditingController.value.text,
-                                  feeling: emotion,
-                                  feelingScore: 1,
-                                  weather: weather,
-                                  targetDate:
-                                      DateFormat('yyyy-MM-dd').format(date),
-                                  topic: controller.topic.value.value,
-                                  image: controller.firebaseImageUrl.value,
-                                ),
+                                    id: diaryData?.id,
+                                    diaryContent: controller
+                                        .diaryEditingController.value.text,
+                                    feeling: emotion,
+                                    feelingScore: 1,
+                                    weather: weather,
+                                    targetDate:
+                                        DateFormat('yyyy-MM-dd').format(date),
+                                    topic: controller.topic.value.value,
+                                    image: controller.firebaseImageUrl.value ==
+                                            ""
+                                        ? Get.find<DiaryController>()
+                                                .diaryDetailData
+                                                .value
+                                                ?.image ??
+                                            ""
+                                        : controller.firebaseImageUrl.value),
                                 date: date,
                                 isEditScreen: isEditScreen,
                               ),
@@ -290,7 +298,7 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                         return DialogComponent(
                           title: "뒤로 가시겠어요?",
                           content: Text(
-                            "작성 중인 모든 내용이 삭제되요.",
+                            "작성 중인 모든 내용이 삭제되어요.",
                             style: kHeader6Style.copyWith(
                                 color:
                                     Theme.of(context).colorScheme.textSubtitle),

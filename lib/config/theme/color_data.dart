@@ -10,6 +10,8 @@ const kSecondaryColor = Color(0xffe9eaed);
 const kRed200Color = Color(0xfff16465);
 const kRed300Color = Color(0xfff15a5b);
 
+const kModalColor = Color(0xfffff3d4);
+
 const kBlue200Color = Color(0xff597dff);
 const kBlue300Color = Color(0xff5973ff);
 

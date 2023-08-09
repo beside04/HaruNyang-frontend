@@ -1,11 +1,15 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
+import 'package:frontend/data/data_source/global_service.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
+import 'package:get/get.dart' hide Response;
 
 class BookmarkApi {
   final Dio dio;
-  final String _baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+
+  final globalService = Get.find<GlobalService>();
+  String get _baseUrl => globalService.usingServer.value;
 
   BookmarkApi({
     required this.dio,

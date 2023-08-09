@@ -62,7 +62,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                               height: 24.h,
                             ),
                             Text(
-                              "하루냥의",
+                              "이제 하루냥의 하루를 함께",
                               style: kHeader2Style.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.textTitle),
@@ -71,7 +71,7 @@ class OnBoardingFinishScreen extends GetView<OnBoardingFinishViewModel> {
                               height: 4.h,
                             ),
                             Text(
-                              "집사 등록이 완료되었어요!",
+                              "기록해보아요!",
                               style: kHeader2Style.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.textTitle),

@@ -100,7 +100,7 @@ class BirthDayScreen extends StatelessWidget {
                         onTap: () async {
                           Navigator.pop(context);
                           String time = DateTime.now().toIso8601String();
-                          Get.find<HomeViewModel>().isBirthDayPopup.value =
+                          Get.find<HomeViewModel>().isNotBirthDayPopup.value =
                               true;
                           await popUpUseCase.setLastBirthDayPopUpDate(time);
                         },

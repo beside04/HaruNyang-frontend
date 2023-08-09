@@ -6,6 +6,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
 import 'package:frontend/presentation/components/dialog_button.dart';
@@ -61,11 +62,8 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                           child: Image.asset(
                             "lib/config/assets/images/character/haru_error_case.png",
                             width: 160.w,
-                            height: 160.h,
+                            height: 150.h,
                           ),
-                        ),
-                        SizedBox(
-                          height: 16.h,
                         ),
                         InkWell(
                           onTap: () {
@@ -101,43 +99,6 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            controller.changeWithdrawTerms(
-                                !controller.state.value.isAgreeWithdrawTerms);
-                          },
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Obx(
-                                () => SizedBox(
-                                  width: 20.w,
-                                  height: 20.h,
-                                  child: Checkbox(
-                                    activeColor: kOrange300Color,
-                                    value: controller
-                                        .state.value.isAgreeWithdrawTerms,
-                                    onChanged: (value) {
-                                      if (value != null) {
-                                        controller.changeWithdrawTerms(value);
-                                      }
-                                    },
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(8.0.w),
-                                child: Text(
-                                  '안내사항을 확인하였으며 이에 동의합니다.',
-                                  style: kBody2Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textBody),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
                       ],
                     ),
                   ],
@@ -145,76 +106,135 @@ class WithdrawScreen extends GetView<WithdrawViewModel> {
               ),
             ),
             Obx(
-              () => BottomButton(
-                title: "탈퇴하기",
-                onTap: controller.state.value.isAgreeWithdrawTerms
-                    ? () {
-                        GlobalUtils.setAnalyticsCustomEvent(
-                            'Click_Withdraw_Done');
-                        showDialog(
-                          barrierDismissible: true,
-                          context: context,
-                          builder: (context) {
-                            return DialogComponent(
-                              title: "정말 탈퇴 하시겠어요?",
-                              content: Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 30.0),
-                                child: Text(
-                                  "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
-                                  style: kHeader6Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textSubtitle),
-                                ),
-                              ),
-                              actionContent: [
-                                DialogButton(
-                                  title: "아니요",
-                                  onTap: () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .secondaryColor,
-                                  textStyle: kHeader4Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textSubtitle),
-                                ),
-                                SizedBox(
-                                  width: 12.w,
-                                ),
-                                DialogButton(
-                                  title: "탈퇴하기",
-                                  onTap: () async {
-                                    final result = await controller
-                                        .withdrawUser(isKakaoLogin);
-                                    if (result) {
-                                      Get.find<OnBoardingController>()
-                                          .clearMyInformation();
-                                      Get.offAll(
-                                        () => const WithdrawDoneScreen(),
-                                      );
-                                    } else {
-                                      Get.back();
-                                      Get.snackbar('알림', '회원 탈퇴에 실패했습니다.');
-                                    }
-                                  },
-                                  backgroundColor: Theme.of(context)
-                                      .colorScheme
-                                      .primaryColor,
-                                  textStyle: kHeader4Style.copyWith(
-                                    color: kWhiteColor,
+              () => Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      controller.changeWithdrawTerms(
+                          !controller.state.value.isAgreeWithdrawTerms);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(left: 24.0.w, bottom: 20.h),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Theme.of(context).colorScheme.brightness ==
+                                  Brightness.dark
+                              ? Obx(
+                                  () => SizedBox(
+                                    width: 24.w,
+                                    height: 24.h,
+                                    child: controller
+                                            .state.value.isAgreeWithdrawTerms
+                                        ? Image.asset(
+                                            "lib/config/assets/images/check/round_check_primary.png",
+                                          )
+                                        : Image.asset(
+                                            "lib/config/assets/images/check/round_check_dark_mode.png",
+                                          ),
+                                  ),
+                                )
+                              : Obx(
+                                  () => SizedBox(
+                                    width: 24.w,
+                                    height: 24.h,
+                                    child: controller
+                                            .state.value.isAgreeWithdrawTerms
+                                        ? Image.asset(
+                                            "lib/config/assets/images/check/round_check_primary.png",
+                                          )
+                                        : Image.asset(
+                                            "lib/config/assets/images/check/round_check_light_mode.png",
+                                          ),
                                   ),
                                 ),
-                              ],
+                          Padding(
+                            padding: EdgeInsets.all(8.0.w),
+                            child: Text(
+                              '안내사항을 확인하였으며 이에 동의합니다.',
+                              style: kHeader6Style.copyWith(
+                                  color:
+                                      Theme.of(context).colorScheme.textBody),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  BottomButton(
+                    title: "탈퇴하기",
+                    onTap: controller.state.value.isAgreeWithdrawTerms
+                        ? () {
+                            GlobalUtils.setAnalyticsCustomEvent(
+                                'Click_Withdraw_Done');
+                            showDialog(
+                              barrierDismissible: true,
+                              context: context,
+                              builder: (context) {
+                                return DialogComponent(
+                                  title: "정말 탈퇴 하시겠어요?",
+                                  content: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 30.0),
+                                    child: Text(
+                                      "탈퇴하면 더이상 하루냥과 함께 할 수 없어요.",
+                                      style: kHeader6Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textSubtitle),
+                                    ),
+                                  ),
+                                  actionContent: [
+                                    DialogButton(
+                                      title: "아니요",
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                        Navigator.pop(context);
+                                      },
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .secondaryColor,
+                                      textStyle: kHeader4Style.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textSubtitle),
+                                    ),
+                                    SizedBox(
+                                      width: 12.w,
+                                    ),
+                                    DialogButton(
+                                      title: "탈퇴하기",
+                                      onTap: () async {
+                                        final result = await controller
+                                            .withdrawUser(isKakaoLogin);
+                                        if (result) {
+                                          Get.find<OnBoardingController>()
+                                              .clearMyInformation();
+                                          Get.offAll(
+                                            () => const WithdrawDoneScreen(),
+                                          );
+                                        } else {
+                                          Get.back();
+                                          Get.snackbar('알림', '회원 탈퇴에 실패했습니다.');
+                                        }
+                                      },
+                                      backgroundColor: Theme.of(context)
+                                          .colorScheme
+                                          .primaryColor,
+                                      textStyle: kHeader4Style.copyWith(
+                                        color: kWhiteColor,
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
                             );
-                          },
-                        );
-                      }
-                    : null,
+                          }
+                        : null,
+                  ),
+                ],
               ),
             ),
           ],

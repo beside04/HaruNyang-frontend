@@ -1,15 +1,19 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
+import 'package:frontend/data/data_source/global_service.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
+import 'package:get/get.dart' hide Response;
 
 class LoginApi {
-  String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
+  final globalService = Get.find<GlobalService>();
+  String get _baseUrl => globalService.usingServer.value;
+
   final Dio _client = Dio();
 
   Future<Result<LoginTokenData>> login(
       String loginType, String socialId, String? deviceId) async {
-    String loginUrl = '$baseUrl/v2/users/sign-in';
+    String loginUrl = '$_baseUrl/v2/users/sign-in';
 
     try {
       Response response;
@@ -52,7 +56,7 @@ class LoginApi {
     required job,
     required birthDate,
   }) async {
-    String signupUrl = '$baseUrl/v2/users/sign-up';
+    String signupUrl = '$_baseUrl/v2/users/sign-up';
     try {
       Response response;
 

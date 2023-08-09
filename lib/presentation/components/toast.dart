@@ -10,7 +10,7 @@ void toast({
   required BuildContext context,
   required String text,
   required bool isCheckIcon,
-  int milliseconds = 3000,
+  int milliseconds = 2000,
 }) {
   final fToast = FToast();
   fToast.init(context);
@@ -38,7 +38,7 @@ void toast({
         ),
         Text(
           text,
-          style: kSubtitle1Style.copyWith(color: kWhiteColor),
+          style: kBody2Style.copyWith(color: kWhiteColor),
         ),
       ],
     ),
@@ -52,7 +52,7 @@ void toast({
         alignment: Alignment.center,
         children: [
           Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 90.h,
+            bottom: MediaQuery.of(context).viewInsets.bottom + 76.h,
             child: Container(
               child: child,
             ),

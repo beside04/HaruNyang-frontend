@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
@@ -40,32 +41,34 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
   void initState() {
     super.initState();
 
-    diaryController.getRandomWorldViewTopic();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      diaryController.getRandomWorldViewTopic();
 
-    if (widget.isEditScreen) {
-      writeDiaryLoadingViewModelController.updateDiaryDetail(
-          widget.diaryData, widget.date);
-    } else {
-      writeDiaryLoadingViewModelController.saveDiaryDetail(
-          widget.diaryData, widget.date);
-    }
+      if (widget.isEditScreen) {
+        writeDiaryLoadingViewModelController.updateDiaryDetail(
+            widget.diaryData, widget.date);
+      } else {
+        writeDiaryLoadingViewModelController.saveDiaryDetail(
+            widget.diaryData, widget.date);
+      }
 
-    if (mounted) {
-      _timer = Timer(const Duration(seconds: 1), () {
-        setState(() {
-          _shouldShowWidget = true;
-          _counterTest = 85;
+      if (mounted) {
+        _timer = Timer(const Duration(seconds: 1), () {
+          setState(() {
+            _shouldShowWidget = true;
+            _counterTest = 85;
+          });
         });
-      });
 
-      _startCounting();
-    }
+        _startCounting();
+      }
+    });
   }
 
   late Timer _countingTimer;
 
   void _startCounting() {
-    _countingTimer = Timer(const Duration(milliseconds: 2500), () {
+    _countingTimer = Timer(const Duration(milliseconds: 5000), () {
       if (mounted) {
         setState(() {
           _counterTest = 100;
@@ -141,7 +144,7 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                         padding: EdgeInsets.symmetric(horizontal: 60.0.w),
                         child: FAProgressBar(
                           currentValue: _counterTest,
-                          animatedDuration: const Duration(milliseconds: 2500),
+                          animatedDuration: const Duration(milliseconds: 5000),
                           size: 15,
                           displayText: '',
                           progressColor: kOrange300Color,
@@ -152,19 +155,13 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Text(
-                        "집사들이 슬퍼하면 고양이 숲에 비가 온답니다",
-                        style: kBody1Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
-                      ),
                       Obx(
                         () => Text(
                           textAlign: TextAlign.center,
                           diaryController.worldViewTopic.value,
                           maxLines: 2,
-                          style: kHeader3Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle,
-                          ),
+                          style: kBody1Style.copyWith(
+                              color: Theme.of(context).colorScheme.textTitle),
                         ),
                       ),
                     ],

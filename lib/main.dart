@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/data/data_source/global_service.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,11 +20,12 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'presentation/home/home_screen.dart';
-import 'package:flutter_smartlook/flutter_smartlook.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
+  Get.put(GlobalService());
+
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
   await Firebase.initializeApp(
@@ -71,20 +74,19 @@ class MyApp extends GetView<MainViewModel> {
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent, // 투명색
             systemNavigationBarColor:
-                controller.themeMode.value == ThemeMode.light
+                Theme.of(context).colorScheme.brightness == Brightness.dark
                     ? kGrayColor950
                     : kWhiteColor,
             systemNavigationBarIconBrightness:
-                controller.themeMode.value == ThemeMode.light
+                Theme.of(context).colorScheme.brightness == Brightness.dark
                     ? Brightness.light
                     : Brightness.dark,
             systemNavigationBarDividerColor:
-                controller.themeMode.value == ThemeMode.light
+                Theme.of(context).colorScheme.brightness == Brightness.dark
                     ? kGrayColor950
                     : kWhiteColor,
           ),
-          child: SmartlookRecordingWidget(
-              child: Obx(
+          child: Obx(
             () => GetMaterialApp(
               navigatorObservers: [
                 FirebaseAnalyticsObserver(analytics: analytics),
@@ -102,7 +104,7 @@ class MyApp extends GetView<MainViewModel> {
               darkTheme: darkMode(context),
               home: const SplashScreen(),
             ),
-          )),
+          ),
         );
       },
     );

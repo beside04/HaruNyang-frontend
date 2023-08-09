@@ -29,49 +29,12 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  final tokenController = Get.find<TokenController>();
-  final onBoardingController = Get.find<OnBoardingController>();
-  final diaryController = Get.find<DiaryController>();
 
   @override
   void initState() {
     _controller = AnimationController(vsync: this);
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      init();
-    });
+
     super.initState();
-  }
-
-  Future<void> init() async {
-    await Future.delayed(const Duration(milliseconds: 1500), () async {
-      String? accessToken = await tokenController.getAccessToken();
-
-      if (accessToken == null) {
-        //token이 없으면 로그인 화면 이동
-        Get.offAll(
-          () => const LoginScreen(),
-          binding: BindingsBuilder(
-            getLoginBinding,
-          ),
-        );
-      } else {
-        //캘린더 업데이트
-        diaryController.initPage();
-        //북마크데이터 업데이트
-        Get.find<DiaryController>().getAllBookmarkData();
-
-        //Home 화면 이동
-
-        await Get.find<OnBoardingController>().getMyInformation();
-
-        Get.offAll(
-          () => const HomeScreen(),
-          binding: BindingsBuilder(
-            getHomeViewModelBinding,
-          ),
-        );
-      }
-    });
   }
 
   @override

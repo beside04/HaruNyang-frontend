@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_smartlook/flutter_smartlook.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
@@ -15,13 +14,8 @@ class MainViewModel extends GetxController {
     required this.pushMessagePermissionUseCase,
   });
 
-  final Smartlook smartlook = Smartlook.instance;
-
   @override
   void onInit() {
-    smartlook.start();
-    smartlook.preferences
-        .setProjectKey('82cc34e5fbeb21b4b4d1c4775ac473c51a6339e6');
     super.onInit();
   }
 

@@ -47,10 +47,13 @@ class ProfileButton extends StatelessWidget {
                       color: titleColor,
                     ),
                   ),
+
+                  //onBoardingController.state.value.age == null
+                  // isBirth == false 두개 조건일때 아이콘 발생
+
                   onBoardingController.state.value.age == null &&
-                          isBirth == false
-                      ? Container()
-                      : Positioned(
+                          isBirth == true
+                      ? Positioned(
                           top: 0,
                           right: 0,
                           child: Container(
@@ -61,12 +64,12 @@ class ProfileButton extends StatelessWidget {
                               shape: BoxShape.circle,
                             ),
                           ),
-                        ),
+                        )
+                      : Container(),
                 ],
               ),
-              onBoardingController.state.value.age == null && isBirth == false
-                  ? Container()
-                  : Container(
+              onBoardingController.state.value.age == null && isBirth == true
+                  ? Container(
                       decoration: BoxDecoration(
                         color: Theme.of(context)
                             .colorScheme
@@ -86,7 +89,8 @@ class ProfileButton extends StatelessWidget {
                                   Theme.of(context).colorScheme.primaryColor),
                         ),
                       ),
-                    ),
+                    )
+                  : Container(),
               icon
             ],
           ),

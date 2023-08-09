@@ -80,7 +80,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors:
-                    Get.find<MainViewModel>().themeMode.value == ThemeMode.dark
+                    Theme.of(context).colorScheme.brightness == Brightness.dark
                         ? [kGrayColor950, kGrayColor950]
                         : [
                             const Color(0xffffac60),

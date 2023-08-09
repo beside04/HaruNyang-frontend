@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/login/components/kakao_login_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
@@ -36,7 +37,6 @@ class LoginScreen extends GetView<LoginViewModel> {
           return await Future.value(backResult);
         },
         child: Scaffold(
-          backgroundColor: kGrayColor950,
           body: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,14 +46,19 @@ class LoginScreen extends GetView<LoginViewModel> {
                   top: 250.h,
                 ),
                 child: Center(
-                  child: Image.asset(
-                    "lib/config/assets/images/login/login_logo.png",
-                    width: 92.w,
-                  ),
-                ),
+                    child: Theme.of(context).colorScheme.brightness ==
+                            Brightness.dark
+                        ? Image.asset(
+                            "lib/config/assets/images/login/login_logo_dark.png",
+                            width: 92.w,
+                          )
+                        : Image.asset(
+                            "lib/config/assets/images/login/login_logo_light.png",
+                            width: 92.w,
+                          )),
               ),
               SizedBox(
-                height: 230.h,
+                height: GetPlatform.isAndroid ? 310.h : 230.h,
               ),
               InkWell(
                 onTap: () async {

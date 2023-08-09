@@ -63,10 +63,10 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              height: 24.h,
+                              height: 32.h,
                             ),
                             Text(
-                              "몇 살이에요?",
+                              "몇 살이에요? \n하루냥이 생일을 축하해드려요!",
                               style: kHeader2Style.copyWith(
                                   color:
                                       Theme.of(context).colorScheme.textTitle),
@@ -120,7 +120,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                               ),
                             ),
                             SizedBox(
-                              height: 158.h,
+                              height: 106.h,
                             ),
                             Center(
                               child: Image.asset(

@@ -69,7 +69,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                         Center(
                           child: Text(
                             DateFormat.E('ko-KR').format(day),
-                            style: kHeader5Style.copyWith(
+                            style: kSubtitle1Style.copyWith(
                                 color: Theme.of(context).colorScheme.textTitle),
                           ),
                         ),
@@ -125,13 +125,13 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                         shape: BoxShape.circle,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .secondaryColor,
+                                            .surface_01,
                                       ),
                                     )
                                   : isToday(day)
                                       ? Image.asset(
                                           getEmoticonImage(events[0].feeling),
-                                          width: 32.w,
+                                          width: 36.w,
                                         )
                                       : events.isNotEmpty
                                           ? Align(
@@ -139,7 +139,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                               child: Image.asset(
                                                 getEmoticonImage(
                                                     events[0].feeling),
-                                                width: 32.w,
+                                                width: 36.w,
                                               ),
                                             )
                                           : DateTime.now().isAfter(day)
@@ -158,7 +158,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                                     shape: BoxShape.circle,
                                                     color: Theme.of(context)
                                                         .colorScheme
-                                                        .secondaryColor,
+                                                        .surface_01,
                                                   ),
                                                 )
                                               : Padding(
@@ -166,10 +166,12 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                                       EdgeInsets.all(8.0.w),
                                                   child: Text(
                                                     DateFormat('d').format(day),
-                                                    style: kBody1Style.copyWith(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .textSubtitle),
+                                                    style:
+                                                        kHeader6Style.copyWith(
+                                                            color: Theme.of(
+                                                                    context)
+                                                                .colorScheme
+                                                                .iconSubColor),
                                                   ),
                                                 )
                             ],
@@ -181,10 +183,12 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                   prioritizedBuilder: (context, day, events) {
                     return isToday(day)
                         ? Padding(
-                            padding: const EdgeInsets.all(7.0),
+                            padding: const EdgeInsets.only(
+                              bottom: 16,
+                            ),
                             child: Container(
-                              width: 30.w,
-                              height: 20.h,
+                              width: 25.w,
+                              height: 16.h,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 color: kOrange300Color,
@@ -192,21 +196,21 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                               child: Center(
                                 child: Text(
                                   DateFormat('d').format(day),
-                                  style:
-                                      kBody2Style.copyWith(color: kWhiteColor),
+                                  style: kCaption1Style.copyWith(
+                                      color: kWhiteColor),
                                 ),
                               ),
                             ),
                           )
                         : DateTime.now().isAfter(day)
                             ? Padding(
-                                padding: EdgeInsets.all(8.0.w),
+                                padding: EdgeInsets.all(16.0.w),
                                 child: Text(
                                   DateFormat('d').format(day),
-                                  style: kBody2Style.copyWith(
+                                  style: kCaption1Style.copyWith(
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .textTitle),
+                                          .iconSubColor),
                                 ),
                               )
                             : Container();
