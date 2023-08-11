@@ -4,17 +4,20 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 
 class AgeTextField extends StatelessWidget {
-  const AgeTextField(
-      {super.key,
-      required this.textEditingController,
-      required this.onTap,
-      required this.suffixIcon,
-      required this.isSettingAge});
+  const AgeTextField({
+    super.key,
+    required this.textEditingController,
+    required this.onTap,
+    required this.suffixIcon,
+    required this.isSettingAge,
+    required this.hintText,
+  });
 
   final TextEditingController textEditingController;
   final VoidCallback? onTap;
   final Widget? suffixIcon;
   final bool isSettingAge;
+  final String hintText;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class AgeTextField extends StatelessWidget {
         helperStyle: kBody3Style.copyWith(
             color: Theme.of(context).colorScheme.textTitle),
         counterText: "",
-        hintText: 'YYYY-MM-DD 입력',
+        hintText: hintText == "2000-01-01" ? "YYYY-MM-DD 입력" : hintText,
         hintStyle: kSubtitle1Style.copyWith(
             color: Theme.of(context).colorScheme.placeHolder),
         contentPadding: const EdgeInsets.only(

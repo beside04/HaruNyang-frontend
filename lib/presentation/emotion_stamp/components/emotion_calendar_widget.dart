@@ -184,7 +184,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                     return isToday(day)
                         ? Padding(
                             padding: const EdgeInsets.only(
-                              bottom: 16,
+                              bottom: 14,
                             ),
                             child: Container(
                               width: 25.w,

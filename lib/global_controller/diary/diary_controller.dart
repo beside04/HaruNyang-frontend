@@ -40,24 +40,7 @@ class DiaryController extends GetxController {
 
   Rx<DiaryState> get state => _state;
   int currentPageCount = 250;
-
-  Rx<String> worldViewTopic = "".obs;
-
-  List<String> worldViewTopicList = [
-    '하루냥은 고양이 숲에서 왔어요. 고양이 숲은 지구와 연결되어 있는 고양이들의 공간이에요.',
-    '하루냥은 고양이 숲에서 왔어요. 고양이 숲의 날씨는 지구 친구들의 감정에 영향을 받아요.',
-    '하루냥은 고양이 숲에서 왔어요. 고양이 숲에는 비가 많이와요.',
-    '하루냥은 고양이 숲에서 왔어요. 지구의 사람들이 슬퍼하면 고양이 숲에 비가 온답니다.',
-    '하루냥이 제일 좋아하는 음식은 붕어빵이에요.',
-    '하루냥은 연잎을 우산으로 써요.',
-    '하루냥은 택배박스 안에서 살고 있어요.',
-    '하루냥이 좋아하는 과일은 수박이에요',
-    '하루냥은 주황색을 좋아해요.',
-    '하루냥은 지구의 chatGPT를 통해서 지구어를 통역해요.',
-    '하루냥은 추운 겨울날 택배 박스를 타고 인간세계로 왔어요.',
-    '붕어빵처럼 따뜻한 마음씨를 지닌 하루냥의 한 마디를 들어보세요!',
-    '하루냥은 팥 붕어빵을 좋아해요.',
-  ];
+  RxBool isNote = false.obs;
 
   @override
   void onInit() {
@@ -72,6 +55,8 @@ class DiaryController extends GetxController {
       diary: null,
       wiseSayingList: [],
     );
+
+    isNote.value = false;
 
     Get.find<DiaryController>().diaryDetailData.value = null;
   }
@@ -311,11 +296,5 @@ class DiaryController extends GetxController {
       },
       error: (message) {},
     );
-  }
-
-  void getRandomWorldViewTopic() {
-    int randomNumber = Random().nextInt(worldViewTopicList.length);
-
-    worldViewTopic.value = worldViewTopicList[randomNumber];
   }
 }

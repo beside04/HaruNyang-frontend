@@ -59,7 +59,7 @@ class EmotionCardDiaryWidget extends StatelessWidget {
               diaryData.diaryContent,
               style: kBody2Style.copyWith(
                   color: Theme.of(context).colorScheme.textBody),
-            )
+            ),
           ],
         ),
       ),

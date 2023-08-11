@@ -222,11 +222,6 @@ class ProfileScreen extends StatelessWidget {
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
                       mainViewController.toggleThemeMode(context);
-                      print(MediaQuery.of(context).platformBrightness);
-                      print(MediaQuery.of(context).platformBrightness);
-                      print(MediaQuery.of(context).platformBrightness);
-                      print(MediaQuery.of(context).platformBrightness);
-                      print(MediaQuery.of(context).platformBrightness);
                     },
                     activeIcon: Center(
                       child: SvgPicture.asset(
@@ -295,6 +290,11 @@ class ProfileScreen extends StatelessWidget {
                     inAppReview.requestReview();
                   }
                 },
+              ),
+              Divider(
+                thickness: 1.h,
+                height: 1.h,
+                color: Theme.of(context).colorScheme.border,
               ),
               ProfileButton(
                 icon: SvgPicture.asset(

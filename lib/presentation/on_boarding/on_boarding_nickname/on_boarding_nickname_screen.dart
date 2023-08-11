@@ -132,9 +132,11 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                             child: Container(),
                                           )
                                         : GestureDetector(
-                                            child: const Icon(
+                                            child: Icon(
                                               Icons.cancel,
-                                              color: kBlackColor,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .iconSubColor,
                                               size: 20,
                                             ),
                                             onTap: () => controller

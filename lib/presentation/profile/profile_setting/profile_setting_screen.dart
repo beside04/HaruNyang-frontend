@@ -127,7 +127,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                             Icons.cancel,
                                             color: Theme.of(context)
                                                 .colorScheme
-                                                .iconColor,
+                                                .iconSubColor,
                                             size: 20,
                                           ),
                                           onTap: () => controller
@@ -260,9 +260,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                           child: Container(),
                                         )
                                       : GestureDetector(
-                                          child: const Icon(
+                                          child: Icon(
                                             Icons.cancel,
-                                            color: kBlackColor,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .iconSubColor,
                                             size: 20,
                                           ),
                                           onTap: () => controller
@@ -270,6 +272,13 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                               .clear(),
                                         ),
                                 ),
+                                hintText: onBoardingController
+                                                .state.value.age ==
+                                            '' ||
+                                        onBoardingController.state.value.age ==
+                                            null
+                                    ? "2000-01-01"
+                                    : onBoardingController.state.value.age!,
                               ),
                             ),
                             Obx(

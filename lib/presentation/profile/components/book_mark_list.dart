@@ -50,7 +50,7 @@ class BookMarkList extends StatelessWidget {
                         Text(
                           DateFormat('yyyy.MM.dd').format(date),
                           style: kSubtitle1Style.copyWith(
-                              color: Theme.of(context).colorScheme.textBody),
+                              color: Theme.of(context).colorScheme.textTitle),
                         )
                       ],
                     ),
@@ -70,19 +70,19 @@ class BookMarkList extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 12.h,
+                  height: 8.h,
                 ),
                 Text(
                   title,
-                  style: kBody2Style.copyWith(
-                      color: Theme.of(context).colorScheme.textBody),
+                  style: kBody1Style.copyWith(
+                      color: Theme.of(context).colorScheme.textCaption),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
                     name == "harunyang" ? "하루냥" : name,
-                    style: kBody3Style.copyWith(
-                        color: Theme.of(context).colorScheme.textSubtitle),
+                    style: kBody2Style.copyWith(
+                        color: Theme.of(context).colorScheme.textLowEmphasis),
                   ),
                 )
               ],

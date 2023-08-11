@@ -4,6 +4,10 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
 ThemeData lightMode(context) => ThemeData(
+      scrollbarTheme: ScrollbarThemeData(
+        thumbColor:
+            MaterialStateProperty.all(const Color(0xffd9d9d9)), // 원하는 색상으로 변경
+      ),
       checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),
@@ -68,6 +72,10 @@ ThemeData lightMode(context) => ThemeData(
     );
 
 ThemeData darkMode(context) => ThemeData(
+      scrollbarTheme: ScrollbarThemeData(
+        thumbColor:
+            MaterialStateProperty.all(const Color(0xffd9d9d9)), // 원하는 색상으로 변경
+      ),
       checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),

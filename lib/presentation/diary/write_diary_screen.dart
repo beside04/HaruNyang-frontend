@@ -391,6 +391,159 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                             weatherIconDesc: getWeatherValue(weather),
                             color: Theme.of(context).colorScheme.surface_01,
                           ),
+                          Obx(
+                            () => Get.find<DiaryController>()
+                                        .diaryDetailData
+                                        .value ==
+                                    null
+                                ? Container()
+                                : Get.find<DiaryController>()
+                                            .diaryDetailData
+                                            .value!
+                                            .image ==
+                                        ''
+                                    ? Container()
+                                    : Center(
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 20.0.w,
+                                              right: 20.w,
+                                              top: 20),
+                                          child: Stack(
+                                            children: [
+                                              Image.network(
+                                                Get.find<DiaryController>()
+                                                    .diaryDetailData
+                                                    .value!
+                                                    .image,
+                                                fit: BoxFit.cover,
+                                              ),
+                                              Positioned(
+                                                right: 12,
+                                                top: 12,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    controller.clear();
+                                                  },
+                                                  child: Container(
+                                                    margin:
+                                                        const EdgeInsets.all(6),
+                                                    decoration: BoxDecoration(
+                                                      color: kWhiteColor
+                                                          .withOpacity(0.6),
+                                                      shape: BoxShape.circle,
+                                                    ),
+                                                    height: 24.h,
+                                                    width: 24.w,
+                                                    child: SvgPicture.asset(
+                                                      "lib/config/assets/images/diary/light_mode/close.svg",
+                                                      color: kGrayColor950,
+                                                      height: 12,
+                                                      width: 12,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                          ),
+                          Obx(
+                            () => (controller.croppedFile.value != null ||
+                                    controller.pickedFile.value != null ||
+                                    controller.networkImage.value != null)
+                                ? Center(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 20.0.w, right: 20.w, top: 20),
+                                      child: controller.networkImage.value !=
+                                              null
+                                          ? Stack(
+                                              children: [
+                                                Image.network(
+                                                  controller
+                                                      .networkImage.value!,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                                Positioned(
+                                                  right: 12,
+                                                  top: 12,
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      controller.clear();
+                                                    },
+                                                    child: Container(
+                                                      margin:
+                                                          const EdgeInsets.all(
+                                                              6),
+                                                      decoration: BoxDecoration(
+                                                        color: kWhiteColor
+                                                            .withOpacity(0.6),
+                                                        shape: BoxShape.circle,
+                                                      ),
+                                                      height: 24.h,
+                                                      width: 24.w,
+                                                      child: SvgPicture.asset(
+                                                        "lib/config/assets/images/diary/light_mode/close.svg",
+                                                        color: kGrayColor950,
+                                                        height: 12,
+                                                        width: 12,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : controller.croppedFile.value != null
+                                              ? Stack(
+                                                  children: [
+                                                    Image.file(
+                                                      fit: BoxFit.cover,
+                                                      File(controller
+                                                          .croppedFile
+                                                          .value!
+                                                          .path),
+                                                    ),
+                                                    Positioned(
+                                                      right: 12,
+                                                      top: 12,
+                                                      child: GestureDetector(
+                                                        onTap: () {
+                                                          controller.clear();
+                                                        },
+                                                        child: Container(
+                                                          margin:
+                                                              const EdgeInsets
+                                                                  .all(6),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: kWhiteColor
+                                                                .withOpacity(
+                                                                    0.6),
+                                                            shape:
+                                                                BoxShape.circle,
+                                                          ),
+                                                          height: 24.h,
+                                                          width: 24.w,
+                                                          child:
+                                                              SvgPicture.asset(
+                                                            "lib/config/assets/images/diary/light_mode/close.svg",
+                                                            color:
+                                                                kGrayColor950,
+                                                            height: 12,
+                                                            width: 12,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                )
+                                              : const SizedBox.shrink(),
+                                    ),
+                                  )
+                                : Container(),
+                          ),
                           FormBuilderTextField(
                             maxLength: 500,
                             maxLines: null,
@@ -453,152 +606,6 @@ class WriteDiaryScreen extends GetView<WriteDiaryViewModel> {
                                     )
                                   : null;
                             },
-                          ),
-                          Obx(
-                            () => Get.find<DiaryController>()
-                                        .diaryDetailData
-                                        .value ==
-                                    null
-                                ? Container()
-                                : Get.find<DiaryController>()
-                                            .diaryDetailData
-                                            .value!
-                                            .image ==
-                                        ''
-                                    ? Container()
-                                    : Center(
-                                        child: Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: 20.0.w,
-                                          ),
-                                          child: Stack(
-                                            children: [
-                                              Image.network(
-                                                Get.find<DiaryController>()
-                                                    .diaryDetailData
-                                                    .value!
-                                                    .image,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              Positioned(
-                                                right: 12,
-                                                top: 12,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    controller.clear();
-                                                  },
-                                                  child: Container(
-                                                    margin:
-                                                        const EdgeInsets.all(6),
-                                                    decoration:
-                                                        const BoxDecoration(
-                                                      color: kBlackColor,
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    height: 24.h,
-                                                    width: 24.w,
-                                                    child: const Icon(
-                                                      Icons.close,
-                                                      size: 12,
-                                                      color: kWhiteColor,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                          ),
-                          Obx(
-                            () => (controller.croppedFile.value != null ||
-                                    controller.pickedFile.value != null ||
-                                    controller.networkImage.value != null)
-                                ? Center(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: 20.0.w,
-                                      ),
-                                      child: controller.networkImage.value !=
-                                              null
-                                          ? Stack(
-                                              children: [
-                                                Image.network(
-                                                  controller
-                                                      .networkImage.value!,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                Positioned(
-                                                  right: 12,
-                                                  top: 12,
-                                                  child: GestureDetector(
-                                                    onTap: () {
-                                                      controller.clear();
-                                                    },
-                                                    child: Container(
-                                                      margin:
-                                                          const EdgeInsets.all(
-                                                              6),
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        color: kBlackColor,
-                                                        shape: BoxShape.circle,
-                                                      ),
-                                                      height: 24.h,
-                                                      width: 24.w,
-                                                      child: const Icon(
-                                                        Icons.close,
-                                                        size: 12,
-                                                        color: kWhiteColor,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : controller.croppedFile.value != null
-                                              ? Stack(
-                                                  children: [
-                                                    Image.file(
-                                                      fit: BoxFit.cover,
-                                                      File(controller
-                                                          .croppedFile
-                                                          .value!
-                                                          .path),
-                                                    ),
-                                                    Positioned(
-                                                      right: 12,
-                                                      top: 12,
-                                                      child: GestureDetector(
-                                                        onTap: () {
-                                                          controller.clear();
-                                                        },
-                                                        child: Container(
-                                                          margin:
-                                                              const EdgeInsets
-                                                                  .all(6),
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            color: kBlackColor,
-                                                            shape:
-                                                                BoxShape.circle,
-                                                          ),
-                                                          height: 24.h,
-                                                          width: 24.w,
-                                                          child: const Icon(
-                                                            Icons.close,
-                                                            size: 12,
-                                                            color: kWhiteColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : const SizedBox.shrink(),
-                                    ),
-                                  )
-                                : Container(),
                           ),
                         ],
                       ),

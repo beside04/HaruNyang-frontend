@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:flutter_animation_progress_bar/flutter_animation_progress_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/library/FAProgressBar.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/diary/write_diary_loading_view_model.dart';
@@ -42,8 +42,6 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      diaryController.getRandomWorldViewTopic();
-
       if (widget.isEditScreen) {
         writeDiaryLoadingViewModelController.updateDiaryDetail(
             widget.diaryData, widget.date);
@@ -103,12 +101,12 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                     child: Column(
                       children: [
                         Image.asset(
-                          "lib/config/assets/images/character/character6.png",
-                          height: 260.h,
+                          "lib/config/assets/images/character/character9.png",
+                          height: 180.h,
                         ),
                         Text(
-                          "일기 작성이 끝났네요!",
-                          style: kHeader3Style.copyWith(
+                          "하루냥에게 일기 전달 완료!",
+                          style: kHeader5Style.copyWith(
                             color: Theme.of(context).colorScheme.textTitle,
                           ),
                         ),
@@ -121,21 +119,9 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                   duration: const Duration(milliseconds: 800),
                   child: Column(
                     children: [
-                      Text(
-                        "하루냥이 쪽지를",
-                        style: kHeader3Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle,
-                        ),
-                      ),
-                      Text(
-                        "준비하고 있어요",
-                        style: kHeader3Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle,
-                        ),
-                      ),
                       Image.asset(
-                        "lib/config/assets/images/character/character7.png",
-                        height: 260.h,
+                        "lib/config/assets/images/character/character10.png",
+                        height: 180.h,
                       ),
                       SizedBox(
                         height: 20.h,
@@ -155,13 +141,10 @@ class _WriteDiaryLoadingScreenState extends State<WriteDiaryLoadingScreen> {
                       SizedBox(
                         height: 10.h,
                       ),
-                      Obx(
-                        () => Text(
-                          textAlign: TextAlign.center,
-                          diaryController.worldViewTopic.value,
-                          maxLines: 2,
-                          style: kBody1Style.copyWith(
-                              color: Theme.of(context).colorScheme.textTitle),
+                      Text(
+                        "당신을 위로할 쪽지를 쓰고 있어요",
+                        style: kHeader5Style.copyWith(
+                          color: Theme.of(context).colorScheme.textTitle,
                         ),
                       ),
                     ],

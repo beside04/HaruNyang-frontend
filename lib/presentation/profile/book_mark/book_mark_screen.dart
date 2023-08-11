@@ -5,6 +5,7 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
+import 'package:frontend/presentation/components/toast.dart';
 import 'package:frontend/presentation/profile/components/book_mark_list.dart';
 import 'package:get/get.dart';
 
@@ -103,6 +104,11 @@ class _BookMarkScreenState extends State<BookMarkScreen> {
                                 diaryController
                                     .state.value.bookmarkList[index].id!,
                                 index,
+                              );
+                              toast(
+                                context: context,
+                                text: '북마크를 삭제했어요.',
+                                isCheckIcon: true,
                               );
                             },
                           ),
