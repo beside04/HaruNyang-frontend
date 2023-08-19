@@ -176,7 +176,7 @@ class DiaryController extends GetxController {
     Map<String, List<DiaryData>> weekName = {};
     for (int i = 0; i < diaries.length; i++) {
       String title =
-          _weekOfMonthForSimple(DateTime.parse(diaries[i].targetDate));
+          _weekOfMonthForCalendar(DateTime.parse(diaries[i].targetDate));
       if (weekName.containsKey(title)) {
         weekName[title]!.add(diaries[i]);
       } else {
@@ -192,23 +192,30 @@ class DiaryController extends GetxController {
     );
   }
 
-  // 월 주차. (단순하게 1일이 1주차 시작).
-  String _weekOfMonthForSimple(DateTime date) {
-    // 월의 첫번째 날짜.
-    DateTime firstDay = DateTime(date.year, date.month, 1);
+  String _weekOfMonthForCalendar(DateTime date) {
+    DateTime firstDayOfMonth = DateTime(date.year, date.month, 1);
+    DateTime lastDayOfMonth =
+        DateTime(date.year, date.month + 1, 0); // 다음 달의 0일은 현재 달의 마지막 날입니다.
 
-    // 월중에 첫번째 월요일인 날짜.
-    DateTime firstMonday = firstDay
-        .add(Duration(days: (DateTime.monday + 7 - firstDay.weekday) % 7));
+    // 시작 날짜와 끝 날짜가 튀어나와 있는지 확인
+    bool isFirstDayStickingOut = firstDayOfMonth.weekday > DateTime.monday;
+    bool isLastDayStickingOut = lastDayOfMonth.weekday < DateTime.sunday;
 
-    // 첫번째 날짜와 첫번째 월요일인 날짜가 동일한지 판단.
-    // 동일할 경우: 1, 동일하지 않은 경우: 2 를 마지막에 더한다.
-    final bool isFirstDayMonday = firstDay == firstMonday;
+    // 첫 날짜가 튀어나와 있으면 첫 주는 그 날 하나만으로 구성됩니다.
+    if (isFirstDayStickingOut && date.day == 1) {
+      return "첫";
+    }
 
-    final different = _calculateDaysBetween(from: firstMonday, to: date);
+    // 마지막 날짜가 튀어나와 있으면 마지막 주는 그 날 하나만으로 구성됩니다.
+    if (isLastDayStickingOut && date.day == lastDayOfMonth.day) {
+      return "여섯";
+    }
 
-    // 주차 계산.
-    int weekOfMonth = (different / 7 + (isFirstDayMonday ? 1 : 2)).toInt();
+    // 첫 날짜가 튀어나와 있다면 1을 더해 첫 주를 고려합니다.
+    int offset = isFirstDayStickingOut ? 1 : 0;
+
+    // 날짜를 주로 변환
+    int weekOfMonth = ((date.day + offset - 1) / 7 + 1).toInt();
 
     switch (weekOfMonth) {
       case 1:
@@ -221,11 +228,12 @@ class DiaryController extends GetxController {
         return "네";
       case 5:
         return "다섯";
+      case 6:
+        return "여섯";
     }
     return "";
   }
 
-  // D-Day 계산.
   int _calculateDaysBetween({required DateTime from, required DateTime to}) {
     return (to.difference(from).inHours / 24).round();
   }

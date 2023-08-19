@@ -28,6 +28,11 @@ class LoginApi {
 
       final cookies = response.headers.map['set-cookie'];
 
+      print(cookies);
+      print(cookies);
+      print(cookies);
+      print(cookies);
+
       return Result.success(
         LoginTokenData(
           accessToken: cookies![0].split(';')[0],
@@ -39,6 +44,7 @@ class LoginApi {
       if (e.response != null) {
         errMessage = e.response!.statusCode!.toString();
       } else {
+        print(e);
         errMessage = e.response!.statusCode!.toString();
       }
       return Result.error(errMessage);

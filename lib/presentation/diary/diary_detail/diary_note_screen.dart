@@ -233,7 +233,6 @@ class _DairyNoteScreenState extends State<DairyNoteScreen> {
                                           bottom: 30,
                                         ),
                                         child: Scrollbar(
-                                          thumbVisibility: true,
                                           interactive: true,
                                           thickness: 6.0,
                                           radius: const Radius.circular(8.0),
