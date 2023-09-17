@@ -69,8 +69,12 @@ class SplashViewModel extends GetxController {
           minimumFetchInterval: const Duration(seconds: 1),
         ));
 
-        globalService.usingServer.value =
-            remoteConfig.getString("using_server");
+        globalService.usingServer.value = remoteConfig.getString("using_server");
+        globalService.isBannerOpen.value = remoteConfig.getBool("is_banner_open");
+        globalService.bannerUrl.value = remoteConfig.getString("banner_url");
+
+        print(globalService.bannerUrl.value);
+        print(globalService.isBannerOpen.value);
 
         if (APP_BUILD_NUMBER < remoteConfig.getInt("min_build_number")) {
           isNeedUpdate.value = true;
@@ -95,16 +99,14 @@ class SplashViewModel extends GetxController {
                       ),
                       Text(
                         "업데이트가 필요합니다.",
-                        style: kHeader3Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
+                        style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                       ),
                       SizedBox(
                         height: 4.h,
                       ),
                       Text(
                         "필수 업데이트를 해야만 앱을 이용할 수 있습니다.",
-                        style: kHeader6Style.copyWith(
-                            color: Theme.of(context).colorScheme.textSubtitle),
+                        style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                       ),
                     ],
                   ),
@@ -114,9 +116,7 @@ class SplashViewModel extends GetxController {
                       onTap: () async {
                         Get.offAll(() => const LoginScreen());
 
-                        StoreRedirect.redirect(
-                            androidAppId: "com.beside04.haruNyang",
-                            iOSAppId: "6444657575");
+                        StoreRedirect.redirect(androidAppId: "com.beside04.haruNyang", iOSAppId: "6444657575");
                       },
                       backgroundColor: kOrange200Color,
                       textStyle: kHeader4Style.copyWith(color: kWhiteColor),
@@ -126,8 +126,7 @@ class SplashViewModel extends GetxController {
               );
             },
           );
-        } else if (!isOpenPopup.value &&
-            APP_BUILD_NUMBER < remoteConfig.getInt("recommend_build_number")) {
+        } else if (!isOpenPopup.value && APP_BUILD_NUMBER < remoteConfig.getInt("recommend_build_number")) {
           isNeedUpdate.value = true;
 
           showDialog(
@@ -151,16 +150,14 @@ class SplashViewModel extends GetxController {
                       ),
                       Text(
                         "새로운 버전이 있습니다.",
-                        style: kHeader3Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
+                        style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                       ),
                       SizedBox(
                         height: 4.h,
                       ),
                       Text(
                         "업데이트하고 새로운 기능을 만나보세요.",
-                        style: kHeader6Style.copyWith(
-                            color: Theme.of(context).colorScheme.textSubtitle),
+                        style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                       ),
                     ],
                   ),
@@ -176,10 +173,8 @@ class SplashViewModel extends GetxController {
 
                         goToHome();
                       },
-                      backgroundColor:
-                          Theme.of(context).colorScheme.secondaryColor,
-                      textStyle: kHeader4Style.copyWith(
-                          color: Theme.of(context).colorScheme.textSubtitle),
+                      backgroundColor: Theme.of(context).colorScheme.secondaryColor,
+                      textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                     ),
                     SizedBox(
                       width: 12.w,
@@ -188,9 +183,7 @@ class SplashViewModel extends GetxController {
                       title: "업데이트",
                       onTap: () async {
                         Get.offAll(() => const LoginScreen());
-                        StoreRedirect.redirect(
-                            androidAppId: "com.beside04.haruNyang",
-                            iOSAppId: "6444657575");
+                        StoreRedirect.redirect(androidAppId: "com.beside04.haruNyang", iOSAppId: "6444657575");
                       },
                       backgroundColor: kOrange200Color,
                       textStyle: kHeader4Style.copyWith(color: kWhiteColor),
@@ -220,8 +213,7 @@ class SplashViewModel extends GetxController {
 
     if (lastPopupDate != null) {
       DateTime now = DateTime.now();
-      int timeDifference =
-          now.difference(DateTime.parse(lastPopupDate!)).inDays;
+      int timeDifference = now.difference(DateTime.parse(lastPopupDate!)).inDays;
 
       if (timeDifference < 30) isOpenPopup.value = true;
     }

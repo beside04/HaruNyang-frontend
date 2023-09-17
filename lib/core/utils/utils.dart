@@ -4,8 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:frontend/config/theme/color_data.dart';
 
 class GlobalUtils {
-  static final GlobalKey<NavigatorState> navigatorKey =
-      GlobalKey<NavigatorState>();
+  static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   static DateTime? currentBackPressTime;
 
@@ -13,8 +12,7 @@ class GlobalUtils {
   // 버튼 1번 클릭 시 토스트로 메시지 띄워주고 2초 안에 재 클릭 시 앱 종료
   static bool onBackPressed() {
     DateTime now = DateTime.now();
-    if (currentBackPressTime == null ||
-        now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
+    if (currentBackPressTime == null || now.difference(currentBackPressTime!) > const Duration(seconds: 2)) {
       currentBackPressTime = now;
       Fluttertoast.showToast(
         msg: "한번 더 누르시면 종료됩니다.",
@@ -41,9 +39,10 @@ class GlobalUtils {
     );
   }
 
-  static setAnalyticsCustomEvent(String eventName) async {
+  static setAnalyticsCustomEvent(String eventName, [Map<String, dynamic>? params]) async {
     await FirebaseAnalytics.instance.logEvent(
       name: eventName,
+      parameters: params,
     );
   }
 }

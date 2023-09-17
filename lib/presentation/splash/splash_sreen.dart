@@ -26,8 +26,7 @@ class SplashScreen extends StatefulWidget {
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen>
-    with SingleTickerProviderStateMixin {
+class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
 
   @override
@@ -49,7 +48,7 @@ class _SplashScreenState extends State<SplashScreen>
     return DefaultLayout(
       screenName: 'Screen_Event_Splash',
       child: Lottie.asset(
-        'lib/config/assets/lottie/graphic_type.json',
+        Theme.of(context).colorScheme.brightness == Brightness.dark ? 'lib/config/assets/lottie/splash_dark.json' : 'lib/config/assets/lottie/splash_light.json',
         controller: _controller,
         onLoaded: (composition) {
           _controller

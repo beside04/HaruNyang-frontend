@@ -34,8 +34,8 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
           Padding(
             padding: EdgeInsets.only(
               top: 20.h,
-              left: 5.w,
-              right: 5.w,
+              left: 11,
+              right: 11,
             ),
             child: Obx(
               () => TableCalendar<DiaryData>(
@@ -51,10 +51,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                 daysOfWeekHeight: 30.h,
                 headerVisible: false,
                 eventLoader: (DateTime day) {
-                  return diaryController.state.value.diaryDataList
-                      .where(
-                          (element) => element.targetDate == format.format(day))
-                      .toList();
+                  return diaryController.state.value.diaryDataList.where((element) => element.targetDate == format.format(day)).toList();
                 },
                 calendarStyle: CalendarStyle(
                   cellPadding: EdgeInsets.only(top: 10.h),
@@ -69,8 +66,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                         Center(
                           child: Text(
                             DateFormat.E('ko-KR').format(day),
-                            style: kSubtitle1Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle),
+                            style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                           ),
                         ),
                       ],
@@ -111,67 +107,58 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                           child: Column(
                             children: [
                               events.isEmpty && isToday(day)
-                                  ? Container(
-                                      padding: context.isTablet
-                                          ? EdgeInsets.all(9.w)
-                                          : EdgeInsets.all(16.w),
-                                      decoration: BoxDecoration(
-                                        border: isToday(day)
-                                            ? Border.all(
-                                                width: 1,
-                                                color: kOrange300Color,
-                                              )
-                                            : null,
-                                        shape: BoxShape.circle,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .surface_01,
+                                  ? Padding(
+                                      padding: EdgeInsets.only(top: 5),
+                                      child: Image.asset(
+                                        Theme.of(context).colorScheme.brightness == Brightness.dark
+                                            ? "lib/config/assets/images/diary/dark_mode/empty_container.png"
+                                            : "lib/config/assets/images/diary/light_mode/empty_container.png",
+                                        width: 30,
                                       ),
                                     )
                                   : isToday(day)
                                       ? Image.asset(
                                           getEmoticonImage(events[0].feeling),
-                                          width: 36.w,
+                                          width: 36,
                                         )
                                       : events.isNotEmpty
                                           ? Align(
                                               alignment: Alignment.center,
                                               child: Image.asset(
-                                                getEmoticonImage(
-                                                    events[0].feeling),
-                                                width: 36.w,
+                                                getEmoticonImage(events[0].feeling),
+                                                width: 36,
                                               ),
                                             )
                                           : DateTime.now().isAfter(day)
-                                              ? Container(
-                                                  padding: context.isTablet
-                                                      ? EdgeInsets.all(9.w)
-                                                      : EdgeInsets.all(16.w),
-                                                  decoration: BoxDecoration(
-                                                    border: isToday(day)
-                                                        ? Border.all(
-                                                            width: 1,
-                                                            color:
-                                                                kOrange300Color,
-                                                          )
-                                                        : null,
-                                                    shape: BoxShape.circle,
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .surface_01,
+                                              ?
+                                              // Container(
+                                              //                     padding: context.isTablet ? EdgeInsets.all(9.w) : EdgeInsets.all(16.w),
+                                              //                     decoration: BoxDecoration(
+                                              //                       border: isToday(day)
+                                              //                           ? Border.all(
+                                              //                               width: 1,
+                                              //                               color: kOrange300Color,
+                                              //                             )
+                                              //                           : null,
+                                              //                       shape: BoxShape.circle,
+                                              //                       color: Theme.of(context).colorScheme.surface_01,
+                                              //                     ),
+                                              //                   )
+
+                                              Padding(
+                                                  padding: EdgeInsets.only(top: 5),
+                                                  child: Image.asset(
+                                                    Theme.of(context).colorScheme.brightness == Brightness.dark
+                                                        ? "lib/config/assets/images/diary/dark_mode/empty_container.png"
+                                                        : "lib/config/assets/images/diary/light_mode/empty_container.png",
+                                                    width: 30,
                                                   ),
                                                 )
                                               : Padding(
-                                                  padding:
-                                                      EdgeInsets.all(8.0.w),
+                                                  padding: EdgeInsets.all(8.0.w),
                                                   child: Text(
                                                     DateFormat('d').format(day),
-                                                    style:
-                                                        kHeader6Style.copyWith(
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .colorScheme
-                                                                .iconSubColor),
+                                                    style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.iconSubColor),
                                                   ),
                                                 )
                             ],
@@ -196,8 +183,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                               child: Center(
                                 child: Text(
                                   DateFormat('d').format(day),
-                                  style: kCaption1Style.copyWith(
-                                      color: kWhiteColor),
+                                  style: kCaption1Style.copyWith(color: kWhiteColor),
                                 ),
                               ),
                             ),
@@ -207,10 +193,7 @@ class _EmotionCalendarWidgetState extends State<EmotionCalendarWidget> {
                                 padding: EdgeInsets.all(16.0.w),
                                 child: Text(
                                   DateFormat('d').format(day),
-                                  style: kCaption1Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .iconSubColor),
+                                  style: kCaption1Style.copyWith(color: Theme.of(context).colorScheme.iconSubColor),
                                 ),
                               )
                             : Container();

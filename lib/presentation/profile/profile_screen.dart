@@ -54,8 +54,7 @@ class ProfileScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           color: kOrange300Color,
                           shape: BoxShape.circle,
-                          border:
-                              Border.all(width: 0.5, color: Colors.transparent),
+                          border: Border.all(width: 0.5, color: Colors.transparent),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(6.w),
@@ -74,8 +73,7 @@ class ProfileScreen extends StatelessWidget {
                       Obx(
                         () => Text(
                           '${onBoardingController.state.value.nickname}님 반가워요!',
-                          style: kHeader2Style.copyWith(
-                              color: Theme.of(context).colorScheme.textTitle),
+                          style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                         ),
                       ),
                       SizedBox(
@@ -84,8 +82,7 @@ class ProfileScreen extends StatelessWidget {
                       Obx(
                         () => Row(
                           children: [
-                            onBoardingController.state.value.loginType ==
-                                    "KAKAO"
+                            onBoardingController.state.value.loginType == "KAKAO"
                                 ? Container(
                                     width: 20.w,
                                     height: 20.h,
@@ -127,10 +124,7 @@ class ProfileScreen extends StatelessWidget {
                             Obx(
                               () => Text(
                                 " ${onBoardingController.state.value.email}",
-                                style: kBody3Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textSubtitle),
+                                style: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                               ),
                             ),
                           ],
@@ -160,8 +154,7 @@ class ProfileScreen extends StatelessWidget {
                 onPressed: () {
                   Get.to(
                     () => ProfileSettingScreen(
-                      isKakaoLogin:
-                          onBoardingController.state.value.loginType == 'KAKAO',
+                      isKakaoLogin: onBoardingController.state.value.loginType == 'KAKAO',
                     ),
                     binding: BindingsBuilder(
                       getProfileSettingViewModelBinding,
@@ -204,8 +197,7 @@ class ProfileScreen extends StatelessWidget {
               ),
               Obx(
                 () => ProfileButton(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   icon: FlutterSwitch(
                     padding: 2,
                     width: 52.0.w,
@@ -213,12 +205,8 @@ class ProfileScreen extends StatelessWidget {
                     activeColor: Theme.of(context).colorScheme.primaryColor,
                     inactiveColor: kGrayColor750,
                     toggleSize: 28.0.w,
-                    value:
-                        mainViewController.themeMode.value == ThemeMode.light ||
-                            (mainViewController.themeMode.value ==
-                                    ThemeMode.system &&
-                                MediaQuery.of(context).platformBrightness ==
-                                    Brightness.light),
+                    value: mainViewController.themeMode.value == ThemeMode.light ||
+                        (mainViewController.themeMode.value == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.light),
                     borderRadius: 50.0.w,
                     onToggle: (val) async {
                       mainViewController.toggleThemeMode(context);
@@ -300,11 +288,31 @@ class ProfileScreen extends StatelessWidget {
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
                 ),
-                title: '하루냥 인스타 바로가기',
+                title: '하루냥 인스타그램',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () async {
-                  if (!await launchUrl(
-                      Uri.parse("https://www.instagram.com/haru__nyang__/"))) {
+                  if (await canLaunch("instagram://user?username=haru__nyang__")) {
+                    await launch("instagram://user?username=haru__nyang__");
+                  } else if (await canLaunch("https://www.instagram.com/haru__nyang__/")) {
+                    await launch("https://www.instagram.com/haru__nyang__/");
+                  } else {
+                    throw 'Could not launch Instagram';
+                  }
+                },
+              ),
+              Divider(
+                thickness: 1.h,
+                height: 1.h,
+                color: Theme.of(context).colorScheme.border,
+              ),
+              ProfileButton(
+                icon: SvgPicture.asset(
+                  "lib/config/assets/images/profile/navigate_next.svg",
+                ),
+                title: '1:1 문의하기',
+                titleColor: Theme.of(context).colorScheme.textTitle,
+                onPressed: () async {
+                  if (!await launch("https://open.kakao.com/o/sDhHcgDf")) {
                     throw Exception('Could not launch');
                   }
                 },

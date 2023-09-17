@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/topic/topic_data.dart';
@@ -16,8 +18,7 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
-class WriteDiaryViewModel extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class WriteDiaryViewModel extends GetxController with GetSingleTickerProviderStateMixin {
   final String emotion;
   final DiaryData? diaryData;
   WriteDiaryViewModel({
@@ -25,8 +26,7 @@ class WriteDiaryViewModel extends GetxController
     this.diaryData,
   });
 
-  final Rx<TextEditingController> diaryEditingController =
-      TextEditingController().obs;
+  final Rx<TextEditingController> diaryEditingController = TextEditingController().obs;
   final RxString diaryValue = ''.obs;
   final pickedFile = Rx<XFile?>(null);
   final croppedFile = Rx<CroppedFile?>(null);
@@ -106,6 +106,8 @@ class WriteDiaryViewModel extends GetxController
     ),
   ];
 
+  DateTime screenEntryTime = DateTime.now();
+
   @override
   void onInit() {
     super.onInit();
@@ -133,6 +135,15 @@ class WriteDiaryViewModel extends GetxController
     timer?.cancel();
 
     super.onClose();
+
+    DateTime screenExitTime = DateTime.now();
+    Duration stayDuration = screenExitTime.difference(screenEntryTime);
+
+    // Firebase Analytics에 체류시간 로깅
+    GlobalUtils.setAnalyticsCustomEvent('stay_duration', {
+      'screen': "Screen_Event_WriteDiary_WritePage",
+      'duration': stayDuration.inSeconds,
+    });
   }
 
   void onTextChanged() {
@@ -197,13 +208,9 @@ class WriteDiaryViewModel extends GetxController
       // Use the user's UID and the current timestamp to create a unique path for each image.
       String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
 
-      await FirebaseStorage.instance
-          .ref('uploads/$socialId/$timestamp.png')
-          .putFile(file);
+      await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').putFile(file);
 
-      String downloadURL = await FirebaseStorage.instance
-          .ref('uploads/$socialId/$timestamp.png')
-          .getDownloadURL();
+      String downloadURL = await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').getDownloadURL();
 
       firebaseImageUrl.value = downloadURL;
     } on FirebaseException {
@@ -213,8 +220,7 @@ class WriteDiaryViewModel extends GetxController
   }
 
   Future<void> selectDeviceImage() async {
-    final pickedImage = await ImagePicker()
-        .pickImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (pickedImage != null) {
       pickedFile.value = pickedImage;
     }
@@ -224,8 +230,7 @@ class WriteDiaryViewModel extends GetxController
     pickedFile.value = null;
     croppedFile.value = null;
     networkImage.value = null;
-    Get.find<DiaryController>().diaryDetailData.value =
-        Get.find<DiaryController>().diaryDetailData.value!.copyWith(image: "");
+    Get.find<DiaryController>().diaryDetailData.value = Get.find<DiaryController>().diaryDetailData.value!.copyWith(image: "");
   }
 
   void setDiaryData(DiaryData diaryData) {

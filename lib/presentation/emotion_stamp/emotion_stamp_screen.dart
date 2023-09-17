@@ -7,10 +7,10 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart'
-    as picker_theme;
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
+import 'package:frontend/data/data_source/global_service.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/main_view_model.dart';
@@ -23,20 +23,13 @@ import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../core/utils/utils.dart';
 
 class YearMonthModel extends DatePickerModel {
-  YearMonthModel(
-      {required DateTime currentTime,
-      required DateTime maxTime,
-      required DateTime minTime,
-      required LocaleType locale})
-      : super(
-            currentTime: currentTime,
-            maxTime: maxTime,
-            minTime: minTime,
-            locale: locale);
+  YearMonthModel({required DateTime currentTime, required DateTime maxTime, required DateTime minTime, required LocaleType locale})
+      : super(currentTime: currentTime, maxTime: maxTime, minTime: minTime, locale: locale);
 
   @override
   List<int> layoutProportions() {
@@ -100,8 +93,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                 DatePicker.showPicker(
                   context,
                   pickerModel: YearMonthModel(
-                    currentTime:
-                        diaryController.state.value.focusedCalendarDate,
+                    currentTime: diaryController.state.value.focusedCalendarDate,
                     maxTime: DateTime.now(),
                     minTime: DateTime(2000, 1),
                     locale: LocaleType.ko,
@@ -112,10 +104,8 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   },
                   locale: LocaleType.ko,
                   theme: picker_theme.DatePickerTheme(
-                    itemStyle: kSubtitle1Style.copyWith(
-                        color: Theme.of(context).colorScheme.textBody),
-                    backgroundColor:
-                        Theme.of(context).colorScheme.backgroundModal,
+                    itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                    backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                     title: "다른 날짜 일기 보기",
                   ),
                 );
@@ -127,10 +117,8 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      DateFormat('yyyy년 M월').format(
-                          diaryController.state.value.focusedCalendarDate),
-                      style: kHeader4Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle),
+                      DateFormat('yyyy년 M월').format(diaryController.state.value.focusedCalendarDate),
+                      style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                     ),
                     SizedBox(
                       width: 4.w,
@@ -155,9 +143,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   () => PageTransitionSwitcher(
                     duration: const Duration(milliseconds: 300),
                     reverse: !diaryController.state.value.isCalendar,
-                    transitionBuilder: (Widget child,
-                        Animation<double> animation,
-                        Animation<double> secondaryAnimation) {
+                    transitionBuilder: (Widget child, Animation<double> animation, Animation<double> secondaryAnimation) {
                       return SharedAxisTransition(
                         animation: animation,
                         secondaryAnimation: secondaryAnimation,
@@ -173,17 +159,79 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 100.h,
-                child: GestureDetector(
-                  onTap: () {
-                    GlobalUtils.setAnalyticsCustomEvent('Click_AD');
-                  },
-                  child: AdWidget(
-                    ad: banner,
-                  ),
-                ),
-              ),
+              Get.find<GlobalService>().isBannerOpen.value
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Container(
+                        width: double.infinity,
+                        height: 96,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.brightness == Brightness.dark ? Color(0xffF4D3B3) : Color(0xffffe9d5),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(16),
+                          ),
+                        ),
+                        child: GestureDetector(
+                          onTap: () async {
+                            GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
+                            if (!await launch(Get.find<GlobalService>().bannerUrl.value)) {
+                              throw Exception('Could not launch');
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  left: 24.0,
+                                  top: 20,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      "하루냥 사용자 단체 인터뷰 모집",
+                                      style: TextStyle(
+                                        fontFamily: pretendard,
+                                        fontSize: 12,
+                                        fontWeight: FontWeight.w600,
+                                      ).copyWith(color: kGrayColor550),
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    Text(
+                                      "하루냥 개발 크루를 만나고\n의견을 말해주세요!",
+                                      style: kHeader5Style.copyWith(color: kBlackColor),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  right: 28.0,
+                                ),
+                                child: Image.asset(
+                                  "lib/config/assets/images/character/character11.png",
+                                  height: 74,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      height: 100.h,
+                      child: GestureDetector(
+                        onTap: () {
+                          GlobalUtils.setAnalyticsCustomEvent('Click_AD');
+                        },
+                        child: AdWidget(
+                          ad: banner,
+                        ),
+                      ),
+                    ),
             ],
           ),
         ),
