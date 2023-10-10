@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
 
-import '../../../../config/theme/text_data.dart';
-
-class AppleLoginWidget extends StatelessWidget {
-  const AppleLoginWidget({
+class KakaoLoginWidget extends StatelessWidget {
+  const KakaoLoginWidget({
     Key? key,
   }) : super(key: key);
 
@@ -17,7 +16,7 @@ class AppleLoginWidget extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(60.w),
-          color: kBlackColor,
+          color: kKakaoPrimaryColor,
         ),
         width: 335.w,
         height: 52.h,
@@ -25,16 +24,16 @@ class AppleLoginWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              'lib/config/assets/images/login/apple_logo.svg',
-              width: 13.w,
+              'lib/config/assets/images/login/kakao_logo.svg',
+              width: 16.w,
               height: 16.h,
             ),
             SizedBox(
               width: 7.w,
             ),
             Text(
-              "Apple로 로그인",
-              style: kHeader5Style.copyWith(color: kWhiteColor),
+              "카카오로 로그인",
+              style: kHeader5Style.copyWith(color: kBlackColor),
             ),
           ],
         ),

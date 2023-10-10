@@ -9,7 +9,7 @@ import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/login/components/term_check_box.dart';
+import 'package:frontend/ui/screen/login/components/term_check_box.dart';
 import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
 import 'package:frontend/presentation/profile/terms/marketing_consent_screen.dart';
 import 'package:frontend/presentation/profile/terms/privacy_policy_screen.dart';

@@ -9,7 +9,7 @@ import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:get/get.dart';
 
-import 'components/apple_login_widget.dart';
+import '../../ui/screen/login/components/apple_login_widget.dart';
 
 class LoginScreen extends GetView<LoginViewModel> {
   final bool isSignup;
