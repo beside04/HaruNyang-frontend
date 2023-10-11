@@ -19,6 +19,7 @@ class LoginTermsInformationViewModel extends GetxController {
   final RxBool isTermsAgree = false.obs;
   final RxBool isPrivacyPolicyAgree = false.obs;
   final RxBool isMarketingConsentAgree = false.obs;
+  final RxBool isOverseasRelocationConsentAgree = false.obs;
 
   void toggleAllCheck() {
     isAllCheckAgree.value = !isAllCheckAgree.value;
@@ -26,11 +27,13 @@ class LoginTermsInformationViewModel extends GetxController {
       isTermsAgree.value = true;
       isPrivacyPolicyAgree.value = true;
       isMarketingConsentAgree.value = true;
+      isOverseasRelocationConsentAgree.value = true;
       pushMessagePermissionUseCase.setMarketingConsentAgree(true.toString());
     } else {
       isTermsAgree.value = false;
       isPrivacyPolicyAgree.value = false;
       isMarketingConsentAgree.value = false;
+      isOverseasRelocationConsentAgree.value = false;
       pushMessagePermissionUseCase.setMarketingConsentAgree(false.toString());
     }
   }
@@ -41,6 +44,10 @@ class LoginTermsInformationViewModel extends GetxController {
 
   void togglePrivacyPolicyCheck() {
     isPrivacyPolicyAgree.value = !isPrivacyPolicyAgree.value;
+  }
+
+  void toggleOverseasRelocationConsent() {
+    isOverseasRelocationConsentAgree.value = !isOverseasRelocationConsentAgree.value;
   }
 
   void toggleMarketingConsentCheck() {

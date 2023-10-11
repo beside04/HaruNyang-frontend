@@ -15,9 +15,9 @@ import 'package:frontend/presentation/profile/terms/marketing_consent_screen.dar
 import 'package:frontend/presentation/profile/terms/privacy_policy_screen.dart';
 import 'package:frontend/presentation/profile/terms/terms_of_service_screen.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class LoginTermsInformationScreen
-    extends GetView<LoginTermsInformationViewModel> {
+class LoginTermsInformationScreen extends GetView<LoginTermsInformationViewModel> {
   final bool isSocialKakao;
 
   const LoginTermsInformationScreen({
@@ -36,8 +36,7 @@ class LoginTermsInformationScreen
             centerTitle: true,
             title: Text(
               "약관동의",
-              style: kHeader4Style.copyWith(
-                  color: Theme.of(context).colorScheme.textTitle),
+              style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
             ),
             elevation: 0,
             bottom: PreferredSize(
@@ -73,8 +72,7 @@ class LoginTermsInformationScreen
                     ),
                     child: Text(
                       '하루냥의 서비스 약관이에요. \n 필수 약관을 동의하셔야 이용할 수 있어요',
-                      style: kBody3Style.copyWith(
-                          color: Theme.of(context).colorScheme.textSubtitle),
+                      style: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -86,17 +84,15 @@ class LoginTermsInformationScreen
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Theme.of(context).colorScheme.brightness ==
-                                Brightness.dark
+                        Theme.of(context).colorScheme.brightness == Brightness.dark
                             ? Obx(
                                 () => SizedBox(
                                   width: 24.w,
                                   height: 24.h,
                                   child: controller.isTermsAgree.value &&
-                                          controller
-                                              .isPrivacyPolicyAgree.value &&
-                                          controller
-                                              .isMarketingConsentAgree.value
+                                          controller.isPrivacyPolicyAgree.value &&
+                                          controller.isMarketingConsentAgree.value &&
+                                          controller.isOverseasRelocationConsentAgree.value
                                       ? Image.asset(
                                           "lib/config/assets/images/check/round_check_primary.png",
                                         )
@@ -110,10 +106,9 @@ class LoginTermsInformationScreen
                                   width: 24.w,
                                   height: 24.h,
                                   child: controller.isTermsAgree.value &&
-                                          controller
-                                              .isPrivacyPolicyAgree.value &&
-                                          controller
-                                              .isMarketingConsentAgree.value
+                                          controller.isPrivacyPolicyAgree.value &&
+                                          controller.isMarketingConsentAgree.value &&
+                                          controller.isOverseasRelocationConsentAgree.value
                                       ? Image.asset(
                                           "lib/config/assets/images/check/round_check_primary.png",
                                         )
@@ -126,8 +121,7 @@ class LoginTermsInformationScreen
                           padding: EdgeInsets.all(8.w),
                           child: Text(
                             '전체 동의하기',
-                            style: kSubtitle1Style.copyWith(
-                                color: Theme.of(context).colorScheme.textBody),
+                            style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                           ),
                         ),
                       ],
@@ -146,25 +140,25 @@ class LoginTermsInformationScreen
                         children: [
                           Text(
                             '(필수) ',
-                            style: kBody2Style.copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.textPrimary),
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textPrimary),
                           ),
                           Text(
                             '서비스 이용약관',
-                            style: kBody2Style.copyWith(
-                                color: Theme.of(context).colorScheme.textBody),
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                           ),
                         ],
                       ),
                       onTap: controller.toggleTermsCheck,
-                      termOnTap: () {
-                        Get.to(
-                          () => const TermsOfServiceScreen(
-                            isProfileScreen: false,
-                          ),
-                          transition: Transition.downToUp,
-                        );
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/e505f096785141e2b31c206ae439f4ee")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const TermsOfServiceScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
                       },
                     ),
                   ),
@@ -178,25 +172,57 @@ class LoginTermsInformationScreen
                         children: [
                           Text(
                             '(필수) ',
-                            style: kBody2Style.copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.textPrimary),
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textPrimary),
                           ),
                           Text(
                             '개인정보 처리방침',
-                            style: kBody2Style.copyWith(
-                                color: Theme.of(context).colorScheme.textBody),
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                           ),
                         ],
                       ),
                       onTap: controller.togglePrivacyPolicyCheck,
-                      termOnTap: () {
-                        Get.to(
-                          () => const PrivacyPolicyScreen(
-                            isProfileScreen: false,
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/25c01aca07c34481bd1b5b1d5c364499?pvs=4")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const PrivacyPolicyScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Obx(
+                    () => TermCheckBox(
+                      termValue: controller.isOverseasRelocationConsentAgree.value,
+                      termTitle: Row(
+                        children: [
+                          Text(
+                            '(필수) ',
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textPrimary),
                           ),
-                          transition: Transition.downToUp,
-                        );
+                          Text(
+                            '개인정보 국외 이전 동의',
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                          ),
+                        ],
+                      ),
+                      onTap: controller.toggleOverseasRelocationConsent,
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/2c3190cd57db4605889a6f07eac92f3b")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const PrivacyPolicyScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
                       },
                     ),
                   ),
@@ -208,17 +234,19 @@ class LoginTermsInformationScreen
                       termValue: controller.isMarketingConsentAgree.value,
                       termTitle: Text(
                         '(선택) 마케팅 정보 수신 동의',
-                        style: kBody2Style.copyWith(
-                            color: Theme.of(context).colorScheme.textBody),
+                        style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                       ),
                       onTap: controller.toggleMarketingConsentCheck,
-                      termOnTap: () {
-                        Get.to(
-                          () => const MarketingConsentScreen(
-                            isProfileScreen: false,
-                          ),
-                          transition: Transition.downToUp,
-                        );
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/39648dc746334206b5d353b93eee62bd")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const MarketingConsentScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
                       },
                     ),
                   ),
@@ -229,8 +257,7 @@ class LoginTermsInformationScreen
             Obx(
               () => BottomButton(
                 title: "가입 완료하기",
-                onTap: controller.isTermsAgree.value &&
-                        controller.isPrivacyPolicyAgree.value
+                onTap: controller.isTermsAgree.value && controller.isPrivacyPolicyAgree.value
                     ? () {
                         controller.goToLoginScreen(isSocialKakao);
                       }

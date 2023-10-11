@@ -40,44 +40,46 @@ class NoticeButton extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        title,
-                        style: kHeader6Style.copyWith(
-                            color: Theme.of(context).colorScheme.textBody),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(width: 12.0.w),
-                      isImportant
-                          ? Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(30.w),
-                                color:
-                                    Theme.of(context).colorScheme.primaryColor,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 4.0.h, horizontal: 6.0.w),
-                                child: Text(
-                                  '중요',
-                                  style: kCaption1Style.copyWith(
-                                      color: kWhiteColor),
-                                ),
-                              ),
-                            )
-                          : Container(),
-                    ],
-                  ),
-                  Text(
-                    DateFormat('yyyy.MM.dd').format(date),
-                    style: kBody3Style.copyWith(
-                        color: Theme.of(context).colorScheme.textLowEmphasis),
-                  ),
-                ],
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Row(
+                    //   children: [
+                    //     Text(
+                    //       title,
+                    //       style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                    //       overflow: TextOverflow.ellipsis,
+                    //     ),
+                    //     SizedBox(width: 12.0.w),
+                    //     isImportant
+                    //         ? Container(
+                    //             decoration: BoxDecoration(
+                    //               borderRadius: BorderRadius.circular(30.w),
+                    //               color: Theme.of(context).colorScheme.primaryColor,
+                    //             ),
+                    //             child: Padding(
+                    //               padding: EdgeInsets.symmetric(vertical: 4.0.h, horizontal: 6.0.w),
+                    //               child: Text(
+                    //                 '중요',
+                    //                 style: kCaption1Style.copyWith(color: kWhiteColor),
+                    //               ),
+                    //             ),
+                    //           )
+                    //         : Container(),
+                    //   ],
+                    // ),
+                    Text(
+                      title,
+                      style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    Text(
+                      DateFormat('yyyy.MM.dd').format(date),
+                      style: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textLowEmphasis),
+                    ),
+                  ],
+                ),
               ),
               SvgPicture.asset(
                 "lib/config/assets/images/profile/navigate_next.svg",

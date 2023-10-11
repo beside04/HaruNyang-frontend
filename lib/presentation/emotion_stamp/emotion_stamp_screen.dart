@@ -111,7 +111,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                 );
               },
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 16.0, right: 8.0, top: 8.0, bottom: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,
@@ -162,61 +162,27 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
               Get.find<GlobalService>().isBannerOpen.value
                   ? Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Container(
-                        width: double.infinity,
-                        height: 96,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.brightness == Brightness.dark ? Color(0xffF4D3B3) : Color(0xffffe9d5),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16),
-                          ),
+                      child: ClipRRect(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(16),
                         ),
-                        child: GestureDetector(
-                          onTap: () async {
-                            GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
-                            if (!await launch(Get.find<GlobalService>().bannerUrl.value)) {
-                              throw Exception('Could not launch');
-                            }
-                          },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 24.0,
-                                  top: 20,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "하루냥 사용자 단체 인터뷰 모집",
-                                      style: TextStyle(
-                                        fontFamily: pretendard,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ).copyWith(color: kGrayColor550),
-                                    ),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text(
-                                      "하루냥 개발 크루를 만나고\n의견을 말해주세요!",
-                                      style: kHeader5Style.copyWith(color: kBlackColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 28.0,
-                                ),
-                                child: Image.asset(
-                                  "lib/config/assets/images/character/character11.png",
-                                  height: 74,
-                                ),
-                              ),
-                            ],
+                        child: Container(
+                          width: double.infinity,
+                          height: 96,
+                          child: GestureDetector(
+                            onTap: () async {
+                              GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
+                              if (!await launch(Get.find<GlobalService>().bannerUrl.value)) {
+                                throw Exception('Could not launch');
+                              }
+                            },
+                            child: Theme.of(context).colorScheme.brightness == Brightness.dark
+                                ? Image.asset(
+                                    "lib/config/assets/images/home/dark_mode/FGIbanner.png",
+                                  )
+                                : Image.asset(
+                                    "lib/config/assets/images/home/light_mode/FGIbanner.png",
+                                  ),
                           ),
                         ),
                       ),
