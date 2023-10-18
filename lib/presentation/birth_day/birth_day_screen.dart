@@ -44,13 +44,11 @@ class BirthDayScreen extends StatelessWidget {
                           ),
                           Text(
                             "$name님",
-                            style: kHeader1Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle),
+                            style: kHeader1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                           ),
                           Text(
                             '생일을 축하해요!',
-                            style: kHeader1Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle),
+                            style: kHeader1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                           ),
                           Center(
                             child: Padding(
@@ -63,16 +61,14 @@ class BirthDayScreen extends StatelessWidget {
                           ),
                           Text(
                             '남들에겐 그저 흘러갈 수 있는 날일 수도 있지만 \n오늘은 그 무엇보다도 특별한 날이에요.\n$name님이 태어났기에\n우리가 만날 수 있었으니까요.',
-                            style: kBody1Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle),
+                            style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                           ),
                           const SizedBox(
                             height: 30,
                           ),
                           Text(
                             '$name님이 써 주신 일기에 쪽지를 건네며\n저도 행복한 시간을 보낼 수 있었어요.\n오늘 행복한 하루 되시고 앞으로도 계속 만나요 우리!',
-                            style: kBody1Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle),
+                            style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                           ),
                         ],
                       ),
@@ -100,15 +96,13 @@ class BirthDayScreen extends StatelessWidget {
                         onTap: () async {
                           Navigator.pop(context);
                           String time = DateTime.now().toIso8601String();
-                          Get.find<HomeViewModel>().isNotBirthDayPopup.value =
-                              true;
+                          // Get.find<HomeViewModel>().isNotBirthDayPopup.value =
+                          //     true;
                           await popUpUseCase.setLastBirthDayPopUpDate(time);
                         },
                         child: Text(
                           "오늘 하루 그만 볼래요",
-                          style: kBody1Style.copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.textSubtitle),
+                          style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                         ),
                       ),
                     ),

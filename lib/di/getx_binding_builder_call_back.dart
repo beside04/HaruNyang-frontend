@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:frontend/data/data_source/remote_data/bookmark_api.dart';
-import 'package:frontend/data/data_source/remote_data/diary_api.dart';
-import 'package:frontend/data/data_source/remote_data/emotion_stamp_api.dart';
-import 'package:frontend/data/data_source/remote_data/notice_api.dart';
-import 'package:frontend/data/data_source/remote_data/on_boarding_api.dart';
-import 'package:frontend/data/data_source/remote_data/refresh_interceptor.dart';
-import 'package:frontend/data/data_source/remote_data/withdraw_api.dart';
+import 'package:frontend/apis/bookmark_api.dart';
+import 'package:frontend/apis/diary_api.dart';
+import 'package:frontend/apis/emotion_stamp_api.dart';
+import 'package:frontend/apis/notice_api.dart';
+import 'package:frontend/apis/on_boarding_api.dart';
+import 'package:frontend/apis/refresh_interceptor.dart';
+import 'package:frontend/apis/withdraw_api.dart';
 import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
 import 'package:frontend/data/repository/dark_mode/dark_mode_repository_impl.dart';
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
@@ -45,8 +45,6 @@ import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_loading_view_model.dart';
 import 'package:frontend/presentation/diary/write_diary_view_model.dart';
 import 'package:frontend/presentation/home/home_view_model.dart';
-import 'package:frontend/presentation/login/login_terms_information/login_terms_information_viewmodel.dart';
-import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_finish/on_boarding_finish_viewmodel.dart';
 import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_viewmodel.dart';
@@ -55,13 +53,11 @@ import 'package:frontend/presentation/profile/notice/notice_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_view_model.dart';
 import 'package:frontend/presentation/profile/push_message/push_message_view_model.dart';
-import 'package:frontend/presentation/splash/splash_view_model.dart';
 import 'package:get/get.dart';
 
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
 final DarkModeRepositoryImpl darkModeRepositoryImpl = DarkModeRepositoryImpl();
-final PushMessageRepositoryImpl pushMessagePermissionRepositoryImpl =
-    PushMessageRepositoryImpl();
+final PushMessageRepositoryImpl pushMessagePermissionRepositoryImpl = PushMessageRepositoryImpl();
 final PopUpRepositoryImpl popupRepositoryImpl = PopUpRepositoryImpl();
 
 final TokenUseCase tokenUseCase = TokenUseCase(
@@ -172,8 +168,7 @@ final GetEmotionStampUseCase getEmotionStampUseCase = GetEmotionStampUseCase(
   ),
 );
 
-final GetDiaryDetailUseCase getDiaryDetailUseCase =
-    GetDiaryDetailUseCase(diaryRepository: diaryRepository);
+final GetDiaryDetailUseCase getDiaryDetailUseCase = GetDiaryDetailUseCase(diaryRepository: diaryRepository);
 
 final saveDiaryUseCase = SaveDiaryUseCase(
   diaryRepository: diaryRepository,
@@ -197,12 +192,12 @@ void getMainBinding() {
   Get.put(NotificationController());
 }
 
-void getLoginBinding() {
-  Get.put(LoginViewModel(
-    kakaoLoginUseCase: kakaoLoginUseCase,
-    appleLoginUseCase: appleLoginUseCase,
-  ));
-}
+// void getLoginBinding() {
+//   Get.put(LoginViewModel(
+//     kakaoLoginUseCase: kakaoLoginUseCase,
+//     appleLoginUseCase: appleLoginUseCase,
+//   ));
+// }
 
 void getDiaryBinding() {
   Get.put(
@@ -218,19 +213,17 @@ void getWriteDiaryBinding(String emotion, DiaryData? diaryData) {
 
 void getWriteDiaryLoadingBinding() {
   Get.put(
-    WriteDiaryLoadingViewModel(
-        saveDiaryUseCase: saveDiaryUseCase,
-        updateDiaryUseCase: updateDiaryUseCase),
+    WriteDiaryLoadingViewModel(saveDiaryUseCase: saveDiaryUseCase, updateDiaryUseCase: updateDiaryUseCase),
   );
 }
 
-void getLoginTermsInformationBinding() {
-  Get.put(LoginTermsInformationViewModel(
-    kakaoLoginUseCase: kakaoLoginUseCase,
-    appleLoginUseCase: appleLoginUseCase,
-    pushMessagePermissionUseCase: pushMessagePermissionUseCase,
-  ));
-}
+// void getLoginTermsInformationBinding() {
+//   Get.put(LoginTermsInformationViewModel(
+//     kakaoLoginUseCase: kakaoLoginUseCase,
+//     appleLoginUseCase: appleLoginUseCase,
+//     pushMessagePermissionUseCase: pushMessagePermissionUseCase,
+//   ));
+// }
 
 void getOnBoardingJobBinding() {
   Get.put(OnBoardingJobViewModel());
@@ -250,22 +243,22 @@ void getOnBoardingFinishBinding() {
   ));
 }
 
-HomeViewModel getHomeViewModelBinding() {
-  return Get.put(
-    HomeViewModel(
-      getEmotionStampUseCase: getEmotionStampUseCase,
-      popUpUseCase: popUpUseCase,
-    ),
-  );
-}
+// HomeViewModel getHomeViewModelBinding() {
+//   return Get.put(
+//     HomeViewModel(
+//       getEmotionStampUseCase: getEmotionStampUseCase,
+//       popUpUseCase: popUpUseCase,
+//     ),
+//   );
+// }
 
-SplashViewModel getSplashViewModelBinding() {
-  return Get.put(
-    SplashViewModel(
-      popUpUseCase: popUpUseCase,
-    ),
-  );
-}
+// SplashViewModel getSplashViewModelBinding() {
+//   return Get.put(
+//     SplashViewModel(
+//       popUpUseCase: popUpUseCase,
+//     ),
+//   );
+// }
 
 void getWithdrawViewModelBinding() {
   Get.put(
@@ -315,8 +308,7 @@ void getDiaryControllerBinding() {
 }
 
 void getPushMessageControllerBinding() {
-  Get.put(PushMessageViewModel(
-      pushMessagePermissionUseCase: pushMessagePermissionUseCase));
+  Get.put(PushMessageViewModel(pushMessagePermissionUseCase: pushMessagePermissionUseCase));
 }
 
 void getNoticeViewModelBinding() {

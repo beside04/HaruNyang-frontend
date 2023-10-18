@@ -21,6 +21,7 @@ import 'package:frontend/presentation/diary/diary_detail/diary_note_screen.dart'
 import 'package:frontend/presentation/diary/write_diary_screen.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
+import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
@@ -96,12 +97,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
       screenName: 'Screen_Event_DiaryRead',
       child: WillPopScope(
         onWillPop: () async {
-          Get.offAll(
-            () => const HomeScreen(),
-            binding: BindingsBuilder(
-              getHomeViewModelBinding,
-            ),
-          );
+          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+
           Get.find<DiaryController>().resetDiary();
           return false;
         },
@@ -134,17 +131,12 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
           appBar: AppBar(
             title: Text(
               DateFormat('M월 d일').format(widget.date),
-              style: kHeader4Style.copyWith(
-                  color: Theme.of(context).colorScheme.textTitle),
+              style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
             ),
             leading: IconButton(
               onPressed: () {
-                Get.offAll(
-                  () => const HomeScreen(),
-                  binding: BindingsBuilder(
-                    getHomeViewModelBinding,
-                  ),
-                );
+                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+
                 Get.find<DiaryController>().resetDiary();
               },
               icon: SvgPicture.asset(
@@ -174,9 +166,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                         () => WriteDiaryScreen(
                           date: widget.date,
                           emotion: widget.diaryData.feeling,
-                          diaryData: widget.diaryData.id == null
-                              ? widget.diaryData.copyWith(id: widget.diaryId)
-                              : widget.diaryData,
+                          diaryData: widget.diaryData.id == null ? widget.diaryData.copyWith(id: widget.diaryId) : widget.diaryData,
                           weather: widget.diaryData.weather,
                           isEditScreen: true,
                         ),
@@ -192,10 +182,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                             title: "삭제 하실래요?",
                             content: Text(
                               "삭제 후 일기를 복원 할 수 없어요",
-                              style: kHeader6Style.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .textSubtitle),
+                              style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                             ),
                             actionContent: [
                               DialogButton(
@@ -203,13 +190,8 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .secondaryColor,
-                                textStyle: kHeader4Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textSubtitle),
+                                backgroundColor: Theme.of(context).colorScheme.secondaryColor,
+                                textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                               ),
                               SizedBox(
                                 width: 12.w,
@@ -219,11 +201,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                 onTap: () async {
                                   Navigator.pop(context);
 
-                                  await diaryController.deleteDiary(
-                                      widget.diaryData.id ??
-                                          widget.diaryData
-                                              .copyWith(id: widget.diaryId)
-                                              .id!);
+                                  await diaryController.deleteDiary(widget.diaryData.id ?? widget.diaryData.copyWith(id: widget.diaryId).id!);
 
                                   await showDialog(
                                     barrierDismissible: false,
@@ -235,27 +213,18 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                           title: "삭제 완료",
                                           content: Text(
                                             "일기를 삭제했어요.",
-                                            style: kHeader6Style.copyWith(
-                                                color: Theme.of(ctx)
-                                                    .colorScheme
-                                                    .textSubtitle),
+                                            style: kHeader6Style.copyWith(color: Theme.of(ctx).colorScheme.textSubtitle),
                                           ),
                                           actionContent: [
                                             DialogButton(
                                               title: "확인",
                                               onTap: () {
-                                                Get.offAll(
-                                                  () => const HomeScreen(),
-                                                  binding: BindingsBuilder(
-                                                    getHomeViewModelBinding,
-                                                  ),
-                                                );
-                                                Get.find<DiaryController>()
-                                                    .resetDiary();
+                                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+
+                                                Get.find<DiaryController>().resetDiary();
                                               },
                                               backgroundColor: kOrange200Color,
-                                              textStyle: kHeader4Style.copyWith(
-                                                  color: kWhiteColor),
+                                              textStyle: kHeader4Style.copyWith(color: kWhiteColor),
                                             ),
                                           ],
                                         ),
@@ -264,8 +233,7 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                                   );
                                 },
                                 backgroundColor: kOrange200Color,
-                                textStyle:
-                                    kHeader4Style.copyWith(color: kWhiteColor),
+                                textStyle: kHeader4Style.copyWith(color: kWhiteColor),
                               ),
                             ],
                           );
@@ -355,13 +323,11 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                     height: 20.h,
                   ),
                   Obx(
-                    () => diaryController.diaryDetailData.value?.image == '' ||
-                            diaryController.diaryDetailData.value == null
+                    () => diaryController.diaryDetailData.value?.image == '' || diaryController.diaryDetailData.value == null
                         ? Container()
                         : Center(
                             child: Padding(
-                              padding: EdgeInsets.only(
-                                  bottom: 12.0, right: 20.w, left: 20.w),
+                              padding: EdgeInsets.only(bottom: 12.0, right: 20.w, left: 20.w),
                               child: Image.network(
                                 "${diaryController.diaryDetailData.value?.image}",
                                 width: double.infinity,
@@ -371,12 +337,10 @@ class _DiaryDetailScreenState extends State<DiaryDetailScreen> {
                           ),
                   ),
                   Padding(
-                    padding:
-                        EdgeInsets.only(left: 20.w, right: 20.w, bottom: 12.h),
+                    padding: EdgeInsets.only(left: 20.w, right: 20.w, bottom: 12.h),
                     child: Text(
                       widget.diaryData.diaryContent,
-                      style: kBody1Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle),
+                      style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                     ),
                   ),
                 ],

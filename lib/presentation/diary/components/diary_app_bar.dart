@@ -7,11 +7,11 @@ import 'package:frontend/main_view_model.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
+import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class DiaryAppBar extends GetView<DiaryViewModel>
-    implements PreferredSizeWidget {
+class DiaryAppBar extends GetView<DiaryViewModel> implements PreferredSizeWidget {
   final DateTime date;
 
   const DiaryAppBar({
@@ -25,24 +25,15 @@ class DiaryAppBar extends GetView<DiaryViewModel>
       () => AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor:
-            Theme.of(context).colorScheme.brightness == Brightness.dark
-                ? kGrayColor950
-                : const Color(0xffffac60),
+        backgroundColor: Theme.of(context).colorScheme.brightness == Brightness.dark ? kGrayColor950 : const Color(0xffffac60),
         title: Text(
           DateFormat('M월 d일').format(date),
-          style: kHeader4Style.copyWith(
-              color: Theme.of(context).colorScheme.textTitle),
+          style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
         ),
         leading: controller.isEmotionModal.value
             ? BackIcon(
                 onPressed: () {
-                  Get.offAll(
-                    () => const HomeScreen(),
-                    binding: BindingsBuilder(
-                      getHomeViewModelBinding,
-                    ),
-                  );
+                  Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
                 },
               )
             : BackIcon(

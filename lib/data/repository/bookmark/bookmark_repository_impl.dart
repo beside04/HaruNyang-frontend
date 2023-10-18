@@ -1,5 +1,5 @@
+import 'package:frontend/apis/bookmark_api.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/bookmark_api.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/repository/bookmark/bookmark_repository.dart';
 

@@ -7,7 +7,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/presentation/components/back_icon.dart';
 import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/login/login_screen.dart';
+import 'package:frontend/ui/screen/login/login_screen.dart';
 import 'package:get/get.dart';
 
 class WithdrawDoneScreen extends StatelessWidget {
@@ -36,18 +36,15 @@ class WithdrawDoneScreen extends StatelessWidget {
                   children: [
                     Text(
                       '그동안',
-                      style: kHeader2Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle),
+                      style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                     ),
                     Text(
                       '하루냥을 이용해 주셔서',
-                      style: kHeader2Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle),
+                      style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                     ),
                     Text(
                       '감사합니다.',
-                      style: kHeader2Style.copyWith(
-                          color: Theme.of(context).colorScheme.textTitle),
+                      style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                     ),
                     SizedBox(
                       height: 100.h,
@@ -73,24 +70,18 @@ class WithdrawDoneScreen extends StatelessWidget {
                           children: [
                             Text(
                               '나를 성장 시킨건 이별이 아니었다.',
-                              style: kBody2Style.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.textTitle),
+                              style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                             ),
                             Text(
                               '함께했던 시간이었지',
-                              style: kBody2Style.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.textTitle),
+                              style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 6.h,
                             ),
                             Text(
                               '하상욱',
-                              style: kSubtitle1Style.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.textTitle),
+                              style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                             )
                           ],
                         ),
@@ -105,9 +96,9 @@ class WithdrawDoneScreen extends StatelessWidget {
               onTap: () {
                 Get.offAll(
                   () => const LoginScreen(),
-                  binding: BindingsBuilder(
-                    getLoginBinding,
-                  ),
+                  // binding: BindingsBuilder(
+                  //   getLoginBinding,
+                  // ),
                 );
               },
             ),

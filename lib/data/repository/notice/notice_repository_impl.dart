@@ -1,5 +1,5 @@
+import 'package:frontend/apis/notice_api.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/notice_api.dart';
 import 'package:frontend/domain/model/notice/notice_data.dart';
 import 'package:frontend/domain/repository/notice/notice_repository.dart';
 

@@ -14,6 +14,7 @@ import 'package:frontend/presentation/diary/components/emotion_modal.dart';
 import 'package:frontend/presentation/diary/components/weather_modal.dart';
 import 'package:frontend/presentation/diary/diary_view_model.dart';
 import 'package:frontend/presentation/home/home_screen.dart';
+import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:get/get.dart';
 
 import '../../core/utils/utils.dart';
@@ -34,10 +35,8 @@ class _DiaryScreenState extends State<DiaryScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      Get.find<DiaryViewModel>().selectedWeather.value =
-          WeatherData(weather: '', value: '', desc: '');
-      Get.find<DiaryViewModel>().selectedEmotion.value =
-          EmoticonData(emoticon: '', value: '', desc: '');
+      Get.find<DiaryViewModel>().selectedWeather.value = WeatherData(weather: '', value: '', desc: '');
+      Get.find<DiaryViewModel>().selectedEmotion.value = EmoticonData(emoticon: '', value: '', desc: '');
 
       Get.find<DiaryViewModel>().popUpEmotionModal();
     });
@@ -55,14 +54,8 @@ class _DiaryScreenState extends State<DiaryScreen> {
       child: WillPopScope(
         onWillPop: () async {
           if (controller.isEmotionModal.value) {
-            GlobalUtils.setAnalyticsCustomEvent(
-                'Click_Diary_BackToEmotionCalendar');
-            Get.offAll(
-              () => const HomeScreen(),
-              binding: BindingsBuilder(
-                getHomeViewModelBinding,
-              ),
-            );
+            GlobalUtils.setAnalyticsCustomEvent('Click_Diary_BackToEmotionCalendar');
+            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
           } else {
             GlobalUtils.setAnalyticsCustomEvent('Click_Diary_BackToWeather');
             controller.popUpEmotionModal();
@@ -79,13 +72,12 @@ class _DiaryScreenState extends State<DiaryScreen> {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors:
-                    Theme.of(context).colorScheme.brightness == Brightness.dark
-                        ? [kGrayColor950, kGrayColor950]
-                        : [
-                            const Color(0xffffac60),
-                            const Color(0xffffc793),
-                          ],
+                colors: Theme.of(context).colorScheme.brightness == Brightness.dark
+                    ? [kGrayColor950, kGrayColor950]
+                    : [
+                        const Color(0xffffac60),
+                        const Color(0xffffc793),
+                      ],
               ),
             ),
             child: Column(
@@ -102,8 +94,7 @@ class _DiaryScreenState extends State<DiaryScreen> {
                       Obx(
                         () => Text(
                           "${onBoardingController.state.value.nickname}님,",
-                          style: kHeader2Style.copyWith(
-                              color: Theme.of(context).colorScheme.textTitle),
+                          style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                         ),
                       ),
                     ],
@@ -117,17 +108,11 @@ class _DiaryScreenState extends State<DiaryScreen> {
                           controller.isEmotionModal.value
                               ? Text(
                                   "오늘 날씨 어때요?",
-                                  style: kHeader2Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textTitle),
+                                  style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                 )
                               : Text(
                                   "오늘 기분 어때요?",
-                                  style: kHeader2Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textTitle),
+                                  style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                 ),
                         ],
                       ),
@@ -140,18 +125,14 @@ class _DiaryScreenState extends State<DiaryScreen> {
                         Align(
                           alignment: Alignment.topCenter,
                           child: Image.asset(
-                            controller.isEmotionModal.value
-                                ? "lib/config/assets/images/character/character1.png"
-                                : "lib/config/assets/images/character/character2.png",
+                            controller.isEmotionModal.value ? "lib/config/assets/images/character/character1.png" : "lib/config/assets/images/character/character2.png",
                             width: 320.w,
                             height: 320.h,
                           ),
                         ),
                         const WeatherModal(),
                         EmotionModal(
-                          date: widget.date != null
-                              ? widget.date!
-                              : DateTime.now(),
+                          date: widget.date != null ? widget.date! : DateTime.now(),
                         ),
                       ],
                     ),

@@ -7,8 +7,7 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart'
-    as picker_theme;
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -21,12 +20,12 @@ import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/components/nickname_text_field.dart';
 import 'package:frontend/presentation/components/toast.dart';
-import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/presentation/on_boarding/components/job_button.dart';
 import 'package:frontend/presentation/profile/components/profile_button.dart';
 import 'package:frontend/presentation/profile/profile_setting/profile_setting_view_model.dart';
 import 'package:frontend/presentation/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:frontend/res/constants.dart';
+import 'package:frontend/ui/screen/login/login_screen.dart';
 import 'package:get/get.dart';
 
 import '../../../core/utils/utils.dart';
@@ -52,8 +51,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
         appBar: AppBar(
           title: Text(
             '내 정보 관리',
-            style: kHeader4Style.copyWith(
-                color: Theme.of(context).colorScheme.textTitle),
+            style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
           ),
           elevation: 0,
           leading: BackIcon(
@@ -75,11 +73,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 title: '닉네임 변경',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
-                  GlobalUtils.setAnalyticsCustomEvent(
-                      'Click_MyInfo_NickNameEdit');
+                  GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_NickNameEdit');
                   showModalBottomSheet(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.backgroundModal,
+                    backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(25.0),
@@ -90,8 +86,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                     builder: (context) => FormBuilder(
                       key: _fbKey,
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -103,19 +98,14 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               padding: EdgeInsets.only(left: 24.0.w),
                               child: Text(
                                 "닉네임 변경",
-                                style: kHeader4Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
+                                style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(24.w),
                               child: NicknameTextField(
-                                nameHintText:
-                                    onBoardingController.state.value.nickname,
-                                textEditingController:
-                                    controller.nicknameEditingController,
+                                nameHintText: onBoardingController.state.value.nickname,
+                                textEditingController: controller.nicknameEditingController,
                                 suffixIcon: Obx(
                                   () => controller.nicknameValue.value.isEmpty
                                       ? Visibility(
@@ -125,14 +115,10 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       : GestureDetector(
                                           child: Icon(
                                             Icons.cancel,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .iconSubColor,
+                                            color: Theme.of(context).colorScheme.iconSubColor,
                                             size: 20,
                                           ),
-                                          onTap: () => controller
-                                              .nicknameEditingController
-                                              .clear(),
+                                          onTap: () => controller.nicknameEditingController.clear(),
                                         ),
                                 ),
                               ),
@@ -145,15 +131,11 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                     : () async {
                                         var key = _fbKey.currentState!;
 
-                                        if (key.saveAndValidate() ||
-                                            onBoardingController
-                                                .isDuplicateNickname.value) {
+                                        if (key.saveAndValidate() || onBoardingController.isDuplicateNickname.value) {
                                           FocusScope.of(context).unfocus();
 
-                                          await onBoardingController
-                                              .putMyInformation(
-                                            nickname:
-                                                controller.nicknameValue.value,
+                                          await onBoardingController.putMyInformation(
+                                            nickname: controller.nicknameValue.value,
                                             isOnBoarding: false,
                                             isPutNickname: true,
                                             context: context,
@@ -184,8 +166,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 onPressed: () {
                   GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_AgeEdit');
                   showModalBottomSheet(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.backgroundModal,
+                    backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(25.0),
@@ -196,8 +177,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                     builder: (context) => FormBuilder(
                       key: _fbKey,
                       child: Padding(
-                        padding: EdgeInsets.only(
-                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
@@ -209,18 +189,14 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               padding: EdgeInsets.only(left: 24.0.w),
                               child: Text(
                                 "날짜 변경",
-                                style: kHeader4Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textTitle),
+                                style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                               ),
                             ),
                             Padding(
                               padding: EdgeInsets.all(24.w),
                               child: AgeTextField(
                                 isSettingAge: true,
-                                textEditingController:
-                                    controller.ageEditingController,
+                                textEditingController: controller.ageEditingController,
                                 onTap: () {
                                   DatePicker.showDatePicker(
                                     context,
@@ -231,24 +207,12 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       controller.getBirthDateFormat(date);
                                     },
                                     currentTime: DateTime.parse(
-                                      onBoardingController.state.value.age ==
-                                                  '' ||
-                                              onBoardingController
-                                                      .state.value.age ==
-                                                  null
-                                          ? "2000-01-01"
-                                          : onBoardingController
-                                              .state.value.age!,
+                                      onBoardingController.state.value.age == '' || onBoardingController.state.value.age == null ? "2000-01-01" : onBoardingController.state.value.age!,
                                     ),
                                     locale: LocaleType.ko,
                                     theme: picker_theme.DatePickerTheme(
-                                      itemStyle: kSubtitle1Style.copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .textBody),
-                                      backgroundColor: Theme.of(context)
-                                          .colorScheme
-                                          .backgroundModal,
+                                      itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                                      backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                                       title: "나이 변경",
                                     ),
                                   );
@@ -262,23 +226,13 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                       : GestureDetector(
                                           child: Icon(
                                             Icons.cancel,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .iconSubColor,
+                                            color: Theme.of(context).colorScheme.iconSubColor,
                                             size: 20,
                                           ),
-                                          onTap: () => controller
-                                              .ageEditingController
-                                              .clear(),
+                                          onTap: () => controller.ageEditingController.clear(),
                                         ),
                                 ),
-                                hintText: onBoardingController
-                                                .state.value.age ==
-                                            '' ||
-                                        onBoardingController.state.value.age ==
-                                            null
-                                    ? "2000-01-01"
-                                    : onBoardingController.state.value.age!,
+                                hintText: onBoardingController.state.value.age == '' || onBoardingController.state.value.age == null ? "2000-01-01" : onBoardingController.state.value.age!,
                               ),
                             ),
                             Obx(
@@ -291,8 +245,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                         if (key.saveAndValidate()) {
                                           FocusScope.of(context).unfocus();
 
-                                          await onBoardingController
-                                              .putMyInformation(
+                                          await onBoardingController.putMyInformation(
                                             age: controller.ageValue.value,
                                             isOnBoarding: false,
                                             isPutNickname: false,
@@ -331,11 +284,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_JobEdit');
-                  controller.jobStatus.value = EnumToString.fromString(
-                      Job.values, onBoardingController.state.value.job);
+                  controller.jobStatus.value = EnumToString.fromString(Job.values, onBoardingController.state.value.job);
                   showModalBottomSheet(
-                    backgroundColor:
-                        Theme.of(context).colorScheme.backgroundModal,
+                    backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.vertical(
                         top: Radius.circular(25.0),
@@ -344,8 +295,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                     context: context,
                     isScrollControlled: true,
                     builder: (context) => Padding(
-                      padding: EdgeInsets.only(
-                          bottom: MediaQuery.of(context).viewInsets.bottom),
+                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -357,9 +307,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             padding: EdgeInsets.only(left: 24.0.w),
                             child: Text(
                               "직업 변경",
-                              style: kHeader4Style.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.textTitle),
+                              style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                             ),
                           ),
                           Padding(
@@ -368,8 +316,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: jobList.length,
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 3,
                                 childAspectRatio: 0.8.h,
                               ),
@@ -377,11 +324,9 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                                 return Obx(() => JobButton(
                                       job: jobList[i].name,
                                       icon: jobList[i].icon,
-                                      selected: controller.jobStatus.value ==
-                                          Job.values[i],
+                                      selected: controller.jobStatus.value == Job.values[i],
                                       onPressed: () {
-                                        controller.jobStatus.value =
-                                            Job.values[i];
+                                        controller.jobStatus.value = Job.values[i];
                                       },
                                     ));
                               },
@@ -393,8 +338,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                               onTap: controller.jobStatus.value == null
                                   ? null
                                   : () async {
-                                      await onBoardingController
-                                          .putMyInformation(
+                                      await onBoardingController.putMyInformation(
                                         job: controller.jobStatus.value!.name,
                                         isOnBoarding: false,
                                         isPutNickname: false,
@@ -437,9 +381,7 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                         title: "로그아웃 하시겠어요?",
                         content: Text(
                           "다음에 또 만나요!",
-                          style: kHeader6Style.copyWith(
-                              color:
-                                  Theme.of(context).colorScheme.textSubtitle),
+                          style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                         ),
                         actionContent: [
                           DialogButton(
@@ -447,11 +389,8 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                             onTap: () {
                               Navigator.pop(context);
                             },
-                            backgroundColor:
-                                Theme.of(context).colorScheme.secondaryColor,
-                            textStyle: kHeader4Style.copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.textSubtitle),
+                            backgroundColor: Theme.of(context).colorScheme.secondaryColor,
+                            textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                           ),
                           SizedBox(
                             width: 12.w,
@@ -459,21 +398,17 @@ class ProfileSettingScreen extends GetView<ProfileSettingViewModel> {
                           DialogButton(
                             title: "예",
                             onTap: () async {
-                              Get.find<OnBoardingController>()
-                                  .clearMyInformation();
-                              isKakaoLogin
-                                  ? await controller.kakaoLogout()
-                                  : await controller.appleLogout();
+                              Get.find<OnBoardingController>().clearMyInformation();
+                              isKakaoLogin ? await controller.kakaoLogout() : await controller.appleLogout();
                               Get.offAll(
                                 const LoginScreen(),
-                                binding: BindingsBuilder(
-                                  getLoginBinding,
-                                ),
+                                // binding: BindingsBuilder(
+                                //   getLoginBinding,
+                                // ),
                               );
                             },
                             backgroundColor: kOrange200Color,
-                            textStyle:
-                                kHeader4Style.copyWith(color: kWhiteColor),
+                            textStyle: kHeader4Style.copyWith(color: kWhiteColor),
                           ),
                         ],
                       );

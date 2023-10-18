@@ -117,8 +117,7 @@ class OnBoardingController extends GetxController {
             isOnBoarding: isOnBoarding,
             context: context!,
           )
-        : await onBoardingUseCase.putMyInformation(
-            nickname: nickname, job: job, age: age, email: email);
+        : await onBoardingUseCase.putMyInformation(nickname: nickname, job: job, age: age, email: email);
 
     await getMyInformation();
   }
@@ -152,19 +151,4 @@ class OnBoardingController extends GetxController {
 
     return result;
   }
-
-// Future<bool> reissueToken(String refreshToken) async {
-  //   bool result = false;
-  //   final newToken = await reissueTokenUseCase(refreshToken);
-  //   await newToken.when(
-  //     success: (data) async {
-  //       await tokenUseCase.setAccessToken(data.accessToken);
-  //       await tokenUseCase.setRefreshToken(data.refreshToken);
-  //       result = true;
-  //     },
-  //     error: (message) {},
-  //   );
-  //
-  //   return result;
-  // }
 }

@@ -1,5 +1,5 @@
+import 'package:frontend/apis/diary_api.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/diary_api.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domain/repository/diary/diary_repository.dart';

@@ -10,7 +10,6 @@ import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.
 import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
-import 'package:frontend/data/data_source/global_service.dart';
 import 'package:frontend/global_controller/diary/diary_controller.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/main_view_model.dart';
@@ -18,7 +17,6 @@ import 'package:frontend/presentation/components/dialog_button.dart';
 import 'package:frontend/presentation/components/dialog_component.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/presentation/emotion_stamp/components/emotion_list_widget.dart';
-import 'package:frontend/presentation/login/login_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:get/get.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -159,7 +157,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                   ),
                 ),
               ),
-              Get.find<GlobalService>().isBannerOpen.value
+              isBannerOpen
                   ? Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Container(
@@ -174,7 +172,7 @@ class _EmotionStampScreenState extends State<EmotionStampScreen> {
                         child: GestureDetector(
                           onTap: () async {
                             GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
-                            if (!await launch(Get.find<GlobalService>().bannerUrl.value)) {
+                            if (!await launch(bannerUrl)) {
                               throw Exception('Could not launch');
                             }
                           },

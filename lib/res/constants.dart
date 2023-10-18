@@ -206,3 +206,7 @@ String getWeatherAnimation(String value) {
       return '';
   }
 }
+
+String usingServer = "";
+bool isBannerOpen = false;
+String bannerUrl = "";
