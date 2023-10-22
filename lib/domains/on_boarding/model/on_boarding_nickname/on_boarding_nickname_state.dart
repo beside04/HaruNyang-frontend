@@ -7,7 +7,6 @@ part 'on_boarding_nickname_state.g.dart';
 @freezed
 class OnBoardingNicknameState with _$OnBoardingNicknameState {
   factory OnBoardingNicknameState({
-    @Default('') String nicknameValue,
     @Default(false) bool isOnKeyboard,
   }) = _OnBoardingNicknameState;
 

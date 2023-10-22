@@ -9,15 +9,10 @@ import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/home/provider/home_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
-import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
-import 'package:frontend/main_view_model.dart';
-import 'package:frontend/presentation/components/toast.dart';
-import 'package:frontend/presentation/home/home_view_model.dart';
+import 'package:frontend/ui/components/toast.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
-  const HomeScreen({
-    super.key,
-  });
+  const HomeScreen({super.key});
 
   @override
   HomeScreenState createState() => HomeScreenState();

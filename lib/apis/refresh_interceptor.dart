@@ -7,14 +7,10 @@ import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
-import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/login/login_screen.dart';
-import 'package:get/get.dart';
 
 class RefreshInterceptor extends Interceptor {
   String baseUrl = usingServer;

@@ -6,7 +6,6 @@ import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/res/constants.dart';
-import 'package:get/get.dart' hide Response;
 
 class OnBoardingApi {
   final TokenRepository tokenRepository;

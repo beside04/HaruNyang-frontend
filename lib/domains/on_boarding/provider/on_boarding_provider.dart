@@ -1,27 +1,12 @@
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/domains/on_boarding/model/on_boarding_state.dart';
-import 'package:frontend/domains/splash/model/splash_state.dart';
-import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
-import 'package:frontend/global_controller/token/token_controller.dart';
-import 'package:frontend/main.dart';
-import 'package:frontend/presentation/components/dialog_button.dart';
-import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/components/toast.dart';
-import 'package:frontend/res/constants.dart';
-import 'package:get/get.dart';
-import 'package:store_redirect/store_redirect.dart';
+import 'package:frontend/ui/components/toast.dart';
 
 final onBoardingProvider = StateNotifierProvider<OnBoardingNotifier, OnBoardingState>((ref) {
   return OnBoardingNotifier(

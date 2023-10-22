@@ -4,7 +4,6 @@ import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/res/constants.dart';
-import 'package:get/get.dart' hide Response;
 
 class DiaryApi {
   final Dio dio;

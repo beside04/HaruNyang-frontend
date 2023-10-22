@@ -13,16 +13,12 @@ import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart'
 import 'package:frontend/domains/splash/model/splash_state.dart';
 import 'package:frontend/domains/token/model/token_state.dart';
 import 'package:frontend/domains/token/provider/token_provider.dart';
-import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/presentation/components/dialog_button.dart';
-import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
 import 'package:frontend/res/constants.dart';
+import 'package:frontend/ui/components/dialog_button.dart';
+import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/login/login_screen.dart';
-import 'package:get/get.dart';
 import 'package:store_redirect/store_redirect.dart';
 
 final splashProvider = StateNotifierProvider<SplashNotifier, SplashState>((ref) {
@@ -99,7 +95,11 @@ class SplashNotifier extends StateNotifier<SplashState> {
                     DialogButton(
                       title: "업데이트",
                       onTap: () async {
-                        Get.offAll(() => const LoginScreen());
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                            (route) => false);
 
                         StoreRedirect.redirect(androidAppId: "com.beside04.haruNyang", iOSAppId: "6444657575");
                       },
@@ -167,7 +167,12 @@ class SplashNotifier extends StateNotifier<SplashState> {
                     DialogButton(
                       title: "업데이트",
                       onTap: () async {
-                        Get.offAll(() => const LoginScreen());
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(
+                              builder: (context) => const LoginScreen(),
+                            ),
+                            (route) => false);
+
                         StoreRedirect.redirect(androidAppId: "com.beside04.haruNyang", iOSAppId: "6444657575");
                       },
                       backgroundColor: kOrange200Color,

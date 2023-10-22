@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/main_view_model.dart';
 
 class TermCheckBox extends StatelessWidget {
   const TermCheckBox({
@@ -29,30 +28,29 @@ class TermCheckBox extends StatelessWidget {
               SizedBox(
                 width: 20.w,
                 height: 20.h,
-                child:
-                    Theme.of(context).colorScheme.brightness == Brightness.dark
-                        ? SizedBox(
-                            width: 24.w,
-                            height: 24.h,
-                            child: termValue
-                                ? Image.asset(
-                                    "lib/config/assets/images/check/primary_color_check.png",
-                                  )
-                                : Image.asset(
-                                    "lib/config/assets/images/check/dark_color_check.png",
-                                  ),
-                          )
-                        : SizedBox(
-                            width: 24.w,
-                            height: 24.h,
-                            child: termValue
-                                ? Image.asset(
-                                    "lib/config/assets/images/check/primary_color_check.png",
-                                  )
-                                : Image.asset(
-                                    "lib/config/assets/images/check/light_color_check.png",
-                                  ),
-                          ),
+                child: Theme.of(context).colorScheme.brightness == Brightness.dark
+                    ? SizedBox(
+                        width: 24.w,
+                        height: 24.h,
+                        child: termValue
+                            ? Image.asset(
+                                "lib/config/assets/images/check/primary_color_check.png",
+                              )
+                            : Image.asset(
+                                "lib/config/assets/images/check/dark_color_check.png",
+                              ),
+                      )
+                    : SizedBox(
+                        width: 24.w,
+                        height: 24.h,
+                        child: termValue
+                            ? Image.asset(
+                                "lib/config/assets/images/check/primary_color_check.png",
+                              )
+                            : Image.asset(
+                                "lib/config/assets/images/check/light_color_check.png",
+                              ),
+                      ),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0.w),

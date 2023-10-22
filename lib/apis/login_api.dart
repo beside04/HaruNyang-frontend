@@ -3,7 +3,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
 import 'package:frontend/res/constants.dart';
-import 'package:get/get.dart' hide Response;
 
 class LoginApi {
   String get _baseUrl => usingServer;

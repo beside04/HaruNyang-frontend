@@ -9,12 +9,9 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/login/provider/login_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_finish/on_boarding_finish_provider.dart';
-import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
-import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_finish/on_boarding_finish_viewmodel.dart';
+import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
-import 'package:get/get.dart';
+import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
 
 // ignore: must_be_immutable
 class OnBoardingFinishScreen extends ConsumerWidget {
@@ -27,8 +24,6 @@ class OnBoardingFinishScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    getOnBoardingFinishBinding();
-
     return DefaultLayout(
       screenName: 'Screen_Event_OnBoarding_Done',
       child: WillPopScope(
@@ -99,7 +94,7 @@ class OnBoardingFinishScreen extends ConsumerWidget {
                     Navigator.of(context).pushAndRemoveUntil(
                         CupertinoPageRoute(
                           builder: (context) => HomeScreen(),
-                          settings: RouteSettings(arguments: {"index": 1}),
+                          settings: const RouteSettings(arguments: {"index": 1}),
                         ),
                         (route) => false);
                   },

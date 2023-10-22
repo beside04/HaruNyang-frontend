@@ -7,7 +7,6 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/login/provider/login_provider.dart';
-import 'package:frontend/main_view_model.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/ui/screen/login/components/apple_login_widget.dart';
 import 'package:frontend/ui/screen/login/components/kakao_login_widget.dart';

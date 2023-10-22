@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/apis/emotion_stamp_api.dart';
+import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/text_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
@@ -17,8 +21,10 @@ import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diar
 import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/domains/diary/model/diary_state.dart';
 import 'package:frontend/domains/home/model/home_state.dart';
-import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:get/get.dart';
+import 'package:frontend/main.dart';
+import 'package:frontend/ui/components/dialog_button.dart';
+import 'package:frontend/ui/components/dialog_component.dart';
+import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
 import 'package:intl/intl.dart';
 
 final diaryProvider = StateNotifierProvider<DiaryNotifier, DiaryState>((ref) {
@@ -63,21 +69,15 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   final BookmarkUseCase bookmarkUseCase;
   final GetEmotionStampUseCase getEmotionStampUseCase;
 
-  int currentPageCount = 250;
-  RxBool isNote = false.obs;
-  final diaryDetailData = Rx<DiaryDetailData?>(null);
-
   resetDiary() {
     state = state.copyWith(
       isLoading: true,
       networkImage: '',
       diary: null,
       wiseSayingList: [],
+      isNote: false,
+      diaryDetailData: null,
     );
-
-    isNote.value = false;
-
-    diaryDetailData.value = null;
   }
 
   Future<void> deleteDiary(int diaryID) async {
@@ -131,13 +131,13 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   }
 
   updateBookmarkComments(int index) {
-    if (diaryDetailData.value != null) {
-      final updatedComments = List<CommentData>.from(diaryDetailData.value!.comments)
-        ..[index] = diaryDetailData.value!.comments[index].copyWith(isFavorite: !diaryDetailData.value!.comments[index].isFavorite);
+    if (state.diaryDetailData != null) {
+      final updatedComments = List<CommentData>.from(state.diaryDetailData!.comments)
+        ..[index] = state.diaryDetailData!.comments[index].copyWith(isFavorite: !state.diaryDetailData!.comments[index].isFavorite);
 
-      final updatedDiaryDetailData = diaryDetailData.value!.copyWith(comments: updatedComments);
+      final updatedDiaryDetailData = state.diaryDetailData!.copyWith(comments: updatedComments);
 
-      diaryDetailData.value = updatedDiaryDetailData;
+      state = state.copyWith(diaryDetailData: updatedDiaryDetailData);
     }
   }
 
@@ -305,13 +305,111 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
   }
 
+  void setIsNote(bool isNote) {
+    state = state.copyWith(
+      isNote: isNote,
+    );
+  }
+
   Future<void> getDiaryDetail(id) async {
     final result = await getDiaryDetailUseCase(id);
 
     result.when(
       success: (data) async {
         await getEmotionStampList();
-        diaryDetailData.value = data;
+        state = state.copyWith(diaryDetailData: data);
+      },
+      error: (message) {},
+    );
+  }
+
+  void setDiaryDetailData(DiaryDetailData? diaryDetailData) {
+    state = state.copyWith(diaryDetailData: diaryDetailData);
+  }
+
+  Future<void> saveDiaryDetail(diary, date) async {
+    final result = await saveDiaryUseCase(diary);
+
+    result.when(
+      success: (data) async {
+        await getDiaryDetail(data.id);
+
+        navigatorKey.currentState!.push(
+          MaterialPageRoute(
+            builder: (context) => DiaryDetailScreen(
+              diaryId: data.id,
+              date: date,
+              diaryData: diary,
+              isNewDiary: true,
+            ),
+          ),
+        );
+      },
+      error: (message) {
+        showDialog(
+          barrierDismissible: true,
+          context: navigatorKey.currentContext!,
+          builder: (context) {
+            return DialogComponent(
+              titlePadding: EdgeInsets.zero,
+              title: "",
+              content: Column(
+                children: [
+                  Image.asset(
+                    "lib/config/assets/images/character/update1.png",
+                    width: 120.w,
+                    height: 120.h,
+                  ),
+                  SizedBox(
+                    height: 12.h,
+                  ),
+                  Text(
+                    "하루냥이 잠깐 낮잠을 자고 있어요.",
+                    style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Text(
+                    "대신 재밌는 명언을 추천해드릴게요.",
+                    style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                  ),
+                ],
+              ),
+              actionContent: [
+                DialogButton(
+                  title: "알겠어요",
+                  onTap: () async {
+                    navigatorKey.currentState!.pop();
+                  },
+                  backgroundColor: kOrange200Color,
+                  textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> updateDiaryDetail(diary, date) async {
+    final result = await updateDiaryUseCase(diary);
+
+    result.when(
+      success: (data) async {
+        await getDiaryDetail(data.id);
+
+        navigatorKey.currentState!.push(
+          MaterialPageRoute(
+            builder: (context) => DiaryDetailScreen(
+              diaryId: data.id,
+              date: date,
+              diaryData: diary,
+              isNewDiary: true,
+            ),
+          ),
+        );
       },
       error: (message) {},
     );

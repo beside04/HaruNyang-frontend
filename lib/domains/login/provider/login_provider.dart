@@ -12,17 +12,11 @@ import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_c
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/login/model/login_state.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
-import 'package:frontend/global_controller/diary/diary_controller.dart';
-import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/presentation/components/dialog_button.dart';
-import 'package:frontend/presentation/components/dialog_component.dart';
-import 'package:frontend/presentation/home/home_screen.dart';
-import 'package:frontend/presentation/sign_in_complete/sign_in_complete_screen.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/login/login_terms_information_screen.dart';
-import 'package:get/get.dart';
+import 'package:frontend/ui/screen/sign_in_complete/sign_in_complete_screen.dart';
 import 'package:store_redirect/store_redirect.dart';
 
 final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>((ref) {
@@ -38,7 +32,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
     //social id 얻기
     final isSocialIdGet = await getSocialId(isSocialKakao: "kakao");
     if (!isSocialIdGet) {
-      Get.snackbar('알림', '카카오 세션과 연결이 실패했습니다.');
+      // Get.snackbar('알림', '카카오 세션과 연결이 실패했습니다.');
       return;
     }
 
@@ -49,7 +43,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
     //social id 얻기
     final isSocialIdGet = await getSocialId(isSocialKakao: "apple");
     if (!isSocialIdGet) {
-      Get.snackbar('알림', '애플 세션과 연결이 실패했습니다.');
+      // Get.snackbar('알림', '애플 세션과 연결이 실패했습니다.');
       return;
     }
 
@@ -115,7 +109,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
         if (int.parse(message) == 404) {
           // Get.snackbar('알림', '회원가입 되지 않은 유저입니다.');
         } else {
-          Get.snackbar('알림', '로그인이 실패했습니다.');
+          // Get.snackbar('알림', '로그인이 실패했습니다.');
         }
       },
     );
@@ -137,5 +131,13 @@ class LoginNotifier extends StateNotifier<LoginState> {
     ref.watch(diaryProvider.notifier).getAllBookmarkData();
 
     goHome();
+  }
+
+  Future<void> kakaoLogout() async {
+    await kakaoLoginUseCase.logout();
+  }
+
+  Future<void> appleLogout() async {
+    await appleLoginUseCase.logout();
   }
 }

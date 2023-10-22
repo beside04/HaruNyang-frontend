@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/domains/on_boarding/model/on_boarding_nickname/on_boarding_nickname_state.dart';
-import 'package:get/get.dart';
 
 // class OnBoardingNicknameViewModel extends GetxController {
 //   final TextEditingController nicknameEditingController = TextEditingController();
@@ -41,14 +40,9 @@ final onBoardingNicknameProvider = StateNotifierProvider<OnBoardingNicknameNotif
 class OnBoardingNicknameNotifier extends StateNotifier<OnBoardingNicknameState> {
   OnBoardingNicknameNotifier() : super(OnBoardingNicknameState());
 
-  final nicknameEditingController = TextEditingController();
   StreamSubscription<bool>? keyboardSubscription;
 
   init() {
-    nicknameEditingController.addListener(() {
-      state = state.copyWith(nicknameValue: nicknameEditingController.text);
-    });
-
     var keyboardVisibilityController = KeyboardVisibilityController();
 
     keyboardSubscription = keyboardVisibilityController.onChange.listen((bool visible) {
@@ -58,7 +52,6 @@ class OnBoardingNicknameNotifier extends StateNotifier<OnBoardingNicknameState> 
 
   @override
   void dispose() {
-    nicknameEditingController.dispose();
     keyboardSubscription?.cancel();
     super.dispose();
   }

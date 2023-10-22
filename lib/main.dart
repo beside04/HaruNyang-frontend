@@ -11,7 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domains/main/provider/main_provider.dart';
-import 'package:frontend/main_view_model.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -53,13 +52,6 @@ void main() async {
       ),
     );
   }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
-}
-
-void globalControllerBinding() {
-  getDiaryBinding();
-  getDiaryControllerBinding();
-  getOnBoardingControllerBinding();
-  getTokenControllerBinding();
 }
 
 class MyApp extends ConsumerWidget {

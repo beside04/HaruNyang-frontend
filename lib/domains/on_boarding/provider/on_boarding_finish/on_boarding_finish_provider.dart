@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
 import 'package:frontend/domains/main/provider/main_provider.dart';
-import 'package:frontend/main_view_model.dart';
-import 'package:get/get.dart';
 
 final onBoardingFinishProvider = StateNotifierProvider<OnBoardingFinishNotifier, bool>((ref) {
   return OnBoardingFinishNotifier(ref, pushMessagePermissionUseCase);

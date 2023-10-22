@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
@@ -7,18 +8,17 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/global_controller/on_boarding/on_boarding_controller.dart';
-import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/components/nickname_text_field.dart';
-import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_nickname/on_boarding_nickname_viewmodel.dart';
-import 'package:get/get.dart';
+import 'package:frontend/domains/on_boarding/provider/on_boarding_nickname/on_boarding_nickname_provider.dart';
+import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
+import 'package:frontend/ui/components/bottom_button.dart';
+import 'package:frontend/ui/components/nickname_text_field.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
+import 'package:frontend/ui/screen/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
 
 final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
-class OnBoardingNicknameScreen extends StatefulWidget {
+class OnBoardingNicknameScreen extends ConsumerStatefulWidget {
   final String? email;
   final String loginType;
   final String socialId;
@@ -31,26 +31,32 @@ class OnBoardingNicknameScreen extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<OnBoardingNicknameScreen> createState() =>
-      _OnBoardingNicknameScreenState();
+  OnBoardingNicknameScreenState createState() => OnBoardingNicknameScreenState();
 }
 
-class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
+class OnBoardingNicknameScreenState extends ConsumerState<OnBoardingNicknameScreen> {
   FocusNode nicknameFocusNode = FocusNode();
   bool btnVisible = true;
 
+  final nicknameEditingController = TextEditingController();
+
   @override
   void initState() {
-    getOnBoardingNickNameBinding();
     nicknameFocusNode.addListener(btnVisibleChange);
+    nicknameEditingController.addListener(_onNicknameChanged);
     super.initState();
   }
 
   @override
   void dispose() {
     nicknameFocusNode.removeListener(btnVisibleChange);
+    nicknameEditingController.removeListener(_onNicknameChanged);
     nicknameFocusNode.dispose();
     super.dispose();
+  }
+
+  void _onNicknameChanged() {
+    setState(() {});
   }
 
   void btnVisibleChange() {
@@ -61,9 +67,6 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<OnBoardingNicknameViewModel>();
-    final onBoardingController = Get.find<OnBoardingController>();
-
     return DefaultLayout(
       screenName: 'Screen_Event_OnBoarding_NickName',
       child: WillPopScope(
@@ -102,20 +105,14 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                 ),
                                 Text(
                                   "안녕하세요, 저는 하루냥이에요",
-                                  style: kHeader2Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textTitle),
+                                  style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                 ),
                                 SizedBox(
                                   height: 4.h,
                                 ),
                                 Text(
                                   "집사님을 어떻게 불러드릴까요?",
-                                  style: kHeader2Style.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .textTitle),
+                                  style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                 ),
                                 SizedBox(
                                   height: 20.h,
@@ -123,10 +120,9 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                 NicknameTextField(
                                   nameHintText: '닉네임',
                                   focus: nicknameFocusNode,
-                                  textEditingController:
-                                      controller.nicknameEditingController,
-                                  suffixIcon: Obx(
-                                    () => controller.nicknameValue.value.isEmpty
+                                  textEditingController: nicknameEditingController,
+                                  suffixIcon: Consumer(builder: (context, ref, child) {
+                                    return nicknameEditingController.text.isEmpty
                                         ? Visibility(
                                             visible: false,
                                             child: Container(),
@@ -134,24 +130,20 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                         : GestureDetector(
                                             child: Icon(
                                               Icons.cancel,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .iconSubColor,
+                                              color: Theme.of(context).colorScheme.iconSubColor,
                                               size: 20,
                                             ),
-                                            onTap: () => controller
-                                                .nicknameEditingController
-                                                .clear(),
-                                          ),
-                                  ),
+                                            onTap: () => nicknameEditingController.clear(),
+                                          );
+                                  }),
                                 ),
-                                Obx(
-                                  () => controller.isOnKeyboard.value
+                                Consumer(builder: (context, ref, child) {
+                                  return ref.watch(onBoardingNicknameProvider).isOnKeyboard
                                       ? Container()
                                       : SizedBox(
                                           height: 124.h,
-                                        ),
-                                ),
+                                        );
+                                }),
                                 Center(
                                   child: Image.asset(
                                     "lib/config/assets/images/character/character4.png",
@@ -167,25 +159,26 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                     ),
                     Visibility(
                       visible: btnVisible,
-                      child: Obx(
-                        () => BottomButton(
+                      child: Consumer(builder: (context, ref, child) {
+                        print("ADSASDASD");
+
+                        return BottomButton(
                           title: '다음',
-                          onTap: controller.nicknameValue.value.isEmpty
+                          onTap: nicknameEditingController.text.trim().isEmpty
                               ? null
                               : () async {
                                   var key = _fbKey.currentState!;
-                                  if (key.saveAndValidate() ||
-                                      onBoardingController
-                                          .isDuplicateNickname.value) {
+                                  if (key.saveAndValidate()) {
                                     FocusScope.of(context).unfocus();
 
-                                    Get.to(
-                                      () => OnBoardingAgeScreen(
-                                        nickname:
-                                            controller.nicknameValue.value,
-                                        email: widget.email,
-                                        loginType: widget.loginType,
-                                        socialId: widget.socialId,
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                        builder: (context) => OnBoardingAgeScreen(
+                                          nickname: nicknameEditingController.text,
+                                          email: widget.email,
+                                          loginType: widget.loginType,
+                                          socialId: widget.socialId,
+                                        ),
                                       ),
                                     );
 
@@ -197,8 +190,8 @@ class _OnBoardingNicknameScreenState extends State<OnBoardingNicknameScreen> {
                                     // );
                                   }
                                 },
-                        ),
-                      ),
+                        );
+                      }),
                     )
                   ],
                 ),

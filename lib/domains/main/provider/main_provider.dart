@@ -95,4 +95,12 @@ class MainNotifier extends StateNotifier<MainState> {
   Future<void> setPushMessagePermission(bool pushMessagePermission) async {
     state = state.copyWith(pushMessagePermission: pushMessagePermission);
   }
+
+  cancelAllNotifications() {
+    pushMessagePermissionUseCase.cancelAllNotifications();
+  }
+
+  dailyAtTimeNotification(Time alarmTime) {
+    pushMessagePermissionUseCase.dailyAtTimeNotification(alarmTime);
+  }
 }

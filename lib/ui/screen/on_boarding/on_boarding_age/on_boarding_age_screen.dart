@@ -1,24 +1,24 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart'
-    as picker_theme;
+import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/presentation/components/age_text_field.dart';
-import 'package:frontend/presentation/components/bottom_button.dart';
-import 'package:frontend/presentation/on_boarding/components/on_boarding_stepper.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_age/on_boarding_age_viewmodel.dart';
-import 'package:frontend/presentation/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
-import 'package:get/get.dart';
+import 'package:frontend/domains/on_boarding/provider/on_boarding_age/on_boarding_age_provider.dart';
+import 'package:frontend/ui/components/age_text_field.dart';
+import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
+import 'package:frontend/ui/screen/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
 
-class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
+class OnBoardingAgeScreen extends ConsumerWidget {
   final String nickname;
   final String? email;
   final String loginType;
@@ -34,9 +34,7 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   @override
-  Widget build(BuildContext context) {
-    getOnBoardingBirthBinding();
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return DefaultLayout(
       screenName: 'Screen_Event_OnBoarding_Age',
       child: Scaffold(
@@ -67,17 +65,14 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                             ),
                             Text(
                               "몇 살이에요? \n하루냥이 생일을 축하해드려요!",
-                              style: kHeader2Style.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.textTitle),
+                              style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(
                               height: 40.h,
                             ),
                             AgeTextField(
                               isSettingAge: false,
-                              textEditingController:
-                                  controller.ageEditingController,
+                              textEditingController: ref.watch(onBoardingAgeProvider.notifier).ageEditingController,
                               onTap: () {
                                 DatePicker.showDatePicker(
                                   context,
@@ -85,24 +80,19 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                                   minTime: DateTime(1930, 1, 1),
                                   maxTime: DateTime(2022, 12, 31),
                                   onConfirm: (date) {
-                                    controller.getBirthDateFormat(date);
+                                    ref.watch(onBoardingAgeProvider.notifier).getBirthDateFormat(date);
                                   },
                                   currentTime: DateTime(2000, 01, 01),
                                   locale: LocaleType.ko,
                                   theme: picker_theme.DatePickerTheme(
-                                    itemStyle: kSubtitle1Style.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .textBody),
-                                    backgroundColor: Theme.of(context)
-                                        .colorScheme
-                                        .backgroundModal,
+                                    itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                                    backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                                     title: "나이 입력하기",
                                   ),
                                 );
                               },
-                              suffixIcon: Obx(
-                                () => controller.ageValue.value.isEmpty
+                              suffixIcon: Consumer(builder: (context, ref, child) {
+                                return ref.watch(onBoardingAgeProvider).isEmpty
                                     ? Visibility(
                                         visible: false,
                                         child: Container(),
@@ -110,16 +100,12 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                                     : GestureDetector(
                                         child: Icon(
                                           Icons.cancel,
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .iconSubColor,
+                                          color: Theme.of(context).colorScheme.iconSubColor,
                                           size: 20,
                                         ),
-                                        onTap: () => controller
-                                            .ageEditingController
-                                            .clear(),
-                                      ),
-                              ),
+                                        onTap: () => ref.watch(onBoardingAgeProvider.notifier).ageEditingController.clear(),
+                                      );
+                              }),
                               hintText: "2000-01-01",
                             ),
                             SizedBox(
@@ -144,16 +130,15 @@ class OnBoardingAgeScreen extends GetView<OnBoardingAgeViewModel> {
                     var key = _fbKey.currentState!;
                     if (key.saveAndValidate()) {
                       FocusScope.of(context).unfocus();
-                      Get.to(
-                        () => OnBoardingJobScreen(
+                      Navigator.of(context).push(CupertinoPageRoute(
+                        builder: (context) => OnBoardingJobScreen(
                           nickname: nickname,
-                          birth: controller.ageValue.value,
+                          birth: ref.watch(onBoardingAgeProvider),
                           email: email,
                           loginType: loginType,
                           socialId: socialId,
                         ),
-                        transition: Transition.cupertino,
-                      );
+                      ));
                     }
                   },
                 ),
