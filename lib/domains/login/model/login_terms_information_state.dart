@@ -11,6 +11,7 @@ class LoginTermsInformationState with _$LoginTermsInformationState {
     @Default(false) bool isTermsAgree,
     @Default(false) bool isPrivacyPolicyAgree,
     @Default(false) bool isMarketingConsentAgree,
+    @Default(false) bool isOverseasRelocationConsentAgree,
   }) = _LoginTermsInformationState;
 
   factory LoginTermsInformationState.fromJson(Map<String, dynamic> json) => _$LoginTermsInformationStateFromJson(json);

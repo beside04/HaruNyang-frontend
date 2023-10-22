@@ -14,6 +14,7 @@ import 'package:frontend/ui/screen/login/components/term_check_box.dart';
 import 'package:frontend/ui/screen/profile/terms/marketing_consent_screen.dart';
 import 'package:frontend/ui/screen/profile/terms/privacy_policy_screen.dart';
 import 'package:frontend/ui/screen/profile/terms/terms_of_service_screen.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LoginTermsInformationScreen extends ConsumerWidget {
   final String loginType;
@@ -87,7 +88,8 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                                   height: 24.h,
                                   child: ref.watch(loginTermsInformationProvider).isTermsAgree &&
                                           ref.watch(loginTermsInformationProvider).isPrivacyPolicyAgree &&
-                                          ref.watch(loginTermsInformationProvider).isMarketingConsentAgree
+                                          ref.watch(loginTermsInformationProvider).isMarketingConsentAgree &&
+                                          ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree
                                       ? Image.asset(
                                           "lib/config/assets/images/check/round_check_primary.png",
                                         )
@@ -102,7 +104,8 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                                   height: 24.h,
                                   child: ref.watch(loginTermsInformationProvider).isTermsAgree &&
                                           ref.watch(loginTermsInformationProvider).isPrivacyPolicyAgree &&
-                                          ref.watch(loginTermsInformationProvider).isMarketingConsentAgree
+                                          ref.watch(loginTermsInformationProvider).isMarketingConsentAgree &&
+                                          ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree
                                       ? Image.asset(
                                           "lib/config/assets/images/check/round_check_primary.png",
                                         )
@@ -143,21 +146,16 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                         ],
                       ),
                       onTap: ref.watch(loginTermsInformationProvider.notifier).toggleTermsCheck,
-                      termOnTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => const TermsOfServiceScreen(isProfileScreen: false),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              const begin = Offset(0.0, 1.0);
-                              const end = Offset.zero;
-                              const curve = Curves.easeInOut;
-                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                              var offsetAnimation = animation.drive(tween);
-                              return SlideTransition(position: offsetAnimation, child: child);
-                            },
-                          ),
-                        );
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/e505f096785141e2b31c206ae439f4ee")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const TermsOfServiceScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
                       },
                     );
                   }),
@@ -180,21 +178,48 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                         ],
                       ),
                       onTap: ref.watch(loginTermsInformationProvider.notifier).togglePrivacyPolicyCheck,
-                      termOnTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => const PrivacyPolicyScreen(isProfileScreen: false),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              const begin = Offset(0.0, 1.0);
-                              const end = Offset.zero;
-                              const curve = Curves.easeInOut;
-                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                              var offsetAnimation = animation.drive(tween);
-                              return SlideTransition(position: offsetAnimation, child: child);
-                            },
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/25c01aca07c34481bd1b5b1d5c364499?pvs=4")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const PrivacyPolicyScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
+                      },
+                    );
+                  }),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Consumer(builder: (context, ref, child) {
+                    return TermCheckBox(
+                      termValue: ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree,
+                      termTitle: Row(
+                        children: [
+                          Text(
+                            '(필수) ',
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textPrimary),
                           ),
-                        );
+                          Text(
+                            '개인정보 국외 이전 동의',
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                          ),
+                        ],
+                      ),
+                      onTap: ref.watch(loginTermsInformationProvider.notifier).toggleOverseasRelocationConsent,
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/2c3190cd57db4605889a6f07eac92f3b")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const PrivacyPolicyScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
                       },
                     );
                   }),
@@ -209,21 +234,16 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                         style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                       ),
                       onTap: ref.watch(loginTermsInformationProvider.notifier).toggleMarketingConsentCheck,
-                      termOnTap: () {
-                        Navigator.push(
-                          context,
-                          PageRouteBuilder(
-                            pageBuilder: (context, animation, secondaryAnimation) => const MarketingConsentScreen(isProfileScreen: false),
-                            transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                              const begin = Offset(0.0, 1.0);
-                              const end = Offset.zero;
-                              const curve = Curves.easeInOut;
-                              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                              var offsetAnimation = animation.drive(tween);
-                              return SlideTransition(position: offsetAnimation, child: child);
-                            },
-                          ),
-                        );
+                      termOnTap: () async {
+                        if (!await launch("https://www.notion.so/39648dc746334206b5d353b93eee62bd")) {
+                          throw Exception('Could not launch');
+                        }
+                        // Get.to(
+                        //   () => const MarketingConsentScreen(
+                        //     isProfileScreen: false,
+                        //   ),
+                        //   transition: Transition.downToUp,
+                        // );
                       },
                     );
                   }),
@@ -236,7 +256,7 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                 title: "가입 완료하기",
                 onTap: ref.watch(loginTermsInformationProvider).isTermsAgree && ref.watch(loginTermsInformationProvider).isPrivacyPolicyAgree
                     ? () {
-                        ref.watch(loginTermsInformationProvider.notifier).goToLoginScreen("kakao");
+                        ref.watch(loginTermsInformationProvider.notifier).goToLoginScreen(loginType);
                       }
                     : null,
               );

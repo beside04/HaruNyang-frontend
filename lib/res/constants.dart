@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 // ignore: constant_identifier_names
-const int APP_BUILD_NUMBER = 8;
+const int APP_BUILD_NUMBER = 10;
 // ignore: constant_identifier_names
-const String APP_VERSION_NUMBER = '2.0.3';
+const String APP_VERSION_NUMBER = '2.1.0';
 
 // ignore: constant_identifier_names
 const Map<String, String> UNIT_ID = kReleaseMode

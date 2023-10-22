@@ -39,6 +39,7 @@ class MainNotifier extends StateNotifier<LoginTermsInformationState> {
         isTermsAgree: true,
         isPrivacyPolicyAgree: true,
         isMarketingConsentAgree: true,
+        isOverseasRelocationConsentAgree: true,
       );
       pushMessagePermissionUseCase.setMarketingConsentAgree(true.toString());
     } else {
@@ -46,6 +47,7 @@ class MainNotifier extends StateNotifier<LoginTermsInformationState> {
         isTermsAgree: false,
         isPrivacyPolicyAgree: false,
         isMarketingConsentAgree: false,
+        isOverseasRelocationConsentAgree: false,
       );
       pushMessagePermissionUseCase.setMarketingConsentAgree(false.toString());
     }
@@ -57,6 +59,10 @@ class MainNotifier extends StateNotifier<LoginTermsInformationState> {
 
   void togglePrivacyPolicyCheck() {
     state = state.copyWith(isPrivacyPolicyAgree: !state.isPrivacyPolicyAgree);
+  }
+
+  void toggleOverseasRelocationConsent() {
+    state = state.copyWith(isOverseasRelocationConsentAgree: !state.isOverseasRelocationConsentAgree);
   }
 
   void toggleMarketingConsentCheck() {
