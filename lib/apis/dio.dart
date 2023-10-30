@@ -15,7 +15,7 @@ final dioProvider = Provider<Dio>((ref) {
   );
 
   var requestHeaderInfo = ref.watch(requestHeaderInfoProvider);
-  // dio.interceptors.add(logger);
+  dio.interceptors.add(logger);
   dio.interceptors.add(
     CustomInterceptor(
       storage: StorageService(),

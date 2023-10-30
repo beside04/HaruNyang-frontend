@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:frontend/apis/emotion_stamp_api.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/result.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
@@ -13,6 +15,7 @@ import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
+import 'package:frontend/domain/repository/diary/diary_repository.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
@@ -28,46 +31,77 @@ import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
 import 'package:intl/intl.dart';
 
 final diaryProvider = StateNotifierProvider<DiaryNotifier, DiaryState>((ref) {
-  return DiaryNotifier(
-    ref,
-    GetEmotionStampUseCase(
-      emotionStampRepository: EmotionStampRepositoryImpl(
-        emotionStampApi: EmotionStampApi(
-          dio: getDio(),
-        ),
-      ),
-    ),
-    SaveDiaryUseCase(
-      diaryRepository: diaryRepository,
-    ),
-    UpdateDiaryUseCase(
-      diaryRepository: diaryRepository,
-    ),
-    DeleteDiaryUseCase(
-      diaryRepository: diaryRepository,
-    ),
-    BookmarkUseCase(
-      bookmarkRepository: bookmarkRepository,
-    ),
-  )..initPage();
+  final diaryRepository = ref.watch(diaryRepositoryProvider);
+  return DiaryNotifier(diaryRepository:diaryRepository);
 });
 
 class DiaryNotifier extends StateNotifier<DiaryState> {
-  DiaryNotifier(this.ref, this.getEmotionStampUseCase, this.saveDiaryUseCase, this.updateDiaryUseCase, this.deleteDiaryUseCase, this.bookmarkUseCase)
-      : super(DiaryState(
-          focusedStartDate: DateTime.now(),
-          focusedEndDate: DateTime.now(),
-          focusedCalendarDate: DateTime.now(),
-          selectedCalendarDate: DateTime.now(),
-        ));
+  final DiaryRepository diaryRepository;
+  DiaryNotifier({
+    required this.diaryRepository,
+  }) : super(DiaryState(
+      focusedStartDate: DateTime.now(),
+      focusedEndDate: DateTime.now(),
+      focusedCalendarDate: DateTime.now(),
+      selectedCalendarDate: DateTime.now(),
+  ));
 
-  final Ref ref;
 
-  final SaveDiaryUseCase saveDiaryUseCase;
-  final UpdateDiaryUseCase updateDiaryUseCase;
-  final DeleteDiaryUseCase deleteDiaryUseCase;
-  final BookmarkUseCase bookmarkUseCase;
-  final GetEmotionStampUseCase getEmotionStampUseCase;
+
+  // final Ref ref;
+
+  // final SaveDiaryUseCase saveDiaryUseCase;
+  // final UpdateDiaryUseCase updateDiaryUseCase;
+  // final DeleteDiaryUseCase deleteDiaryUseCase;
+  // final BookmarkUseCase bookmarkUseCase;
+  // final GetEmotionStampUseCase getEmotionStampUseCase;
+
+  Future<Result<DiaryDetailData>> saveDiary$ (DiaryData diary) async {
+    try {
+      DiaryData request = DiaryData(
+          diaryContent: diary.diaryContent, feeling: diary.feeling, feelingScore: diary.feelingScore, weather: diary.weather, targetDate: diary.targetDate,
+      );
+      Result<DiaryDetailData> response = await diaryRepository.saveDiary(request);
+
+      return Result.success(
+          DiaryDetailData.fromJson(response.data),
+      );
+    } on DioError catch (e) {
+      return Result.error(e.message);
+    }
+  }
+
+  Future<Result<DiaryDetailData>> updateDiary$ (DiaryData diary) async {
+    try {
+      DiaryData request = DiaryData(
+        diaryContent: diary.diaryContent, feeling: diary.feeling, feelingScore: diary.feelingScore, weather: diary.weather, targetDate: diary.targetDate,
+      );
+      Result<DiaryDetailData> response = await diaryRepository.updateDiary(request);
+
+      return Result.success(
+        DiaryDetailData.fromJson(response.data),
+      );
+    } on DioError catch (e) {
+      return Result.error(e.message);
+    }
+  }
+
+  Future<Result<bool>> deleteDiary$(int diaryId) async {
+    try {
+
+      var response = await diaryRepository.deleteDiary(diaryId);
+      final bool resultData = response.data;
+
+      if(resultData) {
+        return const Result.success(true);
+      } else {
+        return const Result.error('일기 삭제가 실패 했습니다.');
+      }
+
+    } on DioError catch (e) {
+      return Result.error(e.message);
+    }
+  }
 
   resetDiary() {
     state = state.copyWith(
