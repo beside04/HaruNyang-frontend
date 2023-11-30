@@ -4,7 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
-import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/ui/screen/emotion_stamp/components/emotion_card_diary_widget.dart';
 
 class EmotionListWidget extends ConsumerStatefulWidget {
@@ -81,23 +80,8 @@ class EmotionListWidgetState extends ConsumerState<EmotionListWidget> {
                                       left: 20.w,
                                       right: 20.w,
                                     ),
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => DiaryDetailScreen(
-                                              diaryId: diary.id!,
-                                              date: DateTime.parse(diary.targetDate),
-                                              diaryData: diary,
-                                              isNewDiary: false,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: EmotionCardDiaryWidget(
-                                        diaryData: diary,
-                                      ),
+                                    child: EmotionCardDiaryWidget(
+                                      diaryData: diary,
                                     ),
                                   ))
                               .toList(),

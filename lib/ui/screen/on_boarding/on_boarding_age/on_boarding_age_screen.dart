@@ -1,20 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_age/on_boarding_age_provider.dart';
 import 'package:frontend/ui/components/age_text_field.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/ui/screen/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
 
@@ -71,6 +69,7 @@ class OnBoardingAgeScreen extends ConsumerWidget {
                               height: 40.h,
                             ),
                             AgeTextField(
+                              onChanged: (value) {},
                               isSettingAge: false,
                               textEditingController: ref.watch(onBoardingAgeProvider.notifier).ageEditingController,
                               onTap: () {

@@ -3,7 +3,6 @@ import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
 
 part 'diary_select_state.freezed.dart';
-
 part 'diary_select_state.g.dart';
 
 @freezed
@@ -14,47 +13,47 @@ class DiarySelectState with _$DiarySelectState {
     @Default("맞아") String? emotionTextValue,
     @Default([
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/happy.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/happy_christmas.png',
         value: 'HAPPINESS',
         desc: '기뻐',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/sad2.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/sad_christmas.png',
         value: 'SADNESS',
         desc: '슬퍼',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/angry.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/angry_christmas.png',
         value: 'ANGRY',
         desc: '화나',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/excited.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/excited_christmas.png',
         value: 'EXCITED',
         desc: '신나',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/tired.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/tired_christmas.png',
         value: 'TIRED',
         desc: '힘들어',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/amazed.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/amazed_christmas.png',
         value: 'SURPRISED',
         desc: '놀랐어',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/soso.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/soso_christmas.png',
         value: 'NEUTRAL',
         desc: '그저그래',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/blushed.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/blushed_christmas.png',
         value: 'FLUTTER',
         desc: '설레',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/character/molra.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/molra_christmas.png',
         value: 'UNCERTAIN',
         desc: '몰라',
       ),

@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/res/constants.dart';
+import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/screen/profile/book_mark/book_mark_screen.dart';
 import 'package:frontend/ui/screen/profile/components/profile_button.dart';
 import 'package:frontend/ui/screen/profile/notice/notice_screen.dart';
 import 'package:frontend/ui/screen/profile/profile_setting/profile_setting_screen.dart';
 import 'package:frontend/ui/screen/profile/terms/terms_screen.dart';
-
 import 'package:in_app_review/in_app_review.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -57,7 +55,7 @@ class ProfileScreen extends ConsumerWidget {
                           padding: EdgeInsets.all(6.w),
                           child: Center(
                             child: Image.asset(
-                              "lib/config/assets/images/character/character1.png",
+                              "lib/config/assets/images/character/character1_christmas.png",
                               width: 48.w,
                               height: 48.h,
                             ),
@@ -202,40 +200,200 @@ class ProfileScreen extends ConsumerWidget {
                 height: 1.h,
                 color: Theme.of(context).colorScheme.border,
               ),
+              // Consumer(builder: (context, ref, child) {
+              //   return ProfileButton(
+              //     padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+              //     icon: FlutterSwitch(
+              //       padding: 2,
+              //       width: 52.0.w,
+              //       height: 32.0.h,
+              //       activeColor: Theme.of(context).colorScheme.primaryColor,
+              //       inactiveColor: kGrayColor750,
+              //       toggleSize: 28.0.w,
+              //       value: ref.watch(mainProvider).themeMode == ThemeMode.light ||
+              //           (ref.watch(mainProvider).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.light),
+              //       borderRadius: 50.0.w,
+              //       onToggle: (val) async {
+              //         ref.watch(mainProvider.notifier).toggleThemeMode(context);
+              //       },
+              //       activeIcon: Center(
+              //         child: SvgPicture.asset(
+              //           "lib/config/assets/images/profile/light_mode.svg",
+              //           width: 19.w,
+              //           height: 19.h,
+              //         ),
+              //       ),
+              //       inactiveIcon: Center(
+              //         child: SvgPicture.asset(
+              //           "lib/config/assets/images/profile/dark_mode.svg",
+              //           width: 14.w,
+              //           height: 18.h,
+              //         ),
+              //       ),
+              //     ),
+              //     title: '라이트 다크모드 전환',
+              //     titleColor: Theme.of(context).colorScheme.textTitle,
+              //     onPressed: null,
+              //   );
+              // }),
               Consumer(builder: (context, ref, child) {
                 return ProfileButton(
                   padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-                  icon: FlutterSwitch(
-                    padding: 2,
-                    width: 52.0.w,
-                    height: 32.0.h,
-                    activeColor: Theme.of(context).colorScheme.primaryColor,
-                    inactiveColor: kGrayColor750,
-                    toggleSize: 28.0.w,
-                    value: ref.watch(mainProvider).themeMode == ThemeMode.light ||
-                        (ref.watch(mainProvider).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.light),
-                    borderRadius: 50.0.w,
-                    onToggle: (val) async {
-                      ref.watch(mainProvider.notifier).toggleThemeMode(context);
-                    },
-                    activeIcon: Center(
-                      child: SvgPicture.asset(
-                        "lib/config/assets/images/profile/light_mode.svg",
-                        width: 19.w,
-                        height: 19.h,
-                      ),
-                    ),
-                    inactiveIcon: Center(
-                      child: SvgPicture.asset(
-                        "lib/config/assets/images/profile/dark_mode.svg",
-                        width: 14.w,
-                        height: 18.h,
-                      ),
-                    ),
+                  icon: Text(
+                    ref.watch(mainProvider.notifier).themeModeToString(ref.watch(mainProvider).themeMode),
+                    style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                   ),
-                  title: '라이트 다크모드 전환',
+                  title: '기본 테마 설정',
                   titleColor: Theme.of(context).colorScheme.textTitle,
-                  onPressed: null,
+                  onPressed: () {
+                    ref.watch(mainProvider.notifier).tempThemeMode = ref.watch(mainProvider).themeMode;
+
+                    showModalBottomSheet(
+                      backgroundColor: Theme.of(context).colorScheme.backgroundModal,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25.0),
+                        ),
+                      ),
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) => StatefulBuilder(builder: (context, StateSetter setState) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: Consumer(builder: (context, ref, child) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  height: 32.0,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 24.0.w),
+                                  child: Text(
+                                    "기본 테마를 설정해주세요.",
+                                    style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10.0,
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    ref.watch(mainProvider.notifier).tempThemeMode = ThemeMode.system;
+                                    setState(() {});
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
+                                        child: Text(
+                                          "시스템 설정",
+                                          style: kHeader6Style.copyWith(
+                                              color: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.system
+                                                  ? Theme.of(context).colorScheme.primaryColor
+                                                  : Theme.of(context).colorScheme.textLowEmphasis),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.system,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
+                                          child: Image.asset(
+                                            "lib/config/assets/images/check/primary_color_check_bold.png",
+                                            width: 17,
+                                            height: 12,
+                                            color: Color(0xff0A9F60),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    ref.watch(mainProvider.notifier).tempThemeMode = ThemeMode.light;
+                                    setState(() {});
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
+                                        child: Text(
+                                          "라이트 모드",
+                                          style: kHeader6Style.copyWith(
+                                              color: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.light
+                                                  ? Theme.of(context).colorScheme.primaryColor
+                                                  : Theme.of(context).colorScheme.textLowEmphasis),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.light,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
+                                          child: Image.asset(
+                                            "lib/config/assets/images/check/primary_color_check_bold.png",
+                                            width: 17,
+                                            height: 12,
+                                            color: Color(0xff0A9F60),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    ref.watch(mainProvider.notifier).tempThemeMode = ThemeMode.dark;
+                                    setState(() {});
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
+                                        child: Text(
+                                          "다크 모드",
+                                          style: kHeader6Style.copyWith(
+                                              color: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.dark
+                                                  ? Theme.of(context).colorScheme.primaryColor
+                                                  : Theme.of(context).colorScheme.textLowEmphasis),
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.dark,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
+                                          child: Image.asset(
+                                            "lib/config/assets/images/check/primary_color_check_bold.png",
+                                            width: 17,
+                                            height: 12,
+                                            color: Color(0xff0A9F60),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                BottomButton(
+                                  title: '변경하기',
+                                  onTap: () {
+                                    ref.watch(mainProvider.notifier).toggleThemeMode();
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          }),
+                        );
+                      }),
+                    );
+                  },
                 );
               }),
               Divider(

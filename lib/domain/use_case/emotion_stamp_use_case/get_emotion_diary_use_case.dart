@@ -11,6 +11,7 @@ class GetEmotionStampUseCase {
   });
 
   Future<Result<List<DiaryData>>> call(String from, String to) async {
+
     final result = await emotionStampRepository.getEmotionStamp(from, to);
     result.when(
       success: (result) {},

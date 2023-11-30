@@ -11,6 +11,7 @@ class AgeTextField extends StatelessWidget {
     required this.suffixIcon,
     required this.isSettingAge,
     required this.hintText,
+    required this.onChanged,
   });
 
   final TextEditingController textEditingController;
@@ -18,25 +19,24 @@ class AgeTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final bool isSettingAge;
   final String hintText;
+  final Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return FormBuilderTextField(
+      onChanged: onChanged,
       controller: textEditingController,
-      style: kSubtitle1Style.copyWith(
-          color: Theme.of(context).colorScheme.textTitle),
+      style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
       onTap: onTap,
       readOnly: true,
       name: 'age',
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
         helperText: isSettingAge ? null : "필수 정보가 아니라 다음에 작성해도 좋아요!",
-        helperStyle: kBody3Style.copyWith(
-            color: Theme.of(context).colorScheme.textTitle),
+        helperStyle: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
         counterText: "",
         hintText: hintText == "2000-01-01" ? "YYYY-MM-DD 입력" : hintText,
-        hintStyle: kSubtitle1Style.copyWith(
-            color: Theme.of(context).colorScheme.placeHolder),
+        hintStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.placeHolder),
         contentPadding: const EdgeInsets.only(
           top: 14,
           bottom: 14,

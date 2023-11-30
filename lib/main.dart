@@ -3,17 +3,15 @@ import 'dart:async';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/splash/splash_sreen.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -34,11 +32,10 @@ void main() async {
   String appkey = dotenv.env['NATIVE_APP_KEY'] ?? '';
   KakaoSdk.init(nativeAppKey: appkey);
   // getMainBinding();
-  // globalControllerBinding();
+  // // globalControllerBinding();
   final container = ProviderContainer();
-  await container.read(mainProvider.notifier).getIsPushMessage();
-  await container.read(mainProvider.notifier).getIsMarketingConsentAgree();
-  await container.read(mainProvider.notifier).getPushMessageTime();
+
+  await container.read(mainProvider.notifier).initializeState();
 
   //FirebaseCrashlytics
   runZonedGuarded<Future<void>>(() async {
@@ -46,7 +43,8 @@ void main() async {
 
     initializeDateFormatting().then(
       (_) => runApp(
-        const ProviderScope(
+        UncontrolledProviderScope(
+          container: container,
           child: MyApp(),
         ),
       ),
@@ -56,6 +54,7 @@ void main() async {
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
+
   static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 
   @override

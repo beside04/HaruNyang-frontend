@@ -1,5 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/domains/notification/model/notification_state.dart';
@@ -80,10 +80,10 @@ class NotificationNotifier extends StateNotifier<NotificationState> {
 
   Future<void> _getToken() async {
     try {
-      // token = await _messaging.getToken();
-      // if (kDebugMode) {
-      //   print("notification token:$token");
-      // }
+      token = await FirebaseMessaging.instance.getToken();
+      if (kDebugMode) {
+        print("notification token:$token");
+      }
     } catch (e) {
       if (kDebugMode) {
         print(e);

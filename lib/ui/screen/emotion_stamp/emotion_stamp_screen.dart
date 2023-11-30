@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/layout/default_layout.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.dart';
@@ -150,17 +149,73 @@ class EmotionStampScreenState extends ConsumerState<EmotionStampScreen> {
                 }),
               ),
               isBannerOpen
-                  ? Padding(
+                  ?
+                  // Padding(
+                  //         padding: const EdgeInsets.all(20.0),
+                  //         child: Container(
+                  //           width: double.infinity,
+                  //           height: 96,
+                  //           decoration: BoxDecoration(
+                  //             color: Theme.of(context).colorScheme.brightness == Brightness.dark ? Color(0xffF4D3B3) : Color(0xffffe9d5),
+                  //             borderRadius: BorderRadius.all(
+                  //               Radius.circular(16),
+                  //             ),
+                  //           ),
+                  //           child: GestureDetector(
+                  //             onTap: () async {
+                  //               GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
+                  //               if (!await launch(bannerUrl)) {
+                  //                 throw Exception('Could not launch');
+                  //               }
+                  //             },
+                  //             child: Row(
+                  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //               children: [
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.only(
+                  //                     left: 24.0,
+                  //                     top: 20,
+                  //                   ),
+                  //                   child: Column(
+                  //                     crossAxisAlignment: CrossAxisAlignment.start,
+                  //                     children: [
+                  //                       Text(
+                  //                         "하루냥 사용자 단체 인터뷰 모집",
+                  //                         style: TextStyle(
+                  //                           fontFamily: pretendard,
+                  //                           fontSize: 12,
+                  //                           fontWeight: FontWeight.w600,
+                  //                         ).copyWith(color: kGrayColor550),
+                  //                       ),
+                  //                       SizedBox(
+                  //                         height: 2,
+                  //                       ),
+                  //                       Text(
+                  //                         "하루냥 개발 크루를 만나고\n의견을 말해주세요!",
+                  //                         style: kHeader5Style.copyWith(color: kBlackColor),
+                  //                       ),
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //                 Padding(
+                  //                   padding: const EdgeInsets.only(
+                  //                     right: 28.0,
+                  //                   ),
+                  //                   child: Image.asset(
+                  //                     "lib/config/assets/images/character/character11.png",
+                  //                     height: 74,
+                  //                   ),
+                  //                 ),
+                  //               ],
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       )
+                  Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Container(
                         width: double.infinity,
                         height: 96,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.brightness == Brightness.dark ? Color(0xffF4D3B3) : Color(0xffffe9d5),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(16),
-                          ),
-                        ),
                         child: GestureDetector(
                           onTap: () async {
                             GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
@@ -168,45 +223,8 @@ class EmotionStampScreenState extends ConsumerState<EmotionStampScreen> {
                               throw Exception('Could not launch');
                             }
                           },
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  left: 24.0,
-                                  top: 20,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "하루냥 사용자 단체 인터뷰 모집",
-                                      style: TextStyle(
-                                        fontFamily: pretendard,
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
-                                      ).copyWith(color: kGrayColor550),
-                                    ),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text(
-                                      "하루냥 개발 크루를 만나고\n의견을 말해주세요!",
-                                      style: kHeader5Style.copyWith(color: kBlackColor),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  right: 28.0,
-                                ),
-                                child: Image.asset(
-                                  "lib/config/assets/images/character/character11.png",
-                                  height: 74,
-                                ),
-                              ),
-                            ],
+                          child: Image.asset(
+                            "lib/config/assets/images/home/banner/christmas_banner.png",
                           ),
                         ),
                       ),

@@ -114,19 +114,22 @@ class WriteDiaryNotifier extends StateNotifier<WriteDiaryState> {
     }
   }
 
-  void clear() {
+  Future<void> clear() async {
     ref.read(pickedFileProvider.notifier).state = null;
+    await Future.delayed(Duration(milliseconds: 100));
     ref.read(croppedFileProvider.notifier).state = null;
-    state = state.copyWith(networkImage: null);
-    ref.read(diaryProvider.notifier).setDiaryDetailData(ref.read(diaryProvider).diaryDetailData!.copyWith(image: ""));
+    await Future.delayed(Duration(milliseconds: 100));
+    if (mounted) {
+      state = state.copyWith(networkImage: null);
+    }
+    await Future.delayed(Duration.zero);
+    ref.read(diaryProvider.notifier).setDiaryDetailData(ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
   }
 
   void setDiaryData(DiaryData diaryData) {
-    if (!state.isUpdated) {
-      diaryEditingController.text = diaryData.diaryContent;
+    diaryEditingController.text = diaryData.diaryContent;
 
-      state = state.copyWith(isUpdated: true);
-    }
+    state = state.copyWith(diaryValueLength: diaryEditingController.text.length);
   }
 
   void getDefaultTopic(String emoticon) {

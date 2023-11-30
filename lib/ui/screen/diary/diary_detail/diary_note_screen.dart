@@ -1,7 +1,5 @@
-import 'dart:io';
 import 'dart:ui';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,9 +7,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
+import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class DairyNoteScreen extends ConsumerStatefulWidget {
   const DairyNoteScreen({super.key});
@@ -60,7 +61,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                 children: [
                   SizedBox(height: 120.h),
                   SizedBox(
-                    height: 490,
+                    height: 550.h,
                     child: PageView(
                       padEnds: false,
                       onPageChanged: (index) {
@@ -72,7 +73,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                         int index = entry.key;
                         var comment = entry.value;
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                          padding: const EdgeInsets.symmetric(horizontal: 30.0),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: Container(
@@ -84,7 +85,8 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      color: kModalColor,
+                                      // color: kModalColor,
+                                      color: Color(0xff0A9F60),
                                       child: Padding(
                                         padding: const EdgeInsets.all(
                                           10,
@@ -97,13 +99,16 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                 right: 37,
                                                 top: 28,
                                               ),
-                                              child: ref.watch(diaryProvider).diaryDetailData!.comments[index].author == "harunyang"
-                                                  ? Image.asset(
-                                                      "lib/config/assets/images/character/character5.png",
-                                                    )
-                                                  : Image.asset(
-                                                      "lib/config/assets/images/character/character10.png",
-                                                    ),
+                                              child: Image.asset(
+                                                "lib/config/assets/images/character/character5_christmas.png",
+                                              ),
+                                              // ref.watch(diaryProvider).diaryDetailData!.comments[index].author == "harunyang"
+                                              //     ? Image.asset(
+                                              //         "lib/config/assets/images/character/character5_christmas.png",
+                                              //       )
+                                              //     : Image.asset(
+                                              //         "lib/config/assets/images/character/character10.png",
+                                              //       ),
                                             ),
                                             Positioned(
                                                 right: 10,
@@ -165,7 +170,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                               top: 24.0.h,
                                             ),
                                             child: Text(
-                                              '하루냥',
+                                              '산타 하루냥',
                                               style: kHeader5Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                                             ),
                                           )
@@ -181,7 +186,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                         padding: EdgeInsets.only(
                                           left: 24.0.w,
                                           right: 16.0.w,
-                                          bottom: 30,
+                                          bottom: isBannerOpen ? 8 : 20,
                                         ),
                                         child: Scrollbar(
                                           interactive: true,
@@ -203,6 +208,34 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                     )),
                                               ),
                                             ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: isBannerOpen,
+                                      child: GestureDetector(
+                                        onTap: () async {
+                                          GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
+                                          if (!await launch(bannerUrl)) {
+                                            throw Exception('Could not launch');
+                                          }
+                                        },
+                                        child: Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(bottom: 8.0),
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context).colorScheme.secondaryColor,
+                                                borderRadius: BorderRadius.circular(20.0),
+                                              ),
+                                              child: Text(
+                                                "산타 하루냥에게 답장 쓰러가기",
+                                                style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),

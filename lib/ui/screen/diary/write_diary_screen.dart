@@ -3,8 +3,6 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,15 +11,14 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
-import 'package:frontend/domains/diary/provider/diary_select_provider.dart';
 import 'package:frontend/domains/diary/provider/wtire_diary_provider.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
+import 'package:frontend/ui/components/toast.dart';
 import 'package:frontend/ui/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/ui/screen/diary/write_diary_loading_screen.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
@@ -36,6 +33,8 @@ class WriteDiaryScreen extends ConsumerStatefulWidget {
   final DiaryData? diaryData;
   final bool isEditScreen;
 
+  final bool isAutoSave;
+
   WriteDiaryScreen({
     Key? key,
     required this.date,
@@ -43,6 +42,7 @@ class WriteDiaryScreen extends ConsumerStatefulWidget {
     required this.weather,
     required this.isEditScreen,
     this.diaryData,
+    required this.isAutoSave,
   }) : super(key: key);
 
   @override
@@ -50,9 +50,13 @@ class WriteDiaryScreen extends ConsumerStatefulWidget {
 }
 
 class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleTickerProviderStateMixin {
+  Timer? _autoSaveTimer;
+
   @override
   void initState() {
     super.initState();
+
+    _autoSaveTimer = Timer.periodic(Duration(seconds: 3), (Timer t) => _autoSaveDiary());
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref.watch(writeDiaryProvider.notifier).setRandomImageNumber(Random().nextInt(7) + 1);
@@ -62,15 +66,39 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
       ref.watch(writeDiaryProvider.notifier).getDefaultTopic(widget.emotion);
 
       if (widget.diaryData != null) {
+        print("widget.diaryData ${widget.diaryData!.diaryContent}");
+
         ref.watch(writeDiaryProvider.notifier).setDiaryData(widget.diaryData!);
+      } else {
+        ref.watch(writeDiaryProvider.notifier).diaryEditingController.text = "";
+        ref.watch(writeDiaryProvider.notifier).state = ref.watch(writeDiaryProvider.notifier).state.copyWith(diaryValueLength: 0);
       }
     });
+  }
+
+  Future<void> _autoSaveDiary() async {
+    String currentText = ref.watch(writeDiaryProvider.notifier).diaryEditingController.text;
+    if (currentText.isNotEmpty) {
+      DiaryData diary = DiaryData(
+        id: widget.diaryData?.id,
+        diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+        feeling: widget.emotion,
+        feelingScore: 1,
+        weather: widget.weather,
+        targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
+        topic: ref.watch(writeDiaryProvider).topic.value,
+        image: ref.watch(writeDiaryProvider).firebaseImageUrl == "" ? ref.watch(diaryProvider).diaryDetailData?.image ?? "" : ref.watch(writeDiaryProvider).firebaseImageUrl,
+        isAutoSave: true,
+      );
+
+      ref.watch(diaryProvider.notifier).saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary);
+    }
   }
 
   @override
   void dispose() {
     super.dispose();
-
+    _autoSaveTimer?.cancel();
     ref.watch(writeDiaryProvider.notifier).diaryEditingController.removeListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
 
     DateTime screenExitTime = DateTime.now();
@@ -482,6 +510,40 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                 padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
                                 child: SvgPicture.asset(
                                   "lib/config/assets/images/diary/write_diary/refresh.svg",
+                                  width: 24.w,
+                                  color: kGrayColor600,
+                                  height: 24.h,
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Temp_Save');
+
+                                DiaryData diary = DiaryData(
+                                  id: widget.diaryData?.id,
+                                  diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+                                  feeling: widget.emotion,
+                                  feelingScore: 1,
+                                  weather: widget.weather,
+                                  targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
+                                  topic: ref.watch(writeDiaryProvider).topic.value,
+                                  image: ref.watch(writeDiaryProvider).firebaseImageUrl == "" ? ref.watch(diaryProvider).diaryDetailData?.image ?? "" : ref.watch(writeDiaryProvider).firebaseImageUrl,
+                                  isAutoSave: true,
+                                );
+
+                                ref.watch(diaryProvider.notifier).saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary).then((value) {
+                                  toast(
+                                    context: context,
+                                    text: '작성 중인 일기가 임시저장 되었어요.',
+                                    isCheckIcon: true,
+                                  );
+                                });
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
+                                child: Image.asset(
+                                  "lib/config/assets/images/diary/write_diary/save.png",
                                   width: 24.w,
                                   color: kGrayColor600,
                                   height: 24.h,

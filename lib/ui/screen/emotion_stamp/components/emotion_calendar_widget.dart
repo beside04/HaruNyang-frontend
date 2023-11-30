@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,9 +9,12 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/res/constants.dart';
+import 'package:frontend/ui/components/dialog_button.dart';
+import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/ui/screen/diary/diary_detail/empty_diary_screen.dart';
+import 'package:frontend/ui/screen/diary/write_diary_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -72,31 +77,111 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                   },
                   markerBuilder: (context, day, events) {
                     return InkWell(
-                      onTap: () {
+                      onTap: () async {
                         ref.watch(diaryProvider.notifier).setSelectedCalendarDate(day);
                         ref.watch(diaryProvider.notifier).setFocusDay(day);
 
                         if ((DateTime.now().isAfter(day) || isToday(day))) {
-                          events.isEmpty
-                              ? Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EmptyDiaryScreen(
-                                      date: day,
+                          if (events.isEmpty) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EmptyDiaryScreen(
+                                  date: day,
+                                ),
+                              ),
+                            );
+                          } else if (events[0].isAutoSave) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WriteDiaryScreen(
+                                        date: day,
+                                        emotion: events[0].feeling,
+                                        weather: events[0].weather,
+                                        diaryData: events[0],
+                                        isEditScreen: false,
+                                        isAutoSave: true,
+                                      )),
+                            );
+                          } else {
+                            final saveDiary = await ref.watch(diaryProvider.notifier).getTempDiary(day);
+
+                            if (saveDiary != null && mounted) {
+                              Map<String, dynamic> diaryMap = json.decode(saveDiary);
+                              DiaryData saveDiaryData = DiaryData.fromJson(diaryMap);
+
+                              showDialog(
+                                barrierDismissible: true,
+                                context: context,
+                                builder: (context) {
+                                  return DialogComponent(
+                                    title: "임시 저장된 글이 있어요",
+                                    content: Text(
+                                      "임시 저장된 글을 불러 올까요?",
+                                      style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                                     ),
+                                    actionContent: [
+                                      DialogButton(
+                                        title: "아니요",
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => DiaryDetailScreen(
+                                                diaryId: events[0].id!,
+                                                date: day,
+                                                diaryData: events[0],
+                                                isNewDiary: false,
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        backgroundColor: Theme.of(context).colorScheme.secondaryColor,
+                                        textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                      ),
+                                      SizedBox(
+                                        width: 12.w,
+                                      ),
+                                      DialogButton(
+                                        title: "예",
+                                        onTap: () {
+                                          Navigator.pop(context);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => WriteDiaryScreen(
+                                                      date: DateTime.parse(saveDiaryData.targetDate),
+                                                      emotion: saveDiaryData.feeling,
+                                                      weather: saveDiaryData.weather,
+                                                      diaryData: saveDiaryData,
+                                                      isEditScreen: true,
+                                                      isAutoSave: true,
+                                                    )),
+                                          );
+                                        },
+                                        backgroundColor: kOrange200Color,
+                                        textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DiaryDetailScreen(
+                                    diaryId: events[0].id!,
+                                    date: day,
+                                    diaryData: events[0],
+                                    isNewDiary: false,
                                   ),
-                                )
-                              : Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => DiaryDetailScreen(
-                                      diaryId: events[0].id!,
-                                      date: day,
-                                      diaryData: events[0],
-                                      isNewDiary: false,
-                                    ),
-                                  ),
-                                );
+                                ),
+                              );
+                            }
+                          }
                         } else {
                           toast(
                             context: context,
@@ -124,14 +209,22 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                     )
                                   : isToday(day)
                                       ? Image.asset(
-                                          getEmoticonImage(events[0].feeling),
+                                          events[0].isAutoSave
+                                              ? Theme.of(context).colorScheme.brightness == Brightness.dark
+                                                  ? "lib/config/assets/images/diary/emotion/save-dark.png"
+                                                  : "lib/config/assets/images/diary/emotion/save-light.png"
+                                              : getEmoticonImage(events[0].feeling),
                                           width: 36,
                                         )
                                       : events.isNotEmpty
                                           ? Align(
                                               alignment: Alignment.center,
                                               child: Image.asset(
-                                                getEmoticonImage(events[0].feeling),
+                                                events[0].isAutoSave
+                                                    ? Theme.of(context).colorScheme.brightness == Brightness.dark
+                                                        ? "lib/config/assets/images/diary/emotion/save-dark.png"
+                                                        : "lib/config/assets/images/diary/emotion/save-light.png"
+                                                    : getEmoticonImage(events[0].feeling),
                                                 width: 36,
                                               ),
                                             )

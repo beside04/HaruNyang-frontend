@@ -1,18 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_nickname/on_boarding_nickname_provider.dart';
-import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/components/nickname_text_field.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/ui/screen/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
 
@@ -118,6 +115,9 @@ class OnBoardingNicknameScreenState extends ConsumerState<OnBoardingNicknameScre
                                   height: 20.h,
                                 ),
                                 NicknameTextField(
+                                  onChanged: (value) {
+                                    setState(() {});
+                                  },
                                   nameHintText: '닉네임',
                                   focus: nicknameFocusNode,
                                   textEditingController: nicknameEditingController,

@@ -6,8 +6,8 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
+import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
-import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
@@ -18,9 +18,7 @@ import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
-import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/domains/diary/model/diary_state.dart';
-import 'package:frontend/domains/home/model/home_state.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
@@ -49,7 +47,7 @@ final diaryProvider = StateNotifierProvider<DiaryNotifier, DiaryState>((ref) {
     BookmarkUseCase(
       bookmarkRepository: bookmarkRepository,
     ),
-  )..initPage();
+  );
 });
 
 class DiaryNotifier extends StateNotifier<DiaryState> {
@@ -153,6 +151,28 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
   }
 
+  Future<void> saveDiary(String date, DiaryData diary) async {
+    state = state.copyWith(
+      isCalendarLoading: true,
+    );
+
+    await AutoDiarySaveDataSource().saveDiary(date, diary);
+
+    final autoDiaryData = await AutoDiarySaveDataSource().loadDiariesByMonth(DateFormat('yyyy').format(state.focusedStartDate), DateFormat('MM').format(state.focusedStartDate));
+
+    state = state.copyWith(
+      diaryDataList: [...state.diaryDataList, ...autoDiaryData],
+    );
+
+    state = state.copyWith(
+      isCalendarLoading: false,
+    );
+  }
+
+  Future<String?> getTempDiary(DateTime dateTime) async {
+    return await AutoDiarySaveDataSource().getDiary(DateFormat('yyyy-MM-dd').format(dateTime));
+  }
+
   Future<void> getEmotionStampList() async {
     state = state.copyWith(
       isCalendarLoading: true,
@@ -165,17 +185,19 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
       DateFormat('yyyy-MM-dd').format(state.focusedEndDate),
     );
 
+    final autoDiaryData = await AutoDiarySaveDataSource().loadDiariesByMonth(DateFormat('yyyy').format(state.focusedStartDate), DateFormat('MM').format(state.focusedStartDate));
+
     result.when(
       success: (result) {
-        result.sort((a, b) {
-          return b.targetDate.compareTo(a.targetDate);
-        });
+        List<DiaryData> combinedList = [...result, ...autoDiaryData];
+
+        combinedList.sort((a, b) => b.targetDate.compareTo(a.targetDate));
 
         state = state.copyWith(
-          diaryDataList: result,
+          diaryDataList: combinedList,
         );
 
-        _makeDiaryCardDataList(result);
+        _makeDiaryCardDataList(combinedList);
       },
       error: (message) {
         // Get.snackbar('알림', '다이어리 목록을 불러오는데 실패했습니다.');
@@ -327,25 +349,84 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     state = state.copyWith(diaryDetailData: diaryDetailData);
   }
 
-  Future<void> saveDiaryDetail(diary, date) async {
+  Future<void> saveDiaryDetail(DiaryData diary, DateTime date) async {
     final result = await saveDiaryUseCase(diary);
 
     result.when(
       success: (data) async {
         await getDiaryDetail(data.id);
+        await AutoDiarySaveDataSource().deleteDiary(DateFormat('yyyy-MM-dd').format(date));
 
-        navigatorKey.currentState!.push(
-          MaterialPageRoute(
-            builder: (context) => DiaryDetailScreen(
-              diaryId: data.id,
-              date: date,
-              diaryData: diary,
-              isNewDiary: true,
+        if (data.comments[0].author == "harunyang") {
+          navigatorKey.currentState!.push(
+            MaterialPageRoute(
+              builder: (context) => DiaryDetailScreen(
+                diaryId: data.id,
+                date: date,
+                diaryData: diary,
+                isNewDiary: true,
+              ),
             ),
-          ),
-        );
+          );
+        } else {
+          showDialog(
+            barrierDismissible: true,
+            context: navigatorKey.currentContext!,
+            builder: (context) {
+              return DialogComponent(
+                titlePadding: EdgeInsets.zero,
+                title: "",
+                content: Column(
+                  children: [
+                    Image.asset(
+                      "lib/config/assets/images/character/character12.png",
+                      width: 120.w,
+                      height: 120.h,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Text(
+                      "하루냥이 잠깐 낮잠을 자고 있어요.",
+                      style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    Text(
+                      "대신 재밌는 명언을 추천해드릴게요.",
+                      style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                    ),
+                  ],
+                ),
+                actionContent: [
+                  DialogButton(
+                    title: "알겠어요",
+                    onTap: () async {
+                      navigatorKey.currentState!.pop();
+                      navigatorKey.currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => DiaryDetailScreen(
+                            diaryId: data.id,
+                            date: date,
+                            diaryData: diary,
+                            isNewDiary: true,
+                          ),
+                        ),
+                      );
+                    },
+                    backgroundColor: kOrange200Color,
+                    textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                  ),
+                ],
+              );
+            },
+          );
+        }
       },
-      error: (message) {
+      error: (message) async {
+        saveDiary(date.toString(), diary);
+
         showDialog(
           barrierDismissible: true,
           context: navigatorKey.currentContext!,
@@ -356,7 +437,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
               content: Column(
                 children: [
                   Image.asset(
-                    "lib/config/assets/images/character/update1.png",
+                    "lib/config/assets/images/character/haru_error_case.png",
                     width: 120.w,
                     height: 120.h,
                   ),
@@ -364,14 +445,14 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                     height: 12.h,
                   ),
                   Text(
-                    "하루냥이 잠깐 낮잠을 자고 있어요.",
+                    "잠시 후 다시 시도해주세요.",
                     style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                   ),
                   SizedBox(
                     height: 4.h,
                   ),
                   Text(
-                    "대신 재밌는 명언을 추천해드릴게요.",
+                    "하루냥이 잠깐 낮잠자고 있어요...",
                     style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                   ),
                 ],
@@ -380,6 +461,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                 DialogButton(
                   title: "알겠어요",
                   onTap: () async {
+                    navigatorKey.currentState!.pop();
                     navigatorKey.currentState!.pop();
                   },
                   backgroundColor: kOrange200Color,
@@ -393,25 +475,129 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
   }
 
-  Future<void> updateDiaryDetail(diary, date) async {
+  Future<void> updateDiaryDetail(DiaryData diary, DateTime date) async {
     final result = await updateDiaryUseCase(diary);
 
     result.when(
       success: (data) async {
         await getDiaryDetail(data.id);
+        await AutoDiarySaveDataSource().deleteDiary(DateFormat('yyyy-MM-dd').format(date));
 
-        navigatorKey.currentState!.push(
-          MaterialPageRoute(
-            builder: (context) => DiaryDetailScreen(
-              diaryId: data.id,
-              date: date,
-              diaryData: diary,
-              isNewDiary: true,
+        if (data.comments[0].author == "harunyang") {
+          navigatorKey.currentState!.push(
+            MaterialPageRoute(
+              builder: (context) => DiaryDetailScreen(
+                diaryId: data.id,
+                date: date,
+                diaryData: diary,
+                isNewDiary: true,
+              ),
             ),
-          ),
+          );
+        } else {
+          showDialog(
+            barrierDismissible: true,
+            context: navigatorKey.currentContext!,
+            builder: (context) {
+              return DialogComponent(
+                titlePadding: EdgeInsets.zero,
+                title: "",
+                content: Column(
+                  children: [
+                    Image.asset(
+                      "lib/config/assets/images/character/character12.png",
+                      width: 120.w,
+                      height: 120.h,
+                    ),
+                    SizedBox(
+                      height: 12.h,
+                    ),
+                    Text(
+                      "하루냥이 잠깐 낮잠을 자고 있어요.",
+                      style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                    ),
+                    SizedBox(
+                      height: 4.h,
+                    ),
+                    Text(
+                      "대신 재밌는 명언을 추천해드릴게요.",
+                      style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                    ),
+                  ],
+                ),
+                actionContent: [
+                  DialogButton(
+                    title: "알겠어요",
+                    onTap: () async {
+                      navigatorKey.currentState!.pop();
+                      navigatorKey.currentState!.push(
+                        MaterialPageRoute(
+                          builder: (context) => DiaryDetailScreen(
+                            diaryId: data.id,
+                            date: date,
+                            diaryData: diary,
+                            isNewDiary: true,
+                          ),
+                        ),
+                      );
+                    },
+                    backgroundColor: kOrange200Color,
+                    textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                  ),
+                ],
+              );
+            },
+          );
+        }
+      },
+      error: (message) {
+        saveDiary(date.toString(), diary);
+
+        showDialog(
+          barrierDismissible: true,
+          context: navigatorKey.currentContext!,
+          builder: (context) {
+            return DialogComponent(
+              titlePadding: EdgeInsets.zero,
+              title: "",
+              content: Column(
+                children: [
+                  Image.asset(
+                    "lib/config/assets/images/character/haru_error_case.png",
+                    width: 120.w,
+                    height: 120.h,
+                  ),
+                  SizedBox(
+                    height: 12.h,
+                  ),
+                  Text(
+                    "잠시 후 다시 시도해주세요.",
+                    style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Text(
+                    "하루냥이 잠깐 낮잠자고 있어요...",
+                    style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                  ),
+                ],
+              ),
+              actionContent: [
+                DialogButton(
+                  title: "알겠어요",
+                  onTap: () async {
+                    navigatorKey.currentState!.pop();
+                    navigatorKey.currentState!.pop();
+                  },
+                  backgroundColor: kOrange200Color,
+                  textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                ),
+              ],
+            );
+          },
         );
       },
-      error: (message) {},
     );
   }
 }

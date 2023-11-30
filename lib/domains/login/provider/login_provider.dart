@@ -1,23 +1,13 @@
-import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/config/theme/text_data.dart';
-import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
-import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
-import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/login/model/login_state.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/login/login_terms_information_screen.dart';
 import 'package:frontend/ui/screen/sign_in_complete/sign_in_complete_screen.dart';
-import 'package:store_redirect/store_redirect.dart';
 
 final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>((ref) {
   return LoginNotifier(ref);
@@ -30,27 +20,28 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   Future<void> connectKakaoLogin() async {
     //social id 얻기
-    final isSocialIdGet = await getSocialId(isSocialKakao: "kakao");
+    final isSocialIdGet = await getSocialId(isSocialKakao: "KAKAO");
     if (!isSocialIdGet) {
       // Get.snackbar('알림', '카카오 세션과 연결이 실패했습니다.');
       return;
     }
 
-    getLoginSuccessData(loginType: "kakao");
+    getLoginSuccessData(loginType: "KAKAO");
   }
 
   Future<void> connectAppleLogin() async {
     //social id 얻기
-    final isSocialIdGet = await getSocialId(isSocialKakao: "apple");
+    final isSocialIdGet = await getSocialId(isSocialKakao: "APPLE");
     if (!isSocialIdGet) {
       // Get.snackbar('알림', '애플 세션과 연결이 실패했습니다.');
       return;
     }
 
-    getLoginSuccessData(loginType: "apple");
+    getLoginSuccessData(loginType: "APPLE");
   }
 
   Future<void> getLoginSuccessData({required String loginType}) async {
+    print("loginType ${loginType}");
     final loginResult = await onLogin(loginType: loginType);
 
     if (loginResult == 200) {
@@ -66,7 +57,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   Future<bool> getSocialId({required String isSocialKakao}) async {
-    final socialLoginResult = isSocialKakao == "kakao" ? await kakaoLoginUseCase.getKakaoSocialId() : await appleLoginUseCase.getAppleSocialId();
+    final socialLoginResult = isSocialKakao == "KAKAO" ? await kakaoLoginUseCase.getKakaoSocialId() : await appleLoginUseCase.getAppleSocialId();
     final email = socialLoginResult.email;
     final socialId = socialLoginResult.socialId;
 
@@ -97,7 +88,8 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   Future<int> onLogin({required loginType}) async {
     int result = 0;
-    final loginResult = loginType == "kakao" ? await kakaoLoginUseCase.login(state.socialId) : await appleLoginUseCase.login(state.socialId);
+    print("state.socialId :  ${state.socialId}");
+    final loginResult = loginType == "KAKAO" ? await kakaoLoginUseCase.login(state.socialId) : await appleLoginUseCase.login(state.socialId);
 
     await loginResult.when(
       success: (accessToken) async {
@@ -115,6 +107,20 @@ class LoginNotifier extends StateNotifier<LoginState> {
     );
 
     return result;
+  }
+
+  Future<void> getLoginData() async {
+    final getDeviceId = await tokenUseCase.getDeviceId();
+    final getLoginType = await tokenUseCase.getLoginType();
+    final getSocialId = await tokenUseCase.getSocialId();
+
+    state = state.copyWith(
+      socialId: getSocialId ?? "",
+      deviceToken: getDeviceId,
+      loginType: getLoginType ?? "",
+    );
+
+    getLoginSuccessData(loginType: getLoginType ?? "");
   }
 
   void goHome() {

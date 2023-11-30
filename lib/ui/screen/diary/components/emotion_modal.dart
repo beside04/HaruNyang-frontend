@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
@@ -95,6 +94,7 @@ class EmotionModal extends ConsumerWidget {
                                           emotion: ref.watch(diarySelectProvider).selectedEmotion.value,
                                           weather: ref.watch(diarySelectProvider).selectedWeather.value,
                                           isEditScreen: false,
+                                          isAutoSave: false,
                                         )),
                               );
                             },

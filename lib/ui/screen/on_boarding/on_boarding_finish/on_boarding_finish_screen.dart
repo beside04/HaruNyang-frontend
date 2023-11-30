@@ -6,7 +6,6 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/login/provider/login_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_finish/on_boarding_finish_provider.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
@@ -86,8 +85,6 @@ class OnBoardingFinishScreen extends ConsumerWidget {
                   title: '시작하기',
                   onTap: () async {
                     ref.watch(onBoardingFinishProvider.notifier).setPushMessage();
-
-                    await ref.watch(loginProvider.notifier).getLoginSuccessData(loginType: loginType);
 
                     await ref.watch(loginProvider.notifier).getLoginSuccessData(loginType: loginType);
 

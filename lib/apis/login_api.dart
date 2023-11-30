@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
 import 'package:frontend/res/constants.dart';
@@ -28,11 +27,6 @@ class LoginApi {
       );
 
       final cookies = response.headers.map['set-cookie'];
-
-      print(cookies);
-      print(cookies);
-      print(cookies);
-      print(cookies);
 
       return Result.success(
         LoginTokenData(

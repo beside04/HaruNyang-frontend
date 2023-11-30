@@ -12,7 +12,6 @@ import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/login/provider/login_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/res/constants.dart';
@@ -105,71 +104,79 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => FormBuilder(
-                      key: _fbKey,
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              height: 40.0.h,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 24.0.w),
-                              child: Text(
-                                "닉네임 변경",
-                                style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                    builder: (context) => StatefulBuilder(builder: (context, StateSetter setState) {
+                      return FormBuilder(
+                        key: _fbKey,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 40.0.h,
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(24.w),
-                              child: NicknameTextField(
-                                nameHintText: ref.watch(onBoardingProvider).nickname,
-                                textEditingController: nicknameEditingController,
-                                suffixIcon: Consumer(builder: (context, ref, child) {
-                                  return nicknameEditingController.text.isEmpty
-                                      ? Visibility(
-                                          visible: false,
-                                          child: Container(),
-                                        )
-                                      : GestureDetector(
-                                          child: Icon(
-                                            Icons.cancel,
-                                            color: Theme.of(context).colorScheme.iconSubColor,
-                                            size: 20,
-                                          ),
-                                          onTap: () => nicknameEditingController.clear(),
-                                        );
-                                }),
+                              Padding(
+                                padding: EdgeInsets.only(left: 24.0.w),
+                                child: Text(
+                                  "닉네임 변경",
+                                  style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                                ),
                               ),
-                            ),
-                            Consumer(builder: (context, ref, child) {
-                              return BottomButton(
-                                title: '변경하기',
-                                onTap: nicknameEditingController.text.isEmpty
-                                    ? null
-                                    : () async {
-                                        var key = _fbKey.currentState!;
+                              Padding(
+                                padding: EdgeInsets.all(24.w),
+                                child: NicknameTextField(
+                                  onChanged: (value) {
+                                    setState(() {});
+                                  },
+                                  nameHintText: ref.watch(onBoardingProvider).nickname,
+                                  textEditingController: nicknameEditingController,
+                                  suffixIcon: Consumer(builder: (context, ref, child) {
+                                    return nicknameEditingController.text.isEmpty
+                                        ? Visibility(
+                                            visible: false,
+                                            child: Container(),
+                                          )
+                                        : GestureDetector(
+                                            child: Icon(
+                                              Icons.cancel,
+                                              color: Theme.of(context).colorScheme.iconSubColor,
+                                              size: 20,
+                                            ),
+                                            onTap: () {
+                                              nicknameEditingController.clear();
+                                              setState(() {});
+                                            },
+                                          );
+                                  }),
+                                ),
+                              ),
+                              Consumer(builder: (context, ref, child) {
+                                return BottomButton(
+                                  title: '변경하기',
+                                  onTap: nicknameEditingController.text.isEmpty
+                                      ? null
+                                      : () async {
+                                          var key = _fbKey.currentState!;
 
-                                        if (key.saveAndValidate()) {
-                                          FocusScope.of(context).unfocus();
+                                          if (key.saveAndValidate()) {
+                                            FocusScope.of(context).unfocus();
 
-                                          await ref.watch(onBoardingProvider.notifier).putMyInformation(
-                                                nickname: nicknameEditingController.text,
-                                                isOnBoarding: false,
-                                                isPutNickname: true,
-                                                context: context,
-                                              );
-                                        }
-                                      },
-                              );
-                            }),
-                          ],
+                                            await ref.watch(onBoardingProvider.notifier).putMyInformation(
+                                                  nickname: nicknameEditingController.text,
+                                                  isOnBoarding: false,
+                                                  isPutNickname: true,
+                                                  context: context,
+                                                );
+                                          }
+                                        },
+                                );
+                              }),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                   );
                 },
               ),
@@ -196,100 +203,109 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => FormBuilder(
-                      key: _fbKey,
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              height: 40.0.h,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 24.0.w),
-                              child: Text(
-                                "날짜 변경",
-                                style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                    builder: (context) => StatefulBuilder(builder: (context, StateSetter setState) {
+                      return FormBuilder(
+                        key: _fbKey,
+                        child: Padding(
+                          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              SizedBox(
+                                height: 40.0.h,
                               ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(24.w),
-                              child: AgeTextField(
-                                isSettingAge: true,
-                                textEditingController: ageEditingController,
-                                onTap: () {
-                                  DatePicker.showDatePicker(
-                                    context,
-                                    showTitleActions: true,
-                                    minTime: DateTime(1930, 1, 1),
-                                    maxTime: DateTime(2022, 12, 31),
-                                    onConfirm: (date) {
-                                      getBirthDateFormat(date);
-                                    },
-                                    currentTime: DateTime.parse(
-                                      ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
-                                    ),
-                                    locale: LocaleType.ko,
-                                    theme: picker_theme.DatePickerTheme(
-                                      itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
-                                      backgroundColor: Theme.of(context).colorScheme.backgroundModal,
-                                      title: "나이 변경",
-                                    ),
-                                  );
-                                },
-                                suffixIcon: Consumer(builder: (context, ref, child) {
-                                  return ageEditingController.text.isEmpty
-                                      ? Visibility(
-                                          visible: false,
-                                          child: Container(),
-                                        )
-                                      : GestureDetector(
-                                          child: Icon(
-                                            Icons.cancel,
-                                            color: Theme.of(context).colorScheme.iconSubColor,
-                                            size: 20,
-                                          ),
-                                          onTap: () => ageEditingController.clear(),
-                                        );
-                                }),
-                                hintText: ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
+                              Padding(
+                                padding: EdgeInsets.only(left: 24.0.w),
+                                child: Text(
+                                  "날짜 변경",
+                                  style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                                ),
                               ),
-                            ),
-                            Consumer(builder: (context, ref, child) {
-                              return BottomButton(
-                                title: '변경하기',
-                                onTap: ageEditingController.text.isEmpty
-                                    ? null
-                                    : () async {
-                                        var key = _fbKey.currentState!;
-                                        if (key.saveAndValidate()) {
-                                          FocusScope.of(context).unfocus();
-
-                                          await ref.watch(onBoardingProvider.notifier).putMyInformation(
-                                                age: ageEditingController.text,
-                                                isOnBoarding: false,
-                                                isPutNickname: false,
-                                                context: context,
-                                              );
-
-                                          // ignore: use_build_context_synchronously
-                                          Navigator.pop(context);
-                                          // ignore: use_build_context_synchronously
-                                          toast(
-                                            context: context,
-                                            text: '변경을 완료했어요.',
-                                            isCheckIcon: true,
-                                          );
-                                        }
+                              Padding(
+                                padding: EdgeInsets.all(24.w),
+                                child: AgeTextField(
+                                  onChanged: (value) {
+                                    setState(() {});
+                                  },
+                                  isSettingAge: true,
+                                  textEditingController: ageEditingController,
+                                  onTap: () {
+                                    DatePicker.showDatePicker(
+                                      context,
+                                      showTitleActions: true,
+                                      minTime: DateTime(1930, 1, 1),
+                                      maxTime: DateTime(2022, 12, 31),
+                                      onConfirm: (date) {
+                                        getBirthDateFormat(date);
+                                        setState(() {});
                                       },
-                              );
-                            }),
-                          ],
+                                      currentTime: DateTime.parse(
+                                        ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
+                                      ),
+                                      locale: LocaleType.ko,
+                                      theme: picker_theme.DatePickerTheme(
+                                        itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                                        backgroundColor: Theme.of(context).colorScheme.backgroundModal,
+                                        title: "나이 변경",
+                                      ),
+                                    );
+                                  },
+                                  suffixIcon: Consumer(builder: (context, ref, child) {
+                                    return ageEditingController.text.isEmpty
+                                        ? Visibility(
+                                            visible: false,
+                                            child: Container(),
+                                          )
+                                        : GestureDetector(
+                                            child: Icon(
+                                              Icons.cancel,
+                                              color: Theme.of(context).colorScheme.iconSubColor,
+                                              size: 20,
+                                            ),
+                                            onTap: () {
+                                              ageEditingController.clear();
+                                              setState(() {});
+                                            },
+                                          );
+                                  }),
+                                  hintText: ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
+                                ),
+                              ),
+                              Consumer(builder: (context, ref, child) {
+                                return BottomButton(
+                                  title: '변경하기',
+                                  onTap: ageEditingController.text.isEmpty
+                                      ? null
+                                      : () async {
+                                          var key = _fbKey.currentState!;
+                                          if (key.saveAndValidate()) {
+                                            FocusScope.of(context).unfocus();
+
+                                            await ref.watch(onBoardingProvider.notifier).putMyInformation(
+                                                  age: ageEditingController.text,
+                                                  isOnBoarding: false,
+                                                  isPutNickname: false,
+                                                  context: context,
+                                                );
+
+                                            // ignore: use_build_context_synchronously
+                                            Navigator.pop(context);
+                                            // ignore: use_build_context_synchronously
+                                            toast(
+                                              context: context,
+                                              text: '변경을 완료했어요.',
+                                              isCheckIcon: true,
+                                            );
+                                          }
+                                        },
+                                );
+                              }),
+                            ],
+                          ),
                         ),
-                      ),
-                    ),
+                      );
+                    }),
                   );
                 },
               ),
@@ -307,6 +323,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                 onPressed: () {
                   GlobalUtils.setAnalyticsCustomEvent('Click_MyInfo_JobEdit');
                   jobStatus = EnumToString.fromString(Job.values, ref.watch(onBoardingProvider).job);
+
                   showModalBottomSheet(
                     backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                     shape: const RoundedRectangleBorder(
@@ -316,73 +333,81 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                     ),
                     context: context,
                     isScrollControlled: true,
-                    builder: (context) => Padding(
-                      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SizedBox(
-                            height: 40.0.h,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 24.0.w),
-                            child: Text(
-                              "직업 변경",
-                              style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 20.0.h),
-                            child: GridView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: jobList.length,
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                childAspectRatio: 0.8.h,
-                              ),
-                              itemBuilder: (BuildContext context, int i) {
-                                return Consumer(builder: (context, ref, child) {
-                                  return JobButton(
-                                    job: jobList[i].name,
-                                    icon: jobList[i].icon,
-                                    selected: jobStatus == Job.values[i],
-                                    onPressed: () {
-                                      jobStatus = Job.values[i];
-                                    },
-                                  );
-                                });
-                              },
-                            ),
-                          ),
-                          Consumer(builder: (context, ref, child) {
-                            return BottomButton(
-                              title: '변경하기',
-                              onTap: jobStatus == null
-                                  ? null
-                                  : () async {
-                                      await ref.watch(onBoardingProvider.notifier).putMyInformation(
-                                            job: jobStatus!.name,
-                                            isOnBoarding: false,
-                                            isPutNickname: false,
-                                            context: context,
-                                          );
+                    builder: (context) {
+                      return StatefulBuilder(
+                        builder: (context, StateSetter setState) {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SizedBox(
+                                  height: 40.0.h,
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 24.0.w),
+                                  child: Text(
+                                    "직업 변경",
+                                    style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20.0.h),
+                                  child: GridView.builder(
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    shrinkWrap: true,
+                                    itemCount: jobList.length,
+                                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 3,
+                                      childAspectRatio: 0.8.h,
+                                    ),
+                                    itemBuilder: (BuildContext context, int i) {
+                                      return Consumer(builder: (context, ref, child) {
+                                        return JobButton(
+                                          job: jobList[i].name,
+                                          icon: jobList[i].icon,
+                                          selected: jobStatus == Job.values[i],
+                                          onPressed: () {
+                                            jobStatus = Job.values[i];
 
-                                      // ignore: use_build_context_synchronously
-                                      Navigator.pop(context);
-                                      // ignore: use_build_context_synchronously
-                                      toast(
-                                        context: context,
-                                        text: '변경을 완료했어요.',
-                                        isCheckIcon: true,
-                                      );
+                                            setState(() {});
+                                          },
+                                        );
+                                      });
                                     },
-                            );
-                          }),
-                        ],
-                      ),
-                    ),
+                                  ),
+                                ),
+                                Consumer(builder: (context, ref, child) {
+                                  return BottomButton(
+                                    title: '변경하기',
+                                    onTap: jobStatus == null
+                                        ? null
+                                        : () async {
+                                            await ref.watch(onBoardingProvider.notifier).putMyInformation(
+                                                  job: jobStatus!.name,
+                                                  isOnBoarding: false,
+                                                  isPutNickname: false,
+                                                  context: context,
+                                                );
+
+                                            // ignore: use_build_context_synchronously
+                                            Navigator.pop(context);
+                                            // ignore: use_build_context_synchronously
+                                            toast(
+                                              context: context,
+                                              text: '변경을 완료했어요.',
+                                              isCheckIcon: true,
+                                            );
+                                          },
+                                  );
+                                }),
+                              ],
+                            ),
+                          );
+                        },
+                      );
+                    },
                   );
                 },
               ),

@@ -35,14 +35,26 @@ class MainNotifier extends StateNotifier<MainState> {
   final DarkModeUseCase darkModeUseCase;
   final PushMessageUseCase pushMessagePermissionUseCase;
 
-  void toggleThemeMode(context) {
-    if (state.themeMode == ThemeMode.dark) {
-      GlobalUtils.setAnalyticsCustomEvent('Click_ThemeMode_DarkToLight');
-      state = state.copyWith(themeMode: ThemeMode.light);
-    } else {
-      GlobalUtils.setAnalyticsCustomEvent('Click_ThemeMode_LightToDark');
-      state = state.copyWith(themeMode: ThemeMode.dark);
-    }
+  ThemeMode? tempThemeMode;
+
+  Future<void> initializeState() async {
+    final pushMessagePermission = GlobalUtils.toBoolean(await pushMessagePermissionUseCase.getIsPushMessagePermission());
+    final marketingConsentAgree = GlobalUtils.toBoolean(await pushMessagePermissionUseCase.getIsMarketingConsentAgree());
+    final pushMessageTime = DateTime.parse(await pushMessagePermissionUseCase.getPushMessageTime() ?? '2023-01-01 21:00:00.000');
+    final themeMode = stringToThemeMode(await darkModeUseCase.getIsDarkMode() ?? "ThemeMode.system");
+
+    state = state.copyWith(
+      pushMessagePermission: pushMessagePermission,
+      marketingConsentAgree: marketingConsentAgree,
+      pushMessageTime: pushMessageTime,
+      themeMode: themeMode,
+    );
+  }
+
+  void toggleThemeMode() {
+    GlobalUtils.setAnalyticsCustomEvent('Click_ThemeMode_Change');
+    darkModeUseCase.setDarkMode(tempThemeMode!.toString());
+    state = state.copyWith(themeMode: tempThemeMode!);
   }
 
   togglePushMessageValue() {
@@ -75,21 +87,33 @@ class MainNotifier extends StateNotifier<MainState> {
     }
   }
 
-  Future<void> getIsPushMessage() async {
-    state = state.copyWith(pushMessagePermission: (GlobalUtils.toBoolean(await pushMessagePermissionUseCase.getIsPushMessagePermission())));
-  }
-
-  Future<void> getIsMarketingConsentAgree() async {
-    state = state.copyWith(marketingConsentAgree: (GlobalUtils.toBoolean(await pushMessagePermissionUseCase.getIsMarketingConsentAgree())));
-  }
-
   Future<void> setPushMessageTime(String date) async {
     state = state.copyWith(pushMessageTime: DateTime.parse(date));
     await pushMessagePermissionUseCase.setPushMessageTime(date);
   }
 
-  Future<void> getPushMessageTime() async {
-    state = state.copyWith(pushMessageTime: DateTime.parse(await pushMessagePermissionUseCase.getPushMessageTime() ?? '2023-01-01 21:00:00.000'));
+  ThemeMode stringToThemeMode(String themeString) {
+    switch (themeString) {
+      case 'ThemeMode.light':
+        return ThemeMode.light;
+      case 'ThemeMode.dark':
+        return ThemeMode.dark;
+      case 'ThemeMode.system':
+      default:
+        return ThemeMode.system;
+    }
+  }
+
+  String themeModeToString(ThemeMode themeMode) {
+    switch (themeMode) {
+      case ThemeMode.light:
+        return "라이트 모드";
+      case ThemeMode.dark:
+        return "다크 모드";
+      case ThemeMode.system:
+      default:
+        return "시스템 설정";
+    }
   }
 
   Future<void> setPushMessagePermission(bool pushMessagePermission) async {

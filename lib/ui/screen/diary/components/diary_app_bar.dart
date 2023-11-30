@@ -3,8 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/diary/provider/diary_select_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
@@ -24,7 +22,8 @@ class DiaryAppBar extends ConsumerWidget implements PreferredSizeWidget {
       return AppBar(
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.brightness == Brightness.dark ? kGrayColor950 : const Color(0xffffac60),
+        backgroundColor: Theme.of(context).colorScheme.brightness == Brightness.dark ? kGrayColor950 : const Color(0xff09B56C),
+        // const Color(0xffffac60),
         title: Text(
           DateFormat('M월 d일').format(date),
           style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),

@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 // ignore: constant_identifier_names
-const int APP_BUILD_NUMBER = 10;
+const int APP_BUILD_NUMBER = 11;
 // ignore: constant_identifier_names
 const String APP_VERSION_NUMBER = '2.1.0';
 
@@ -84,23 +84,23 @@ List<JobData> jobList = [
 String getEmoticonImage(String value) {
   switch (value) {
     case 'HAPPINESS':
-      return 'lib/config/assets/images/character/happy.png';
+      return 'lib/config/assets/images/diary/emotion/happy_christmas.png';
     case 'SADNESS':
-      return 'lib/config/assets/images/character/sad2.png';
+      return 'lib/config/assets/images/diary/emotion/sad_christmas.png';
     case 'ANGRY':
-      return 'lib/config/assets/images/character/angry.png';
+      return 'lib/config/assets/images/diary/emotion/angry_christmas.png';
     case 'EXCITED':
-      return 'lib/config/assets/images/character/excited.png';
+      return 'lib/config/assets/images/diary/emotion/excited_christmas.png';
     case 'TIRED':
-      return 'lib/config/assets/images/character/tired.png';
+      return 'lib/config/assets/images/diary/emotion/tired_christmas.png';
     case 'SURPRISED':
-      return 'lib/config/assets/images/character/amazed.png';
+      return 'lib/config/assets/images/diary/emotion/amazed_christmas.png';
     case 'NEUTRAL':
-      return 'lib/config/assets/images/character/soso.png';
+      return 'lib/config/assets/images/diary/emotion/soso_christmas.png';
     case 'FLUTTER':
-      return 'lib/config/assets/images/character/blushed.png';
+      return 'lib/config/assets/images/diary/emotion/blushed_christmas.png';
     case 'UNCERTAIN':
-      return 'lib/config/assets/images/character/molra.png';
+      return 'lib/config/assets/images/diary/emotion/molra_christmas.png';
     default:
       return '';
   }

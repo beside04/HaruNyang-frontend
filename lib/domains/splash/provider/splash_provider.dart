@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,12 +7,10 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domains/diary/model/diary_state.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
-import 'package:frontend/domains/on_boarding/model/on_boarding_state.dart';
+import 'package:frontend/domains/login/provider/login_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/domains/splash/model/splash_state.dart';
-import 'package:frontend/domains/token/model/token_state.dart';
 import 'package:frontend/domains/token/provider/token_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/res/constants.dart';
@@ -53,7 +52,8 @@ class SplashNotifier extends StateNotifier<SplashState> {
         ));
 
         usingServer = remoteConfig.getString("using_server");
-        isBannerOpen = remoteConfig.getBool("is_banner_open");
+        print("usingServer ${usingServer}");
+        isBannerOpen = remoteConfig.getBool("is_christmas_banner_open");
         bannerUrl = remoteConfig.getString("banner_url");
 
         if (APP_BUILD_NUMBER < remoteConfig.getInt("min_build_number")) {
@@ -71,7 +71,7 @@ class SplashNotifier extends StateNotifier<SplashState> {
                   content: Column(
                     children: [
                       Image.asset(
-                        "lib/config/assets/images/character/update1.png",
+                        "lib/config/assets/images/character/haru_error_case.png",
                         width: 120.w,
                         height: 120.h,
                       ),
@@ -217,6 +217,8 @@ class SplashNotifier extends StateNotifier<SplashState> {
   }
 
   Future<void> goToHome() async {
+    int retryCount = 0;
+
     Future.delayed(const Duration(milliseconds: 1500), () async {
       String? accessToken = await tokenController.getAccessToken();
 
@@ -229,20 +231,34 @@ class SplashNotifier extends StateNotifier<SplashState> {
           (route) => false,
         );
       } else {
-        //캘린더 업데이트
-        diaryController.initPage();
-        //북마크데이터 업데이트
-        ref.watch(diaryProvider.notifier).getAllBookmarkData();
+        if (retryCount < 1) {
+          retryCount++;
 
-        //Home 화면 이동
-        await ref.watch(onBoardingProvider.notifier).getMyInformation();
+          try {
+            final getDeviceId = await tokenUseCase.getDeviceId();
+            final getLoginType = await tokenUseCase.getLoginType();
+            final getSocialId = await tokenUseCase.getSocialId();
 
-        navigatorKey.currentState!.pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
-          ),
-          (route) => false,
-        );
+            await ref.read(loginProvider.notifier).getLoginData();
+
+            // ref.read(loginProvider.notifier).getLoginSuccessData(loginType: getLoginType!);
+
+            navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+          } on DioError catch (e) {
+            // 로그인 화면으로 다시 이동
+            // Get.snackbar('알림', '세션이 만료되었습니다.');
+            await tokenUseCase.deleteAllToken();
+
+            navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+          }
+          // Your existing code here
+        } else {
+          // 로그인 화면으로 다시 이동
+          // Get.snackbar('알림', '세션이 만료되었습니다.');
+          await tokenUseCase.deleteAllToken();
+
+          navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+        }
       }
     });
   }

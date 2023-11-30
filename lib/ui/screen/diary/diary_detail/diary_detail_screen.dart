@@ -1,6 +1,3 @@
-import 'dart:ui';
-
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +7,6 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/main.dart';
@@ -25,7 +21,6 @@ import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
 import 'package:rive/rive.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class DiaryDetailScreen extends ConsumerStatefulWidget {
   final int diaryId;
@@ -156,6 +151,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                             diaryData: widget.diaryData.id == null ? widget.diaryData.copyWith(id: widget.diaryId) : widget.diaryData,
                             weather: widget.diaryData.weather,
                             isEditScreen: true,
+                            isAutoSave: false,
                           ),
                         ),
                       );
@@ -207,7 +203,8 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                             DialogButton(
                                               title: "확인",
                                               onTap: () {
-                                                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+                                                navigatorKey.currentState!.pop();
+                                                navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
 
                                                 ref.watch(diaryProvider.notifier).resetDiary();
                                               },

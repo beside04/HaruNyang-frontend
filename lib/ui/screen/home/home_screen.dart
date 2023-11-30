@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/home/provider/home_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/ui/components/toast.dart';
@@ -22,6 +21,8 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
+    print("AAAKMAKAMKAMKAMAKAMK");
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
@@ -116,9 +117,20 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
                       ],
                       currentIndex: ref.watch(homeProvider).selectedIndex,
                       onTap: (index) async {
-                        final result = await ref.watch(homeProvider.notifier).onItemTapped(index);
+                        final DiarySate diarySate = await ref.watch(homeProvider.notifier).onItemTapped(index);
 
-                        if (!result) {
+                        print(diarySate);
+
+                        if (diarySate == DiarySate.alreadySaved) {
+                          // ignore: use_build_context_synchronously
+                          toast(
+                            context: context,
+                            text: '오늘 날짜에 임시 저장된 일기가 있어요',
+                            isCheckIcon: false,
+                          );
+                        }
+
+                        if (diarySate == DiarySate.writtenToday) {
                           // ignore: use_build_context_synchronously
                           toast(
                             context: context,

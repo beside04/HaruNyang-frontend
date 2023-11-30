@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 
 class NicknameTextField extends ConsumerWidget {
   const NicknameTextField({
@@ -12,6 +11,7 @@ class NicknameTextField extends ConsumerWidget {
     required this.nameHintText,
     required this.textEditingController,
     required this.suffixIcon,
+    required this.onChanged,
     this.focus,
   });
 
@@ -20,10 +20,13 @@ class NicknameTextField extends ConsumerWidget {
   final Widget? suffixIcon;
   final FocusNode? focus;
 
+  final Function(String?)? onChanged;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Consumer(builder: (context, ref, child) {
       return FormBuilderTextField(
+        onChanged: onChanged,
         maxLength: 12,
         name: 'name',
         focusNode: focus,
