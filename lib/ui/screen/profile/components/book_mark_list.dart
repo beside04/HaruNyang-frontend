@@ -49,8 +49,7 @@ class BookMarkList extends StatelessWidget {
                       children: [
                         Text(
                           DateFormat('yyyy.MM.dd').format(date),
-                          style: kSubtitle1Style.copyWith(
-                              color: Theme.of(context).colorScheme.textTitle),
+                          style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                         )
                       ],
                     ),
@@ -59,12 +58,14 @@ class BookMarkList extends StatelessWidget {
                             onTap: onTap,
                             child: SvgPicture.asset(
                               "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
+                              color: Theme.of(context).colorScheme.primaryColor,
                             ),
                           )
                         : GestureDetector(
                             onTap: onTap,
                             child: SvgPicture.asset(
                               "lib/config/assets/images/diary/write_diary/bookmark.svg",
+                              color: Theme.of(context).colorScheme.primaryColor,
                             ),
                           ),
                   ],
@@ -74,15 +75,13 @@ class BookMarkList extends StatelessWidget {
                 ),
                 Text(
                   title,
-                  style: kBody1Style.copyWith(
-                      color: Theme.of(context).colorScheme.textCaption),
+                  style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textCaption),
                 ),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Text(
-                    name == "harunyang" ? "하루냥" : name,
-                    style: kBody2Style.copyWith(
-                        color: Theme.of(context).colorScheme.textLowEmphasis),
+                    name == "harunyang" ? "산타 하루냥" : name,
+                    style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textLowEmphasis),
                   ),
                 )
               ],

@@ -22,8 +22,6 @@ class HomeScreenState extends ConsumerState<HomeScreen> {
   void initState() {
     super.initState();
 
-    print("AAAKMAKAMKAMKAMAKAMK");
-
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final args = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>?;
 

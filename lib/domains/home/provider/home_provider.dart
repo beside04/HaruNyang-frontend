@@ -24,7 +24,6 @@ enum DiarySate {
 }
 
 final homeProvider = StateNotifierProvider<HomeNotifier, HomeState>((ref) {
-  print("KJSDAMLASDMKLSMAKLDMKLSAMDKLAMSLDMKLAS");
   return HomeNotifier(
     ref,
     PopUpUseCase(

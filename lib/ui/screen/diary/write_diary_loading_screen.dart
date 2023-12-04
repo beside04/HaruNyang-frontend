@@ -39,11 +39,6 @@ class WriteDiaryLoadingScreenState extends ConsumerState<WriteDiaryLoadingScreen
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -58,6 +53,8 @@ class WriteDiaryLoadingScreenState extends ConsumerState<WriteDiaryLoadingScreen
               padding: EdgeInsets.symmetric(horizontal: 60.0.w),
               child: Lottie.asset(
                 'lib/config/assets/lottie/loading.json',
+                height: 160,
+                width: 160,
                 fit: BoxFit.fill,
               ),
             ),

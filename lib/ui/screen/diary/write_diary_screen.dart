@@ -21,7 +21,6 @@ import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:frontend/ui/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/ui/screen/diary/write_diary_loading_screen.dart';
-import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:rive/rive.dart';
@@ -99,10 +98,15 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
   void dispose() {
     super.dispose();
     _autoSaveTimer?.cancel();
+
     ref.watch(writeDiaryProvider.notifier).diaryEditingController.removeListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
 
     DateTime screenExitTime = DateTime.now();
     Duration stayDuration = screenExitTime.difference(ref.watch(screenEntryTimeProvider));
+
+    Future(() {
+      ref.watch(diaryProvider.notifier).getEmotionStampList();
+    });
 
     // Firebase Analytics에 체류시간 로깅
     GlobalUtils.setAnalyticsCustomEvent('stay_duration', {
@@ -197,35 +201,47 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                               }
                             }
 
-                            Navigator.of(context).pushAndRemoveUntil(
+                            if (mounted) {
+                              FocusManager.instance.primaryFocus?.unfocus();
+
+                              _autoSaveTimer?.cancel();
+
+                              ref.watch(writeDiaryProvider.notifier).diaryEditingController.removeListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
+
+                              Future(() {
+                                ref.watch(diaryProvider.notifier).getEmotionStampList();
+                              });
+
+                              DateTime screenExitTime = DateTime.now();
+                              Duration stayDuration = screenExitTime.difference(ref.watch(screenEntryTimeProvider));
+
+                              // Firebase Analytics에 체류시간 로깅
+                              GlobalUtils.setAnalyticsCustomEvent('stay_duration', {
+                                'screen': "Screen_Event_WriteDiary_WritePage",
+                                'duration': stayDuration.inSeconds,
+                              });
+
+                              Navigator.push(
+                                context,
                                 MaterialPageRoute(
-                                  builder: (context) => HomeScreen(),
-                                  settings: RouteSettings(arguments: {"index": 0}),
+                                  builder: (context) => WriteDiaryLoadingScreen(
+                                    diaryData: DiaryData(
+                                        id: widget.diaryData?.id,
+                                        diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+                                        feeling: widget.emotion,
+                                        feelingScore: 1,
+                                        weather: widget.weather,
+                                        targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
+                                        topic: ref.watch(writeDiaryProvider).topic.value,
+                                        image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
+                                            ? ref.watch(diaryProvider).diaryDetailData?.image ?? ""
+                                            : ref.watch(writeDiaryProvider).firebaseImageUrl),
+                                    date: widget.date,
+                                    isEditScreen: widget.isEditScreen,
+                                  ),
                                 ),
-                                (route) => false);
-
-                            FocusManager.instance.primaryFocus?.unfocus();
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => WriteDiaryLoadingScreen(
-                                  diaryData: DiaryData(
-                                      id: widget.diaryData?.id,
-                                      diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
-                                      feeling: widget.emotion,
-                                      feelingScore: 1,
-                                      weather: widget.weather,
-                                      targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
-                                      topic: ref.watch(writeDiaryProvider).topic.value,
-                                      image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
-                                          ? ref.watch(diaryProvider).diaryDetailData?.image ?? ""
-                                          : ref.watch(writeDiaryProvider).firebaseImageUrl),
-                                  date: widget.date,
-                                  isEditScreen: widget.isEditScreen,
-                                ),
-                              ),
-                            );
+                              );
+                            }
                           },
                     child: Text(
                       '등록',
@@ -412,60 +428,63 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                 )
                               : Container();
                         }),
-                        TextField(
-                          maxLength: 500,
-                          maxLines: null,
-                          autofocus: true,
-                          style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
-                          controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
-                          keyboardType: TextInputType.multiline,
-                          textAlignVertical: TextAlignVertical.center,
-                          cursorColor: Theme.of(context).colorScheme.inverseSurface,
-                          decoration: InputDecoration(
-                            helperText: "",
-                            counterText: "",
-                            hintStyle: kBody1Style.copyWith(color: kGrayColor400),
-                            contentPadding: const EdgeInsets.only(
-                              top: 12,
-                              left: 20,
-                              right: 20,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: TextField(
+                            maxLength: 500,
+                            maxLines: null,
+                            autofocus: true,
+                            style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                            controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
+                            keyboardType: TextInputType.multiline,
+                            textAlignVertical: TextAlignVertical.center,
+                            cursorColor: Theme.of(context).colorScheme.inverseSurface,
+                            decoration: InputDecoration(
+                              helperText: "",
+                              counterText: "",
+                              hintStyle: kBody1Style.copyWith(color: kGrayColor400),
+                              contentPadding: const EdgeInsets.only(
+                                top: 12,
+                                left: 20,
+                                right: 20,
+                              ),
+                              filled: true,
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
+                              focusedBorder: const OutlineInputBorder(
+                                borderSide: BorderSide.none,
+                              ),
                             ),
-                            filled: true,
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                            focusedBorder: const OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                            ),
-                          ),
-                          onChanged: (value) {
-                            ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
-                            value.length == 500
-                                ? showDialog(
-                                    barrierDismissible: true,
-                                    context: context,
-                                    builder: (ctx) {
-                                      return DialogComponent(
-                                        title: "글자 제한",
-                                        content: Text(
-                                          "500 글자까지 작성할 수 있어요.",
-                                          style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
-                                        ),
-                                        actionContent: [
-                                          DialogButton(
-                                            title: "확인 했어요",
-                                            onTap: () {
-                                              Navigator.pop(context);
-                                            },
-                                            backgroundColor: kOrange200Color,
-                                            textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                            onChanged: (value) {
+                              ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
+                              value.length == 500
+                                  ? showDialog(
+                                      barrierDismissible: true,
+                                      context: context,
+                                      builder: (ctx) {
+                                        return DialogComponent(
+                                          title: "글자 제한",
+                                          content: Text(
+                                            "500 글자까지 작성할 수 있어요.",
+                                            style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                                           ),
-                                        ],
-                                      );
-                                    },
-                                  )
-                                : null;
-                          },
+                                          actionContent: [
+                                            DialogButton(
+                                              title: "확인 했어요",
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                              backgroundColor: kOrange200Color,
+                                              textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    )
+                                  : null;
+                            },
+                          ),
                         ),
                       ],
                     ),
@@ -495,9 +514,9 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                 padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
                                 child: SvgPicture.asset(
                                   "lib/config/assets/images/diary/write_diary/album.svg",
-                                  color: kGrayColor600,
-                                  width: 24.w,
-                                  height: 24.h,
+                                  color: Theme.of(context).colorScheme.iconSubColor,
+                                  // width: 24.w,
+                                  // height: 24.h,
                                 ),
                               ),
                             ),
@@ -508,11 +527,9 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
-                                child: SvgPicture.asset(
-                                  "lib/config/assets/images/diary/write_diary/refresh.svg",
-                                  width: 24.w,
-                                  color: kGrayColor600,
-                                  height: 24.h,
+                                child: Image.asset(
+                                  "lib/config/assets/images/diary/write_diary/refresh-2.png",
+                                  color: Theme.of(context).colorScheme.iconSubColor,
                                 ),
                               ),
                             ),
@@ -543,10 +560,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                               child: Padding(
                                 padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
                                 child: Image.asset(
-                                  "lib/config/assets/images/diary/write_diary/save.png",
-                                  width: 24.w,
-                                  color: kGrayColor600,
-                                  height: 24.h,
+                                  "lib/config/assets/images/diary/write_diary/save-2.png",
+                                  color: Theme.of(context).colorScheme.iconSubColor,
                                 ),
                               ),
                             ),

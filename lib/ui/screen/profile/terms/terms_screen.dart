@@ -6,9 +6,6 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/screen/profile/components/profile_button.dart';
-import 'package:frontend/ui/screen/profile/terms/marketing_consent_screen.dart';
-import 'package:frontend/ui/screen/profile/terms/privacy_policy_screen.dart';
-import 'package:frontend/ui/screen/profile/terms/terms_of_service_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TermsScreen extends StatelessWidget {
@@ -42,6 +39,7 @@ class TermsScreen extends StatelessWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '서비스 이용약관',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -67,6 +65,7 @@ class TermsScreen extends StatelessWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '개인정보 처리방침',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -92,6 +91,7 @@ class TermsScreen extends StatelessWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '개인정보 국외 이전 동의',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -109,6 +109,7 @@ class TermsScreen extends StatelessWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '마케팅 정보 수신 동의',
                 titleColor: Theme.of(context).colorScheme.textTitle,

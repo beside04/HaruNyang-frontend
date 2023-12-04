@@ -55,7 +55,7 @@ class BirthDayScreen extends ConsumerWidget {
                               padding: const EdgeInsets.all(10.0),
                               child: Image.asset(
                                 "lib/config/assets/images/character/birthday.png",
-                                width: 264.w,
+                                width: 264,
                               ),
                             ),
                           ),

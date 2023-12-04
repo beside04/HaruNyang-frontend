@@ -2,18 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/login/provider/login_terms_information_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/screen/login/components/term_check_box.dart';
-import 'package:frontend/ui/screen/profile/terms/marketing_consent_screen.dart';
-import 'package:frontend/ui/screen/profile/terms/privacy_policy_screen.dart';
-import 'package:frontend/ui/screen/profile/terms/terms_of_service_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LoginTermsInformationScreen extends ConsumerWidget {
@@ -91,7 +86,7 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                                           ref.watch(loginTermsInformationProvider).isMarketingConsentAgree &&
                                           ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree
                                       ? Image.asset(
-                                          "lib/config/assets/images/check/round_check_primary.png",
+                                          "lib/config/assets/images/check/round_check_primary_dark_christmas.png",
                                         )
                                       : Image.asset(
                                           "lib/config/assets/images/check/round_check_dark_mode.png",
@@ -107,7 +102,7 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                                           ref.watch(loginTermsInformationProvider).isMarketingConsentAgree &&
                                           ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree
                                       ? Image.asset(
-                                          "lib/config/assets/images/check/round_check_primary.png",
+                                          "lib/config/assets/images/check/round_check_primary_light_christmas.png",
                                         )
                                       : Image.asset(
                                           "lib/config/assets/images/check/round_check_light_mode.png",

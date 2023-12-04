@@ -90,6 +90,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '닉네임 변경',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -189,6 +190,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                 isBirth: true,
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '생일 변경',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -317,6 +319,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '직업 변경',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -417,6 +420,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '로그아웃',
                 titleColor: Theme.of(context).colorScheme.textTitle,

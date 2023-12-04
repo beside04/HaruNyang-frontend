@@ -44,15 +44,22 @@ void toast({
     ),
   );
 
+  double calculateValue(double x) {
+    double m = -0.14545454545454545;
+    double b = 197.0181818181818;
+    return m * x + b;
+  }
+
   fToast.showToast(
     child: toast,
     toastDuration: Duration(milliseconds: milliseconds),
     positionedToastBuilder: (context, child) {
+      final deviceSize = MediaQuery.of(context).size.height;
       return Stack(
         alignment: Alignment.center,
         children: [
           Positioned(
-            bottom: MediaQuery.of(context).viewInsets.bottom + 76.h,
+            bottom: calculateValue(deviceSize),
             child: Container(
               child: child,
             ),

@@ -158,12 +158,6 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
 
     await AutoDiarySaveDataSource().saveDiary(date, diary);
 
-    final autoDiaryData = await AutoDiarySaveDataSource().loadDiariesByMonth(DateFormat('yyyy').format(state.focusedStartDate), DateFormat('MM').format(state.focusedStartDate));
-
-    state = state.copyWith(
-      diaryDataList: [...state.diaryDataList, ...autoDiaryData],
-    );
-
     state = state.copyWith(
       isCalendarLoading: false,
     );

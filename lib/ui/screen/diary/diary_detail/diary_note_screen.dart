@@ -59,7 +59,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  SizedBox(height: 120.h),
+                  SizedBox(height: 73.h),
                   SizedBox(
                     height: 550.h,
                     child: PageView(
@@ -97,10 +97,12 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                               padding: const EdgeInsets.only(
                                                 left: 37.0,
                                                 right: 37,
-                                                top: 28,
+                                                top: 18,
                                               ),
                                               child: Image.asset(
                                                 "lib/config/assets/images/character/character5_christmas.png",
+                                                height: 180.h,
+                                                width: double.infinity,
                                               ),
                                               // ref.watch(diaryProvider).diaryDetailData!.comments[index].author == "harunyang"
                                               //     ? Image.asset(
@@ -133,6 +135,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                               "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
                                                               width: 20,
                                                               height: 20,
+                                                              color: kWhiteColor,
                                                             ),
                                                           ),
                                                         )
@@ -154,6 +157,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                               "lib/config/assets/images/diary/write_diary/bookmark.svg",
                                                               width: 20,
                                                               height: 20,
+                                                              color: kWhiteColor,
                                                             ),
                                                           ),
                                                         );
@@ -223,7 +227,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                         },
                                         child: Center(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(bottom: 8.0),
+                                            padding: const EdgeInsets.only(bottom: 24.0),
                                             child: Container(
                                               padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
                                               decoration: BoxDecoration(

@@ -143,6 +143,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '내 정보 관리',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -163,6 +164,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '북마크 목록',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -183,6 +185,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '푸시 메세지 설정',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -200,45 +203,8 @@ class ProfileScreen extends ConsumerWidget {
                 height: 1.h,
                 color: Theme.of(context).colorScheme.border,
               ),
-              // Consumer(builder: (context, ref, child) {
-              //   return ProfileButton(
-              //     padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-              //     icon: FlutterSwitch(
-              //       padding: 2,
-              //       width: 52.0.w,
-              //       height: 32.0.h,
-              //       activeColor: Theme.of(context).colorScheme.primaryColor,
-              //       inactiveColor: kGrayColor750,
-              //       toggleSize: 28.0.w,
-              //       value: ref.watch(mainProvider).themeMode == ThemeMode.light ||
-              //           (ref.watch(mainProvider).themeMode == ThemeMode.system && MediaQuery.of(context).platformBrightness == Brightness.light),
-              //       borderRadius: 50.0.w,
-              //       onToggle: (val) async {
-              //         ref.watch(mainProvider.notifier).toggleThemeMode(context);
-              //       },
-              //       activeIcon: Center(
-              //         child: SvgPicture.asset(
-              //           "lib/config/assets/images/profile/light_mode.svg",
-              //           width: 19.w,
-              //           height: 19.h,
-              //         ),
-              //       ),
-              //       inactiveIcon: Center(
-              //         child: SvgPicture.asset(
-              //           "lib/config/assets/images/profile/dark_mode.svg",
-              //           width: 14.w,
-              //           height: 18.h,
-              //         ),
-              //       ),
-              //     ),
-              //     title: '라이트 다크모드 전환',
-              //     titleColor: Theme.of(context).colorScheme.textTitle,
-              //     onPressed: null,
-              //   );
-              // }),
               Consumer(builder: (context, ref, child) {
                 return ProfileButton(
-                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
                   icon: Text(
                     ref.watch(mainProvider.notifier).themeModeToString(ref.watch(mainProvider).themeMode),
                     style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
@@ -402,6 +368,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '공지사항',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -420,6 +387,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '이용약관',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -436,6 +404,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '개발자 응원하기',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -456,6 +425,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '하루냥 인스타그램',
                 titleColor: Theme.of(context).colorScheme.textTitle,
@@ -477,6 +447,7 @@ class ProfileScreen extends ConsumerWidget {
               ProfileButton(
                 icon: SvgPicture.asset(
                   "lib/config/assets/images/profile/navigate_next.svg",
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
                 title: '1:1 문의하기',
                 titleColor: Theme.of(context).colorScheme.textTitle,

@@ -21,19 +21,14 @@ class BottomButton extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Padding(
-        padding: EdgeInsets.only(
-          left: 16.w,
-          bottom: bottomPadding,
-          right: 16.w,
-        ),
+        padding: EdgeInsets.only(left: 16.w, bottom: bottomPadding, right: 16.w),
         child: SizedBox(
           width: 335.w,
           height: 52.h,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               shadowColor: Colors.transparent,
-              disabledBackgroundColor:
-                  Theme.of(context).colorScheme.disabledColor,
+              disabledBackgroundColor: Theme.of(context).colorScheme.disabledColor,
               backgroundColor: Theme.of(context).colorScheme.primaryColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(60),

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/result.dart';
+import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -98,6 +99,7 @@ class KakaoLoginUseCase {
   Future<UserIdResponse?> logout() async {
     await tokenRepository.deleteAllToken();
     onBoardingRepository.clearMyInformation();
+    await AutoDiarySaveDataSource().deleteAllDiary();
     return await socialLoginRepository.logout();
   }
 
@@ -105,6 +107,7 @@ class KakaoLoginUseCase {
     await tokenRepository.deleteAllToken();
     await darkModeUseCase.deleteDarkModeData();
     onBoardingRepository.clearMyInformation();
+    await AutoDiarySaveDataSource().deleteAllDiary();
     await pushMessagePermissionUseCase.deletePushMessagePermissionData();
     return await socialLoginRepository.withdrawal();
   }

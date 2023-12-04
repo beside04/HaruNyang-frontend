@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 
 class TermCheckBox extends StatelessWidget {
   const TermCheckBox({
@@ -35,6 +36,7 @@ class TermCheckBox extends StatelessWidget {
                         child: termValue
                             ? Image.asset(
                                 "lib/config/assets/images/check/primary_color_check.png",
+                                color: Theme.of(context).colorScheme.primaryColor,
                               )
                             : Image.asset(
                                 "lib/config/assets/images/check/dark_color_check.png",
@@ -46,6 +48,7 @@ class TermCheckBox extends StatelessWidget {
                         child: termValue
                             ? Image.asset(
                                 "lib/config/assets/images/check/primary_color_check.png",
+                                color: Theme.of(context).colorScheme.primaryColor,
                               )
                             : Image.asset(
                                 "lib/config/assets/images/check/light_color_check.png",

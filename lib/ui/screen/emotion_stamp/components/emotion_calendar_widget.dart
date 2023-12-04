@@ -243,7 +243,6 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                               //                       color: Theme.of(context).colorScheme.surface_01,
                                               //                     ),
                                               //                   )
-
                                               Padding(
                                                   padding: EdgeInsets.only(top: 5),
                                                   child: Image.asset(

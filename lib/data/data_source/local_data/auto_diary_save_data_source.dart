@@ -41,4 +41,9 @@ class AutoDiarySaveDataSource {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(date);
   }
+
+  Future<void> deleteAllDiary() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 }

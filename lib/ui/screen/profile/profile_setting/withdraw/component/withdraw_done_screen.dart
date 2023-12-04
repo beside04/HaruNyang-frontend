@@ -4,7 +4,6 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/screen/login/login_screen.dart';
@@ -55,37 +54,37 @@ class WithdrawDoneScreen extends StatelessWidget {
                         height: 250.h,
                       ),
                     ),
-                    Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).colorScheme.surface_01,
-                        ),
-                        width: double.infinity,
-                        height: 104.h,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              '나를 성장 시킨건 이별이 아니었다.',
-                              style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
-                            ),
-                            Text(
-                              '함께했던 시간이었지',
-                              style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
-                            ),
-                            SizedBox(
-                              height: 6.h,
-                            ),
-                            Text(
-                              '하상욱',
-                              style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                    // Center(
+                    //   child: Container(
+                    //     decoration: BoxDecoration(
+                    //       borderRadius: BorderRadius.circular(12),
+                    //       color: Theme.of(context).colorScheme.surface_01,
+                    //     ),
+                    //     width: double.infinity,
+                    //     height: 104.h,
+                    //     child: Column(
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         Text(
+                    //           '나를 성장 시킨건 이별이 아니었다.',
+                    //           style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                    //         ),
+                    //         Text(
+                    //           '함께했던 시간이었지',
+                    //           style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                    //         ),
+                    //         SizedBox(
+                    //           height: 6.h,
+                    //         ),
+                    //         Text(
+                    //           '하상욱',
+                    //           style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                    //         )
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

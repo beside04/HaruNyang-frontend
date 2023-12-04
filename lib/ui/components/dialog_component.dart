@@ -11,7 +11,7 @@ class DialogComponent extends StatelessWidget {
     required this.actionContent,
     this.titlePadding = const EdgeInsets.only(
       left: 24.0,
-      top: 24.0,
+      top: 40.0,
       right: 24.0,
       bottom: 0,
     ),
@@ -32,7 +32,7 @@ class DialogComponent extends StatelessWidget {
       ),
       contentPadding: EdgeInsets.only(
         top: 4.h,
-        bottom: 10.h,
+        bottom: 24.h,
       ),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20.0),
