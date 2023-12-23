@@ -68,6 +68,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
     state = state.copyWith(
       socialId: socialId,
       email: email,
+      loginType: isSocialKakao == "KAKAO" ? "KAKAO" : "APPLE",
     );
 
     return true;

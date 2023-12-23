@@ -58,9 +58,9 @@ class LoginApi {
     required birthDate,
   }) async {
     String signupUrl = '$_baseUrl/v2/users/sign-up';
+
     try {
       Response response;
-
       response = await dio.post(
         signupUrl,
         options: Options(headers: {
