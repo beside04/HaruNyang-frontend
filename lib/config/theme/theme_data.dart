@@ -4,6 +4,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 
 ThemeData lightMode(context) => ThemeData(
+      useMaterial3: false,
       checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),
@@ -68,6 +69,7 @@ ThemeData lightMode(context) => ThemeData(
     );
 
 ThemeData darkMode(context) => ThemeData(
+      useMaterial3: false,
       checkboxTheme: CheckboxThemeData(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(4.0),
@@ -130,30 +132,56 @@ ThemeData darkMode(context) => ThemeData(
 
 extension CustomColorScheme on ColorScheme {
   Color get backgroundColor => brightness == Brightness.light ? kWhiteColor : kGrayColor950;
+
   Color get backgroundModal => brightness == Brightness.light ? kWhiteColor : kGrayColor900;
+
   Color get surface_01 => brightness == Brightness.light ? kGrayColor50 : kGrayColor900;
+
   Color get surface_02 => brightness == Brightness.light ? kGrayColor100 : kGrayColor850;
+
   Color get surfaceModal => brightness == Brightness.light ? kGrayColor50 : kGrayColor850;
+
   Color get primaryColor => brightness == Brightness.light ? kOrange300Color : kOrange200Color;
+
   Color get secondaryColor => brightness == Brightness.light ? kGrayColor100 : kGrayColor800;
+
   Color get errorColor => brightness == Brightness.light ? kRed300Color : kRed200Color;
+
   Color get successColor => brightness == Brightness.light ? kBlue300Color : kBlue200Color;
+
   Color get disabledColor => brightness == Brightness.light ? kGrayColor150 : kGrayColor850;
+
   Color get textPrimary => brightness == Brightness.light ? kOrange350Color : kOrange250Color;
+
   Color get textTitle => brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
+
   Color get textSubtitle => brightness == Brightness.light ? kGrayColor500 : kGrayColor400;
+
   Color get textBody => brightness == Brightness.light ? kGrayColor800 : kGrayColor100;
+
   Color get textLowEmphasis => brightness == Brightness.light ? kGrayColor400 : kGrayColor550;
+
   Color get textCaption => brightness == Brightness.light ? kGrayColor700 : kGrayColor300;
+
   Color get textDisabled => brightness == Brightness.light ? kGrayColor300 : kGrayColor700;
+
   Color get placeHolder => brightness == Brightness.light ? kGrayColor400 : kGrayColor550;
+
   Color get iconColor => brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
+
   Color get iconColorReverse => brightness == Brightness.light ? kGrayColor50 : kGrayColor950;
+
   Color get iconSubColor => brightness == Brightness.light ? kGrayColor400 : kGrayColor600;
+
   Color get border => brightness == Brightness.light ? kGrayColor100 : kGrayColor850;
+
   Color get borderModal => brightness == Brightness.light ? kGrayColor250 : kGrayColor900;
+
   Color get outlineDefault => brightness == Brightness.light ? kGrayColor250 : kGrayColor800;
+
   Color get outlineChip => brightness == Brightness.light ? kGrayColor50 : kGrayColor850;
+
   Color get outlineActive => brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
+
   Color get backgroundListColor => brightness == Brightness.light ? kWhiteColor : kGrayColor900;
 }

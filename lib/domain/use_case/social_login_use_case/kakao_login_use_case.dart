@@ -1,5 +1,6 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/core/utils/notification_controller.dart';
+import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -7,7 +8,7 @@ import 'package:frontend/domain/repository/social_login_repository/kakao_login_r
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
-import 'package:get/get.dart';
+import 'package:frontend/domains/notification/provider/notification_provider.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class KakaoLoginUseCase {
@@ -26,8 +27,6 @@ class KakaoLoginUseCase {
     required this.onBoardingRepository,
     required this.pushMessagePermissionUseCase,
   });
-
-  var deviceToken = Get.find<NotificationController>().token;
 
   Future<SocialLoginResult> getKakaoSocialId() async {
     //카카오 social id 및 email 얻기
@@ -79,9 +78,11 @@ class KakaoLoginUseCase {
   Future<Result<String>> loginProcess(String socialId) async {
     String accessToken = '';
 
+    final container = ProviderContainer();
+
+    var deviceToken = container.read(notificationProvider).token;
     //로그인 api 호출
-    final loginResult =
-        await serverLoginRepository.login('KAKAO', socialId, deviceToken);
+    final loginResult = await serverLoginRepository.login('KAKAO', socialId, deviceToken);
 
     return await loginResult.when(
       success: (loginData) async {
@@ -98,6 +99,7 @@ class KakaoLoginUseCase {
   Future<UserIdResponse?> logout() async {
     await tokenRepository.deleteAllToken();
     onBoardingRepository.clearMyInformation();
+    await AutoDiarySaveDataSource().deleteAllDiary();
     return await socialLoginRepository.logout();
   }
 
@@ -105,6 +107,8 @@ class KakaoLoginUseCase {
     await tokenRepository.deleteAllToken();
     await darkModeUseCase.deleteDarkModeData();
     onBoardingRepository.clearMyInformation();
+    await AutoDiarySaveDataSource().deleteAllDiary();
+    await UserApi.instance.unlink();
     await pushMessagePermissionUseCase.deletePushMessagePermissionData();
     return await socialLoginRepository.withdrawal();
   }

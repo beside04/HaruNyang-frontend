@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'diary_data.freezed.dart';
-
 part 'diary_data.g.dart';
 
 @freezed
@@ -15,8 +14,8 @@ class DiaryData with _$DiaryData {
     @Default('') String? topic,
     @JsonKey(name: 'weather') required String weather,
     @JsonKey(name: 'targetDate') required String targetDate,
+    @Default(false) bool isAutoSave,
   }) = _DiaryData;
 
-  factory DiaryData.fromJson(Map<String, dynamic> json) =>
-      _$DiaryDataFromJson(json);
+  factory DiaryData.fromJson(Map<String, dynamic> json) => _$DiaryDataFromJson(json);
 }

@@ -13,6 +13,5 @@ class BookmarkData with _$BookmarkData {
     @JsonKey(name: 'created_at') required String createdAt,
   }) = _BookmarkData;
 
-  factory BookmarkData.fromJson(Map<String, dynamic> json) =>
-      _$BookmarkDataFromJson(json);
+  factory BookmarkData.fromJson(Map<String, dynamic> json) => _$BookmarkDataFromJson(json);
 }

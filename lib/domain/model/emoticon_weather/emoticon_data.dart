@@ -4,12 +4,11 @@ part 'emoticon_data.g.dart';
 
 @freezed
 class EmoticonData with _$EmoticonData {
-  factory EmoticonData({
+  const factory EmoticonData({
     int? id,
     required String emoticon,
     required String value,
     required String desc,
   }) = _EmoticonData;
-  factory EmoticonData.fromJson(Map<String, dynamic> json) =>
-      _$EmoticonDataFromJson(json);
+  factory EmoticonData.fromJson(Map<String, dynamic> json) => _$EmoticonDataFromJson(json);
 }

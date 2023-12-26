@@ -1,7 +1,8 @@
 import 'dart:convert';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/core/utils/notification_controller.dart';
+import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -9,7 +10,7 @@ import 'package:frontend/domain/repository/social_login_repository/apple_login_r
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
-import 'package:get/get.dart';
+import 'package:frontend/domains/notification/provider/notification_provider.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AppleLoginUseCase {
@@ -34,8 +35,7 @@ class AppleLoginUseCase {
     String? email = '';
     String? socialId = '';
 
-    final AuthorizationCredentialAppleID? appleLoginResult =
-        await socialLoginRepository.login();
+    final AuthorizationCredentialAppleID? appleLoginResult = await socialLoginRepository.login();
     if (appleLoginResult != null) {
       final AuthorizationCredentialAppleID user = appleLoginResult;
 
@@ -89,11 +89,12 @@ class AppleLoginUseCase {
 
   Future<Result<String>> loginProcess(String socialId) async {
     String accessToken = '';
-    var deviceToken = Get.find<NotificationController>().token;
+    final container = ProviderContainer();
+
+    var deviceToken = container.read(notificationProvider).token;
 
     //로그인 api 호출
-    final loginResult =
-        await serverLoginRepository.login('APPLE', socialId, deviceToken);
+    final loginResult = await serverLoginRepository.login('APPLE', socialId, deviceToken);
 
     return await loginResult.when(
       success: (loginData) async {
@@ -110,6 +111,7 @@ class AppleLoginUseCase {
   Future<void> logout() async {
     await tokenRepository.deleteAllToken();
     onBoardingRepository.clearMyInformation();
+    await AutoDiarySaveDataSource().deleteAllDiary();
     return await socialLoginRepository.logout();
   }
 
@@ -117,6 +119,7 @@ class AppleLoginUseCase {
     await tokenRepository.deleteAllToken();
     onBoardingRepository.clearMyInformation();
     await darkModeUseCase.deleteDarkModeData();
+    await AutoDiarySaveDataSource().deleteAllDiary();
     await pushMessagePermissionUseCase.deletePushMessagePermissionData();
     await pushMessagePermissionUseCase.deleteMarketingConsentAgree();
     await pushMessagePermissionUseCase.deletePushMessageTime();

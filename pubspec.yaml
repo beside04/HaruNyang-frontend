@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 2.0.4+35
+version: 2.1.0+36
 scripts:
   codegen: flutter pub run build_runner watch
 
@@ -38,11 +38,10 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  get: ^4.6.5
   kakao_flutter_sdk_user: ^1.2.2
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.1
   freezed_annotation: ^2.2.0
-  flutter_secure_storage: ^6.0.0
+  flutter_secure_storage: ^9.0.0
   intl: ^0.18.0
   flutter_form_builder: ^9.0.0
   form_builder_validators: ^9.0.0
@@ -85,15 +84,25 @@ dependencies:
   flutter_animation_progress_bar: ^2.3.1
   firebase_storage: ^11.2.3
   rive: ^0.11.3
+  flutter_riverpod: ^2.4.0
+  riverpod_annotation: ^2.1.5
+  pretty_dio_logger: ^1.2.0-beta-1
+  device_info_plus: ^9.0.3
+  package_info_plus: ^4.1.0
+  shared_preferences: ^2.2.1
+  retrofit: ^3.3.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^2.0.0
-  build_runner: ^2.3.2
+  build_runner: ^2.4.6
   json_serializable: ^6.5.4
   freezed: ^2.2.1
+  riverpod_generator: ^2.3.2
+  custom_lint: ^0.5.3
+  riverpod_lint: ^2.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -109,11 +118,13 @@ flutter:
     - lib/config/assets/images/on_boarding/
     - lib/config/assets/images/character/
     - lib/config/assets/images/diary/weather/
+    - lib/config/assets/images/diary/emotion/
     - lib/config/assets/images/diary/write_diary/
     - lib/config/assets/images/diary/dark_mode/
     - lib/config/assets/images/diary/light_mode/
     - lib/config/assets/images/home/light_mode/
     - lib/config/assets/images/home/dark_mode/
+    - lib/config/assets/images/home/banner/
     - lib/config/assets/images/check/
     - lib/config/assets/images/profile/
     - lib/config/assets/lottie/
