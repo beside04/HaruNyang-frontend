@@ -63,7 +63,7 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(12.0.w),
                     ),
                     child: Text(
-                      '하루냥의 서비스 약관이에요. \n 필수 약관을 동의하셔야 이용할 수 있어요',
+                      '하루냥의 서비스 약관이예요. \n 필수 약관을 동의하셔야 이용할 수 있어요',
                       style: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                       textAlign: TextAlign.center,
                     ),
@@ -186,38 +186,38 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                       },
                     );
                   }),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  Consumer(builder: (context, ref, child) {
-                    return TermCheckBox(
-                      termValue: ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree,
-                      termTitle: Row(
-                        children: [
-                          Text(
-                            '(필수) ',
-                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textPrimary),
-                          ),
-                          Text(
-                            '개인정보 국외 이전 동의',
-                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
-                          ),
-                        ],
-                      ),
-                      onTap: ref.watch(loginTermsInformationProvider.notifier).toggleOverseasRelocationConsent,
-                      termOnTap: () async {
-                        if (!await launch("https://www.notion.so/2c3190cd57db4605889a6f07eac92f3b")) {
-                          throw Exception('Could not launch');
-                        }
-                        // Get.to(
-                        //   () => const PrivacyPolicyScreen(
-                        //     isProfileScreen: false,
-                        //   ),
-                        //   transition: Transition.downToUp,
-                        // );
-                      },
-                    );
-                  }),
+                  // SizedBox(
+                  //   height: 16.h,
+                  // ),
+                  // Consumer(builder: (context, ref, child) {
+                  //   return TermCheckBox(
+                  //     termValue: ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree,
+                  //     termTitle: Row(
+                  //       children: [
+                  //         Text(
+                  //           '(필수) ',
+                  //           style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textPrimary),
+                  //         ),
+                  //         Text(
+                  //           '개인정보 국외 이전 동의',
+                  //           style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                  //         ),
+                  //       ],
+                  //     ),
+                  //     onTap: ref.watch(loginTermsInformationProvider.notifier).toggleOverseasRelocationConsent,
+                  //     termOnTap: () async {
+                  //       if (!await launch("https://www.notion.so/2c3190cd57db4605889a6f07eac92f3b")) {
+                  //         throw Exception('Could not launch');
+                  //       }
+                  //       // Get.to(
+                  //       //   () => const PrivacyPolicyScreen(
+                  //       //     isProfileScreen: false,
+                  //       //   ),
+                  //       //   transition: Transition.downToUp,
+                  //       // );
+                  //     },
+                  //   );
+                  // }),
                   SizedBox(
                     height: 16.h,
                   ),

@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:frontend/domain/repository/push_message/push_message_repository.dart';
-import 'package:timezone/timezone.dart' as tz;
 import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class PushMessageUseCase {
   final PushMessageRepository pushMessagePermissionRepository;
@@ -59,7 +59,13 @@ class PushMessageUseCase {
         : await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()?.requestPermissions();
 
     NotificationDetails details = const NotificationDetails(
-      android: AndroidNotificationDetails('id', notiTitle, importance: Importance.max, priority: Priority.max),
+      android: AndroidNotificationDetails(
+        'id',
+        notiTitle,
+        importance: Importance.max,
+        priority: Priority.max,
+        icon: "@mipmap/ic_launcher",
+      ),
       iOS: DarwinNotificationDetails(
         presentAlert: true,
         presentBadge: true,

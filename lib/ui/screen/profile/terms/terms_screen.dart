@@ -83,24 +83,24 @@ class TermsScreen extends StatelessWidget {
                   // );
                 },
               ),
-              Divider(
-                thickness: 1.h,
-                height: 1.h,
-                color: Theme.of(context).colorScheme.border,
-              ),
-              ProfileButton(
-                icon: SvgPicture.asset(
-                  "lib/config/assets/images/profile/navigate_next.svg",
-                  color: Theme.of(context).colorScheme.iconSubColor,
-                ),
-                title: '개인정보 국외 이전 동의',
-                titleColor: Theme.of(context).colorScheme.textTitle,
-                onPressed: () async {
-                  if (!await launch("https://www.notion.so/2c3190cd57db4605889a6f07eac92f3b")) {
-                    throw Exception('Could not launch');
-                  }
-                },
-              ),
+              // Divider(
+              //   thickness: 1.h,
+              //   height: 1.h,
+              //   color: Theme.of(context).colorScheme.border,
+              // ),
+              // ProfileButton(
+              //   icon: SvgPicture.asset(
+              //     "lib/config/assets/images/profile/navigate_next.svg",
+              //     color: Theme.of(context).colorScheme.iconSubColor,
+              //   ),
+              //   title: '개인정보 국외 이전 동의',
+              //   titleColor: Theme.of(context).colorScheme.textTitle,
+              //   onPressed: () async {
+              //     if (!await launch("https://www.notion.so/2c3190cd57db4605889a6f07eac92f3b")) {
+              //       throw Exception('Could not launch');
+              //     }
+              //   },
+              // ),
               Divider(
                 thickness: 1.h,
                 height: 1.h,

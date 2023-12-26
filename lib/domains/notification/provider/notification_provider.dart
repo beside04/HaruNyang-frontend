@@ -48,7 +48,7 @@ class NotificationNotifier extends StateNotifier<NotificationState> {
     );
 
     // FirebaseMessaging.onMessage.listen((RemoteMessage rm) async {
-    //   message.value = rm;
+    //   // message.value = rm;
     //   RemoteNotification? notification = rm.notification;
     //   AndroidNotification? android = rm.notification?.android;
     //

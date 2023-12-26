@@ -1,19 +1,7 @@
-import 'dart:async';
-import 'dart:io';
-
-import 'package:flutter/material.dart';
-import 'package:frontend/domain/model/diary/comment_data.dart';
-import 'package:frontend/domain/model/diary/diary_card_data.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
-import 'package:frontend/domain/model/diary/diary_detail_data.dart';
-import 'package:frontend/domain/model/topic/topic_data.dart';
-import 'package:frontend/domain/model/wise_saying/wise_saying_data.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:frontend/domain/model/topic/topic_data.dart';
 
 part 'write_diary_state.freezed.dart';
-
 part 'write_diary_state.g.dart';
 
 @freezed
@@ -42,7 +30,7 @@ class WriteDiaryState with _$WriteDiaryState {
       ),
       TopicData(
         id: 11,
-        value: '고민거리가\n 뭐에요?',
+        value: '고민거리가\n 뭐예요?',
       ),
       TopicData(
         id: 12,
@@ -50,7 +38,7 @@ class WriteDiaryState with _$WriteDiaryState {
       ),
       TopicData(
         id: 13,
-        value: '다가오는 주말에\n 뭘 할거에요?',
+        value: '다가오는 주말에\n 뭘 할거예요?',
       ),
       TopicData(
         id: 14,
@@ -70,11 +58,11 @@ class WriteDiaryState with _$WriteDiaryState {
       ),
       TopicData(
         id: 18,
-        value: '내일 하고\n 싶은게 뭐에요?',
+        value: '내일 하고\n 싶은게 뭐예요?',
       ),
       TopicData(
         id: 19,
-        value: '요즘 자주 듣는\n 음악이 뭐에요?',
+        value: '요즘 자주 듣는\n 음악이 뭐예요?',
       ),
       TopicData(
         id: 20,
@@ -82,7 +70,7 @@ class WriteDiaryState with _$WriteDiaryState {
       ),
       TopicData(
         id: 21,
-        value: '지금 받고 싶은\n 선물이 뭐에요?',
+        value: '지금 받고 싶은\n 선물이 뭐예요?',
       ),
       TopicData(
         id: 22,

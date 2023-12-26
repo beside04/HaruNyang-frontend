@@ -101,7 +101,7 @@ class OnBoardingNicknameScreenState extends ConsumerState<OnBoardingNicknameScre
                                   height: 32.h,
                                 ),
                                 Text(
-                                  "안녕하세요, 저는 하루냥이에요",
+                                  "안녕하세요, 저는 하루냥이예요",
                                   style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                 ),
                                 SizedBox(

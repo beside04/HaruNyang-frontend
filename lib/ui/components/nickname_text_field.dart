@@ -66,7 +66,7 @@ class NicknameTextField extends ConsumerWidget {
 
             RegExp regex = RegExp(r'([^가-힣a-z0-9\x20])');
             if (regex.hasMatch(value)) {
-              return '사용할 수 없는 닉네임이에요.';
+              return '사용할 수 없는 닉네임이예요.';
             } else {
               return null;
             }

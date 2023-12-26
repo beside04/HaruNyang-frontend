@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class LocalSecureDataSource {
@@ -12,15 +13,13 @@ class LocalSecureDataSource {
   final FlutterSecureStorage secureStorage = const FlutterSecureStorage();
 
   Future<String?> loadData({required String key}) async {
-    // try {
-    //   final accessToken = await _storage.read(key: 'accessToken');
-    //   return accessToken;
-    // } on PlatformException catch (e) {
-    //   // Workaround for https://github.com/mogol/flutter_secure_storage/issues/43
-    //   await _storage.deleteAll();
-    // }
-
-    return await secureStorage.read(key: key);
+    try {
+      return await secureStorage.read(key: key);
+    } on PlatformException catch (e) {
+      // Workaround for https://github.com/mogol/flutter_secure_storage/issues/43
+      await secureStorage.deleteAll();
+    }
+    return null;
   }
 
   Future<void> saveData({required String key, required String data}) async {

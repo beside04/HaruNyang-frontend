@@ -62,7 +62,7 @@ class OnBoardingAgeScreen extends ConsumerWidget {
                               height: 32.h,
                             ),
                             Text(
-                              "몇 살이에요? \n하루냥이 생일을 축하해드려요!",
+                              "몇 살이예요? \n하루냥이 생일을 축하해드려요!",
                               style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                             ),
                             SizedBox(

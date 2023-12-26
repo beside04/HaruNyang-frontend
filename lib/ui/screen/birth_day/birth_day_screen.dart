@@ -60,7 +60,7 @@ class BirthDayScreen extends ConsumerWidget {
                             ),
                           ),
                           Text(
-                            '남들에겐 그저 흘러갈 수 있는 날일 수도 있지만 \n오늘은 그 무엇보다도 특별한 날이에요.\n$name님이 태어났기에\n우리가 만날 수 있었으니까요.',
+                            '남들에겐 그저 흘러갈 수 있는 날일 수도 있지만 \n오늘은 그 무엇보다도 특별한 날이예요.\n$name님이 태어났기에\n우리가 만날 수 있었으니까요.',
                             style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                           ),
                           const SizedBox(

@@ -108,6 +108,7 @@ class KakaoLoginUseCase {
     await darkModeUseCase.deleteDarkModeData();
     onBoardingRepository.clearMyInformation();
     await AutoDiarySaveDataSource().deleteAllDiary();
+    await UserApi.instance.unlink();
     await pushMessagePermissionUseCase.deletePushMessagePermissionData();
     return await socialLoginRepository.withdrawal();
   }
