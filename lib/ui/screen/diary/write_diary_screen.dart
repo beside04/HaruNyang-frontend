@@ -2,7 +2,9 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,9 +13,10 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
+import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
-import 'package:frontend/domains/diary/provider/wtire_diary_provider.dart';
+import 'package:frontend/domains/diary/provider/write_diary_provider.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
@@ -21,8 +24,11 @@ import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:frontend/ui/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/ui/screen/diary/write_diary_loading_screen.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:rive/rive.dart';
 
 class WriteDiaryScreen extends ConsumerStatefulWidget {
@@ -50,6 +56,9 @@ class WriteDiaryScreen extends ConsumerStatefulWidget {
 
 class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleTickerProviderStateMixin {
   Timer? _autoSaveTimer;
+
+  XFile? pickedFile;
+  CroppedFile? croppedFile;
 
   @override
   void initState() {
@@ -92,6 +101,90 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
 
       ref.watch(diaryProvider.notifier).saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary);
     }
+  }
+
+  Future<void> cropImage() async {
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
+    if (pickedImage != null) {
+      pickedFile = pickedImage;
+    }
+
+    final bytes = await pickedFile!.readAsBytes();
+
+    final kb = bytes.lengthInBytes / 1024;
+    final directory = await getApplicationDocumentsDirectory();
+
+    if (kb > 200) {
+      ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
+        pickedFile!.path,
+        '${directory.path}/haruKitty.jpg',
+        quality: 20,
+      );
+    } else {
+      ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
+        pickedFile!.path,
+        '${directory.path}/haruKitty.jpg',
+        quality: 100,
+      );
+    }
+    if (pickedFile != null) {
+      CroppedFile? croppedImage = await ImageCropper().cropImage(
+        sourcePath: ref.watch(cropQualityImageProvider)!.path,
+        compressFormat: ImageCompressFormat.jpg,
+        uiSettings: [
+          AndroidUiSettings(
+            toolbarTitle: 'Cropper',
+            toolbarColor: kOrange200Color,
+            toolbarWidgetColor: kWhiteColor,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false,
+          ),
+          IOSUiSettings(
+            title: 'Cropper',
+          ),
+        ],
+      );
+      if (croppedImage != null) {
+        croppedFile = croppedImage;
+      }
+    }
+  }
+
+  Future<void> uploadImage() async {
+    final socialId = await tokenUseCase.getSocialId();
+
+    File file = File(croppedFile!.path);
+
+    try {
+      // Use the user's UID and the current timestamp to create a unique path for each image.
+      String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
+
+      await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').putFile(file);
+
+      String downloadURL = await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').getDownloadURL();
+
+      ref.read(writeDiaryProvider.notifier).state = ref.read(writeDiaryProvider).copyWith(firebaseImageUrl: downloadURL);
+    } on FirebaseException {
+      // Get.snackbar('알림', '이미지 업로드에 실패하였습니다.');
+      // e.g, e.code == 'canceled'
+    }
+  }
+
+  Future<void> selectDeviceImage() async {
+    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
+    if (pickedImage != null) {
+      pickedFile = pickedImage;
+    }
+  }
+
+  Future<void> clear() async {
+    pickedFile = null;
+    croppedFile = null;
+    if (mounted) {
+      ref.read(writeDiaryProvider.notifier).state = ref.read(writeDiaryProvider).copyWith(networkImage: null);
+    }
+    await Future.delayed(Duration.zero);
+    ref.read(diaryProvider.notifier).setDiaryDetailData(ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
   }
 
   @override
@@ -171,7 +264,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                         ? null
                         : () async {
                             GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Register');
-                            if (ref.watch(croppedFileProvider) != null) {
+                            if (croppedFile != null) {
                               showDialog(
                                 context: context,
                                 barrierDismissible: false,
@@ -193,7 +286,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                               );
 
                               try {
-                                await ref.watch(writeDiaryProvider.notifier).uploadImage();
+                                await uploadImage();
                                 // ignore: use_build_context_synchronously
                                 Navigator.of(context, rootNavigator: true).pop();
                               } catch (e) {
@@ -328,7 +421,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                               top: 12,
                                               child: GestureDetector(
                                                 onTap: () {
-                                                  ref.watch(writeDiaryProvider.notifier).clear();
+                                                  clear();
                                                 },
                                                 child: Container(
                                                   margin: const EdgeInsets.all(6),
@@ -353,7 +446,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                     );
                         }),
                         Consumer(builder: (context, ref, child) {
-                          return (ref.watch(croppedFileProvider) != null || ref.watch(pickedFileProvider) != null || ref.watch(writeDiaryProvider).networkImage != null)
+                          return (croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null)
                               ? Center(
                                   child: Padding(
                                     padding: EdgeInsets.only(left: 20.0.w, right: 20.w, top: 20),
@@ -369,7 +462,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                 top: 12,
                                                 child: GestureDetector(
                                                   onTap: () {
-                                                    ref.watch(writeDiaryProvider.notifier).clear();
+                                                    clear();
                                                   },
                                                   child: Container(
                                                     margin: const EdgeInsets.all(6),
@@ -390,19 +483,19 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                               ),
                                             ],
                                           )
-                                        : ref.watch(croppedFileProvider) != null
+                                        : croppedFile != null
                                             ? Stack(
                                                 children: [
                                                   Image.file(
                                                     fit: BoxFit.cover,
-                                                    File(ref.watch(croppedFileProvider)!.path),
+                                                    File(croppedFile!.path),
                                                   ),
                                                   Positioned(
                                                     right: 12,
                                                     top: 12,
                                                     child: GestureDetector(
                                                       onTap: () {
-                                                        ref.watch(writeDiaryProvider.notifier).clear();
+                                                        clear();
                                                       },
                                                       child: Container(
                                                         margin: const EdgeInsets.all(6),
@@ -508,7 +601,9 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                             GestureDetector(
                               onTap: () {
                                 GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Picture');
-                                ref.watch(writeDiaryProvider.notifier).selectDeviceImage().then((_) => ref.watch(writeDiaryProvider.notifier).cropImage());
+
+                                cropImage();
+                                // ref.watch(writeDiaryProvider.notifier).selectDeviceImage().then((_) => ref.watch(writeDiaryProvider.notifier).cropImage());
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),

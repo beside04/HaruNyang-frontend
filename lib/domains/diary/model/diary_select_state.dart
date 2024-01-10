@@ -13,47 +13,47 @@ class DiarySelectState with _$DiarySelectState {
     @Default("맞아") String? emotionTextValue,
     @Default([
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/happy_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/happy.png',
         value: 'HAPPINESS',
         desc: '기뻐',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/sad_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/sad.png',
         value: 'SADNESS',
         desc: '슬퍼',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/angry_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/angry.png',
         value: 'ANGRY',
         desc: '화나',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/excited_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/excited.png',
         value: 'EXCITED',
         desc: '신나',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/tired_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/tired.png',
         value: 'TIRED',
         desc: '힘들어',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/amazed_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/amazed.png',
         value: 'SURPRISED',
         desc: '놀랐어',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/soso_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/soso.png',
         value: 'NEUTRAL',
         desc: '그저그래',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/blushed_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/blushed.png',
         value: 'FLUTTER',
         desc: '설레',
       ),
       EmoticonData(
-        emoticon: 'lib/config/assets/images/diary/emotion/molra_christmas.png',
+        emoticon: 'lib/config/assets/images/diary/emotion/molra.png',
         value: 'UNCERTAIN',
         desc: '몰라',
       ),

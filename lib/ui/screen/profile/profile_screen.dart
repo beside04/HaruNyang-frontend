@@ -55,7 +55,7 @@ class ProfileScreen extends ConsumerWidget {
                           padding: EdgeInsets.all(6.w),
                           child: Center(
                             child: Image.asset(
-                              "lib/config/assets/images/character/character1_christmas.png",
+                              "lib/config/assets/images/character/character1.png",
                               width: 48.w,
                               height: 48.h,
                             ),

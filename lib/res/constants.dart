@@ -84,23 +84,23 @@ List<JobData> jobList = [
 String getEmoticonImage(String value) {
   switch (value) {
     case 'HAPPINESS':
-      return 'lib/config/assets/images/diary/emotion/happy_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/happy.png';
     case 'SADNESS':
-      return 'lib/config/assets/images/diary/emotion/sad_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/sad.png';
     case 'ANGRY':
-      return 'lib/config/assets/images/diary/emotion/angry_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/angry.png';
     case 'EXCITED':
-      return 'lib/config/assets/images/diary/emotion/excited_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/excited.png';
     case 'TIRED':
-      return 'lib/config/assets/images/diary/emotion/tired_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/tired.png';
     case 'SURPRISED':
-      return 'lib/config/assets/images/diary/emotion/amazed_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/amazed.png';
     case 'NEUTRAL':
-      return 'lib/config/assets/images/diary/emotion/soso_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/soso.png';
     case 'FLUTTER':
-      return 'lib/config/assets/images/diary/emotion/blushed_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/blushed.png';
     case 'UNCERTAIN':
-      return 'lib/config/assets/images/diary/emotion/molra_christmas.png';
+      return 'lib/config/assets/images/diary/emotion/molra.png';
     default:
       return '';
   }
