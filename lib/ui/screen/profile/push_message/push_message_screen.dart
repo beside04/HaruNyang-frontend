@@ -4,13 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:frontend/common/layout/default_layout.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/toast.dart';
@@ -54,7 +52,7 @@ class PushMessageScreen extends ConsumerWidget {
                     width: 52.0.w,
                     height: 32.0.h,
                     activeColor: Theme.of(context).primaryColor,
-                    inactiveColor: kGrayColor250,
+                    inactiveColor: Theme.of(context).colorScheme.iconSubColor,
                     toggleSize: 28.0.w,
                     value: ref.watch(mainProvider).pushMessagePermission,
                     borderRadius: 50.0.w,

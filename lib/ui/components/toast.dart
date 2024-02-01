@@ -54,12 +54,21 @@ void toast({
     child: toast,
     toastDuration: Duration(milliseconds: milliseconds),
     positionedToastBuilder: (context, child) {
-      final deviceSize = MediaQuery.of(context).size.height;
+      final deviceSize = MediaQuery.of(context).size;
+      double keyboardHeight = MediaQuery.of(context).viewInsets.bottom;
+      double bottomPosition = calculateValue(deviceSize.height);
+
+      // 키보드가 활성화되었을 때, 키보드 위에 토스트가 위치하도록 조정
+      if (keyboardHeight > 0) {
+        bottomPosition += keyboardHeight;
+      }
+
+      // final deviceSize = MediaQuery.of(context).size.height;
       return Stack(
         alignment: Alignment.center,
         children: [
           Positioned(
-            bottom: calculateValue(deviceSize),
+            bottom: bottomPosition,
             child: Container(
               child: child,
             ),

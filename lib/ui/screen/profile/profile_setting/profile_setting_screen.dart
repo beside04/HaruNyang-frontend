@@ -220,7 +220,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                               Padding(
                                 padding: EdgeInsets.only(left: 24.0.w),
                                 child: Text(
-                                  "날짜 변경",
+                                  "생일 변경",
                                   style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                 ),
                               ),
@@ -249,7 +249,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                       theme: picker_theme.DatePickerTheme(
                                         itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                                         backgroundColor: Theme.of(context).colorScheme.backgroundModal,
-                                        title: "나이 변경",
+                                        title: "생일 변경",
                                       ),
                                     );
                                   },

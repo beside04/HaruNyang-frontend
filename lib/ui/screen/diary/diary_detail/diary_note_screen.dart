@@ -133,7 +133,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                               "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
                                                               width: 20,
                                                               height: 20,
-                                                              color: kWhiteColor,
+                                                              color: kOrange250Color,
                                                             ),
                                                           ),
                                                         )
@@ -155,7 +155,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                               "lib/config/assets/images/diary/write_diary/bookmark.svg",
                                                               width: 20,
                                                               height: 20,
-                                                              color: kWhiteColor,
+                                                              color: kOrange250Color,
                                                             ),
                                                           ),
                                                         );
