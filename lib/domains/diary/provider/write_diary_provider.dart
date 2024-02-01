@@ -1,25 +1,14 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/config/theme/color_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/topic/topic_data.dart';
 import 'package:frontend/domains/diary/model/write_diary_state.dart';
-import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/ui/components/toast.dart';
-import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
 final animationControllerProvider = StateProvider<AnimationController?>((ref) => null);
-final pickedFileProvider = StateProvider<XFile?>((ref) => null);
-final croppedFileProvider = StateProvider<CroppedFile?>((ref) => null);
 final cropQualityImageProvider = StateProvider<File?>((ref) => null);
 final screenEntryTimeProvider = StateProvider<DateTime>((ref) => DateTime.now());
 
@@ -46,85 +35,57 @@ class WriteDiaryNotifier extends StateNotifier<WriteDiaryState> {
     state = state.copyWith(shouldShowWidget: true);
   }
 
-  Future<void> cropImage() async {
-    final bytes = await ref.watch(pickedFileProvider)!.readAsBytes();
-    final kb = bytes.lengthInBytes / 1024;
-    final directory = await getApplicationDocumentsDirectory();
-
-    if (kb > 200) {
-      ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
-        ref.watch(pickedFileProvider)!.path,
-        '${directory.path}/haruKitty.jpg',
-        quality: 20,
-      );
-    } else {
-      ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
-        ref.watch(pickedFileProvider)!.path,
-        '${directory.path}/haruKitty.jpg',
-        quality: 100,
-      );
-    }
-    if (ref.watch(pickedFileProvider) != null) {
-      CroppedFile? croppedImage = await ImageCropper().cropImage(
-        sourcePath: ref.watch(cropQualityImageProvider)!.path,
-        compressFormat: ImageCompressFormat.jpg,
-        uiSettings: [
-          AndroidUiSettings(
-            toolbarTitle: 'Cropper',
-            toolbarColor: kOrange200Color,
-            toolbarWidgetColor: kWhiteColor,
-            initAspectRatio: CropAspectRatioPreset.original,
-            lockAspectRatio: false,
-          ),
-          IOSUiSettings(
-            title: 'Cropper',
-          ),
-        ],
-      );
-      if (croppedImage != null) {
-        ref.watch(croppedFileProvider.notifier).state = croppedImage;
-      }
-    }
-  }
-
-  Future<void> uploadImage() async {
-    final socialId = await tokenUseCase.getSocialId();
-
-    File file = File(ref.watch(croppedFileProvider)!.path);
-
-    try {
-      // Use the user's UID and the current timestamp to create a unique path for each image.
-      String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
-
-      await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').putFile(file);
-
-      String downloadURL = await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').getDownloadURL();
-
-      state = state.copyWith(firebaseImageUrl: downloadURL);
-    } on FirebaseException {
-      // Get.snackbar('알림', '이미지 업로드에 실패하였습니다.');
-      // e.g, e.code == 'canceled'
-    }
-  }
-
-  Future<void> selectDeviceImage() async {
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
-    if (pickedImage != null) {
-      ref.watch(pickedFileProvider.notifier).state = pickedImage;
-    }
-  }
-
-  Future<void> clear() async {
-    ref.read(pickedFileProvider.notifier).state = null;
-    await Future.delayed(Duration(milliseconds: 100));
-    ref.read(croppedFileProvider.notifier).state = null;
-    await Future.delayed(Duration(milliseconds: 100));
-    if (mounted) {
-      state = state.copyWith(networkImage: null);
-    }
-    await Future.delayed(Duration.zero);
-    ref.read(diaryProvider.notifier).setDiaryDetailData(ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
-  }
+  // Future<void> cropImage() async {
+  //   final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
+  //   if (pickedImage != null) {
+  //     await Future.delayed(Duration(milliseconds: 100));
+  //     ref.watch(pickedFileProvider.notifier).state = pickedImage;
+  //     await Future.delayed(Duration(milliseconds: 100));
+  //   }
+  //
+  //   await Future.delayed(Duration(milliseconds: 100));
+  //
+  //   final bytes = await ref.watch(pickedFileProvider)!.readAsBytes();
+  //   await Future.delayed(Duration(milliseconds: 100));
+  //
+  //   final kb = bytes.lengthInBytes / 1024;
+  //   final directory = await getApplicationDocumentsDirectory();
+  //
+  //   if (kb > 200) {
+  //     ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
+  //       ref.watch(pickedFileProvider)!.path,
+  //       '${directory.path}/haruKitty.jpg',
+  //       quality: 20,
+  //     );
+  //   } else {
+  //     ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
+  //       ref.watch(pickedFileProvider)!.path,
+  //       '${directory.path}/haruKitty.jpg',
+  //       quality: 100,
+  //     );
+  //   }
+  //   if (ref.watch(pickedFileProvider) != null) {
+  //     CroppedFile? croppedImage = await ImageCropper().cropImage(
+  //       sourcePath: ref.watch(cropQualityImageProvider)!.path,
+  //       compressFormat: ImageCompressFormat.jpg,
+  //       uiSettings: [
+  //         AndroidUiSettings(
+  //           toolbarTitle: 'Cropper',
+  //           toolbarColor: kOrange200Color,
+  //           toolbarWidgetColor: kWhiteColor,
+  //           initAspectRatio: CropAspectRatioPreset.original,
+  //           lockAspectRatio: false,
+  //         ),
+  //         IOSUiSettings(
+  //           title: 'Cropper',
+  //         ),
+  //       ],
+  //     );
+  //     if (croppedImage != null) {
+  //       ref.watch(croppedFileProvider.notifier).state = croppedImage;
+  //     }
+  //   }
+  // }
 
   void setDiaryData(DiaryData diaryData) {
     diaryEditingController.text = diaryData.diaryContent;

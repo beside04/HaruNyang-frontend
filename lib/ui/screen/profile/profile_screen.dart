@@ -55,7 +55,7 @@ class ProfileScreen extends ConsumerWidget {
                           padding: EdgeInsets.all(6.w),
                           child: Center(
                             child: Image.asset(
-                              "lib/config/assets/images/character/character1_christmas.png",
+                              "lib/config/assets/images/character/character1.png",
                               width: 48.w,
                               height: 48.h,
                             ),
@@ -204,14 +204,8 @@ class ProfileScreen extends ConsumerWidget {
                 color: Theme.of(context).colorScheme.border,
               ),
               Consumer(builder: (context, ref, child) {
-                return ProfileButton(
-                  icon: Text(
-                    ref.watch(mainProvider.notifier).themeModeToString(ref.watch(mainProvider).themeMode),
-                    style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
-                  ),
-                  title: '기본 테마 설정',
-                  titleColor: Theme.of(context).colorScheme.textTitle,
-                  onPressed: () {
+                return InkWell(
+                  onTap: () {
                     ref.watch(mainProvider.notifier).tempThemeMode = ref.watch(mainProvider).themeMode;
 
                     showModalBottomSheet(
@@ -270,7 +264,7 @@ class ProfileScreen extends ConsumerWidget {
                                             "lib/config/assets/images/check/primary_color_check_bold.png",
                                             width: 17,
                                             height: 12,
-                                            color: Color(0xff0A9F60),
+                                            color: kOrange300Color,
                                           ),
                                         ),
                                       ),
@@ -303,7 +297,7 @@ class ProfileScreen extends ConsumerWidget {
                                             "lib/config/assets/images/check/primary_color_check_bold.png",
                                             width: 17,
                                             height: 12,
-                                            color: Color(0xff0A9F60),
+                                            color: kOrange300Color,
                                           ),
                                         ),
                                       ),
@@ -336,7 +330,7 @@ class ProfileScreen extends ConsumerWidget {
                                             "lib/config/assets/images/check/primary_color_check_bold.png",
                                             width: 17,
                                             height: 12,
-                                            color: Color(0xff0A9F60),
+                                            color: kOrange300Color,
                                           ),
                                         ),
                                       ),
@@ -360,6 +354,39 @@ class ProfileScreen extends ConsumerWidget {
                       }),
                     );
                   },
+                  child: Container(
+                    color: Theme.of(context).colorScheme.backgroundColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Stack(
+                            children: [
+                              Text(
+                                "${'기본 테마 설정'}   ",
+                                style: kHeader5Style.copyWith(
+                                  color: Theme.of(context).colorScheme.textTitle,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          Text(
+                            ref.watch(mainProvider.notifier).themeModeToString(ref.watch(mainProvider).themeMode),
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          SvgPicture.asset(
+                            "lib/config/assets/images/profile/navigate_next.svg",
+                            color: Theme.of(context).colorScheme.iconSubColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 );
               }),
               Divider(

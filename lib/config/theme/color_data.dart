@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 //Primary Color
-// const kOrange200Color = Color(0xffff972d);
-// const kOrange250Color = Color(0xfffc8c1c);
-// const kOrange300Color = Color(0xffff8D23);
-// const kOrange350Color = Color(0xfffc8212);
+const kOrange200Color = Color(0xffff972d);
+const kOrange250Color = Color(0xfffc8c1c);
+const kOrange300Color = Color(0xffff8D23);
+const kOrange350Color = Color(0xfffc8212);
 
-const kOrange200Color = Color(0xff3DCC99);
-const kOrange250Color = Color(0xff3DCC99);
-const kOrange300Color = Color(0xff15BA7F);
-const kOrange350Color = Color(0xff15BA7F);
+// const kOrange200Color = Color(0xff3DCC99);
+// const kOrange250Color = Color(0xff3DCC99);
+// const kOrange300Color = Color(0xff15BA7F);
+// const kOrange350Color = Color(0xff15BA7F);
 
 const kSecondaryColor = Color(0xffe9eaed);
 const kRed200Color = Color(0xfff16465);

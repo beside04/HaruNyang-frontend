@@ -86,7 +86,7 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                                           ref.watch(loginTermsInformationProvider).isMarketingConsentAgree &&
                                           ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree
                                       ? Image.asset(
-                                          "lib/config/assets/images/check/round_check_primary_dark_christmas.png",
+                                          "lib/config/assets/images/check/round_check_primary.png",
                                         )
                                       : Image.asset(
                                           "lib/config/assets/images/check/round_check_dark_mode.png",
@@ -102,7 +102,7 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                                           ref.watch(loginTermsInformationProvider).isMarketingConsentAgree &&
                                           ref.watch(loginTermsInformationProvider).isOverseasRelocationConsentAgree
                                       ? Image.asset(
-                                          "lib/config/assets/images/check/round_check_primary_light_christmas.png",
+                                          "lib/config/assets/images/check/round_check_primary.png",
                                         )
                                       : Image.asset(
                                           "lib/config/assets/images/check/round_check_light_mode.png",

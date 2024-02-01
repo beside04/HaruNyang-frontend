@@ -73,7 +73,7 @@ platform :ios do
         reject_if_possible: true,
         skip_metadata: false,
         skip_screenshots: true,
-        languages: ['en-US', 'ja','ko'],
+        languages: ['en-US', 'ja', 'ko'],
         release_notes: {
           "default" => "버그 수정",
           "en-US" => "bug fixed",

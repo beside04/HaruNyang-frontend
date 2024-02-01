@@ -68,10 +68,10 @@ class DiaryScreenState extends ConsumerState<DiaryScreen> {
                 colors: Theme.of(context).colorScheme.brightness == Brightness.dark
                     ? [kGrayColor950, kGrayColor950]
                     : [
-                        const Color(0xff09B56C),
-                        const Color(0xff40D093),
-                        // const Color(0xffffac60),
-                        // const Color(0xffffc793),
+                        // const Color(0xff09B56C),
+                        // const Color(0xff40D093),
+                        const Color(0xffffac60),
+                        const Color(0xffffc793),
                       ],
               ),
             ),
@@ -121,9 +121,7 @@ class DiaryScreenState extends ConsumerState<DiaryScreen> {
                         Align(
                           alignment: Alignment.topCenter,
                           child: Image.asset(
-                            ref.watch(diarySelectProvider).isEmotionModal
-                                ? "lib/config/assets/images/character/character1_christmas.png"
-                                : "lib/config/assets/images/character/character2_christmas.png",
+                            ref.watch(diarySelectProvider).isEmotionModal ? "lib/config/assets/images/character/character1.png" : "lib/config/assets/images/character/character2.png",
                             width: 320.w,
                             height: 320.h,
                           ),
