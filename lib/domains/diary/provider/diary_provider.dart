@@ -152,14 +152,26 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   }
 
   Future<void> saveDiary(String date, DiaryData diary) async {
-    state = state.copyWith(
-      isCalendarLoading: true,
-    );
+    state = state.copyWith(isCalendarLoading: true);
 
     await AutoDiarySaveDataSource().saveDiary(date, diary);
 
+    final autoDiaryData = await AutoDiarySaveDataSource().loadDiariesByMonth(
+      DateFormat('yyyy').format(state.focusedStartDate),
+      DateFormat('MM').format(state.focusedStartDate),
+    );
+
+    // Set을 사용하여 중복 제거
+    final allDiaries = {...state.diaryDataList, ...autoDiaryData};
+    List<DiaryData> combinedList = allDiaries.toList();
+
+    combinedList.sort((a, b) => b.targetDate.compareTo(a.targetDate));
+
+    _makeDiaryCardDataList(combinedList);
+
     state = state.copyWith(
       isCalendarLoading: false,
+      diaryDataList: combinedList,
     );
   }
 
@@ -204,6 +216,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   }
 
   void _makeDiaryCardDataList(List<DiaryData> diaries) {
+    print("diaries ${diaries}");
     List<DiaryCardData> diaryCardDataList = [];
     Map<String, List<DiaryData>> weekName = {};
     for (int i = 0; i < diaries.length; i++) {
