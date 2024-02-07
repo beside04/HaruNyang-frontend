@@ -20,7 +20,6 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.1.2+38
 scripts:
   codegen: flutter pub run build_runner watch
-
 environment:
   sdk: '>=3.0.2 <4.0.0'
 
@@ -145,3 +144,24 @@ flutter:
           weight: 500
         - asset: lib/config/assets/font/pretendard/Pretendard-Regular.otf
           weight: 400
+    - family: leeSeoyun
+      fonts:
+        - asset: lib/config/assets/font/leeSeoyun/LeeSeoyun(Mac).ttf
+          weight: 400
+    - family: maruburi
+      fonts:
+        - asset: lib/config/assets/font/maruburi/MaruBuri-Regular.ttf
+          weight: 400
+    - family: nanum_ddaacdandan
+      fonts:
+        - asset: lib/config/assets/font/nanum/nanum_ddaacdandan.ttf
+          weight: 400
+    - family: nanum_bisang
+      fonts:
+        - asset: lib/config/assets/font/nanum/nanum_bisang.ttf
+          weight: 400
+    - family: nanum_junghacsang
+      fonts:
+        - asset: lib/config/assets/font/nanum/nanum_junghacsang.ttf
+          weight: 400
+
