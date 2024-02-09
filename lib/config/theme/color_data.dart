@@ -49,6 +49,16 @@ const kGrayColor150 = Color(0xffdcdde2);
 const kGrayColor50 = Color(0xfff5f5f5);
 const kWhiteColor = Color(0xffffffff);
 
+const kHappyModalColor = Color(0xfffff3d4);
+const kSadModalColor = Color(0xffd5e6ff);
+const kAngryModalColor = Color(0xffffdede);
+const kExcitedModalColor = Color(0xffdaf6e6);
+const kTiredModalColor = Color(0xfff0ebff);
+const kAmazedModalColor = Color(0xffdbefcd);
+const kNeutralModalColor = Color(0xffefefef);
+const kFlutterModalColor = Color(0xffffe6e6);
+const kWiseSayingModalColor = Color(0xffffeede);
+
 //temp data
 const kFillGrayColor = Color(0xFFF8F8F8);
 const kKakaoPrimaryColor = Color(0xFFFAE100);

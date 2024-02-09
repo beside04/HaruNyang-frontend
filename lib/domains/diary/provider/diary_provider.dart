@@ -216,7 +216,6 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   }
 
   void _makeDiaryCardDataList(List<DiaryData> diaries) {
-    print("diaries ${diaries}");
     List<DiaryCardData> diaryCardDataList = [];
     Map<String, List<DiaryData>> weekName = {};
     for (int i = 0; i < diaries.length; i++) {

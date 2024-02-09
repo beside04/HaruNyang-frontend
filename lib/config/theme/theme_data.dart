@@ -184,4 +184,22 @@ extension CustomColorScheme on ColorScheme {
   Color get outlineActive => brightness == Brightness.light ? kGrayColor950 : kGrayColor50;
 
   Color get backgroundListColor => brightness == Brightness.light ? kWhiteColor : kGrayColor900;
+
+  Color get happyModalColor => brightness == Brightness.light ? kHappyModalColor : kHappyModalColor;
+
+  Color get sadModalColor => brightness == Brightness.light ? kSadModalColor : kSadModalColor;
+
+  Color get angryModalColor => brightness == Brightness.light ? kAngryModalColor : kAngryModalColor;
+
+  Color get excitedModalColor => brightness == Brightness.light ? kExcitedModalColor : kExcitedModalColor;
+
+  Color get tiredModalColor => brightness == Brightness.light ? kTiredModalColor : kTiredModalColor;
+
+  Color get amazedModalColor => brightness == Brightness.light ? kAmazedModalColor : kAmazedModalColor;
+
+  Color get neutralModalColor => brightness == Brightness.light ? kNeutralModalColor : kNeutralModalColor;
+
+  Color get flutterModalColor => brightness == Brightness.light ? kFlutterModalColor : kFlutterModalColor;
+
+  Color get wiseSayingModalColor => brightness == Brightness.light ? kWiseSayingModalColor : kWiseSayingModalColor;
 }

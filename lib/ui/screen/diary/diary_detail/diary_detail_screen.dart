@@ -15,7 +15,7 @@ import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/components/weather_emotion_badge_writing_diary.dart';
 import 'package:frontend/ui/screen/diary/components/diary_popup_menu_item.dart';
-import 'package:frontend/ui/screen/diary/diary_detail/diary_note_screen.dart';
+import 'package:frontend/ui/screen/diary/diary_detail/diary_result_screen.dart';
 import 'package:frontend/ui/screen/diary/write_diary_screen.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -61,9 +61,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
         // ignore: use_build_context_synchronously
         ? await Navigator.of(context).push(
             PageRouteBuilder(
-              barrierColor: Colors.black38,
-              opaque: false, // set to false
-              pageBuilder: (_, __, ___) => DairyNoteScreen(),
+              pageBuilder: (_, __, ___) => DiaryResultScreen(),
             ),
           )
         : null;
@@ -91,9 +89,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                       onPressed: () {
                         Navigator.of(context).push(
                           PageRouteBuilder(
-                            barrierColor: Colors.black38,
-                            opaque: false, // set to false
-                            pageBuilder: (_, __, ___) => DairyNoteScreen(),
+                            pageBuilder: (_, __, ___) => DiaryResultScreen(),
                           ),
                         );
                       },

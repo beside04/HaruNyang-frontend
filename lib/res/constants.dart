@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 // ignore: constant_identifier_names
@@ -204,6 +206,56 @@ String getWeatherAnimation(String value) {
       return '';
     default:
       return '';
+  }
+}
+
+Color getLetterModalColor(String value, BuildContext context) {
+  switch (value) {
+    case 'HAPPINESS':
+      return Theme.of(context).colorScheme.happyModalColor;
+    case 'SADNESS':
+      return Theme.of(context).colorScheme.sadModalColor;
+    case 'ANGRY':
+      return Theme.of(context).colorScheme.angryModalColor;
+    case 'EXCITED':
+      return Theme.of(context).colorScheme.excitedModalColor;
+    case 'TIRED':
+      return Theme.of(context).colorScheme.tiredModalColor;
+    case 'SURPRISED':
+      return Theme.of(context).colorScheme.amazedModalColor;
+    case 'NEUTRAL':
+      return Theme.of(context).colorScheme.neutralModalColor;
+    case 'FLUTTER':
+      return Theme.of(context).colorScheme.flutterModalColor;
+    case 'UNCERTAIN':
+      return Theme.of(context).colorScheme.neutralModalColor;
+    default:
+      return Theme.of(context).colorScheme.happyModalColor;
+  }
+}
+
+String getLetterModalImage(String value) {
+  switch (value) {
+    case 'HAPPINESS':
+      return 'lib/config/assets/images/character/letter/happiness.png';
+    case 'SADNESS':
+      return 'lib/config/assets/images/character/letter/sadness.png';
+    case 'ANGRY':
+      return 'lib/config/assets/images/character/letter/angry.png';
+    case 'EXCITED':
+      return 'lib/config/assets/images/character/letter/excited.png';
+    case 'TIRED':
+      return 'lib/config/assets/images/character/letter/tired.png';
+    case 'SURPRISED':
+      return 'lib/config/assets/images/character/letter/surprised.png';
+    case 'NEUTRAL':
+      return 'lib/config/assets/images/character/letter/neutral.png';
+    case 'FLUTTER':
+      return 'lib/config/assets/images/character/letter/flutter.png';
+    case 'UNCERTAIN':
+      return 'lib/config/assets/images/character/letter/uncertain.png';
+    default:
+      return 'lib/config/assets/images/character/letter/happiness.png';
   }
 }
 

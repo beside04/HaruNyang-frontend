@@ -91,6 +91,9 @@ dependencies:
   package_info_plus: ^4.1.0
   shared_preferences: ^2.2.1
   retrofit: ^3.3.1
+  screenshot: ^2.1.0
+  share_plus: ^7.2.2
+  image_gallery_saver: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -117,6 +120,7 @@ flutter:
     - lib/config/assets/images/login/
     - lib/config/assets/images/on_boarding/
     - lib/config/assets/images/character/
+    - lib/config/assets/images/character/letter/
     - lib/config/assets/images/diary/weather/
     - lib/config/assets/images/diary/emotion/
     - lib/config/assets/images/diary/write_diary/
