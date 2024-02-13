@@ -8,6 +8,7 @@ import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
+import 'package:frontend/domains/font/provider/font_provider.dart';
 import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/res/constants.dart';
@@ -465,9 +466,7 @@ class ProfileScreen extends ConsumerWidget {
               Consumer(builder: (context, ref, child) {
                 return ProfileButton(
                   icon: Text(
-                    ref
-                        .watch(mainProvider.notifier)
-                        .themeModeToString(ref.watch(mainProvider).themeMode),
+                    ref.watch(fontProvider).selectedFontTitle,
                     style: kBody2Style.copyWith(
                         color: Theme.of(context).colorScheme.textSubtitle),
                   ),
