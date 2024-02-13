@@ -85,50 +85,6 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                 padding: const EdgeInsets.fromLTRB(24, 32, 24, 40),
                 child: Column(
                   children: [
-                    // Slider(
-                    //   value: _currentSliderValue,
-                    //   max: 22,
-                    //   min: 16,
-                    //   divisions: 2,
-                    //   label: _currentSliderValue.round().toString(),
-                    //   onChanged: (double value) {
-                    //     setState(() {
-                    //       _currentSliderValue = value;
-                    //     });
-                    //   },
-                    //   inactiveColor: Theme.of(context).dividerColor,
-                    //   activeColor: Theme.of(context).dividerColor,
-                    //   thumbColor: Theme.of(context).primaryColor,
-                    // ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 24),
-                    //   child: Row(
-                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //     children: [
-                    //       Text(
-                    //         '작게',
-                    //         style: kBody3Style.copyWith(
-                    //           color:
-                    //               Theme.of(context).colorScheme.textLowEmphasis,
-                    //         ),
-                    //       ),
-                    //       Text(
-                    //         '기본',
-                    //         style: kBody3Style.copyWith(
-                    //           color:
-                    //               Theme.of(context).colorScheme.textLowEmphasis,
-                    //         ),
-                    //       ),
-                    //       Text(
-                    //         '크게',
-                    //         style: kBody3Style.copyWith(
-                    //           color:
-                    //               Theme.of(context).colorScheme.textLowEmphasis,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
                       child: Row(
@@ -170,7 +126,7 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                 color: Theme.of(context).colorScheme.border,
               ),
               Padding(
-                padding: const EdgeInsets.fromLTRB(24, 20, 0, 20),
+                padding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
                 child: Text(
                   '폰트 종류',
                   style: kHeader4Style.copyWith(

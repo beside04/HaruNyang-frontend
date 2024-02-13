@@ -31,20 +31,23 @@ class _FontSizeCheckBoxState extends State<FontSizeCheckBox> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Container(
-            padding: const EdgeInsets.only(bottom: 20),
-            child: widget.isSelected
-                ? SvgPicture.asset(
-                    'lib/config/assets/images/check/round_checkbox.svg',
-                    width: 24,
-                    height: 24,
-                  )
-                : SvgPicture.asset(
-                    'lib/config/assets/images/check/dot.svg',
-                    width: 8,
-                    height: 8,
-                  ),
-          ),
+          SizedBox(
+              width: 26,
+              height: 26,
+              child: Center(
+                child: widget.isSelected
+                    ? SvgPicture.asset(
+                        'lib/config/assets/images/check/round_checkbox.svg',
+                        width: 24,
+                        height: 24,
+                      )
+                    : SvgPicture.asset(
+                        'lib/config/assets/images/check/dot.svg',
+                        width: 8,
+                        height: 8,
+                      ),
+              )),
+          const SizedBox(height: 20),
           Text(
             widget.label,
             style: kBody3Style.copyWith(
