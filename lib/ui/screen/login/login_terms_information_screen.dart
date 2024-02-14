@@ -218,30 +218,30 @@ class LoginTermsInformationScreen extends ConsumerWidget {
                   //     },
                   //   );
                   // }),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  Consumer(builder: (context, ref, child) {
-                    return TermCheckBox(
-                      termValue: ref.watch(loginTermsInformationProvider).isMarketingConsentAgree,
-                      termTitle: Text(
-                        '(선택) 마케팅 정보 수신 동의',
-                        style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
-                      ),
-                      onTap: ref.watch(loginTermsInformationProvider.notifier).toggleMarketingConsentCheck,
-                      termOnTap: () async {
-                        if (!await launch("https://www.notion.so/39648dc746334206b5d353b93eee62bd")) {
-                          throw Exception('Could not launch');
-                        }
-                        // Get.to(
-                        //   () => const MarketingConsentScreen(
-                        //     isProfileScreen: false,
-                        //   ),
-                        //   transition: Transition.downToUp,
-                        // );
-                      },
-                    );
-                  }),
+                  // SizedBox(
+                  //   height: 16.h,
+                  // ),
+                  // Consumer(builder: (context, ref, child) {
+                  //   return TermCheckBox(
+                  //     termValue: ref.watch(loginTermsInformationProvider).isMarketingConsentAgree,
+                  //     termTitle: Text(
+                  //       '(선택) 마케팅 정보 수신 동의',
+                  //       style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textBody),
+                  //     ),
+                  //     onTap: ref.watch(loginTermsInformationProvider.notifier).toggleMarketingConsentCheck,
+                  //     termOnTap: () async {
+                  //       if (!await launch("https://www.notion.so/39648dc746334206b5d353b93eee62bd")) {
+                  //         throw Exception('Could not launch');
+                  //       }
+                  //       // Get.to(
+                  //       //   () => const MarketingConsentScreen(
+                  //       //     isProfileScreen: false,
+                  //       //   ),
+                  //       //   transition: Transition.downToUp,
+                  //       // );
+                  //     },
+                  //   );
+                  // }),
                 ],
               ),
             ),
