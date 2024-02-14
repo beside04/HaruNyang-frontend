@@ -8,6 +8,7 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/library/date_time_spinner/base_picker_model.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
 import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
 import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
@@ -28,6 +29,16 @@ import 'package:frontend/ui/screen/profile/components/profile_button.dart';
 import 'package:frontend/ui/screen/profile/profile_setting/withdraw/withdraw_screen.dart';
 import 'package:intl/intl.dart';
 
+class MonthDayModel extends DatePickerModel {
+  MonthDayModel({required DateTime currentTime, required DateTime maxTime, required DateTime minTime, required LocaleType locale})
+      : super(currentTime: currentTime, maxTime: maxTime, minTime: minTime, locale: locale);
+
+  @override
+  List<int> layoutProportions() {
+    return [0, 1, 1];
+  }
+}
+
 class ProfileSettingScreen extends ConsumerStatefulWidget {
   final bool isKakaoLogin;
 
@@ -47,7 +58,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
   TextEditingController ageEditingController = TextEditingController();
 
   void getBirthDateFormat(date) {
-    ageEditingController.text = DateFormat('yyyy-MM-dd').format(date);
+    ageEditingController.text = DateFormat('MM-dd').format(date);
   }
 
   Job? jobStatus = null;
@@ -233,18 +244,24 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                   isSettingAge: true,
                                   textEditingController: ageEditingController,
                                   onTap: () {
-                                    DatePicker.showDatePicker(
+                                    DatePicker.showPicker(
                                       context,
+                                      pickerModel: MonthDayModel(
+                                        currentTime: DateTime.parse(
+                                          ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
+                                        ),
+                                        minTime: DateTime(1930, 1, 1),
+                                        maxTime: DateTime(2022, 12, 31),
+                                        locale: LocaleType.ko,
+                                      ),
                                       showTitleActions: true,
-                                      minTime: DateTime(1930, 1, 1),
-                                      maxTime: DateTime(2022, 12, 31),
                                       onConfirm: (date) {
                                         getBirthDateFormat(date);
                                         setState(() {});
                                       },
-                                      currentTime: DateTime.parse(
-                                        ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
-                                      ),
+                                      // currentTime: DateTime.parse(
+                                      //   ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
+                                      // ),
                                       locale: LocaleType.ko,
                                       theme: picker_theme.DatePickerTheme(
                                         itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
@@ -271,7 +288,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                             },
                                           );
                                   }),
-                                  hintText: ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "2000-01-01" : ref.watch(onBoardingProvider).age!,
+                                  hintText: ref.watch(onBoardingProvider).age == '' || ref.watch(onBoardingProvider).age == null ? "01-01" : ref.watch(onBoardingProvider).age!.replaceAll("2000-", ""),
                                 ),
                               ),
                               Consumer(builder: (context, ref, child) {
@@ -285,7 +302,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
                                             FocusScope.of(context).unfocus();
 
                                             await ref.watch(onBoardingProvider.notifier).putMyInformation(
-                                                  age: ageEditingController.text,
+                                                  age: "2000-${ageEditingController.text}",
                                                   isOnBoarding: false,
                                                   isPutNickname: false,
                                                   context: context,

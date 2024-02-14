@@ -35,7 +35,7 @@ class AgeTextField extends StatelessWidget {
         helperText: isSettingAge ? null : "필수 정보가 아니라 다음에 작성해도 좋아요!",
         helperStyle: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
         counterText: "",
-        hintText: hintText == "2000-01-01" ? "YYYY-MM-DD 입력" : hintText,
+        hintText: hintText == "01-01" ? "MM-DD 입력" : hintText,
         hintStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.placeHolder),
         contentPadding: const EdgeInsets.only(
           top: 14,

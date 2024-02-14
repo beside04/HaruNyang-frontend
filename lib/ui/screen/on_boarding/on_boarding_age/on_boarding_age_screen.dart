@@ -15,6 +15,7 @@ import 'package:frontend/ui/components/age_text_field.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/ui/screen/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
+import 'package:frontend/ui/screen/profile/profile_setting/profile_setting_screen.dart';
 
 class OnBoardingAgeScreen extends ConsumerWidget {
   final String nickname;
@@ -73,15 +74,18 @@ class OnBoardingAgeScreen extends ConsumerWidget {
                               isSettingAge: false,
                               textEditingController: ref.watch(onBoardingAgeProvider.notifier).ageEditingController,
                               onTap: () {
-                                DatePicker.showDatePicker(
+                                DatePicker.showPicker(
                                   context,
+                                  pickerModel: MonthDayModel(
+                                    currentTime: DateTime(2000, 01, 01),
+                                    minTime: DateTime(1930, 1, 1),
+                                    maxTime: DateTime(2022, 12, 31),
+                                    locale: LocaleType.ko,
+                                  ),
                                   showTitleActions: true,
-                                  minTime: DateTime(1930, 1, 1),
-                                  maxTime: DateTime(2022, 12, 31),
                                   onConfirm: (date) {
                                     ref.watch(onBoardingAgeProvider.notifier).getBirthDateFormat(date);
                                   },
-                                  currentTime: DateTime(2000, 01, 01),
                                   locale: LocaleType.ko,
                                   theme: picker_theme.DatePickerTheme(
                                     itemStyle: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
@@ -105,7 +109,7 @@ class OnBoardingAgeScreen extends ConsumerWidget {
                                         onTap: () => ref.watch(onBoardingAgeProvider.notifier).ageEditingController.clear(),
                                       );
                               }),
-                              hintText: "2000-01-01",
+                              hintText: "01-01",
                             ),
                             SizedBox(
                               height: 106.h,
@@ -132,7 +136,7 @@ class OnBoardingAgeScreen extends ConsumerWidget {
                       Navigator.of(context).push(CupertinoPageRoute(
                         builder: (context) => OnBoardingJobScreen(
                           nickname: nickname,
-                          birth: ref.watch(onBoardingAgeProvider),
+                          birth: "2000-${ref.watch(onBoardingAgeProvider)}",
                           email: email,
                           loginType: loginType,
                           socialId: socialId,

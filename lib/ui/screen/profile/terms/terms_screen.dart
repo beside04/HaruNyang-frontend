@@ -101,32 +101,32 @@ class TermsScreen extends StatelessWidget {
               //     }
               //   },
               // ),
-              Divider(
-                thickness: 1.h,
-                height: 1.h,
-                color: Theme.of(context).colorScheme.border,
-              ),
-              ProfileButton(
-                icon: SvgPicture.asset(
-                  "lib/config/assets/images/profile/navigate_next.svg",
-                  color: Theme.of(context).colorScheme.iconSubColor,
-                ),
-                title: '마케팅 정보 수신 동의',
-                titleColor: Theme.of(context).colorScheme.textTitle,
-                onPressed: () async {
-                  if (!await launch("https://www.notion.so/39648dc746334206b5d353b93eee62bd")) {
-                    throw Exception('Could not launch');
-                  }
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => MarketingConsentScreen(
-                  //       isProfileScreen: true,
-                  //     ),
-                  //   ),
-                  // );
-                },
-              ),
+              // Divider(
+              //   thickness: 1.h,
+              //   height: 1.h,
+              //   color: Theme.of(context).colorScheme.border,
+              // ),
+              // ProfileButton(
+              //   icon: SvgPicture.asset(
+              //     "lib/config/assets/images/profile/navigate_next.svg",
+              //     color: Theme.of(context).colorScheme.iconSubColor,
+              //   ),
+              //   title: '마케팅 정보 수신 동의',
+              //   titleColor: Theme.of(context).colorScheme.textTitle,
+              //   onPressed: () async {
+              //     if (!await launch("https://www.notion.so/39648dc746334206b5d353b93eee62bd")) {
+              //       throw Exception('Could not launch');
+              //     }
+              //     // Navigator.push(
+              //     //   context,
+              //     //   MaterialPageRoute(
+              //     //     builder: (context) => MarketingConsentScreen(
+              //     //       isProfileScreen: true,
+              //     //     ),
+              //     //   ),
+              //     // );
+              //   },
+              // ),
               Divider(
                 thickness: 1.h,
                 height: 1.h,

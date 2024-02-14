@@ -111,9 +111,10 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                               //       ),
                                             ),
                                             Positioned(
-                                                right: 10,
-                                                top: 10,
-                                                child: Consumer(builder: (context, ref, child) {
+                                              right: 10,
+                                              top: 10,
+                                              child: Consumer(
+                                                builder: (context, ref, child) {
                                                   return ref.watch(diaryProvider).diaryDetailData!.comments[index].isFavorite
                                                       ? GestureDetector(
                                                           onTap: () {
@@ -159,7 +160,9 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                             ),
                                                           ),
                                                         );
-                                                })),
+                                                },
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
