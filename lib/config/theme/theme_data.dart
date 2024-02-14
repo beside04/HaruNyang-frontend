@@ -202,4 +202,6 @@ extension CustomColorScheme on ColorScheme {
   Color get flutterModalColor => brightness == Brightness.light ? kFlutterModalColor : kFlutterModalColor;
 
   Color get wiseSayingModalColor => brightness == Brightness.light ? kWiseSayingModalColor : kWiseSayingModalColor;
+
+  Color get letterBackgroundLineColor => brightness == Brightness.light ? kWhiteColor : kGrayColor800;
 }

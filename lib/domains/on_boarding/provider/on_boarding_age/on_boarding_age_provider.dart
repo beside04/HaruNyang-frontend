@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
+
 //
 // class OnBoardingAgeViewModel extends GetxController {
 //   final TextEditingController ageEditingController = TextEditingController();
@@ -33,7 +34,7 @@ class OnBoardingAgeNotifier extends StateNotifier<String> {
   final ageEditingController = TextEditingController();
 
   void getBirthDateFormat(DateTime date) {
-    ageEditingController.text = DateFormat('yyyy-MM-dd').format(date);
+    ageEditingController.text = DateFormat('MM-dd').format(date);
     state = ageEditingController.text;
   }
 }

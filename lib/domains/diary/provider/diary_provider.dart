@@ -152,9 +152,19 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   }
 
   Future<void> saveDiary(String date, DiaryData diary) async {
+    await AutoDiarySaveDataSource().saveDiary(date, diary);
+
+    loadDiary(DateTime.parse(date));
+  }
+
+  void loadDiary(DateTime deleteDate) async {
     state = state.copyWith(isCalendarLoading: true);
 
-    await AutoDiarySaveDataSource().saveDiary(date, diary);
+    List<DiaryData> filteredDiaryDataList = state.diaryDataList.where((diary) {
+      // 날짜 비교를 위해 String으로 변환
+      String diaryDate = DateFormat('yyyy-MM-dd').format(deleteDate);
+      return !(diary.targetDate == diaryDate && diary.isAutoSave);
+    }).toList();
 
     final autoDiaryData = await AutoDiarySaveDataSource().loadDiariesByMonth(
       DateFormat('yyyy').format(state.focusedStartDate),
@@ -162,7 +172,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
 
     // Set을 사용하여 중복 제거
-    final allDiaries = {...state.diaryDataList, ...autoDiaryData};
+    final allDiaries = {...filteredDiaryDataList, ...autoDiaryData};
     List<DiaryData> combinedList = allDiaries.toList();
 
     combinedList.sort((a, b) => b.targetDate.compareTo(a.targetDate));

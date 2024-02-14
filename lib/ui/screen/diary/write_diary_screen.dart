@@ -12,6 +12,8 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/letter_paper_painter.dart';
+import 'package:frontend/core/utils/library/topic_bubble_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
@@ -60,9 +62,17 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
   XFile? pickedFile;
   CroppedFile? croppedFile;
 
+  late WriteDiaryNotifier writeDiaryNotifier;
+  late DiaryNotifier diaryNotifier;
+  late DateTime screenEntryTime;
+
   @override
   void initState() {
     super.initState();
+
+    writeDiaryNotifier = ref.read(writeDiaryProvider.notifier);
+    diaryNotifier = ref.read(diaryProvider.notifier);
+    screenEntryTime = ref.read(screenEntryTimeProvider);
 
     _autoSaveTimer = Timer.periodic(Duration(seconds: 3), (Timer t) => _autoSaveDiary());
 
@@ -74,8 +84,6 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
       ref.watch(writeDiaryProvider.notifier).getDefaultTopic(widget.emotion);
 
       if (widget.diaryData != null) {
-        print("widget.diaryData ${widget.diaryData!.diaryContent}");
-
         ref.watch(writeDiaryProvider.notifier).setDiaryData(widget.diaryData!);
       } else {
         ref.watch(writeDiaryProvider.notifier).diaryEditingController.text = "";
@@ -144,9 +152,11 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
           ),
         ],
       );
-      if (croppedImage != null) {
-        croppedFile = croppedImage;
-      }
+      setState(() {
+        if (croppedImage != null) {
+          croppedFile = croppedImage;
+        }
+      });
     }
   }
 
@@ -170,35 +180,30 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     }
   }
 
-  Future<void> selectDeviceImage() async {
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
-    if (pickedImage != null) {
-      pickedFile = pickedImage;
-    }
-  }
-
   Future<void> clear() async {
-    pickedFile = null;
-    croppedFile = null;
+    setState(() {
+      pickedFile = null;
+      croppedFile = null;
+    });
+
     if (mounted) {
-      ref.read(writeDiaryProvider.notifier).state = ref.read(writeDiaryProvider).copyWith(networkImage: null);
+      writeDiaryNotifier.state = ref.read(writeDiaryProvider).copyWith(networkImage: null);
     }
     await Future.delayed(Duration.zero);
-    ref.read(diaryProvider.notifier).setDiaryDetailData(ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
+    diaryNotifier.setDiaryDetailData(ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
   }
 
   @override
-  void dispose() {
-    super.dispose();
+  Future<void> dispose() async {
     _autoSaveTimer?.cancel();
-
-    ref.watch(writeDiaryProvider.notifier).diaryEditingController.removeListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
+    writeDiaryNotifier.diaryEditingController.removeListener(writeDiaryNotifier.onTextChanged);
 
     DateTime screenExitTime = DateTime.now();
-    Duration stayDuration = screenExitTime.difference(ref.watch(screenEntryTimeProvider));
+    Duration stayDuration = screenExitTime.difference(screenEntryTime);
 
     Future(() {
-      ref.watch(diaryProvider.notifier).getEmotionStampList();
+      diaryNotifier.loadDiary(widget.date);
+      writeDiaryNotifier.resetFirebaseImageUrl();
     });
 
     // Firebase Analytics에 체류시간 로깅
@@ -206,6 +211,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
       'screen': "Screen_Event_WriteDiary_WritePage",
       'duration': stayDuration.inSeconds,
     });
+    super.dispose();
   }
 
   @override
@@ -358,14 +364,34 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                   Expanded(
                     child: ListView(
                       children: [
+                        Column(
+                          children: [
+                            TopicBubbleWidget(
+                              color: Theme.of(context).colorScheme.secondaryColor,
+                              text: Consumer(builder: (context, ref, child) {
+                                return Text(
+                                  textAlign: TextAlign.center,
+                                  ref.watch(writeDiaryProvider).topic.value,
+                                  style: kSubtitle1Style.copyWith(
+                                    color: Theme.of(context).colorScheme.textTitle,
+                                  ),
+                                );
+                              }),
+                              onDelete: () {
+                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Get_Topic');
+                                ref.watch(writeDiaryProvider.notifier).getRandomTopic();
+                              },
+                            ),
+                          ],
+                        ),
                         SizedBox(
-                          height: 188.h,
+                          height: 164,
                           child: Stack(
                             children: [
                               Center(
                                 child: Image.asset(
                                   getWeatherCharacter(widget.weather),
-                                  height: 196.h,
+                                  height: 140,
                                 ),
                               ),
                               getWeatherAnimation(widget.weather) == ""
@@ -377,206 +403,249 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                             ],
                           ),
                         ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        Center(
-                          child: Consumer(builder: (context, ref, child) {
-                            return Text(
-                              textAlign: TextAlign.center,
-                              ref.watch(writeDiaryProvider).topic.value,
-                              maxLines: 2,
-                              style: kHeader3Style.copyWith(
-                                color: Theme.of(context).colorScheme.textTitle,
-                              ),
-                            );
-                          }),
-                        ),
-                        Container(
-                          height: 12.h,
-                        ),
-                        WeatherEmotionBadgeWritingDiary(
-                          emoticon: getEmoticonImage(widget.emotion),
-                          emoticonDesc: getEmoticonValue(widget.emotion),
-                          weatherIcon: getWeatherImage(widget.weather),
-                          weatherIconDesc: getWeatherValue(widget.weather),
-                          color: Theme.of(context).colorScheme.surface_01,
-                        ),
-                        Consumer(builder: (context, ref, child) {
-                          return ref.watch(diaryProvider).diaryDetailData == null
-                              ? Container()
-                              : ref.watch(diaryProvider).diaryDetailData!.image == ''
-                                  ? Container()
-                                  : Center(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(left: 20.0.w, right: 20.w, top: 20),
-                                        child: Stack(
-                                          children: [
-                                            Image.network(
-                                              ref.watch(diaryProvider).diaryDetailData!.image,
-                                              fit: BoxFit.cover,
-                                            ),
-                                            Positioned(
-                                              right: 12,
-                                              top: 12,
-                                              child: GestureDetector(
-                                                onTap: () {
-                                                  clear();
-                                                },
-                                                child: Container(
-                                                  margin: const EdgeInsets.all(6),
-                                                  decoration: BoxDecoration(
-                                                    color: kWhiteColor.withOpacity(0.6),
-                                                    shape: BoxShape.circle,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Container(
+                              color: Theme.of(context).colorScheme.surface_01,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: SizedBox(
+                                      height: 72.0,
+                                      child: WeatherEmotionBadgeWritingDiary(
+                                        emoticon: getEmoticonImage(widget.emotion),
+                                        emoticonDesc: getEmoticonValue(widget.emotion),
+                                        weatherIcon: getWeatherImage(widget.weather),
+                                        weatherIconDesc: getWeatherValue(widget.weather),
+                                        color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                      ),
+                                    ),
+                                  ),
+                                  Positioned(
+                                    top: 70,
+                                    child: Consumer(builder: (context, ref, child) {
+                                      return ref.watch(diaryProvider).diaryDetailData == null
+                                          ? Container()
+                                          : ref.watch(diaryProvider).diaryDetailData!.image == ''
+                                              ? Container()
+                                              : Center(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                                                    child: Stack(
+                                                      children: [
+                                                        Container(
+                                                          color: kImageBackgroundColor,
+                                                          width: 260,
+                                                          height: 260,
+                                                          child: Image.network(
+                                                            ref.watch(diaryProvider).diaryDetailData!.image,
+                                                            width: 260,
+                                                            height: 260,
+                                                          ),
+                                                        ),
+                                                        Positioned(
+                                                          right: 12,
+                                                          top: 12,
+                                                          child: GestureDetector(
+                                                            onTap: () {
+                                                              clear();
+                                                            },
+                                                            child: Container(
+                                                              margin: const EdgeInsets.all(6),
+                                                              decoration: BoxDecoration(
+                                                                color: kWhiteColor.withOpacity(0.6),
+                                                                shape: BoxShape.circle,
+                                                              ),
+                                                              height: 24.h,
+                                                              width: 24.w,
+                                                              child: SvgPicture.asset(
+                                                                "lib/config/assets/images/diary/light_mode/close.svg",
+                                                                color: kGrayColor950,
+                                                                height: 12,
+                                                                width: 12,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ),
-                                                  height: 24.h,
-                                                  width: 24.w,
-                                                  child: SvgPicture.asset(
-                                                    "lib/config/assets/images/diary/light_mode/close.svg",
-                                                    color: kGrayColor950,
-                                                    height: 12,
-                                                    width: 12,
-                                                  ),
-                                                ),
+                                                );
+                                    }),
+                                  ),
+                                  Positioned(
+                                    top: 70,
+                                    child: Consumer(builder: (context, ref, child) {
+                                      return (croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null)
+                                          ? Center(
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                                                child: ref.watch(writeDiaryProvider).networkImage != null
+                                                    ? Stack(
+                                                        children: [
+                                                          Container(
+                                                            color: kImageBackgroundColor,
+                                                            width: 260,
+                                                            height: 260,
+                                                            child: Image.network(
+                                                              ref.watch(writeDiaryProvider).networkImage!,
+                                                              width: 260,
+                                                              height: 260,
+                                                            ),
+                                                          ),
+                                                          Positioned(
+                                                            right: 12,
+                                                            top: 12,
+                                                            child: GestureDetector(
+                                                              onTap: () async {
+                                                                await clear();
+                                                              },
+                                                              child: Container(
+                                                                margin: const EdgeInsets.all(6),
+                                                                decoration: BoxDecoration(
+                                                                  color: kWhiteColor.withOpacity(0.6),
+                                                                  shape: BoxShape.circle,
+                                                                ),
+                                                                height: 24.h,
+                                                                width: 24.w,
+                                                                child: SvgPicture.asset(
+                                                                  "lib/config/assets/images/diary/light_mode/close.svg",
+                                                                  color: kGrayColor950,
+                                                                  height: 12,
+                                                                  width: 12,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : croppedFile != null
+                                                        ? Stack(
+                                                            children: [
+                                                              Container(
+                                                                color: kImageBackgroundColor,
+                                                                width: 260,
+                                                                height: 260,
+                                                                child: Image.file(
+                                                                  File(croppedFile!.path),
+                                                                  width: 260,
+                                                                  height: 260,
+                                                                ),
+                                                              ),
+                                                              Positioned(
+                                                                right: 12,
+                                                                top: 12,
+                                                                child: GestureDetector(
+                                                                  onTap: () {
+                                                                    clear();
+                                                                  },
+                                                                  child: Container(
+                                                                    margin: const EdgeInsets.all(6),
+                                                                    decoration: BoxDecoration(
+                                                                      color: kWhiteColor.withOpacity(0.6),
+                                                                      shape: BoxShape.circle,
+                                                                    ),
+                                                                    height: 24.h,
+                                                                    width: 24.w,
+                                                                    child: SvgPicture.asset(
+                                                                      "lib/config/assets/images/diary/light_mode/close.svg",
+                                                                      color: kGrayColor950,
+                                                                      height: 12,
+                                                                      width: 12,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        : const SizedBox.shrink(),
                                               ),
+                                            )
+                                          : Container();
+                                    }),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: ((croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null) ||
+                                                (ref.watch(diaryProvider).diaryDetailData != null && ref.watch(diaryProvider).diaryDetailData!.image != ''))
+                                            ? 350
+                                            : 70,
+                                        left: 30,
+                                        right: 30),
+                                    child: Container(
+                                      constraints: BoxConstraints(
+                                        minHeight: 500,
+                                      ),
+                                      child: CustomPaint(
+                                        painter: LetterPaperPainter(
+                                          color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                        ),
+                                        child: TextField(
+                                          maxLength: 500,
+                                          maxLines: null,
+                                          autofocus: true,
+                                          style: kBody1Style.copyWith(
+                                            color: Theme.of(context).colorScheme.textBody,
+                                            height: 2.1,
+                                          ),
+                                          controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
+                                          keyboardType: TextInputType.multiline,
+                                          textAlignVertical: TextAlignVertical.center,
+                                          cursorColor: Theme.of(context).colorScheme.primaryColor,
+                                          decoration: InputDecoration(
+                                            border: InputBorder.none,
+                                            helperText: "",
+                                            counterText: "",
+                                            hintStyle: kBody1Style.copyWith(color: kGrayColor400),
+                                            contentPadding: const EdgeInsets.only(
+                                              top: 4,
                                             ),
-                                          ],
+                                            filled: true,
+                                            enabledBorder: const OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                            ),
+                                            focusedBorder: const OutlineInputBorder(
+                                              borderSide: BorderSide.none,
+                                            ),
+                                          ),
+                                          onChanged: (value) {
+                                            ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
+                                            value.length == 500
+                                                ? showDialog(
+                                                    barrierDismissible: true,
+                                                    context: context,
+                                                    builder: (ctx) {
+                                                      return DialogComponent(
+                                                        title: "글자 제한",
+                                                        content: Text(
+                                                          "500 글자까지 작성할 수 있어요.",
+                                                          style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                                        ),
+                                                        actionContent: [
+                                                          DialogButton(
+                                                            title: "확인 했어요",
+                                                            onTap: () {
+                                                              Navigator.pop(context);
+                                                            },
+                                                            backgroundColor: kOrange200Color,
+                                                            textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                                          ),
+                                                        ],
+                                                      );
+                                                    },
+                                                  )
+                                                : null;
+                                          },
                                         ),
                                       ),
-                                    );
-                        }),
-                        Consumer(builder: (context, ref, child) {
-                          return (croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null)
-                              ? Center(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 20.0.w, right: 20.w, top: 20),
-                                    child: ref.watch(writeDiaryProvider).networkImage != null
-                                        ? Stack(
-                                            children: [
-                                              Image.network(
-                                                ref.watch(writeDiaryProvider).networkImage!,
-                                                fit: BoxFit.cover,
-                                              ),
-                                              Positioned(
-                                                right: 12,
-                                                top: 12,
-                                                child: GestureDetector(
-                                                  onTap: () {
-                                                    clear();
-                                                  },
-                                                  child: Container(
-                                                    margin: const EdgeInsets.all(6),
-                                                    decoration: BoxDecoration(
-                                                      color: kWhiteColor.withOpacity(0.6),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                    height: 24.h,
-                                                    width: 24.w,
-                                                    child: SvgPicture.asset(
-                                                      "lib/config/assets/images/diary/light_mode/close.svg",
-                                                      color: kGrayColor950,
-                                                      height: 12,
-                                                      width: 12,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          )
-                                        : croppedFile != null
-                                            ? Stack(
-                                                children: [
-                                                  Image.file(
-                                                    fit: BoxFit.cover,
-                                                    File(croppedFile!.path),
-                                                  ),
-                                                  Positioned(
-                                                    right: 12,
-                                                    top: 12,
-                                                    child: GestureDetector(
-                                                      onTap: () {
-                                                        clear();
-                                                      },
-                                                      child: Container(
-                                                        margin: const EdgeInsets.all(6),
-                                                        decoration: BoxDecoration(
-                                                          color: kWhiteColor.withOpacity(0.6),
-                                                          shape: BoxShape.circle,
-                                                        ),
-                                                        height: 24.h,
-                                                        width: 24.w,
-                                                        child: SvgPicture.asset(
-                                                          "lib/config/assets/images/diary/light_mode/close.svg",
-                                                          color: kGrayColor950,
-                                                          height: 12,
-                                                          width: 12,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              )
-                                            : const SizedBox.shrink(),
+                                    ),
                                   ),
-                                )
-                              : Container();
-                        }),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: TextField(
-                            maxLength: 500,
-                            maxLines: null,
-                            autofocus: true,
-                            style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
-                            controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
-                            keyboardType: TextInputType.multiline,
-                            textAlignVertical: TextAlignVertical.center,
-                            cursorColor: Theme.of(context).colorScheme.inverseSurface,
-                            decoration: InputDecoration(
-                              helperText: "",
-                              counterText: "",
-                              hintStyle: kBody1Style.copyWith(color: kGrayColor400),
-                              contentPadding: const EdgeInsets.only(
-                                top: 12,
-                                left: 20,
-                                right: 20,
-                              ),
-                              filled: true,
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                              ),
-                              focusedBorder: const OutlineInputBorder(
-                                borderSide: BorderSide.none,
+                                ],
                               ),
                             ),
-                            onChanged: (value) {
-                              ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
-                              value.length == 500
-                                  ? showDialog(
-                                      barrierDismissible: true,
-                                      context: context,
-                                      builder: (ctx) {
-                                        return DialogComponent(
-                                          title: "글자 제한",
-                                          content: Text(
-                                            "500 글자까지 작성할 수 있어요.",
-                                            style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
-                                          ),
-                                          actionContent: [
-                                            DialogButton(
-                                              title: "확인 했어요",
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                              },
-                                              backgroundColor: kOrange200Color,
-                                              textStyle: kHeader4Style.copyWith(color: kWhiteColor),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    )
-                                  : null;
-                            },
                           ),
                         ),
                       ],
@@ -612,19 +681,6 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                   color: Theme.of(context).colorScheme.iconSubColor,
                                   // width: 24.w,
                                   // height: 24.h,
-                                ),
-                              ),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Get_Topic');
-                                ref.watch(writeDiaryProvider.notifier).getRandomTopic();
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
-                                child: Image.asset(
-                                  "lib/config/assets/images/diary/write_diary/refresh-2.png",
-                                  color: Theme.of(context).colorScheme.iconSubColor,
                                 ),
                               ),
                             ),

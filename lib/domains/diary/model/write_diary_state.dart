@@ -22,59 +22,59 @@ class WriteDiaryState with _$WriteDiaryState {
     @Default([
       TopicData(
         id: 9,
-        value: '오늘 가장 기억에 남는 일은\n 무엇이었나요?',
+        value: '오늘 가장 기억에 남는 일은 무엇이었나요?',
       ),
       TopicData(
         id: 10,
-        value: '요즘 힘든 점이\n 있어요?',
+        value: '요즘 힘든 점이 있어요?',
       ),
       TopicData(
         id: 11,
-        value: '고민거리가\n 뭐예요?',
+        value: '고민거리가 뭐예요?',
       ),
       TopicData(
         id: 12,
-        value: '오늘 점심은\n 뭘 먹었어요?',
+        value: '오늘 점심은 뭘 먹었어요?',
       ),
       TopicData(
         id: 13,
-        value: '다가오는 주말에\n 뭘 할거예요?',
+        value: '다가오는 주말에 뭘 할거예요?',
       ),
       TopicData(
         id: 14,
-        value: '오늘 가장 재밌는 일은\n 뭐였어요?',
+        value: '오늘 가장 재밌는 일은 뭐였어요?',
       ),
       TopicData(
         id: 15,
-        value: '오늘 어떤 커피를\n 먹었어요?',
+        value: '오늘 어떤 커피를 먹었어요?',
       ),
       TopicData(
         id: 16,
-        value: '무엇이 나를\n 힘들게 해요?',
+        value: '무엇이 나를 힘들게 해요?',
       ),
       TopicData(
         id: 17,
-        value: '무엇이 나를\n 설레게 해요?',
+        value: '무엇이 나를 설레게 해요?',
       ),
       TopicData(
         id: 18,
-        value: '내일 하고\n 싶은게 뭐예요?',
+        value: '내일 하고 싶은게 뭐예요?',
       ),
       TopicData(
         id: 19,
-        value: '요즘 자주 듣는\n 음악이 뭐예요?',
+        value: '요즘 자주 듣는 음악이 뭐예요?',
       ),
       TopicData(
         id: 20,
-        value: '먹고 싶은 음식이\n 있나요?',
+        value: '먹고 싶은 음식이 있나요?',
       ),
       TopicData(
         id: 21,
-        value: '지금 받고 싶은\n 선물이 뭐예요?',
+        value: '지금 받고 싶은 선물이 뭐예요?',
       ),
       TopicData(
         id: 22,
-        value: '쉬는 날에\n 어디 가고 싶어요?',
+        value: '쉬는 날에 어디 가고 싶어요?',
       ),
     ])
     List<TopicData> metaTopic,

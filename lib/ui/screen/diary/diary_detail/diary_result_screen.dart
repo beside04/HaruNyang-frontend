@@ -8,6 +8,7 @@ import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
+import 'package:frontend/core/utils/letter_paper_painter.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/toast.dart';
@@ -32,96 +33,99 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
       screenName: 'Screen_Event_DiaryResult',
       child: Scaffold(
         bottomNavigationBar: SafeArea(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () async {
-                  await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
-                    if (image != null) {
-                      final directory = await getApplicationDocumentsDirectory();
-                      final imagePath = await File('${directory.path}/image.png').create();
-                      await imagePath.writeAsBytes(image);
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12.0, top: 28.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                GestureDetector(
+                  onTap: () async {
+                    await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
+                      if (image != null) {
+                        final directory = await getApplicationDocumentsDirectory();
+                        final imagePath = await File('${directory.path}/image.png').create();
+                        await imagePath.writeAsBytes(image);
 
-                      final result = await Share.shareXFiles([XFile('${imagePath.path}')], text: '하루냥 쪽지');
+                        final result = await Share.shareXFiles([XFile('${imagePath.path}')], text: '하루냥 쪽지');
 
-                      result.status == ShareResultStatus.success
-                          ? toast(
-                              context: context,
-                              text: '이미지 공유를 성공했습니다!',
-                              isCheckIcon: true,
-                            )
-                          : toast(
-                              context: context,
-                              text: '이미지 공유를 실패했습니다.',
-                              isCheckIcon: false,
-                            );
-                    }
-                  });
-                },
-                child: Container(
-                  width: 100,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.0),
-                    color: kGrayColor100,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "공유하기",
-                      style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                        result.status == ShareResultStatus.success
+                            ? toast(
+                                context: context,
+                                text: '이미지 공유를 성공했습니다!',
+                                isCheckIcon: true,
+                              )
+                            : toast(
+                                context: context,
+                                text: '이미지 공유를 실패했습니다.',
+                                isCheckIcon: false,
+                              );
+                      }
+                    });
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.0),
+                      color: Theme.of(context).colorScheme.secondaryColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "공유하기",
+                        style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 12,
-              ),
-              GestureDetector(
-                onTap: () async {
-                  await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
-                    if (image != null) {
-                      final directory = await getApplicationDocumentsDirectory();
-                      final imagePath = await File('${directory.path}/image.png').create();
-                      await imagePath.writeAsBytes(image);
+                SizedBox(
+                  width: 12,
+                ),
+                GestureDetector(
+                  onTap: () async {
+                    await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
+                      if (image != null) {
+                        final directory = await getApplicationDocumentsDirectory();
+                        final imagePath = await File('${directory.path}/image.png').create();
+                        await imagePath.writeAsBytes(image);
 
-                      final result = await ImageGallerySaver.saveFile('${imagePath.path}', name: "하루냥");
+                        final result = await ImageGallerySaver.saveFile('${imagePath.path}', name: "하루냥");
 
-                      result["isSuccess"]
-                          ? toast(
-                              context: context,
-                              text: '이미지가 저장되었습니다!',
-                              isCheckIcon: true,
-                            )
-                          : toast(
-                              context: context,
-                              text: '이미지 저장을 실패했습니다.',
-                              isCheckIcon: false,
-                            );
-                    }
-                  });
-                },
-                child: Container(
-                  width: 100,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100.0),
-                    color: kGrayColor100,
-                  ),
-                  child: Center(
-                    child: Text(
-                      "이미지 저장",
-                      style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                        result["isSuccess"]
+                            ? toast(
+                                context: context,
+                                text: '이미지가 저장되었습니다!',
+                                isCheckIcon: true,
+                              )
+                            : toast(
+                                context: context,
+                                text: '이미지 저장을 실패했습니다.',
+                                isCheckIcon: false,
+                              );
+                      }
+                    });
+                  },
+                  child: Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(100.0),
+                      color: Theme.of(context).colorScheme.secondaryColor,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "이미지 저장",
+                        style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         appBar: AppBar(
           title: Text(
-            "하루냥 편지",
+            "하루냥의 편지",
             style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
           ),
           leading: IconButton(
@@ -240,11 +244,11 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                               children: [
                                 CustomPaint(
                                   painter: LetterPaperPainter(
-                                    context: context,
+                                    color: kWhiteColor,
                                   ),
                                   child: Text(
                                     ref.watch(diaryProvider).diaryDetailData!.comments[0].message,
-                                    style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textBody, height: 2.1),
+                                    style: kBody1Style.copyWith(color: kGrayColor850, height: 2.1),
                                   ),
                                 ),
                               ],
@@ -277,38 +281,5 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
         ),
       ),
     );
-  }
-}
-
-class LetterPaperPainter extends CustomPainter {
-  final BuildContext context;
-
-  LetterPaperPainter({
-    required this.context,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = kWhiteColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.5;
-
-    // You can calculate the line height based on the text style.
-    final lineHeight = 34.0;
-    final lineSpace = 34.0; // The space between lines
-
-    // Draw lines based on the number of lines of the text
-    for (var i = 0; i < (size.height / lineHeight) + 7; i++) {
-      print(size.height);
-      print("i ${i}");
-      final y = i * lineHeight + lineSpace;
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) {
-    return false;
   }
 }
