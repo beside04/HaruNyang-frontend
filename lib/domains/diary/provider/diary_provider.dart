@@ -15,6 +15,7 @@ import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
+import 'package:frontend/domain/use_case/diary/image_history_use_case.dart';
 import 'package:frontend/domain/use_case/diary/save_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/update_diary_use_case.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
@@ -47,11 +48,14 @@ final diaryProvider = StateNotifierProvider<DiaryNotifier, DiaryState>((ref) {
     BookmarkUseCase(
       bookmarkRepository: bookmarkRepository,
     ),
+    ImageHistoryUseCase(
+      diaryRepository: diaryRepository,
+    ),
   );
 });
 
 class DiaryNotifier extends StateNotifier<DiaryState> {
-  DiaryNotifier(this.ref, this.getEmotionStampUseCase, this.saveDiaryUseCase, this.updateDiaryUseCase, this.deleteDiaryUseCase, this.bookmarkUseCase)
+  DiaryNotifier(this.ref, this.getEmotionStampUseCase, this.saveDiaryUseCase, this.updateDiaryUseCase, this.deleteDiaryUseCase, this.bookmarkUseCase, this.imageHistoryUseCase)
       : super(DiaryState(
           focusedStartDate: DateTime.now(),
           focusedEndDate: DateTime.now(),
@@ -66,6 +70,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   final DeleteDiaryUseCase deleteDiaryUseCase;
   final BookmarkUseCase bookmarkUseCase;
   final GetEmotionStampUseCase getEmotionStampUseCase;
+  final ImageHistoryUseCase imageHistoryUseCase;
 
   resetDiary() {
     state = state.copyWith(
@@ -81,6 +86,10 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   Future<void> deleteDiary(int diaryID) async {
     await deleteDiaryUseCase(diaryID);
     getEmotionStampList();
+  }
+
+  Future<void> postImageHistory(String imageUrl) async {
+    await imageHistoryUseCase(imageUrl);
   }
 
   Future<void> getAllBookmarkData() async {

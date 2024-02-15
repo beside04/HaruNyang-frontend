@@ -204,4 +204,6 @@ extension CustomColorScheme on ColorScheme {
   Color get wiseSayingModalColor => brightness == Brightness.light ? kWiseSayingModalColor : kWiseSayingModalColor;
 
   Color get letterBackgroundLineColor => brightness == Brightness.light ? kWhiteColor : kGrayColor800;
+
+  Color get whiteBlackColor => brightness == Brightness.light ? kWhiteColor : kBlackColor;
 }

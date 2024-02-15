@@ -30,4 +30,9 @@ class DiaryRepositoryImpl implements DiaryRepository {
   Future<Result<bool>> deleteDiary(int diaryId) async {
     return await diaryApi.deleteDiary(diaryId);
   }
+
+  @override
+  Future<Result<bool>> postImageHistory(String imageUrl) async {
+    return await diaryApi.postImageHistory(imageUrl);
+  }
 }

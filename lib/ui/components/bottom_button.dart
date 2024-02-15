@@ -10,11 +10,15 @@ class BottomButton extends StatelessWidget {
     required this.title,
     required this.onTap,
     this.bottomPadding = 47,
+    this.buttonWidth = 335,
+    this.buttonHeight = 52,
   });
 
   final String title;
   final VoidCallback? onTap;
   final double bottomPadding;
+  final double buttonWidth;
+  final double buttonHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +27,8 @@ class BottomButton extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.only(left: 16.w, bottom: bottomPadding, right: 16.w),
         child: SizedBox(
-          width: 335.w,
-          height: 52.h,
+          width: buttonWidth,
+          height: buttonHeight,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               shadowColor: Colors.transparent,

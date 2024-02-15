@@ -173,6 +173,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
 
       String downloadURL = await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').getDownloadURL();
 
+      await ref.read(diaryProvider.notifier).postImageHistory(downloadURL);
+
       ref.read(writeDiaryProvider.notifier).state = ref.read(writeDiaryProvider).copyWith(firebaseImageUrl: downloadURL);
     } on FirebaseException {
       // Get.snackbar('알림', '이미지 업로드에 실패하였습니다.');
@@ -488,12 +490,12 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                         children: [
                                                           Container(
                                                             color: kImageBackgroundColor,
-                                                            width: 260,
-                                                            height: 260,
+                                                            width: MediaQuery.of(context).size.width - 100,
+                                                            height: MediaQuery.of(context).size.width - 100,
                                                             child: Image.network(
                                                               ref.watch(writeDiaryProvider).networkImage!,
-                                                              width: 260,
-                                                              height: 260,
+                                                              width: MediaQuery.of(context).size.width - 100,
+                                                              height: MediaQuery.of(context).size.width - 100,
                                                             ),
                                                           ),
                                                           Positioned(
