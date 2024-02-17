@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
@@ -7,6 +6,7 @@ import 'package:frontend/res/constants.dart';
 
 class DiaryApi {
   final Dio dio;
+
   String get _baseUrl => usingServer;
 
   DiaryApi({
@@ -130,6 +130,39 @@ class DiaryApi {
           errMessage = '401';
         } else {
           errMessage = e.response!.data['message'];
+        }
+      } else {
+        errMessage = '401';
+      }
+      return Result.error(errMessage);
+    } catch (e) {
+      return Result.error(e.toString());
+    }
+  }
+
+  Future<Result<bool>> postImageHistory(String imageUrl) async {
+    String diaryUrl = '$_baseUrl/v2/storage/images/history';
+    try {
+      Response response;
+      response = await dio.post(
+        diaryUrl,
+        data: {
+          "imageUrl": imageUrl,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        return const Result.success(true);
+      } else {
+        return const Result.error('일기 이미지 히스토리 저장 실패');
+      }
+    } on DioError catch (e) {
+      String errMessage = '';
+      if (e.response != null) {
+        if (e.response!.statusCode == 401) {
+          errMessage = '401';
+        } else {
+          errMessage = e.response!.data;
         }
       } else {
         errMessage = '401';

@@ -12,6 +12,7 @@ import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/res/constants.dart';
+import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/components/weather_emotion_badge_writing_diary.dart';
@@ -21,7 +22,7 @@ import 'package:frontend/ui/screen/diary/write_diary_screen.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
-import 'package:rive/rive.dart';
+import 'package:rive/rive.dart' as rive;
 
 class DiaryDetailScreen extends ConsumerStatefulWidget {
   final int diaryId;
@@ -80,31 +81,6 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
           return false;
         },
         child: Scaffold(
-          floatingActionButton: Consumer(builder: (context, ref, child) {
-            return ref.watch(diaryProvider).isNote
-                ? Container(
-                    width: 60.w,
-                    height: 60.h,
-                    child: FloatingActionButton(
-                      elevation: 5,
-                      onPressed: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder: (_, __, ___) => DiaryResultScreen(),
-                          ),
-                        );
-                      },
-                      backgroundColor: kOrange300Color,
-                      child: Center(
-                        child: Image.asset(
-                          "lib/config/assets/images/diary/write_diary/letter.png",
-                          height: 32.h,
-                        ),
-                      ),
-                    ),
-                  )
-                : Container();
-          }),
           appBar: AppBar(
             title: Text(
               DateFormat('M월 d일').format(widget.date),
@@ -267,113 +243,151 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
               ),
             ],
           ),
-          body: Container(
-            color: Theme.of(context).scaffoldBackgroundColor,
-            child: SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        SizedBox(
-                          height: 164,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Image.asset(
-                                  getWeatherCharacter(widget.diaryData.weather),
-                                  height: 140,
-                                ),
-                              ),
-                              getWeatherAnimation(widget.diaryData.weather) == ""
-                                  ? Container()
-                                  : RiveAnimation.asset(
-                                      getWeatherAnimation(widget.diaryData.weather),
-                                      fit: BoxFit.fill,
-                                    ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Container(
-                              color: Theme.of(context).colorScheme.surface_01,
+          body: Stack(
+            children: [
+              Container(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                child: SafeArea(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            SizedBox(
+                              height: 164,
                               child: Stack(
                                 children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: SizedBox(
-                                      height: 72.0,
-                                      child: WeatherEmotionBadgeWritingDiary(
-                                        emoticon: getEmoticonImage(widget.diaryData.feeling),
-                                        emoticonDesc: getEmoticonValue(widget.diaryData.feeling),
-                                        weatherIcon: getWeatherImage(widget.diaryData.weather),
-                                        weatherIconDesc: getWeatherValue(widget.diaryData.weather),
-                                        color: Theme.of(context).colorScheme.letterBackgroundLineColor,
-                                      ),
+                                  Center(
+                                    child: Image.asset(
+                                      getWeatherCharacter(widget.diaryData.weather),
+                                      height: 140,
                                     ),
                                   ),
-                                  Positioned(
-                                    top: 70,
-                                    child: Consumer(builder: (context, ref, child) {
-                                      return ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null
-                                          ? Container()
-                                          : Center(
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-                                                child: Stack(
-                                                  children: [
-                                                    Container(
-                                                      color: kImageBackgroundColor,
-                                                      width: 260,
-                                                      height: 260,
-                                                      child: Image.network(
-                                                        "${ref.watch(diaryProvider).diaryDetailData?.image}",
-                                                        width: 260,
-                                                        height: 260,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            );
-                                    }),
-                                  ),
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.only(top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350, left: 30, right: 30),
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                        minHeight: 500,
-                                        minWidth: MediaQuery.of(context).size.width,
-                                      ),
-                                      child: CustomPaint(
-                                        painter: LetterPaperPainter(
-                                          color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                  getWeatherAnimation(widget.diaryData.weather) == ""
+                                      ? Container()
+                                      : rive.RiveAnimation.asset(
+                                          getWeatherAnimation(widget.diaryData.weather),
+                                          fit: BoxFit.fill,
                                         ),
-                                        child: Text(
-                                          widget.diaryData.diaryContent,
-                                          style: kBody1Style.copyWith(
-                                            color: Theme.of(context).colorScheme.textBody,
-                                            height: 2.1,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ),
-                          ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Container(
+                                  color: Theme.of(context).colorScheme.surface_01,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: SizedBox(
+                                          height: 72.0,
+                                          child: WeatherEmotionBadgeWritingDiary(
+                                            emoticon: getEmoticonImage(widget.diaryData.feeling),
+                                            emoticonDesc: getEmoticonValue(widget.diaryData.feeling),
+                                            weatherIcon: getWeatherImage(widget.diaryData.weather),
+                                            weatherIconDesc: getWeatherValue(widget.diaryData.weather),
+                                            color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 70,
+                                        child: Consumer(builder: (context, ref, child) {
+                                          return ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null
+                                              ? Container()
+                                              : Center(
+                                                  child: Padding(
+                                                    padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                                                    child: Stack(
+                                                      children: [
+                                                        Container(
+                                                          color: kImageBackgroundColor,
+                                                          width: MediaQuery.of(context).size.width - 100,
+                                                          height: MediaQuery.of(context).size.width - 100,
+                                                          child: Image.network(
+                                                            "${ref.watch(diaryProvider).diaryDetailData?.image}",
+                                                            width: MediaQuery.of(context).size.width - 100,
+                                                            height: MediaQuery.of(context).size.width - 100,
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                );
+                                        }),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350, left: 30, right: 30),
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                            minHeight: 500,
+                                            minWidth: MediaQuery.of(context).size.width,
+                                          ),
+                                          child: CustomPaint(
+                                            painter: LetterPaperPainter(
+                                              color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                            ),
+                                            child: Text(
+                                              widget.diaryData.diaryContent,
+                                              style: kBody1Style.copyWith(
+                                                color: Theme.of(context).colorScheme.textBody,
+                                                height: 2.1,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 50,
+                            ),
+                          ],
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom), // 아이폰 같은 경우에는 하단에 safe area가 있기 때문에 추가
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Theme.of(context).colorScheme.whiteBlackColor.withOpacity(0),
+                        Theme.of(context).colorScheme.whiteBlackColor.withOpacity(1),
                       ],
                     ),
                   ),
-                ],
+                  child: BottomButton(
+                    title: "하루냥 편지 보기",
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder: (_, __, ___) => DiaryResultScreen(),
+                        ),
+                      );
+                    },
+                    bottomPadding: 16,
+                    buttonWidth: 160,
+                    buttonHeight: 48,
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
         ),
       ),

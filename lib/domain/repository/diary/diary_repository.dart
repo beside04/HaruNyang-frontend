@@ -10,4 +10,6 @@ abstract class DiaryRepository {
   Future<Result<DiaryDetailData>> updateDiary(DiaryData diary);
 
   Future<Result<bool>> deleteDiary(int diaryId);
+
+  Future<Result<bool>> postImageHistory(String imageUrl);
 }
