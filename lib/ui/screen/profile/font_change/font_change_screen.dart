@@ -114,32 +114,45 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      child: Stack(
                         children: [
-                          FontSizeCheckBox(
-                            label: '작게',
-                            isSelected: fontState.changedFontSize ==
-                                    fontState.selectedFontDefaultSize - 2
-                                ? true
-                                : false,
-                            onPressed: fontNotifier.handleDownFontSize,
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10, 12, 10, 0),
+                            child: Divider(
+                              thickness: 1.h,
+                              height: 1.h,
+                              color: Theme.of(context).colorScheme.border,
+                            ),
                           ),
-                          FontSizeCheckBox(
-                            label: '기본',
-                            isSelected: fontState.selectedFontDefaultSize ==
-                                    fontState.changedFontSize
-                                ? true
-                                : false,
-                            onPressed: fontNotifier.handleSetDefaultFontSize,
-                          ),
-                          FontSizeCheckBox(
-                            label: '크게',
-                            isSelected: fontState.changedFontSize ==
-                                    fontState.selectedFontDefaultSize + 2
-                                ? true
-                                : false,
-                            onPressed: fontNotifier.handleUpFontSize,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              FontSizeCheckBox(
+                                label: '작게',
+                                isSelected: fontState.changedFontSize ==
+                                        fontState.selectedFontDefaultSize - 2
+                                    ? true
+                                    : false,
+                                onPressed: fontNotifier.handleDownFontSize,
+                              ),
+                              FontSizeCheckBox(
+                                label: '기본',
+                                isSelected: fontState.selectedFontDefaultSize ==
+                                        fontState.changedFontSize
+                                    ? true
+                                    : false,
+                                onPressed:
+                                    fontNotifier.handleSetDefaultFontSize,
+                              ),
+                              FontSizeCheckBox(
+                                label: '크게',
+                                isSelected: fontState.changedFontSize ==
+                                        fontState.selectedFontDefaultSize + 2
+                                    ? true
+                                    : false,
+                                onPressed: fontNotifier.handleUpFontSize,
+                              ),
+                            ],
                           ),
                         ],
                       ),
