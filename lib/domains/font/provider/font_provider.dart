@@ -27,19 +27,29 @@ class FontNotifier extends StateNotifier<FontState> {
       selectedFontValue: font.value,
       selectedFontDefaultSize: font.size,
       changedFontSize: font.size,
+      selectedFontDefaultHeight: font.height,
       changedFontHeight: font.height,
     );
   }
 
   handleSetDefaultFontSize() {
-    state = state.copyWith(changedFontSize: state.selectedFontDefaultSize);
+    state = state.copyWith(
+      changedFontSize: state.selectedFontDefaultSize,
+      changedFontHeight: state.selectedFontDefaultHeight,
+    );
   }
 
   handleUpFontSize() {
-    state = state.copyWith(changedFontSize: state.selectedFontDefaultSize + 2);
+    state = state.copyWith(
+      changedFontSize: state.selectedFontDefaultSize + 2,
+      changedFontHeight: state.lineHeight,
+    );
   }
 
   handleDownFontSize() {
-    state = state.copyWith(changedFontSize: state.selectedFontDefaultSize - 2);
+    state = state.copyWith(
+      changedFontSize: state.selectedFontDefaultSize - 2,
+      changedFontHeight: state.lineHeight,
+    );
   }
 }
