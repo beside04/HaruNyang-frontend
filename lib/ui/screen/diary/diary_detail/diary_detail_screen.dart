@@ -72,6 +72,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var fontNotifier = ref.watch(fontProvider.notifier);
     return DefaultLayout(
       screenName: 'Screen_Event_DiaryRead',
       child: WillPopScope(
@@ -428,10 +429,14 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                             ),
                                             child: Text(
                                               widget.diaryData.diaryContent,
-                                              style: kBody1Style.copyWith(
-                                                color: Theme.of(context).colorScheme.textBody,
-                                                height: 2.1,
-                                              ),
+                                              style: fontNotifier
+                                                  .getFontStyle()
+                                                  .copyWith(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .textBody,
+                                                    height: 1.7,
+                                                  ),
                                             ),
                                           ),
                                         ),

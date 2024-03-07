@@ -30,6 +30,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var fontNotifier = ref.watch(fontProvider.notifier);
     return DefaultLayout(
       screenName: 'Screen_Event_DiaryResult',
       child: Scaffold(
@@ -292,8 +293,15 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                     color: kWhiteColor,
                                   ),
                                   child: Text(
-                                    ref.watch(diaryProvider).diaryDetailData!.comments[0].message,
-                                    style: kBody1Style.copyWith(color: kGrayColor850, height: 2.1),
+                                    ref
+                                        .watch(diaryProvider)
+                                        .diaryDetailData!
+                                        .comments[0]
+                                        .message,
+                                    style: fontNotifier.getFontStyle().copyWith(
+                                          color: kGrayColor850,
+                                          height: 1.7,
+                                        ),
                                   ),
                                 ),
                               ],

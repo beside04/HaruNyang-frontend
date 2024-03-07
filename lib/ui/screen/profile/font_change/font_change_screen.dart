@@ -24,12 +24,42 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
     final fontNotifier = ref.watch(fontProvider.notifier);
 
     final List<Font> fontList = [
-      Font('시스템폰트(Pretendard)', 'pretendard', 18),
-      Font('따악단단', 'nanum_ddaacdandan', 20),
-      Font('이서윤체', 'leeSeoyun', 16),
-      Font('마루부리', 'maruburi', 16),
-      Font('비상체', 'nanum_bisang', 20),
-      Font('중학생', 'nanum_junghacsang', 20),
+      Font(
+        title: '시스템폰트(Pretendard)',
+        value: 'pretendard',
+        size: 18,
+        height: 1,
+      ),
+      Font(
+        title: '따악단단',
+        value: 'nanum_ddaacdandan',
+        size: 20,
+        height: 1.7,
+      ),
+      Font(
+        title: '이서윤체',
+        value: 'leeSeoyun',
+        size: 16,
+        height: 2.1,
+      ),
+      Font(
+        title: '마루부리',
+        value: 'maruburi',
+        size: 16,
+        height: 2.1,
+      ),
+      Font(
+        title: '비상체',
+        value: 'nanum_bisang',
+        size: 20,
+        height: 1.7,
+      ),
+      Font(
+        title: '중학생',
+        value: 'nanum_junghacsang',
+        size: 20,
+        height: 1.7,
+      ),
     ];
 
     return DefaultLayout(
@@ -60,10 +90,7 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                 child: Center(
                   child: Text(
                     '하루를 위로해주는 \n모바일 속 작은 내 친구',
-                    style: TextStyle(
-                      fontSize: fontState.changedFontSize,
-                      fontFamily: fontState.selectedFontValue,
-                    ),
+                    style: fontNotifier.getFontStyle(),
                     textAlign: TextAlign.center,
                   ),
                 ),

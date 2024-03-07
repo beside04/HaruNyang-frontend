@@ -1,3 +1,4 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/domains/font/model/font_state.dart';
 
@@ -12,12 +13,21 @@ class FontNotifier extends StateNotifier<FontState> {
 
   final Ref ref;
 
+  TextStyle getFontStyle() {
+    return TextStyle(
+      fontFamily: state.selectedFontValue,
+      fontSize: state.changedFontSize,
+      height: state.changedFontHeight,
+    );
+  }
+
   handleChangeFont(Font font) {
     state = state.copyWith(
       selectedFontTitle: font.title,
       selectedFontValue: font.value,
       selectedFontDefaultSize: font.size,
       changedFontSize: font.size,
+      changedFontHeight: font.height,
     );
   }
 

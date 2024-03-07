@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'font_state.freezed.dart';
@@ -7,8 +9,14 @@ class Font {
   String title;
   String value;
   double size;
+  double height;
 
-  Font(this.title, this.value, this.size);
+  Font({
+    required this.title,
+    required this.value,
+    required this.size,
+    required this.height,
+  });
 }
 
 @freezed
@@ -18,7 +26,18 @@ class FontState with _$FontState {
     @Default('pretendard') String selectedFontValue,
     @Default(16.0) double selectedFontDefaultSize,
     @Default(16.0) double changedFontSize,
+    @Default(2.1) double changedFontHeight,
   }) = _FontState;
+
+  FontState._();
+
+  TextStyle get fontStyle {
+    return TextStyle(
+      fontFamily: selectedFontValue,
+      fontSize: changedFontSize,
+      height: changedFontHeight,
+    );
+  }
 
   factory FontState.fromJson(Map<String, dynamic> json) =>
       _$FontStateFromJson(json);
