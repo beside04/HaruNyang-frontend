@@ -10,6 +10,7 @@ import 'package:frontend/core/utils/letter_paper_painter.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
+import 'package:frontend/domains/font/provider/font_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
@@ -75,7 +76,9 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
       screenName: 'Screen_Event_DiaryRead',
       child: WillPopScope(
         onWillPop: () async {
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              (route) => false);
 
           ref.watch(diaryProvider.notifier).resetDiary();
           return false;
@@ -84,11 +87,14 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
           appBar: AppBar(
             title: Text(
               DateFormat('M월 d일').format(widget.date),
-              style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+              style: kHeader4Style.copyWith(
+                  color: Theme.of(context).colorScheme.textTitle),
             ),
             leading: IconButton(
               onPressed: () {
-                Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+                Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const HomeScreen()),
+                    (route) => false);
 
                 ref.watch(diaryProvider.notifier).resetDiary();
               },
@@ -121,7 +127,9 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                           builder: (context) => WriteDiaryScreen(
                             date: widget.date,
                             emotion: widget.diaryData.feeling,
-                            diaryData: widget.diaryData.id == null ? widget.diaryData.copyWith(id: widget.diaryId) : widget.diaryData,
+                            diaryData: widget.diaryData.id == null
+                                ? widget.diaryData.copyWith(id: widget.diaryId)
+                                : widget.diaryData,
                             weather: widget.diaryData.weather,
                             isEditScreen: true,
                             isAutoSave: false,
@@ -139,7 +147,10 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                             title: "삭제 하실래요?",
                             content: Text(
                               "삭제 후 일기를 복원 할 수 없어요",
-                              style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                              style: kHeader6Style.copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .textSubtitle),
                             ),
                             actionContent: [
                               DialogButton(
@@ -147,8 +158,13 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
-                                backgroundColor: Theme.of(context).colorScheme.secondaryColor,
-                                textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .secondaryColor,
+                                textStyle: kHeader4Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textSubtitle),
                               ),
                               SizedBox(
                                 width: 12.w,
@@ -158,7 +174,12 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                 onTap: () async {
                                   Navigator.pop(context);
 
-                                  await ref.watch(diaryProvider.notifier).deleteDiary(widget.diaryData.id ?? widget.diaryData.copyWith(id: widget.diaryId).id!);
+                                  await ref
+                                      .watch(diaryProvider.notifier)
+                                      .deleteDiary(widget.diaryData.id ??
+                                          widget.diaryData
+                                              .copyWith(id: widget.diaryId)
+                                              .id!);
 
                                   await showDialog(
                                     barrierDismissible: false,
@@ -170,19 +191,32 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                           title: "삭제 완료",
                                           content: Text(
                                             "일기를 삭제했어요.",
-                                            style: kHeader6Style.copyWith(color: Theme.of(ctx).colorScheme.textSubtitle),
+                                            style: kHeader6Style.copyWith(
+                                                color: Theme.of(ctx)
+                                                    .colorScheme
+                                                    .textSubtitle),
                                           ),
                                           actionContent: [
                                             DialogButton(
                                               title: "확인",
                                               onTap: () {
-                                                navigatorKey.currentState!.pop();
-                                                navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+                                                navigatorKey.currentState!
+                                                    .pop();
+                                                navigatorKey.currentState!
+                                                    .pushAndRemoveUntil(
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                const HomeScreen()),
+                                                        (route) => false);
 
-                                                ref.watch(diaryProvider.notifier).resetDiary();
+                                                ref
+                                                    .watch(
+                                                        diaryProvider.notifier)
+                                                    .resetDiary();
                                               },
                                               backgroundColor: kOrange200Color,
-                                              textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                              textStyle: kHeader4Style.copyWith(
+                                                  color: kWhiteColor),
                                             ),
                                           ],
                                         ),
@@ -191,7 +225,8 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                   );
                                 },
                                 backgroundColor: kOrange200Color,
-                                textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                textStyle:
+                                    kHeader4Style.copyWith(color: kWhiteColor),
                               ),
                             ],
                           );
@@ -259,58 +294,100 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                 children: [
                                   Center(
                                     child: Image.asset(
-                                      getWeatherCharacter(widget.diaryData.weather),
+                                      getWeatherCharacter(
+                                          widget.diaryData.weather),
                                       height: 140,
                                     ),
                                   ),
-                                  getWeatherAnimation(widget.diaryData.weather) == ""
+                                  getWeatherAnimation(
+                                              widget.diaryData.weather) ==
+                                          ""
                                       ? Container()
                                       : rive.RiveAnimation.asset(
-                                          getWeatherAnimation(widget.diaryData.weather),
+                                          getWeatherAnimation(
+                                              widget.diaryData.weather),
                                           fit: BoxFit.fill,
                                         ),
                                 ],
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                              padding: const EdgeInsets.only(
+                                  left: 20, right: 20, bottom: 20),
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20.0),
                                 child: Container(
-                                  color: Theme.of(context).colorScheme.surface_01,
+                                  color:
+                                      Theme.of(context).colorScheme.surface_01,
                                   child: Stack(
                                     children: [
                                       Align(
                                         alignment: Alignment.center,
                                         child: SizedBox(
                                           height: 72.0,
-                                          child: WeatherEmotionBadgeWritingDiary(
-                                            emoticon: getEmoticonImage(widget.diaryData.feeling),
-                                            emoticonDesc: getEmoticonValue(widget.diaryData.feeling),
-                                            weatherIcon: getWeatherImage(widget.diaryData.weather),
-                                            weatherIconDesc: getWeatherValue(widget.diaryData.weather),
-                                            color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                          child:
+                                              WeatherEmotionBadgeWritingDiary(
+                                            emoticon: getEmoticonImage(
+                                                widget.diaryData.feeling),
+                                            emoticonDesc: getEmoticonValue(
+                                                widget.diaryData.feeling),
+                                            weatherIcon: getWeatherImage(
+                                                widget.diaryData.weather),
+                                            weatherIconDesc: getWeatherValue(
+                                                widget.diaryData.weather),
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .letterBackgroundLineColor,
                                           ),
                                         ),
                                       ),
                                       Positioned(
                                         top: 70,
-                                        child: Consumer(builder: (context, ref, child) {
-                                          return ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null
+                                        child: Consumer(
+                                            builder: (context, ref, child) {
+                                          return ref
+                                                          .watch(diaryProvider)
+                                                          .diaryDetailData
+                                                          ?.image ==
+                                                      '' ||
+                                                  ref
+                                                          .watch(diaryProvider)
+                                                          .diaryDetailData ==
+                                                      null
                                               ? Container()
                                               : Center(
                                                   child: Padding(
-                                                    padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 30.0,
+                                                            right: 30.0),
                                                     child: Stack(
                                                       children: [
                                                         Container(
-                                                          color: kImageBackgroundColor,
-                                                          width: MediaQuery.of(context).size.width - 100,
-                                                          height: MediaQuery.of(context).size.width - 100,
+                                                          color:
+                                                              kImageBackgroundColor,
+                                                          width: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              100,
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .width -
+                                                              100,
                                                           child: Image.network(
                                                             "${ref.watch(diaryProvider).diaryDetailData?.image}",
-                                                            width: MediaQuery.of(context).size.width - 100,
-                                                            height: MediaQuery.of(context).size.width - 100,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                100,
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                100,
                                                           ),
                                                         ),
                                                       ],
@@ -321,15 +398,33 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350, left: 30, right: 30),
+                                            top: ref
+                                                            .watch(
+                                                                diaryProvider)
+                                                            .diaryDetailData
+                                                            ?.image ==
+                                                        '' ||
+                                                    ref
+                                                            .watch(
+                                                                diaryProvider)
+                                                            .diaryDetailData ==
+                                                        null
+                                                ? 70
+                                                : 350,
+                                            left: 30,
+                                            right: 30),
                                         child: Container(
                                           constraints: BoxConstraints(
                                             minHeight: 500,
-                                            minWidth: MediaQuery.of(context).size.width,
+                                            minWidth: MediaQuery.of(context)
+                                                .size
+                                                .width,
                                           ),
                                           child: CustomPaint(
                                             painter: LetterPaperPainter(
-                                              color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .letterBackgroundLineColor,
                                             ),
                                             child: Text(
                                               widget.diaryData.diaryContent,
@@ -361,14 +456,23 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                 left: 0,
                 right: 0,
                 child: Container(
-                  padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.bottom), // 아이폰 같은 경우에는 하단에 safe area가 있기 때문에 추가
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context)
+                          .padding
+                          .bottom), // 아이폰 같은 경우에는 하단에 safe area가 있기 때문에 추가
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                       colors: [
-                        Theme.of(context).colorScheme.whiteBlackColor.withOpacity(0),
-                        Theme.of(context).colorScheme.whiteBlackColor.withOpacity(1),
+                        Theme.of(context)
+                            .colorScheme
+                            .whiteBlackColor
+                            .withOpacity(0),
+                        Theme.of(context)
+                            .colorScheme
+                            .whiteBlackColor
+                            .withOpacity(1),
                       ],
                     ),
                   ),
