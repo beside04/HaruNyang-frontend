@@ -300,7 +300,6 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                         .message,
                                     style: fontNotifier.getFontStyle().copyWith(
                                           color: kGrayColor850,
-                                          height: 1.7,
                                         ),
                                   ),
                                 ),

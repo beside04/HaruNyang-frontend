@@ -435,7 +435,6 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                                     color: Theme.of(context)
                                                         .colorScheme
                                                         .textBody,
-                                                    height: 1.7,
                                                   ),
                                             ),
                                           ),

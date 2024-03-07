@@ -288,6 +288,9 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen>
       return true;
     }
 
+    final fontState = ref.watch(fontProvider);
+    final fontNotifier = ref.watch(fontProvider.notifier);
+
     return DefaultLayout(
       screenName: 'Screen_Event_WriteDiary_WritePage',
       child: WillPopScope(
@@ -444,9 +447,15 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen>
                                 return Text(
                                   textAlign: TextAlign.center,
                                   ref.watch(writeDiaryProvider).topic.value,
-                                  style: kSubtitle1Style.copyWith(
-                                    color: Theme.of(context).colorScheme.textTitle,
-                                  ),
+                                  style: fontNotifier.getFontStyle().copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .textTitle,
+                                        fontSize:
+                                            fontState.selectedFontDefaultSize -
+                                                2,
+                                        height: 1,
+                                      ),
                                 );
                               }),
                               onDelete: () {
@@ -769,11 +778,17 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen>
                                           maxLength: 500,
                                           maxLines: null,
                                           autofocus: true,
-                                          style: kBody1Style.copyWith(
-                                            color: Theme.of(context).colorScheme.textBody,
-                                            height: 2.1,
-                                          ),
-                                          controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
+                                          style: fontNotifier
+                                              .getFontStyle()
+                                              .copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .textBody,
+                                              ),
+                                          controller: ref
+                                              .watch(
+                                                  writeDiaryProvider.notifier)
+                                              .diaryEditingController,
                                           keyboardType: TextInputType.multiline,
                                           textAlignVertical:
                                               TextAlignVertical.center,
