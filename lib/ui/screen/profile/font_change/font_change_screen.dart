@@ -90,7 +90,9 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                 child: Center(
                   child: Text(
                     '하루를 위로해주는 \n모바일 속 작은 내 친구',
-                    style: fontNotifier.getFontStyle(),
+                    style: fontNotifier.getFontStyle().copyWith(
+                          height: 1.2,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -210,11 +212,15 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                                           .textSubtitle,
                                 ),
                               ),
-                              RoundRadioCheckbox(
-                                isSelected: fontState.selectedFontValue ==
-                                        fontList[i].value
-                                    ? true
-                                    : false,
+                              SizedBox(
+                                width: 24,
+                                height: 24,
+                                child: RoundRadioCheckbox(
+                                  isSelected: fontState.selectedFontValue ==
+                                          fontList[i].value
+                                      ? true
+                                      : false,
+                                ),
                               ),
                             ],
                           ),

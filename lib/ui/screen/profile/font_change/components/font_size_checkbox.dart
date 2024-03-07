@@ -41,10 +41,13 @@ class _FontSizeCheckBoxState extends State<FontSizeCheckBox> {
                         width: 24,
                         height: 24,
                       )
-                    : SvgPicture.asset(
-                        'lib/config/assets/images/check/dot.svg',
+                    : Container(
                         width: 8,
                         height: 8,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Theme.of(context).colorScheme.border,
+                        ),
                       ),
               )),
           const SizedBox(height: 20),
