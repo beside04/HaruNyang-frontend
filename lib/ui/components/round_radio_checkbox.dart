@@ -27,7 +27,7 @@ class _RoundRadioCheckboxState extends State<RoundRadioCheckbox> {
               shape: BoxShape.circle,
               color: Theme.of(context).scaffoldBackgroundColor,
               border: Border.all(
-                color: Theme.of(context).colorScheme.textSubtitle,
+                color: Theme.of(context).colorScheme.outlineDefault,
                 width: 1,
               ),
             ),

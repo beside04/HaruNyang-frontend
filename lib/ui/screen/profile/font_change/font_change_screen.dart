@@ -86,12 +86,13 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
             children: [
               Container(
                 height: 200,
-                color: Theme.of(context).colorScheme.borderModal,
+                color: Theme.of(context).colorScheme.surface_01,
                 child: Center(
                   child: Text(
                     '하루를 위로해주는 \n모바일 속 작은 내 친구',
                     style: fontNotifier.getFontStyle().copyWith(
                           height: 1.2,
+                          color: Theme.of(context).colorScheme.textBody,
                         ),
                     textAlign: TextAlign.center,
                   ),
@@ -189,10 +190,10 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                       onTap: () => fontNotifier.handleChangeFont(fontList[i]),
                       behavior: HitTestBehavior.translucent,
                       child: SizedBox(
-                        height: 60,
+                        height: 56,
                         child: Padding(
                           padding: const EdgeInsets.symmetric(
-                            vertical: 19,
+                            vertical: 17,
                             horizontal: 24,
                           ),
                           child: Row(
@@ -209,7 +210,7 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                                           .textPrimary
                                       : Theme.of(context)
                                           .colorScheme
-                                          .textSubtitle,
+                                          .textLowEmphasis,
                                 ),
                               ),
                               SizedBox(
