@@ -67,7 +67,7 @@ class BirthDayScreen extends ConsumerWidget {
                             height: 30,
                           ),
                           Text(
-                            '$name님이 써 주신 일기에 쪽지를 건네며\n저도 행복한 시간을 보낼 수 있었어요.\n오늘 행복한 하루 되시고 앞으로도 계속 만나요 우리!',
+                            '$name님이 써 주신 일기에 편지를 건네며\n저도 행복한 시간을 보낼 수 있었어요.\n오늘 행복한 하루 되시고 앞으로도 계속 만나요 우리!',
                             style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                           ),
                         ],

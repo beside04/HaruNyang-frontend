@@ -16,7 +16,7 @@ import 'package:frontend/core/utils/letter_paper_painter.dart';
 import 'package:frontend/core/utils/library/topic_bubble_widget.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/diary/provider/write_diary_provider.dart';
 import 'package:frontend/res/constants.dart';
@@ -37,7 +37,7 @@ class WriteDiaryScreen extends ConsumerStatefulWidget {
   final DateTime date;
   final String emotion;
   final String weather;
-  final DiaryData? diaryData;
+  final DiaryDetailData? diaryData;
   final bool isEditScreen;
 
   final bool isAutoSave;
@@ -95,7 +95,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
   Future<void> _autoSaveDiary() async {
     String currentText = ref.watch(writeDiaryProvider.notifier).diaryEditingController.text;
     if (currentText.isNotEmpty) {
-      DiaryData diary = DiaryData(
+      DiaryDetailData diary = DiaryDetailData(
         id: widget.diaryData?.id,
         diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
         feeling: widget.emotion,
@@ -141,14 +141,14 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
         compressFormat: ImageCompressFormat.jpg,
         uiSettings: [
           AndroidUiSettings(
-            toolbarTitle: 'Cropper',
+            toolbarTitle: '이미지 자르기',
             toolbarColor: kOrange200Color,
             toolbarWidgetColor: kWhiteColor,
             initAspectRatio: CropAspectRatioPreset.original,
             lockAspectRatio: false,
           ),
           IOSUiSettings(
-            title: 'Cropper',
+            title: '이미지 자르기',
           ),
         ],
       );
@@ -326,7 +326,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WriteDiaryLoadingScreen(
-                                    diaryData: DiaryData(
+                                    diaryData: DiaryDetailData(
                                         id: widget.diaryData?.id,
                                         diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
                                         feeling: widget.emotion,
@@ -443,7 +443,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                           width: 260,
                                                           height: 260,
                                                           child: Image.network(
-                                                            ref.watch(diaryProvider).diaryDetailData!.image,
+                                                            ref.watch(diaryProvider).diaryDetailData!.image!,
                                                             width: 260,
                                                             height: 260,
                                                           ),
@@ -690,7 +690,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                               onTap: () {
                                 GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Temp_Save');
 
-                                DiaryData diary = DiaryData(
+                                DiaryDetailData diary = DiaryDetailData(
                                   id: widget.diaryData?.id,
                                   diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
                                   feeling: widget.emotion,

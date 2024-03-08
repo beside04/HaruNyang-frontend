@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/res/constants.dart';
 
@@ -40,7 +39,7 @@ class DiaryApi {
     }
   }
 
-  Future<Result<DiaryDetailData>> saveDiary(DiaryData diary) async {
+  Future<Result<DiaryDetailData>> saveDiary(DiaryDetailData diary) async {
     String diaryUrl = '$_baseUrl/v2/diaries';
     try {
       Response response;
@@ -75,7 +74,7 @@ class DiaryApi {
     }
   }
 
-  Future<Result<DiaryDetailData>> updateDiary(DiaryData diary) async {
+  Future<Result<DiaryDetailData>> updateDiary(DiaryDetailData diary) async {
     String diaryUrl = '$_baseUrl/v2/diaries/${diary.id}';
     try {
       Response response;

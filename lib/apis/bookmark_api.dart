@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:frontend/core/result.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/res/constants.dart';
@@ -44,16 +43,25 @@ class BookmarkApi {
     }
   }
 
-  Future<Result<List<CommentData>>> getBookmark(int page, int limit) async {
-    String bookmarkUrl = '$_baseUrl/v2/comments/favorites';
+  Future<Result<List<CommentData>>> getBookmark(int page, int limit, String? feeling) async {
+    String bookmarkUrl = '$_baseUrl/v2/comments/favorites/search';
+
+    Map<String, dynamic> queryParameters = {};
+
     try {
       Response response;
+
+      queryParameters = feeling == null
+          ? {"page": page, "limitCount": limit}
+          : {
+              "page": page,
+              "limitCount": limit,
+              "feeling": feeling,
+            };
+
       response = await dio.get(
         bookmarkUrl,
-        queryParameters: {
-          "page": page,
-          "limitCount": limit,
-        },
+        queryParameters: queryParameters,
       );
 
       final Iterable bookmarkIterable = response.data;

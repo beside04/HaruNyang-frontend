@@ -7,7 +7,7 @@ import 'package:frontend/domains/notification/model/notification_state.dart';
 final notificationProvider = StateNotifierProvider<NotificationNotifier, NotificationState>((ref) {
   return NotificationNotifier(
     ref,
-  ).._getToken();
+  );
 });
 
 class NotificationNotifier extends StateNotifier<NotificationState> {
@@ -78,9 +78,11 @@ class NotificationNotifier extends StateNotifier<NotificationState> {
     return true;
   }
 
-  Future<void> _getToken() async {
+  Future<void> getToken() async {
     try {
       token = await FirebaseMessaging.instance.getToken();
+      state = state.copyWith(token: token);
+      print("tokentoken : ${token}");
       if (kDebugMode) {
         print("notification token:$token");
       }

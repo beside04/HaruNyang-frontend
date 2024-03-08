@@ -46,7 +46,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         final imagePath = await File('${directory.path}/image.png').create();
                         await imagePath.writeAsBytes(image);
 
-                        final result = await Share.shareXFiles([XFile('${imagePath.path}')], text: '하루냥 쪽지');
+                        final result = await Share.shareXFiles([XFile('${imagePath.path}')], text: '하루냥 편지');
 
                         result.status == ShareResultStatus.success
                             ? toast(
@@ -144,11 +144,11 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
               padding: const EdgeInsets.only(right: 8.0),
               child: Consumer(
                 builder: (context, ref, child) {
-                  return ref.watch(diaryProvider).diaryDetailData!.comments[0].isFavorite
+                  return ref.watch(diaryProvider).diaryDetailData!.comments![0].isFavorite
                       ? GestureDetector(
                           onTap: () {
                             ref.watch(diaryProvider.notifier).deleteBookmarkByBookmarkId(
-                                  ref.watch(diaryProvider).diaryDetailData!.comments[0].id!,
+                                  ref.watch(diaryProvider).diaryDetailData!.comments![0].id!,
                                   0,
                                 );
                             toast(
@@ -170,7 +170,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                       : GestureDetector(
                           onTap: () {
                             ref.watch(diaryProvider.notifier).saveBookmark(
-                                  ref.watch(diaryProvider).diaryDetailData!.comments[0].id!,
+                                  ref.watch(diaryProvider).diaryDetailData!.comments![0].id!,
                                   0,
                                 );
                             toast(
@@ -201,7 +201,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
             child: Screenshot(
               controller: screenshotController,
               child: Container(
-                color: ref.watch(diaryProvider).diaryDetailData!.comments[0].author == "harunyang"
+                color: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
                     ? getLetterModalColor(ref.watch(diaryProvider).diaryDetailData!.feeling, context)
                     : Theme.of(context).colorScheme.wiseSayingModalColor,
                 child: Column(
@@ -220,7 +220,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                               top: 18,
                             ),
                             child: Image.asset(
-                              ref.watch(diaryProvider).diaryDetailData!.comments[0].author == "harunyang"
+                              ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
                                   ? getLetterModalImage(ref.watch(diaryProvider).diaryDetailData!.feeling)
                                   : 'lib/config/assets/images/character/letter/wise_saying.png',
                               height: 140,
@@ -238,7 +238,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                           thumbColor: kWhiteColor.withOpacity(0.6),
                           radius: Radius.circular(10.0),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
+                            padding: const EdgeInsets.only(right: 15.0, bottom: 30),
                             child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: [
@@ -247,7 +247,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                     color: kWhiteColor,
                                   ),
                                   child: Text(
-                                    ref.watch(diaryProvider).diaryDetailData!.comments[0].message,
+                                    ref.watch(diaryProvider).diaryDetailData!.comments![0].message,
                                     style: kBody1Style.copyWith(color: kGrayColor850, height: 2.1),
                                   ),
                                 ),
@@ -263,13 +263,13 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         top: 24,
                         bottom: 30,
                       ),
-                      child: ref.watch(diaryProvider).diaryDetailData!.comments[0].author == "harunyang"
+                      child: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
                           ? Text(
                               'From. 하루냥',
                               style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                             )
                           : Text(
-                              "From. ${ref.watch(diaryProvider).diaryDetailData!.comments[0].author}",
+                              "From. ${ref.watch(diaryProvider).diaryDetailData!.comments![0].author}",
                               style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                             ),
                     ),

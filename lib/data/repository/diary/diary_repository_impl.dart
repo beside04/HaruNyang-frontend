@@ -1,6 +1,5 @@
 import 'package:frontend/apis/diary_api.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domain/repository/diary/diary_repository.dart';
 
@@ -17,12 +16,12 @@ class DiaryRepositoryImpl implements DiaryRepository {
   }
 
   @override
-  Future<Result<DiaryDetailData>> saveDiary(DiaryData diary) async {
+  Future<Result<DiaryDetailData>> saveDiary(DiaryDetailData diary) async {
     return await diaryApi.saveDiary(diary);
   }
 
   @override
-  Future<Result<DiaryDetailData>> updateDiary(DiaryData diary) async {
+  Future<Result<DiaryDetailData>> updateDiary(DiaryDetailData diary) async {
     return await diaryApi.updateDiary(diary);
   }
 

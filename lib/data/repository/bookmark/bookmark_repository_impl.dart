@@ -16,8 +16,8 @@ class BookmarkRepositoryImpl implements BookmarkRepository {
   }
 
   @override
-  Future<Result<List<CommentData>>> getBookmark(int page, int limit) async {
-    return await bookmarkApi.getBookmark(page, limit);
+  Future<Result<List<CommentData>>> getBookmark(int page, int limit, String? feeling) async {
+    return await bookmarkApi.getBookmark(page, limit, feeling);
   }
 
   @override

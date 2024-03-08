@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 // import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/res/constants.dart';
 
@@ -13,7 +13,9 @@ class EmotionStampApi {
     required this.dio,
   });
 
-  Future<Result<List<DiaryData>>> getEmotionStamp(String from, String to) async {
+  Future<Result<List<DiaryDetailData>>> getEmotionStamp(String from, String to) async {
+    print("adsasddsaasd");
+
     try {
       String emoticonStampUrl = '$_baseUrl/v2/diaries?periodFrom=$from&periodTo=$to';
       Response response;
@@ -21,7 +23,20 @@ class EmotionStampApi {
 
       final Iterable emotionStampIterable = response.data;
 
-      final List<DiaryData> emotionStampList = emotionStampIterable.map((e) => DiaryData.fromJson(e)).toList();
+      print("response.dataaaa ${emotionStampIterable.length}");
+
+      // final List<DiaryDetailData> emotionStampList = [];
+      // for (var e in emotionStampIterable) {
+      //   try {
+      //     emotionStampList.add(DiaryDetailData.fromJson(e));
+      //   } catch (error) {
+      //     print("Error converting to DiaryDetailData: $error");
+      //   }
+      // }
+
+      final List<DiaryDetailData> emotionStampList = emotionStampIterable.map((e) => DiaryDetailData.fromJson(e)).toList();
+
+      print("emotionStampListaaa ${emotionStampList}");
 
       emotionStampList.sort((a, b) {
         return a.id!.compareTo(b.id!);

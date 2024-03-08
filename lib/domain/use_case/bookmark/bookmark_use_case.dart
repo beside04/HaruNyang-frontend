@@ -13,8 +13,8 @@ class BookmarkUseCase {
     return await bookmarkRepository.saveBookmark(wiseSayingId);
   }
 
-  Future<Result<List<CommentData>>> getBookmark(int page, int limit) async {
-    return await bookmarkRepository.getBookmark(page, limit);
+  Future<Result<List<CommentData>>> getBookmark(int page, int limit, String? feeling) async {
+    return await bookmarkRepository.getBookmark(page, limit, feeling);
   }
 
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {

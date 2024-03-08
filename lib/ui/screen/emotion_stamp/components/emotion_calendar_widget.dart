@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
@@ -41,7 +41,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
               right: 11,
             ),
             child: Consumer(builder: (context, ref, child) {
-              return TableCalendar<DiaryData>(
+              return TableCalendar<DiaryDetailData>(
                 onPageChanged: ref.watch(diaryProvider.notifier).onPageChanged,
                 rowHeight: 70.h,
                 focusedDay: ref.watch(diaryProvider).focusedCalendarDate,
@@ -109,7 +109,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
 
                             if (saveDiary != null && mounted) {
                               Map<String, dynamic> diaryMap = json.decode(saveDiary);
-                              DiaryData saveDiaryData = DiaryData.fromJson(diaryMap);
+                              DiaryDetailData saveDiaryData = DiaryDetailData.fromJson(diaryMap);
 
                               showDialog(
                                 barrierDismissible: true,
@@ -132,7 +132,6 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                               builder: (context) => DiaryDetailScreen(
                                                 diaryId: events[0].id!,
                                                 date: day,
-                                                diaryData: events[0],
                                                 isNewDiary: false,
                                               ),
                                             ),
@@ -175,7 +174,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                   builder: (context) => DiaryDetailScreen(
                                     diaryId: events[0].id!,
                                     date: day,
-                                    diaryData: events[0],
+                                    // diaryData: events[0],
                                     isNewDiary: false,
                                   ),
                                 ),

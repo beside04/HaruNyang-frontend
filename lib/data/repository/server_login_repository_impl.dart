@@ -14,7 +14,6 @@ class ServerLoginRepositoryImpl implements ServerLoginRepository {
     socialId,
     deviceId,
   ) async {
-    await tokenUseCase.setDeviceId(deviceId ?? "");
     await tokenUseCase.setLoginType(loginType);
     await tokenUseCase.setSocialId(socialId);
 

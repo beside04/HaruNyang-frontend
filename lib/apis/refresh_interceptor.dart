@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
+import 'package:frontend/domains/notification/provider/notification_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/res/constants.dart';
@@ -48,13 +49,12 @@ class RefreshInterceptor extends Interceptor {
           //토큰 재발급 받는 시도를 하고 토큰이 재발급 되면
           //다시 새로운 토큰으로 요청을 한다.
 
-          final getDeviceId = await tokenUseCase.getDeviceId();
           final getLoginType = await tokenUseCase.getLoginType();
           final getSocialId = await tokenUseCase.getSocialId();
 
-          print("getLoginType : ${getLoginType}");
+          var deviceToken = container.read(notificationProvider).token;
 
-          final loginResult = await serverLoginRepository.login(getLoginType!, getSocialId!, getDeviceId);
+          final loginResult = await serverLoginRepository.login(getLoginType!, getSocialId!, deviceToken);
 
           final options = err.requestOptions;
 
@@ -67,7 +67,6 @@ class RefreshInterceptor extends Interceptor {
             error: (message) {},
           );
 
-          await tokenUseCase.setDeviceId(getDeviceId ?? "");
           await tokenUseCase.setLoginType(getLoginType);
           await tokenUseCase.setSocialId(getSocialId);
           await container.read(onBoardingProvider.notifier).getMyInformation();
