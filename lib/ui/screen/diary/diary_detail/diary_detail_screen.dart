@@ -10,6 +10,7 @@ import 'package:frontend/core/utils/letter_paper_painter.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
+import 'package:frontend/domains/font/provider/font_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
@@ -82,6 +83,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var fontNotifier = ref.watch(fontProvider.notifier);
     return DefaultLayout(
       screenName: 'Screen_Event_DiaryRead',
       child: WillPopScope(
@@ -366,10 +368,9 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                                     ),
                                                     child: Text(
                                                       data.diaryContent,
-                                                      style: kBody1Style.copyWith(
-                                                        color: Theme.of(context).colorScheme.textBody,
-                                                        height: 2.1,
-                                                      ),
+                                                      style: fontNotifier.getFontStyle().copyWith(
+                                                            color: Theme.of(context).colorScheme.textBody,
+                                                          ),
                                                     ),
                                                   ),
                                                 ),

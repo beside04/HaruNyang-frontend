@@ -218,14 +218,14 @@ class EmotionStampScreenState extends ConsumerState<EmotionStampScreen> {
                         height: 96,
                         child: GestureDetector(
                           onTap: () async {
-                            GlobalUtils.setAnalyticsCustomEvent('Click_january_Banner');
+                            GlobalUtils.setAnalyticsCustomEvent('Click_Default_Banner');
                             // if (!await launch(bannerUrl)) {
-                            if (!await launch("https://www.instagram.com/p/C1jxnicLxQV/?igsh=MTNpbGF4a2x4aTUxNg==")) {
+                            if (!await launch("https://www.instagram.com/haru__nyang__/")) {
                               throw Exception('Could not launch');
                             }
                           },
                           child: Image.asset(
-                            "lib/config/assets/images/home/banner/january_banner.png",
+                            "lib/config/assets/images/home/banner/default_banner.png",
                           ),
                         ),
                       ),

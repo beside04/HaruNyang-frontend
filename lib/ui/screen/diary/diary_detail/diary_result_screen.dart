@@ -10,6 +10,7 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/letter_paper_painter.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
+import 'package:frontend/domains/font/provider/font_provider.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -29,6 +30,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var fontNotifier = ref.watch(fontProvider.notifier);
     return DefaultLayout(
       screenName: 'Screen_Event_DiaryResult',
       child: Scaffold(
@@ -248,7 +250,9 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                   ),
                                   child: Text(
                                     ref.watch(diaryProvider).diaryDetailData!.comments![0].message,
-                                    style: kBody1Style.copyWith(color: kGrayColor850, height: 2.1),
+                                    style: fontNotifier.getFontStyle().copyWith(
+                                          color: kGrayColor850,
+                                        ),
                                   ),
                                 ),
                               ],

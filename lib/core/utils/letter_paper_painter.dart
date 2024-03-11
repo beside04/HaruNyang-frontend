@@ -19,7 +19,7 @@ class LetterPaperPainter extends CustomPainter {
     final lineSpace = 34.0; // The space between lines
 
     // Draw lines based on the number of lines of the text
-    for (var i = 0; i < (size.height / lineHeight) + 7; i++) {
+    for (var i = 0; i < (size.height / lineHeight) + 5; i++) {
       final y = i * lineHeight + lineSpace;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
     }
