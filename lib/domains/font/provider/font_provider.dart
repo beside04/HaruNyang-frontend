@@ -96,7 +96,7 @@ class FontNotifier extends StateNotifier<FontState> {
           return fontSize == 20
               ? state.selectedFontDefaultHeight
               : isFontSizeUp
-                  ? state.selectedFontDefaultHeight - 0.23
+                  ? state.selectedFontDefaultHeight - 0.15
                   : state.selectedFontDefaultHeight + 0.2;
         }
       case 'nanum_bisang':
@@ -104,7 +104,7 @@ class FontNotifier extends StateNotifier<FontState> {
           return fontSize == 20
               ? state.selectedFontDefaultHeight
               : isFontSizeUp
-                  ? state.selectedFontDefaultHeight - 0.23
+                  ? state.selectedFontDefaultHeight - 0.15
                   : state.selectedFontDefaultHeight + 0.2;
         }
       default:

@@ -133,6 +133,25 @@ String getEmoticonValue(String value) {
   }
 }
 
+String getWeatherChipImage(String value) {
+  switch (value) {
+    case 'SUNNY':
+      return 'lib/config/assets/images/diary/weather/sunny_chip.png';
+    case 'CLOUDY':
+      return 'lib/config/assets/images/diary/weather/cloudy_chip.png';
+    case 'RAINY':
+      return 'lib/config/assets/images/diary/weather/rainy_chip.png';
+    case 'SNOWY':
+      return 'lib/config/assets/images/diary/weather/snowy_chip.png';
+    case 'WINDY':
+      return 'lib/config/assets/images/diary/weather/windy_chip.png';
+    case 'THUNDER':
+      return 'lib/config/assets/images/diary/weather/thunder_chip.png';
+    default:
+      return '';
+  }
+}
+
 String getWeatherImage(String value) {
   switch (value) {
     case 'SUNNY':

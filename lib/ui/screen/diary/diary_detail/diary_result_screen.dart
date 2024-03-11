@@ -58,7 +58,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                               )
                             : toast(
                                 context: context,
-                                text: '이미지 공유를 실패했습니다.',
+                                text: '공유 UI를 닫았습니다.',
                                 isCheckIcon: false,
                               );
                       }
@@ -137,6 +137,8 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
             icon: SvgPicture.asset(
               "lib/config/assets/images/diary/dark_mode/close.svg",
               color: Theme.of(context).colorScheme.iconColor,
+              width: 24,
+              height: 24,
             ),
           ),
           centerTitle: true,
@@ -160,11 +162,11 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: SvgPicture.asset(
                               "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
-                              width: 20,
-                              height: 20,
+                              width: 18,
+                              height: 18,
                               color: kOrange250Color,
                             ),
                           ),
@@ -182,11 +184,11 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: SvgPicture.asset(
                               "lib/config/assets/images/diary/write_diary/bookmark.svg",
-                              width: 20,
-                              height: 20,
+                              width: 18,
+                              height: 18,
                               color: kOrange250Color,
                             ),
                           ),
@@ -196,12 +198,12 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Screenshot(
-              controller: screenshotController,
+        body: Screenshot(
+          controller: screenshotController,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
               child: Container(
                 color: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
                     ? getLetterModalColor(ref.watch(diaryProvider).diaryDetailData!.feeling, context)

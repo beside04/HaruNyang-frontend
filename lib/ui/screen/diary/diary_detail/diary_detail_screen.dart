@@ -322,7 +322,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                                   child: WeatherEmotionBadgeWritingDiary(
                                                     emoticon: getEmoticonImage(data.feeling),
                                                     emoticonDesc: getEmoticonValue(data.feeling),
-                                                    weatherIcon: getWeatherImage(data.weather),
+                                                    weatherIcon: getWeatherChipImage(data.weather),
                                                     weatherIconDesc: getWeatherValue(data.weather),
                                                     color: Theme.of(context).colorScheme.letterBackgroundLineColor,
                                                   ),

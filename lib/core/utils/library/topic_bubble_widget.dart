@@ -78,13 +78,10 @@ class TopicBubbleWidget extends StatelessWidget {
                 onTap: () {
                   onDelete();
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: Image.asset(
-                    "lib/config/assets/images/diary/write_diary/refresh-2.png",
-                    width: 24,
-                    color: Theme.of(context).colorScheme.iconSubColor,
-                  ),
+                child: Image.asset(
+                  "lib/config/assets/images/diary/write_diary/refresh-2.png",
+                  width: 24,
+                  color: Theme.of(context).colorScheme.iconSubColor,
                 ),
               )
             ],
