@@ -19,6 +19,7 @@ import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/diary/provider/write_diary_provider.dart';
+import 'package:frontend/domains/font/provider/font_provider.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
@@ -56,7 +57,8 @@ class WriteDiaryScreen extends ConsumerStatefulWidget {
   WriteDiaryScreenState createState() => WriteDiaryScreenState();
 }
 
-class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleTickerProviderStateMixin {
+class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen>
+    with SingleTickerProviderStateMixin {
   Timer? _autoSaveTimer;
 
   XFile? pickedFile;
@@ -74,12 +76,19 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     diaryNotifier = ref.read(diaryProvider.notifier);
     screenEntryTime = ref.read(screenEntryTimeProvider);
 
-    _autoSaveTimer = Timer.periodic(Duration(seconds: 3), (Timer t) => _autoSaveDiary());
+    _autoSaveTimer =
+        Timer.periodic(Duration(seconds: 3), (Timer t) => _autoSaveDiary());
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ref.watch(writeDiaryProvider.notifier).setRandomImageNumber(Random().nextInt(7) + 1);
-      ref.watch(animationControllerProvider.notifier).state = AnimationController(vsync: this);
-      ref.watch(writeDiaryProvider.notifier).diaryEditingController.addListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
+      ref
+          .watch(writeDiaryProvider.notifier)
+          .setRandomImageNumber(Random().nextInt(7) + 1);
+      ref.watch(animationControllerProvider.notifier).state =
+          AnimationController(vsync: this);
+      ref
+          .watch(writeDiaryProvider.notifier)
+          .diaryEditingController
+          .addListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
 
       ref.watch(writeDiaryProvider.notifier).getDefaultTopic(widget.emotion);
 
@@ -87,32 +96,42 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
         ref.watch(writeDiaryProvider.notifier).setDiaryData(widget.diaryData!);
       } else {
         ref.watch(writeDiaryProvider.notifier).diaryEditingController.text = "";
-        ref.watch(writeDiaryProvider.notifier).state = ref.watch(writeDiaryProvider.notifier).state.copyWith(diaryValueLength: 0);
+        ref.watch(writeDiaryProvider.notifier).state = ref
+            .watch(writeDiaryProvider.notifier)
+            .state
+            .copyWith(diaryValueLength: 0);
       }
     });
   }
 
   Future<void> _autoSaveDiary() async {
-    String currentText = ref.watch(writeDiaryProvider.notifier).diaryEditingController.text;
+    String currentText =
+        ref.watch(writeDiaryProvider.notifier).diaryEditingController.text;
     if (currentText.isNotEmpty) {
       DiaryData diary = DiaryData(
         id: widget.diaryData?.id,
-        diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+        diaryContent:
+            ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
         feeling: widget.emotion,
         feelingScore: 1,
         weather: widget.weather,
         targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
         topic: ref.watch(writeDiaryProvider).topic.value,
-        image: ref.watch(writeDiaryProvider).firebaseImageUrl == "" ? ref.watch(diaryProvider).diaryDetailData?.image ?? "" : ref.watch(writeDiaryProvider).firebaseImageUrl,
+        image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
+            ? ref.watch(diaryProvider).diaryDetailData?.image ?? ""
+            : ref.watch(writeDiaryProvider).firebaseImageUrl,
         isAutoSave: true,
       );
 
-      ref.watch(diaryProvider.notifier).saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary);
+      ref
+          .watch(diaryProvider.notifier)
+          .saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary);
     }
   }
 
   Future<void> cropImage() async {
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery, imageQuality: 20);
+    final pickedImage = await ImagePicker()
+        .pickImage(source: ImageSource.gallery, imageQuality: 20);
     if (pickedImage != null) {
       pickedFile = pickedImage;
     }
@@ -123,13 +142,15 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     final directory = await getApplicationDocumentsDirectory();
 
     if (kb > 200) {
-      ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
+      ref.watch(cropQualityImageProvider.notifier).state =
+          await FlutterImageCompress.compressAndGetFile(
         pickedFile!.path,
         '${directory.path}/haruKitty.jpg',
         quality: 20,
       );
     } else {
-      ref.watch(cropQualityImageProvider.notifier).state = await FlutterImageCompress.compressAndGetFile(
+      ref.watch(cropQualityImageProvider.notifier).state =
+          await FlutterImageCompress.compressAndGetFile(
         pickedFile!.path,
         '${directory.path}/haruKitty.jpg',
         quality: 100,
@@ -169,13 +190,18 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
       // Use the user's UID and the current timestamp to create a unique path for each image.
       String timestamp = DateTime.now().millisecondsSinceEpoch.toString();
 
-      await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').putFile(file);
+      await FirebaseStorage.instance
+          .ref('uploads/$socialId/$timestamp.png')
+          .putFile(file);
 
-      String downloadURL = await FirebaseStorage.instance.ref('uploads/$socialId/$timestamp.png').getDownloadURL();
+      String downloadURL = await FirebaseStorage.instance
+          .ref('uploads/$socialId/$timestamp.png')
+          .getDownloadURL();
 
       await ref.read(diaryProvider.notifier).postImageHistory(downloadURL);
 
-      ref.read(writeDiaryProvider.notifier).state = ref.read(writeDiaryProvider).copyWith(firebaseImageUrl: downloadURL);
+      ref.read(writeDiaryProvider.notifier).state =
+          ref.read(writeDiaryProvider).copyWith(firebaseImageUrl: downloadURL);
     } on FirebaseException {
       // Get.snackbar('알림', '이미지 업로드에 실패하였습니다.');
       // e.g, e.code == 'canceled'
@@ -189,16 +215,19 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     });
 
     if (mounted) {
-      writeDiaryNotifier.state = ref.read(writeDiaryProvider).copyWith(networkImage: null);
+      writeDiaryNotifier.state =
+          ref.read(writeDiaryProvider).copyWith(networkImage: null);
     }
     await Future.delayed(Duration.zero);
-    diaryNotifier.setDiaryDetailData(ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
+    diaryNotifier.setDiaryDetailData(
+        ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
   }
 
   @override
   Future<void> dispose() async {
     _autoSaveTimer?.cancel();
-    writeDiaryNotifier.diaryEditingController.removeListener(writeDiaryNotifier.onTextChanged);
+    writeDiaryNotifier.diaryEditingController
+        .removeListener(writeDiaryNotifier.onTextChanged);
 
     DateTime screenExitTime = DateTime.now();
     Duration stayDuration = screenExitTime.difference(screenEntryTime);
@@ -219,11 +248,16 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
   @override
   Widget build(BuildContext context) {
     Future<bool> handleBackButton() async {
-      if (ref.watch(writeDiaryProvider.notifier).diaryEditingController.text.isEmpty) {
+      if (ref
+          .watch(writeDiaryProvider.notifier)
+          .diaryEditingController
+          .text
+          .isEmpty) {
         Navigator.pop(context);
         FocusManager.instance.primaryFocus?.unfocus();
         return true;
-      } else if (widget.diaryData?.diaryContent != ref.watch(writeDiaryProvider.notifier).diaryEditingController.text) {
+      } else if (widget.diaryData?.diaryContent !=
+          ref.watch(writeDiaryProvider.notifier).diaryEditingController.text) {
         await showDialog(
           barrierDismissible: true,
           context: context,
@@ -234,7 +268,11 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
           ),
         );
         return false;
-      } else if (ref.watch(writeDiaryProvider.notifier).diaryEditingController.text.isNotEmpty) {
+      } else if (ref
+          .watch(writeDiaryProvider.notifier)
+          .diaryEditingController
+          .text
+          .isNotEmpty) {
         await showDialog(
           barrierDismissible: true,
           context: context,
@@ -249,6 +287,9 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
 
       return true;
     }
+
+    final fontState = ref.watch(fontProvider);
+    final fontNotifier = ref.watch(fontProvider.notifier);
 
     return DefaultLayout(
       screenName: 'Screen_Event_WriteDiary_WritePage',
@@ -271,7 +312,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                     onPressed: ref.watch(writeDiaryProvider).diaryValue.isEmpty
                         ? null
                         : () async {
-                            GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Register');
+                            GlobalUtils.setAnalyticsCustomEvent(
+                                'Click_Diary_Register');
                             if (croppedFile != null) {
                               showDialog(
                                 context: context,
@@ -296,9 +338,11 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                               try {
                                 await uploadImage();
                                 // ignore: use_build_context_synchronously
-                                Navigator.of(context, rootNavigator: true).pop();
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
                               } catch (e) {
-                                Navigator.of(context, rootNavigator: true).pop();
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
                               }
                             }
 
@@ -307,17 +351,26 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
 
                               _autoSaveTimer?.cancel();
 
-                              ref.watch(writeDiaryProvider.notifier).diaryEditingController.removeListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
+                              ref
+                                  .watch(writeDiaryProvider.notifier)
+                                  .diaryEditingController
+                                  .removeListener(ref
+                                      .watch(writeDiaryProvider.notifier)
+                                      .onTextChanged);
 
                               Future(() {
-                                ref.watch(diaryProvider.notifier).getEmotionStampList();
+                                ref
+                                    .watch(diaryProvider.notifier)
+                                    .getEmotionStampList();
                               });
 
                               DateTime screenExitTime = DateTime.now();
-                              Duration stayDuration = screenExitTime.difference(ref.watch(screenEntryTimeProvider));
+                              Duration stayDuration = screenExitTime.difference(
+                                  ref.watch(screenEntryTimeProvider));
 
                               // Firebase Analytics에 체류시간 로깅
-                              GlobalUtils.setAnalyticsCustomEvent('stay_duration', {
+                              GlobalUtils.setAnalyticsCustomEvent(
+                                  'stay_duration', {
                                 'screen': "Screen_Event_WriteDiary_WritePage",
                                 'duration': stayDuration.inSeconds,
                               });
@@ -328,15 +381,31 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                   builder: (context) => WriteDiaryLoadingScreen(
                                     diaryData: DiaryData(
                                         id: widget.diaryData?.id,
-                                        diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+                                        diaryContent: ref
+                                            .watch(writeDiaryProvider.notifier)
+                                            .diaryEditingController
+                                            .text,
                                         feeling: widget.emotion,
                                         feelingScore: 1,
                                         weather: widget.weather,
-                                        targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
-                                        topic: ref.watch(writeDiaryProvider).topic.value,
-                                        image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
-                                            ? ref.watch(diaryProvider).diaryDetailData?.image ?? ""
-                                            : ref.watch(writeDiaryProvider).firebaseImageUrl),
+                                        targetDate: DateFormat('yyyy-MM-dd')
+                                            .format(widget.date),
+                                        topic: ref
+                                            .watch(writeDiaryProvider)
+                                            .topic
+                                            .value,
+                                        image: ref
+                                                    .watch(writeDiaryProvider)
+                                                    .firebaseImageUrl ==
+                                                ""
+                                            ? ref
+                                                    .watch(diaryProvider)
+                                                    .diaryDetailData
+                                                    ?.image ??
+                                                ""
+                                            : ref
+                                                .watch(writeDiaryProvider)
+                                                .firebaseImageUrl),
                                     date: widget.date,
                                     isEditScreen: widget.isEditScreen,
                                   ),
@@ -346,15 +415,18 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                           },
                     child: Text(
                       '등록',
-                      style:
-                          ref.watch(writeDiaryProvider).diaryValue.isEmpty ? kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textDisabled) : kHeader6Style.copyWith(color: kOrange350Color),
+                      style: ref.watch(writeDiaryProvider).diaryValue.isEmpty
+                          ? kHeader6Style.copyWith(
+                              color: Theme.of(context).colorScheme.textDisabled)
+                          : kHeader6Style.copyWith(color: kOrange350Color),
                     ),
                   );
                 }),
               ],
               title: Text(
                 DateFormat('M월 d일').format(widget.date),
-                style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                style: kHeader4Style.copyWith(
+                    color: Theme.of(context).colorScheme.textTitle),
               ),
               leading: BackIcon(
                 onPressed: handleBackButton,
@@ -369,19 +441,29 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                         Column(
                           children: [
                             TopicBubbleWidget(
-                              color: Theme.of(context).colorScheme.secondaryColor,
+                              color:
+                                  Theme.of(context).colorScheme.secondaryColor,
                               text: Consumer(builder: (context, ref, child) {
                                 return Text(
                                   textAlign: TextAlign.center,
                                   ref.watch(writeDiaryProvider).topic.value,
-                                  style: kSubtitle1Style.copyWith(
-                                    color: Theme.of(context).colorScheme.textTitle,
-                                  ),
+                                  style: fontNotifier.getFontStyle().copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .textTitle,
+                                        fontSize:
+                                            fontState.selectedFontDefaultSize -
+                                                2,
+                                        height: 1,
+                                      ),
                                 );
                               }),
                               onDelete: () {
-                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Get_Topic');
-                                ref.watch(writeDiaryProvider.notifier).getRandomTopic();
+                                GlobalUtils.setAnalyticsCustomEvent(
+                                    'Click_Diary_Get_Topic');
+                                ref
+                                    .watch(writeDiaryProvider.notifier)
+                                    .getRandomTopic();
                               },
                             ),
                           ],
@@ -406,7 +488,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                          padding: const EdgeInsets.only(
+                              left: 20, right: 20, bottom: 20),
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: Container(
@@ -418,32 +501,54 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                     child: SizedBox(
                                       height: 72.0,
                                       child: WeatherEmotionBadgeWritingDiary(
-                                        emoticon: getEmoticonImage(widget.emotion),
-                                        emoticonDesc: getEmoticonValue(widget.emotion),
-                                        weatherIcon: getWeatherImage(widget.weather),
-                                        weatherIconDesc: getWeatherValue(widget.weather),
-                                        color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                        emoticon:
+                                            getEmoticonImage(widget.emotion),
+                                        emoticonDesc:
+                                            getEmoticonValue(widget.emotion),
+                                        weatherIcon:
+                                            getWeatherImage(widget.weather),
+                                        weatherIconDesc:
+                                            getWeatherValue(widget.weather),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .letterBackgroundLineColor,
                                       ),
                                     ),
                                   ),
                                   Positioned(
                                     top: 70,
-                                    child: Consumer(builder: (context, ref, child) {
-                                      return ref.watch(diaryProvider).diaryDetailData == null
+                                    child: Consumer(
+                                        builder: (context, ref, child) {
+                                      return ref
+                                                  .watch(diaryProvider)
+                                                  .diaryDetailData ==
+                                              null
                                           ? Container()
-                                          : ref.watch(diaryProvider).diaryDetailData!.image == ''
+                                          : ref
+                                                      .watch(diaryProvider)
+                                                      .diaryDetailData!
+                                                      .image ==
+                                                  ''
                                               ? Container()
                                               : Center(
                                                   child: Padding(
-                                                    padding: const EdgeInsets.only(left: 30.0, right: 30.0),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 30.0,
+                                                            right: 30.0),
                                                     child: Stack(
                                                       children: [
                                                         Container(
-                                                          color: kImageBackgroundColor,
+                                                          color:
+                                                              kImageBackgroundColor,
                                                           width: 260,
                                                           height: 260,
                                                           child: Image.network(
-                                                            ref.watch(diaryProvider).diaryDetailData!.image,
+                                                            ref
+                                                                .watch(
+                                                                    diaryProvider)
+                                                                .diaryDetailData!
+                                                                .image,
                                                             width: 260,
                                                             height: 260,
                                                           ),
@@ -451,21 +556,30 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                         Positioned(
                                                           right: 12,
                                                           top: 12,
-                                                          child: GestureDetector(
+                                                          child:
+                                                              GestureDetector(
                                                             onTap: () {
                                                               clear();
                                                             },
                                                             child: Container(
-                                                              margin: const EdgeInsets.all(6),
-                                                              decoration: BoxDecoration(
-                                                                color: kWhiteColor.withOpacity(0.6),
-                                                                shape: BoxShape.circle,
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .all(6),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: kWhiteColor
+                                                                    .withOpacity(
+                                                                        0.6),
+                                                                shape: BoxShape
+                                                                    .circle,
                                                               ),
                                                               height: 24.h,
                                                               width: 24.w,
-                                                              child: SvgPicture.asset(
+                                                              child: SvgPicture
+                                                                  .asset(
                                                                 "lib/config/assets/images/diary/light_mode/close.svg",
-                                                                color: kGrayColor950,
+                                                                color:
+                                                                    kGrayColor950,
                                                                 height: 12,
                                                                 width: 12,
                                                               ),
@@ -480,42 +594,84 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                   ),
                                   Positioned(
                                     top: 70,
-                                    child: Consumer(builder: (context, ref, child) {
-                                      return (croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null)
+                                    child: Consumer(
+                                        builder: (context, ref, child) {
+                                      return (croppedFile != null ||
+                                              pickedFile != null ||
+                                              ref
+                                                      .watch(writeDiaryProvider)
+                                                      .networkImage !=
+                                                  null)
                                           ? Center(
                                               child: Padding(
-                                                padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-                                                child: ref.watch(writeDiaryProvider).networkImage != null
+                                                padding: const EdgeInsets.only(
+                                                    left: 30.0, right: 30.0),
+                                                child: ref
+                                                            .watch(
+                                                                writeDiaryProvider)
+                                                            .networkImage !=
+                                                        null
                                                     ? Stack(
                                                         children: [
                                                           Container(
-                                                            color: kImageBackgroundColor,
-                                                            width: MediaQuery.of(context).size.width - 100,
-                                                            height: MediaQuery.of(context).size.width - 100,
-                                                            child: Image.network(
-                                                              ref.watch(writeDiaryProvider).networkImage!,
-                                                              width: MediaQuery.of(context).size.width - 100,
-                                                              height: MediaQuery.of(context).size.width - 100,
+                                                            color:
+                                                                kImageBackgroundColor,
+                                                            width: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                100,
+                                                            height: MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width -
+                                                                100,
+                                                            child:
+                                                                Image.network(
+                                                              ref
+                                                                  .watch(
+                                                                      writeDiaryProvider)
+                                                                  .networkImage!,
+                                                              width: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width -
+                                                                  100,
+                                                              height: MediaQuery.of(
+                                                                          context)
+                                                                      .size
+                                                                      .width -
+                                                                  100,
                                                             ),
                                                           ),
                                                           Positioned(
                                                             right: 12,
                                                             top: 12,
-                                                            child: GestureDetector(
+                                                            child:
+                                                                GestureDetector(
                                                               onTap: () async {
                                                                 await clear();
                                                               },
                                                               child: Container(
-                                                                margin: const EdgeInsets.all(6),
-                                                                decoration: BoxDecoration(
-                                                                  color: kWhiteColor.withOpacity(0.6),
-                                                                  shape: BoxShape.circle,
+                                                                margin:
+                                                                    const EdgeInsets
+                                                                        .all(6),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: kWhiteColor
+                                                                      .withOpacity(
+                                                                          0.6),
+                                                                  shape: BoxShape
+                                                                      .circle,
                                                                 ),
                                                                 height: 24.h,
                                                                 width: 24.w,
-                                                                child: SvgPicture.asset(
+                                                                child:
+                                                                    SvgPicture
+                                                                        .asset(
                                                                   "lib/config/assets/images/diary/light_mode/close.svg",
-                                                                  color: kGrayColor950,
+                                                                  color:
+                                                                      kGrayColor950,
                                                                   height: 12,
                                                                   width: 12,
                                                                 ),
@@ -528,11 +684,14 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                         ? Stack(
                                                             children: [
                                                               Container(
-                                                                color: kImageBackgroundColor,
+                                                                color:
+                                                                    kImageBackgroundColor,
                                                                 width: 260,
                                                                 height: 260,
-                                                                child: Image.file(
-                                                                  File(croppedFile!.path),
+                                                                child:
+                                                                    Image.file(
+                                                                  File(croppedFile!
+                                                                      .path),
                                                                   width: 260,
                                                                   height: 260,
                                                                 ),
@@ -540,22 +699,33 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                               Positioned(
                                                                 right: 12,
                                                                 top: 12,
-                                                                child: GestureDetector(
+                                                                child:
+                                                                    GestureDetector(
                                                                   onTap: () {
                                                                     clear();
                                                                   },
-                                                                  child: Container(
-                                                                    margin: const EdgeInsets.all(6),
-                                                                    decoration: BoxDecoration(
-                                                                      color: kWhiteColor.withOpacity(0.6),
-                                                                      shape: BoxShape.circle,
+                                                                  child:
+                                                                      Container(
+                                                                    margin: const EdgeInsets
+                                                                        .all(6),
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: kWhiteColor
+                                                                          .withOpacity(
+                                                                              0.6),
+                                                                      shape: BoxShape
+                                                                          .circle,
                                                                     ),
-                                                                    height: 24.h,
+                                                                    height:
+                                                                        24.h,
                                                                     width: 24.w,
-                                                                    child: SvgPicture.asset(
+                                                                    child: SvgPicture
+                                                                        .asset(
                                                                       "lib/config/assets/images/diary/light_mode/close.svg",
-                                                                      color: kGrayColor950,
-                                                                      height: 12,
+                                                                      color:
+                                                                          kGrayColor950,
+                                                                      height:
+                                                                          12,
                                                                       width: 12,
                                                                     ),
                                                                   ),
@@ -563,7 +733,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                               ),
                                                             ],
                                                           )
-                                                        : const SizedBox.shrink(),
+                                                        : const SizedBox
+                                                            .shrink(),
                                               ),
                                             )
                                           : Container();
@@ -571,8 +742,24 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: ((croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null) ||
-                                                (ref.watch(diaryProvider).diaryDetailData != null && ref.watch(diaryProvider).diaryDetailData!.image != ''))
+                                        top: ((croppedFile != null ||
+                                                    pickedFile != null ||
+                                                    ref
+                                                            .watch(
+                                                                writeDiaryProvider)
+                                                            .networkImage !=
+                                                        null) ||
+                                                (ref
+                                                            .watch(
+                                                                diaryProvider)
+                                                            .diaryDetailData !=
+                                                        null &&
+                                                    ref
+                                                            .watch(
+                                                                diaryProvider)
+                                                            .diaryDetailData!
+                                                            .image !=
+                                                        ''))
                                             ? 350
                                             : 70,
                                         left: 30,
@@ -583,38 +770,57 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                       ),
                                       child: CustomPaint(
                                         painter: LetterPaperPainter(
-                                          color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .letterBackgroundLineColor,
                                         ),
                                         child: TextField(
                                           maxLength: 500,
                                           maxLines: null,
                                           autofocus: true,
-                                          style: kBody1Style.copyWith(
-                                            color: Theme.of(context).colorScheme.textBody,
-                                            height: 2.1,
-                                          ),
-                                          controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
+                                          style: fontNotifier
+                                              .getFontStyle()
+                                              .copyWith(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .textBody,
+                                              ),
+                                          controller: ref
+                                              .watch(
+                                                  writeDiaryProvider.notifier)
+                                              .diaryEditingController,
                                           keyboardType: TextInputType.multiline,
-                                          textAlignVertical: TextAlignVertical.center,
-                                          cursorColor: Theme.of(context).colorScheme.primaryColor,
+                                          textAlignVertical:
+                                              TextAlignVertical.center,
+                                          cursorColor: Theme.of(context)
+                                              .colorScheme
+                                              .primaryColor,
                                           decoration: InputDecoration(
                                             border: InputBorder.none,
                                             helperText: "",
                                             counterText: "",
-                                            hintStyle: kBody1Style.copyWith(color: kGrayColor400),
-                                            contentPadding: const EdgeInsets.only(
+                                            hintStyle: kBody1Style.copyWith(
+                                                color: kGrayColor400),
+                                            contentPadding:
+                                                const EdgeInsets.only(
                                               top: 4,
                                             ),
                                             filled: true,
-                                            enabledBorder: const OutlineInputBorder(
+                                            enabledBorder:
+                                                const OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                             ),
-                                            focusedBorder: const OutlineInputBorder(
+                                            focusedBorder:
+                                                const OutlineInputBorder(
                                               borderSide: BorderSide.none,
                                             ),
                                           ),
                                           onChanged: (value) {
-                                            ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
+                                            ref
+                                                .watch(
+                                                    writeDiaryProvider.notifier)
+                                                .setDiaryValueLength(
+                                                    value.length);
                                             value.length == 500
                                                 ? showDialog(
                                                     barrierDismissible: true,
@@ -624,16 +830,25 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                         title: "글자 제한",
                                                         content: Text(
                                                           "500 글자까지 작성할 수 있어요.",
-                                                          style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                                          style: kHeader6Style.copyWith(
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .colorScheme
+                                                                  .textSubtitle),
                                                         ),
                                                         actionContent: [
                                                           DialogButton(
                                                             title: "확인 했어요",
                                                             onTap: () {
-                                                              Navigator.pop(context);
+                                                              Navigator.pop(
+                                                                  context);
                                                             },
-                                                            backgroundColor: kOrange200Color,
-                                                            textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                                            backgroundColor:
+                                                                kOrange200Color,
+                                                            textStyle: kHeader4Style
+                                                                .copyWith(
+                                                                    color:
+                                                                        kWhiteColor),
                                                           ),
                                                         ],
                                                       );
@@ -671,16 +886,20 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                           children: [
                             GestureDetector(
                               onTap: () {
-                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Picture');
+                                GlobalUtils.setAnalyticsCustomEvent(
+                                    'Click_Diary_Picture');
 
                                 cropImage();
                                 // ref.watch(writeDiaryProvider.notifier).selectDeviceImage().then((_) => ref.watch(writeDiaryProvider.notifier).cropImage());
                               },
                               child: Padding(
-                                padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
+                                padding: EdgeInsets.only(
+                                    top: 10.h, bottom: 10.h, left: 16.w),
                                 child: SvgPicture.asset(
                                   "lib/config/assets/images/diary/write_diary/album.svg",
-                                  color: Theme.of(context).colorScheme.iconSubColor,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .iconSubColor,
                                   // width: 24.w,
                                   // height: 24.h,
                                 ),
@@ -688,21 +907,44 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                             ),
                             InkWell(
                               onTap: () {
-                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Temp_Save');
+                                GlobalUtils.setAnalyticsCustomEvent(
+                                    'Click_Diary_Temp_Save');
 
                                 DiaryData diary = DiaryData(
                                   id: widget.diaryData?.id,
-                                  diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+                                  diaryContent: ref
+                                      .watch(writeDiaryProvider.notifier)
+                                      .diaryEditingController
+                                      .text,
                                   feeling: widget.emotion,
                                   feelingScore: 1,
                                   weather: widget.weather,
-                                  targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
-                                  topic: ref.watch(writeDiaryProvider).topic.value,
-                                  image: ref.watch(writeDiaryProvider).firebaseImageUrl == "" ? ref.watch(diaryProvider).diaryDetailData?.image ?? "" : ref.watch(writeDiaryProvider).firebaseImageUrl,
+                                  targetDate: DateFormat('yyyy-MM-dd')
+                                      .format(widget.date),
+                                  topic:
+                                      ref.watch(writeDiaryProvider).topic.value,
+                                  image: ref
+                                              .watch(writeDiaryProvider)
+                                              .firebaseImageUrl ==
+                                          ""
+                                      ? ref
+                                              .watch(diaryProvider)
+                                              .diaryDetailData
+                                              ?.image ??
+                                          ""
+                                      : ref
+                                          .watch(writeDiaryProvider)
+                                          .firebaseImageUrl,
                                   isAutoSave: true,
                                 );
 
-                                ref.watch(diaryProvider.notifier).saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary).then((value) {
+                                ref
+                                    .watch(diaryProvider.notifier)
+                                    .saveDiary(
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(widget.date),
+                                        diary)
+                                    .then((value) {
                                   toast(
                                     context: context,
                                     text: '작성 중인 일기가 임시저장 되었어요.',
@@ -711,28 +953,38 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                 });
                               },
                               child: Padding(
-                                padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
+                                padding: EdgeInsets.only(
+                                    top: 10.h, bottom: 10.h, left: 16.w),
                                 child: Image.asset(
                                   "lib/config/assets/images/diary/write_diary/save-2.png",
-                                  color: Theme.of(context).colorScheme.iconSubColor,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .iconSubColor,
                                 ),
                               ),
                             ),
                           ],
                         ),
                         Padding(
-                          padding: EdgeInsets.only(top: 10.h, bottom: 10.h, right: 16.w),
+                          padding: EdgeInsets.only(
+                              top: 10.h, bottom: 10.h, right: 16.w),
                           child: Row(
                             children: [
                               Consumer(builder: (context, ref, child) {
                                 return Text(
                                   "${ref.watch(writeDiaryProvider).diaryValueLength}",
-                                  style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                                  style: kBody2Style.copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .textTitle),
                                 );
                               }),
                               Text(
                                 "/500",
-                                style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textLowEmphasis),
+                                style: kBody2Style.copyWith(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .textLowEmphasis),
                               ),
                             ],
                           ),
@@ -749,19 +1001,22 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     );
   }
 
-  Widget _buildDialog(BuildContext context, {required String title, required String content}) {
+  Widget _buildDialog(BuildContext context,
+      {required String title, required String content}) {
     return DialogComponent(
       title: title,
       content: Text(
         content,
-        style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+        style: kHeader6Style.copyWith(
+            color: Theme.of(context).colorScheme.textSubtitle),
       ),
       actionContent: [
         DialogButton(
           title: "아니요",
           onTap: () => Navigator.pop(context),
           backgroundColor: Theme.of(context).colorScheme.secondaryColor,
-          textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+          textStyle: kHeader4Style.copyWith(
+              color: Theme.of(context).colorScheme.textSubtitle),
         ),
         SizedBox(
           width: 12.w,
