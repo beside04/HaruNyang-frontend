@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 
@@ -30,9 +29,10 @@ class BookMarkEmoticonIconButton extends StatelessWidget {
               padding: const EdgeInsets.only(top: 8, bottom: 8, left: 8, right: 10),
               shadowColor: Colors.transparent,
               disabledBackgroundColor: Theme.of(context).colorScheme.disabledColor,
-              backgroundColor: selected ? kBlackColor : Theme.of(context).colorScheme.surface_01,
+              backgroundColor: selected ? Theme.of(context).colorScheme.iconColor : Theme.of(context).colorScheme.bookmarkButtonBackgroundColor,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20),
+                side: selected ? BorderSide.none : BorderSide(color: Theme.of(context).colorScheme.border, width: 1),
               ),
             ),
             onPressed: onPressed,
@@ -46,7 +46,9 @@ class BookMarkEmoticonIconButton extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   name,
-                  style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textCaption),
+                  style: kBody2Style.copyWith(
+                    color: selected ? Theme.of(context).colorScheme.textReversedColor : Theme.of(context).colorScheme.textCaption,
+                  ),
                 ),
               ],
             ),

@@ -31,12 +31,15 @@ class DiaryDetailScreen extends ConsumerStatefulWidget {
   final CroppedFile? imageFile;
   final bool isNewDiary;
 
+  final bool isFromBookmarkPage;
+
   const DiaryDetailScreen({
     Key? key,
     required this.diaryId,
     required this.date,
     required this.isNewDiary,
     this.imageFile,
+    required this.isFromBookmarkPage,
   }) : super(key: key);
 
   @override
@@ -83,7 +86,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
       screenName: 'Screen_Event_DiaryRead',
       child: WillPopScope(
         onWillPop: () async {
-          Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+          widget.isFromBookmarkPage ? Navigator.of(context).pop() : Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
 
           ref.watch(diaryProvider.notifier).resetDiary();
           return false;
@@ -116,7 +119,9 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                     ),
                     leading: IconButton(
                       onPressed: () {
-                        Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+                        widget.isFromBookmarkPage
+                            ? Navigator.of(context).pop()
+                            : Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
 
                         ref.watch(diaryProvider.notifier).resetDiary();
                       },

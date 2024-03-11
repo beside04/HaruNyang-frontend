@@ -206,4 +206,10 @@ extension CustomColorScheme on ColorScheme {
   Color get letterBackgroundLineColor => brightness == Brightness.light ? kWhiteColor : kGrayColor800;
 
   Color get whiteBlackColor => brightness == Brightness.light ? kWhiteColor : kBlackColor;
+
+  Color get textReversedColor => brightness == Brightness.light ? kWhiteColor : kGrayColor900;
+
+  Color get bookmarkButtonBackgroundColor => brightness == Brightness.light ? kWhiteColor : kGrayColor850;
+
+  Color get letterBorder => brightness == Brightness.light ? kWhiteColor.withOpacity(0.75) : kGrayColor800;
 }

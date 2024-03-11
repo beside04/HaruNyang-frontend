@@ -52,6 +52,7 @@ class EmotionCardDiaryWidget extends ConsumerWidget {
                 date: DateTime.parse(diaryData.targetDate),
                 // diaryData: diaryData,
                 isNewDiary: false,
+                isFromBookmarkPage: false,
               ),
             ),
           );

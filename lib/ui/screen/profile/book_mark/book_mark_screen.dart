@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domains/bookmark/bookmark_list_state_provider.dart';
-import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
@@ -28,7 +26,6 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
 
   @override
   void initState() {
-    // _bookMarkPagingController = ref.read(bookmarkListStateProvider);
     super.initState();
   }
 
@@ -36,6 +33,7 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
   didChangeDependencies() {
     super.didChangeDependencies();
 
+    ref.read(bookmarkListStateProvider.notifier).setSelectedEmoticon(null);
     _bookMarkPagingController.refresh();
   }
 
@@ -62,7 +60,7 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: SizedBox(
-                  height: 50,
+                  height: 69,
                   child: Row(
                     children: [
                       Padding(
@@ -76,9 +74,12 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                                   padding: const EdgeInsets.only(top: 8, bottom: 8, left: 10, right: 10),
                                   shadowColor: Colors.transparent,
                                   disabledBackgroundColor: Theme.of(context).colorScheme.disabledColor,
-                                  backgroundColor: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null ? kBlackColor : Theme.of(context).colorScheme.surface_01,
+                                  backgroundColor: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                      ? Theme.of(context).colorScheme.iconColor
+                                      : Theme.of(context).colorScheme.bookmarkButtonBackgroundColor,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
+                                    side: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null ? BorderSide.none : BorderSide(color: Theme.of(context).colorScheme.border, width: 1),
                                   ),
                                 ),
                                 onPressed: () {
@@ -90,7 +91,11 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                                   children: [
                                     Text(
                                       "전체보기",
-                                      style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textCaption),
+                                      style: kSubtitle1Style.copyWith(
+                                        color: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                            ? Theme.of(context).colorScheme.textReversedColor
+                                            : Theme.of(context).colorScheme.textCaption,
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -106,15 +111,17 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                           itemCount: ref.watch(bookmarkListStateProvider.notifier).emotionList.length,
                           itemBuilder: (BuildContext context, int i) {
                             return Consumer(builder: (context, ref, child) {
-                              return BookMarkEmoticonIconButton(
-                                name: ref.watch(bookmarkListStateProvider.notifier).emotionList[i].desc,
-                                icon: ref.watch(bookmarkListStateProvider.notifier).emotionList[i].emoticon,
-                                selected: ref.watch(bookmarkListStateProvider.notifier).emotionValue == ref.watch(bookmarkListStateProvider.notifier).emotionList[i].value,
-                                onPressed: () {
-                                  setState(() {
-                                    ref.watch(bookmarkListStateProvider.notifier).setSelectedEmoticon(ref.watch(bookmarkListStateProvider.notifier).emotionList[i].value);
-                                  });
-                                },
+                              return Center(
+                                child: BookMarkEmoticonIconButton(
+                                  name: ref.watch(bookmarkListStateProvider.notifier).emotionList[i].desc,
+                                  icon: ref.watch(bookmarkListStateProvider.notifier).emotionList[i].emoticon,
+                                  selected: ref.watch(bookmarkListStateProvider.notifier).emotionValue == ref.watch(bookmarkListStateProvider.notifier).emotionList[i].value,
+                                  onPressed: () {
+                                    setState(() {
+                                      ref.watch(bookmarkListStateProvider.notifier).setSelectedEmoticon(ref.watch(bookmarkListStateProvider.notifier).emotionList[i].value);
+                                    });
+                                  },
+                                ),
                               );
                             });
                           },
@@ -123,6 +130,11 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                     ],
                   ),
                 ),
+              ),
+              Divider(
+                thickness: 1,
+                height: 1,
+                color: Theme.of(context).colorScheme.border,
               ),
               Expanded(
                 child: PagedListView<int, CommentData>(
@@ -192,6 +204,7 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                                   diaryId: item.diaryId!,
                                   date: DateTime.parse(item.createAt),
                                   isNewDiary: false,
+                                  isFromBookmarkPage: true,
                                 ),
                               ),
                             );
@@ -201,10 +214,10 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                             isBookMark: true,
                             title: item.message,
                             name: item.author,
+                            feeling: item.feeling,
                             onTap: () {
-                              ref.watch(diaryProvider.notifier).deleteBookmarkByBookmarkId(
-                                    ref.watch(diaryProvider).bookmarkList[index].id!,
-                                    index,
+                              ref.watch(bookmarkListStateProvider.notifier).deleteBookmark(
+                                    item.id!,
                                   );
                               toast(
                                 context: context,

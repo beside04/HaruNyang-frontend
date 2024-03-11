@@ -123,9 +123,33 @@ class BookmarkListState extends _$BookmarkListState {
   void setSelectedEmoticon(String? value) {
     if (value == null) {
       emotionValue = null;
+      state.refresh();
     } else {
       emotionValue = value;
+      state.refresh();
     }
+  }
+
+  Future<void> deleteBookmark(int bookmarkId) async {
+    int targetIdx = -1;
+
+    final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
+    result.when(
+      success: (data) async {
+        print(bookmarkId);
+
+        print(state.itemList!);
+
+        targetIdx = state.itemList!.indexWhere((element) => element.id == bookmarkId);
+
+        if (targetIdx != -1) {
+          state.itemList!.removeAt(targetIdx);
+        }
+
+        state.notifyListeners();
+      },
+      error: (message) {},
+    );
   }
 
   List<EmoticonData> emotionList = [

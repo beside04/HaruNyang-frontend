@@ -133,6 +133,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                                 diaryId: events[0].id!,
                                                 date: day,
                                                 isNewDiary: false,
+                                                isFromBookmarkPage: false,
                                               ),
                                             ),
                                           );
@@ -176,6 +177,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                     date: day,
                                     // diaryData: events[0],
                                     isNewDiary: false,
+                                    isFromBookmarkPage: false,
                                   ),
                                 ),
                               );

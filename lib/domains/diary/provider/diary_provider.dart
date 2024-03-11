@@ -394,6 +394,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                 date: date,
                 // diaryData: diary,
                 isNewDiary: true,
+                isFromBookmarkPage: false,
               ),
             ),
           );
@@ -440,6 +441,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                             date: date,
                             // diaryData: diary,
                             isNewDiary: true,
+                            isFromBookmarkPage: false,
                           ),
                         ),
                       );
@@ -520,6 +522,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                 date: date,
                 // diaryData: diary,
                 isNewDiary: true,
+                isFromBookmarkPage: false,
               ),
             ),
           );
@@ -566,6 +569,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                             date: date,
                             // diaryData: diary,
                             isNewDiary: true,
+                            isFromBookmarkPage: false,
                           ),
                         ),
                       );
