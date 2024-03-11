@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/weather_emotion_badge.dart';
@@ -20,7 +20,7 @@ class EmotionCardDiaryWidget extends ConsumerWidget {
     required this.diaryData,
   }) : super(key: key);
 
-  final DiaryData diaryData;
+  final DiaryDetailData diaryData;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +29,7 @@ class EmotionCardDiaryWidget extends ConsumerWidget {
         if (diaryData.isAutoSave) {
           final saveDiary = await ref.watch(diaryProvider.notifier).getTempDiary(DateTime.parse(diaryData.targetDate));
           Map<String, dynamic> diaryMap = json.decode(saveDiary!);
-          DiaryData saveDiaryData = DiaryData.fromJson(diaryMap);
+          DiaryDetailData saveDiaryData = DiaryDetailData.fromJson(diaryMap);
 
           Navigator.push(
             context,
@@ -50,8 +50,9 @@ class EmotionCardDiaryWidget extends ConsumerWidget {
               builder: (context) => DiaryDetailScreen(
                 diaryId: diaryData.id!,
                 date: DateTime.parse(diaryData.targetDate),
-                diaryData: diaryData,
+                // diaryData: diaryData,
                 isNewDiary: false,
+                isFromBookmarkPage: false,
               ),
             ),
           );

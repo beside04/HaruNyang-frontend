@@ -174,7 +174,7 @@ class ProfileScreen extends ConsumerWidget {
                   "lib/config/assets/images/profile/navigate_next.svg",
                   color: Theme.of(context).colorScheme.iconSubColor,
                 ),
-                title: '북마크 목록',
+                title: '편지보관함',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Navigator.push(

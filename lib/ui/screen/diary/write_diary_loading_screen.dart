@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:lottie/lottie.dart';
 
 class WriteDiaryLoadingScreen extends ConsumerStatefulWidget {
-  final DiaryData diaryData;
+  final DiaryDetailData diaryData;
   final DateTime date;
   final bool isEditScreen;
 
@@ -62,7 +62,7 @@ class WriteDiaryLoadingScreenState extends ConsumerState<WriteDiaryLoadingScreen
               height: 10.h,
             ),
             Text(
-              "당신을 위로할 쪽지를 쓰고 있어요",
+              "당신을 위로할 편지를 쓰고 있어요",
               style: kHeader5Style.copyWith(
                 color: Theme.of(context).colorScheme.textTitle,
               ),

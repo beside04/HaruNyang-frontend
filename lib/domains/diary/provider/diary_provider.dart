@@ -11,7 +11,6 @@ import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
@@ -92,44 +91,44 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     await imageHistoryUseCase(imageUrl);
   }
 
-  Future<void> getAllBookmarkData() async {
-    int limit = 100;
-    int page = 0;
-    List<CommentData> bookmarkList = [];
-    bool isEnd = false;
-    while (true) {
-      final result = await bookmarkUseCase.getBookmark(page, limit);
-
-      result.when(
-        success: (data) {
-          bookmarkList.addAll(data);
-          if (data.length < limit) {
-            isEnd = true;
-          }
-
-          state = state.copyWith(
-            bookmarkList: List.from(bookmarkList),
-          );
-        },
-        error: (message) {
-          isEnd = true;
-        },
-      );
-      if (isEnd) {
-        break;
-      }
-      page += 1;
-    }
-    state = state.copyWith(
-      bookmarkList: bookmarkList,
-    );
-  }
+  // Future<void> getAllBookmarkData() async {
+  //   int limit = 100;
+  //   int page = 0;
+  //   List<CommentData> bookmarkList = [];
+  //   bool isEnd = false;
+  //   while (true) {
+  //     final result = await bookmarkUseCase.getBookmark(page, limit, null);
+  //
+  //     result.when(
+  //       success: (data) {
+  //         bookmarkList.addAll(data);
+  //         if (data.length < limit) {
+  //           isEnd = true;
+  //         }
+  //
+  //         state = state.copyWith(
+  //           bookmarkList: List.from(bookmarkList),
+  //         );
+  //       },
+  //       error: (message) {
+  //         isEnd = true;
+  //       },
+  //     );
+  //     if (isEnd) {
+  //       break;
+  //     }
+  //     page += 1;
+  //   }
+  //   state = state.copyWith(
+  //     bookmarkList: bookmarkList,
+  //   );
+  // }
 
   Future<void> deleteBookmarkByBookmarkId(int bookmarkId, int index) async {
     final result = await bookmarkUseCase.deleteBookmark(bookmarkId);
     result.when(
       success: (data) async {
-        await getAllBookmarkData();
+        // await getAllBookmarkData();
 
         updateBookmarkComments(index);
       },
@@ -139,8 +138,8 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
 
   updateBookmarkComments(int index) {
     if (state.diaryDetailData != null) {
-      final updatedComments = List<CommentData>.from(state.diaryDetailData!.comments)
-        ..[index] = state.diaryDetailData!.comments[index].copyWith(isFavorite: !state.diaryDetailData!.comments[index].isFavorite);
+      final updatedComments = List<CommentData>.from(state.diaryDetailData!.comments!)
+        ..[index] = state.diaryDetailData!.comments![index].copyWith(isFavorite: !state.diaryDetailData!.comments![index].isFavorite);
 
       final updatedDiaryDetailData = state.diaryDetailData!.copyWith(comments: updatedComments);
 
@@ -152,7 +151,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     final result = await bookmarkUseCase.saveBookmark(id);
     result.when(
       success: (data) async {
-        await getAllBookmarkData();
+        // await getAllBookmarkData();
 
         updateBookmarkComments(index);
       },
@@ -160,7 +159,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
   }
 
-  Future<void> saveDiary(String date, DiaryData diary) async {
+  Future<void> saveDiary(String date, DiaryDetailData diary) async {
     await AutoDiarySaveDataSource().saveDiary(date, diary);
 
     loadDiary(DateTime.parse(date));
@@ -169,7 +168,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   void loadDiary(DateTime deleteDate) async {
     state = state.copyWith(isCalendarLoading: true);
 
-    List<DiaryData> filteredDiaryDataList = state.diaryDataList.where((diary) {
+    List<DiaryDetailData> filteredDiaryDataList = state.diaryDataList.where((diary) {
       // 날짜 비교를 위해 String으로 변환
       String diaryDate = DateFormat('yyyy-MM-dd').format(deleteDate);
       return !(diary.targetDate == diaryDate && diary.isAutoSave);
@@ -182,7 +181,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
 
     // Set을 사용하여 중복 제거
     final allDiaries = {...filteredDiaryDataList, ...autoDiaryData};
-    List<DiaryData> combinedList = allDiaries.toList();
+    List<DiaryDetailData> combinedList = allDiaries.toList();
 
     combinedList.sort((a, b) => b.targetDate.compareTo(a.targetDate));
 
@@ -214,7 +213,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
 
     result.when(
       success: (result) {
-        List<DiaryData> combinedList = [...result, ...autoDiaryData];
+        List<DiaryDetailData> combinedList = [...result, ...autoDiaryData];
 
         combinedList.sort((a, b) => b.targetDate.compareTo(a.targetDate));
 
@@ -234,9 +233,9 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
   }
 
-  void _makeDiaryCardDataList(List<DiaryData> diaries) {
+  void _makeDiaryCardDataList(List<DiaryDetailData> diaries) {
     List<DiaryCardData> diaryCardDataList = [];
-    Map<String, List<DiaryData>> weekName = {};
+    Map<String, List<DiaryDetailData>> weekName = {};
     for (int i = 0; i < diaries.length; i++) {
       String title = _weekOfMonthForCalendar(DateTime.parse(diaries[i].targetDate));
       if (weekName.containsKey(title)) {
@@ -358,15 +357,20 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
   }
 
-  Future<void> getDiaryDetail(id) async {
+  Future<DiaryDetailData?> getDiaryDetail(id) async {
+    print("ASDDSA");
     final result = await getDiaryDetailUseCase(id);
 
-    result.when(
+    return result.when(
       success: (data) async {
         await getEmotionStampList();
         state = state.copyWith(diaryDetailData: data);
+        print("DSADSA");
+        return data;
       },
-      error: (message) {},
+      error: (message) {
+        return null;
+      },
     );
   }
 
@@ -374,7 +378,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     state = state.copyWith(diaryDetailData: diaryDetailData);
   }
 
-  Future<void> saveDiaryDetail(DiaryData diary, DateTime date) async {
+  Future<void> saveDiaryDetail(DiaryDetailData diary, DateTime date) async {
     final result = await saveDiaryUseCase(diary);
 
     result.when(
@@ -382,14 +386,15 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
         await getDiaryDetail(data.id);
         await AutoDiarySaveDataSource().deleteDiary(DateFormat('yyyy-MM-dd').format(date));
 
-        if (data.comments[0].author == "harunyang") {
+        if (data.comments![0].author == "harunyang") {
           navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => DiaryDetailScreen(
-                diaryId: data.id,
+                diaryId: data.id!,
                 date: date,
-                diaryData: diary,
+                // diaryData: diary,
                 isNewDiary: true,
+                isFromBookmarkPage: false,
               ),
             ),
           );
@@ -432,10 +437,11 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                       navigatorKey.currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => DiaryDetailScreen(
-                            diaryId: data.id,
+                            diaryId: data.id!,
                             date: date,
-                            diaryData: diary,
+                            // diaryData: diary,
                             isNewDiary: true,
+                            isFromBookmarkPage: false,
                           ),
                         ),
                       );
@@ -500,7 +506,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
     );
   }
 
-  Future<void> updateDiaryDetail(DiaryData diary, DateTime date) async {
+  Future<void> updateDiaryDetail(DiaryDetailData diary, DateTime date) async {
     final result = await updateDiaryUseCase(diary);
 
     result.when(
@@ -508,14 +514,15 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
         await getDiaryDetail(data.id);
         await AutoDiarySaveDataSource().deleteDiary(DateFormat('yyyy-MM-dd').format(date));
 
-        if (data.comments[0].author == "harunyang") {
+        if (data.comments![0].author == "harunyang") {
           navigatorKey.currentState!.push(
             MaterialPageRoute(
               builder: (context) => DiaryDetailScreen(
-                diaryId: data.id,
+                diaryId: data.id!,
                 date: date,
-                diaryData: diary,
+                // diaryData: diary,
                 isNewDiary: true,
+                isFromBookmarkPage: false,
               ),
             ),
           );
@@ -558,10 +565,11 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
                       navigatorKey.currentState!.push(
                         MaterialPageRoute(
                           builder: (context) => DiaryDetailScreen(
-                            diaryId: data.id,
+                            diaryId: data.id!,
                             date: date,
-                            diaryData: diary,
+                            // diaryData: diary,
                             isNewDiary: true,
+                            isFromBookmarkPage: false,
                           ),
                         ),
                       );

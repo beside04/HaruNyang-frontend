@@ -42,19 +42,13 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
               children: [
                 GestureDetector(
                   onTap: () async {
-                    await screenshotController
-                        .capture(delay: const Duration(milliseconds: 10))
-                        .then((Uint8List? image) async {
+                    await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
                       if (image != null) {
-                        final directory =
-                            await getApplicationDocumentsDirectory();
-                        final imagePath =
-                            await File('${directory.path}/image.png').create();
+                        final directory = await getApplicationDocumentsDirectory();
+                        final imagePath = await File('${directory.path}/image.png').create();
                         await imagePath.writeAsBytes(image);
 
-                        final result = await Share.shareXFiles(
-                            [XFile('${imagePath.path}')],
-                            text: '하루냥 쪽지');
+                        final result = await Share.shareXFiles([XFile('${imagePath.path}')], text: '하루냥 편지');
 
                         result.status == ShareResultStatus.success
                             ? toast(
@@ -64,7 +58,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                               )
                             : toast(
                                 context: context,
-                                text: '이미지 공유를 실패했습니다.',
+                                text: '공유 UI를 닫았습니다.',
                                 isCheckIcon: false,
                               );
                       }
@@ -80,8 +74,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                     child: Center(
                       child: Text(
                         "공유하기",
-                        style: kSubtitle1Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
+                        style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                       ),
                     ),
                   ),
@@ -91,19 +84,13 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    await screenshotController
-                        .capture(delay: const Duration(milliseconds: 10))
-                        .then((Uint8List? image) async {
+                    await screenshotController.capture(delay: const Duration(milliseconds: 10)).then((Uint8List? image) async {
                       if (image != null) {
-                        final directory =
-                            await getApplicationDocumentsDirectory();
-                        final imagePath =
-                            await File('${directory.path}/image.png').create();
+                        final directory = await getApplicationDocumentsDirectory();
+                        final imagePath = await File('${directory.path}/image.png').create();
                         await imagePath.writeAsBytes(image);
 
-                        final result = await ImageGallerySaver.saveFile(
-                            '${imagePath.path}',
-                            name: "하루냥");
+                        final result = await ImageGallerySaver.saveFile('${imagePath.path}', name: "하루냥");
 
                         result["isSuccess"]
                             ? toast(
@@ -129,8 +116,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                     child: Center(
                       child: Text(
                         "이미지 저장",
-                        style: kSubtitle1Style.copyWith(
-                            color: Theme.of(context).colorScheme.textTitle),
+                        style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                       ),
                     ),
                   ),
@@ -142,8 +128,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
         appBar: AppBar(
           title: Text(
             "하루냥의 편지",
-            style: kHeader4Style.copyWith(
-                color: Theme.of(context).colorScheme.textTitle),
+            style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
           ),
           leading: IconButton(
             onPressed: () {
@@ -152,6 +137,8 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
             icon: SvgPicture.asset(
               "lib/config/assets/images/diary/dark_mode/close.svg",
               color: Theme.of(context).colorScheme.iconColor,
+              width: 24,
+              height: 24,
             ),
           ),
           centerTitle: true,
@@ -161,21 +148,11 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
               padding: const EdgeInsets.only(right: 8.0),
               child: Consumer(
                 builder: (context, ref, child) {
-                  return ref
-                          .watch(diaryProvider)
-                          .diaryDetailData!
-                          .comments[0]
-                          .isFavorite
+                  return ref.watch(diaryProvider).diaryDetailData!.comments![0].isFavorite
                       ? GestureDetector(
                           onTap: () {
-                            ref
-                                .watch(diaryProvider.notifier)
-                                .deleteBookmarkByBookmarkId(
-                                  ref
-                                      .watch(diaryProvider)
-                                      .diaryDetailData!
-                                      .comments[0]
-                                      .id!,
+                            ref.watch(diaryProvider.notifier).deleteBookmarkByBookmarkId(
+                                  ref.watch(diaryProvider).diaryDetailData!.comments![0].id!,
                                   0,
                                 );
                             toast(
@@ -185,11 +162,11 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: SvgPicture.asset(
                               "lib/config/assets/images/diary/write_diary/bookmark_check.svg",
-                              width: 20,
-                              height: 20,
+                              width: 18,
+                              height: 18,
                               color: kOrange250Color,
                             ),
                           ),
@@ -197,11 +174,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                       : GestureDetector(
                           onTap: () {
                             ref.watch(diaryProvider.notifier).saveBookmark(
-                                  ref
-                                      .watch(diaryProvider)
-                                      .diaryDetailData!
-                                      .comments[0]
-                                      .id!,
+                                  ref.watch(diaryProvider).diaryDetailData!.comments![0].id!,
                                   0,
                                 );
                             toast(
@@ -211,11 +184,11 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                             );
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(10.0),
                             child: SvgPicture.asset(
                               "lib/config/assets/images/diary/write_diary/bookmark.svg",
-                              width: 20,
-                              height: 20,
+                              width: 18,
+                              height: 18,
                               color: kOrange250Color,
                             ),
                           ),
@@ -225,22 +198,15 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Screenshot(
-              controller: screenshotController,
+        body: Screenshot(
+          controller: screenshotController,
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
               child: Container(
-                color: ref
-                            .watch(diaryProvider)
-                            .diaryDetailData!
-                            .comments[0]
-                            .author ==
-                        "harunyang"
-                    ? getLetterModalColor(
-                        ref.watch(diaryProvider).diaryDetailData!.feeling,
-                        context)
+                color: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
+                    ? getLetterModalColor(ref.watch(diaryProvider).diaryDetailData!.feeling, context)
                     : Theme.of(context).colorScheme.wiseSayingModalColor,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -258,16 +224,8 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                               top: 18,
                             ),
                             child: Image.asset(
-                              ref
-                                          .watch(diaryProvider)
-                                          .diaryDetailData!
-                                          .comments[0]
-                                          .author ==
-                                      "harunyang"
-                                  ? getLetterModalImage(ref
-                                      .watch(diaryProvider)
-                                      .diaryDetailData!
-                                      .feeling)
+                              ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
+                                  ? getLetterModalImage(ref.watch(diaryProvider).diaryDetailData!.feeling)
                                   : 'lib/config/assets/images/character/letter/wise_saying.png',
                               height: 140,
                               width: double.infinity,
@@ -284,7 +242,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                           thumbColor: kWhiteColor.withOpacity(0.6),
                           radius: Radius.circular(10.0),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 15.0),
+                            padding: const EdgeInsets.only(right: 15.0, bottom: 30),
                             child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: [
@@ -293,11 +251,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                     color: kWhiteColor,
                                   ),
                                   child: Text(
-                                    ref
-                                        .watch(diaryProvider)
-                                        .diaryDetailData!
-                                        .comments[0]
-                                        .message,
+                                    ref.watch(diaryProvider).diaryDetailData!.comments![0].message,
                                     style: fontNotifier.getFontStyle().copyWith(
                                           color: kGrayColor850,
                                         ),
@@ -315,25 +269,14 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         top: 24,
                         bottom: 30,
                       ),
-                      child: ref
-                                  .watch(diaryProvider)
-                                  .diaryDetailData!
-                                  .comments[0]
-                                  .author ==
-                              "harunyang"
+                      child: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
                           ? Text(
                               'From. 하루냥',
-                              style: kSubtitle1Style.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .textSubtitle),
+                              style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                             )
                           : Text(
-                              "From. ${ref.watch(diaryProvider).diaryDetailData!.comments[0].author}",
-                              style: kSubtitle1Style.copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .textSubtitle),
+                              "From. ${ref.watch(diaryProvider).diaryDetailData!.comments![0].author}",
+                              style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                             ),
                     ),
                   ],

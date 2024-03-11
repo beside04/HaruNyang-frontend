@@ -27,38 +27,38 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
       Font(
         title: '시스템폰트(Pretendard)',
         value: 'pretendard',
-        size: 18,
-        height: 1,
+        size: 16,
+        height: 2.1,
       ),
       Font(
         title: '따악단단',
         value: 'nanum_ddaacdandan',
         size: 20,
-        height: 1.6,
+        height: 1.7,
       ),
       Font(
         title: '마루부리',
         value: 'maruburi',
         size: 16,
-        height: 2.5,
+        height: 2.1,
       ),
       Font(
         title: '이서윤체',
         value: 'leeSeoyun',
         size: 16,
-        height: 2,
+        height: 2.1,
       ),
       Font(
         title: '중학생',
         value: 'nanum_junghacsang',
         size: 20,
-        height: 1.6,
+        height: 1.7,
       ),
       Font(
         title: '비상체',
         value: 'nanum_bisang',
         size: 20,
-        height: 1.5,
+        height: 1.7,
       ),
     ];
 
@@ -68,8 +68,7 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
         appBar: AppBar(
           title: Text(
             '폰트 변경',
-            style: kHeader4Style.copyWith(
-                color: Theme.of(context).colorScheme.textTitle),
+            style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
           ),
           elevation: 0,
           leading: BackIcon(
@@ -132,27 +131,17 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                             children: [
                               FontSizeCheckBox(
                                 label: '작게',
-                                isSelected: fontState.changedFontSize ==
-                                        fontState.selectedFontDefaultSize - 2
-                                    ? true
-                                    : false,
+                                isSelected: fontState.changedFontSize == fontState.selectedFontDefaultSize - 2 ? true : false,
                                 onPressed: fontNotifier.handleDownFontSize,
                               ),
                               FontSizeCheckBox(
                                 label: '기본',
-                                isSelected: fontState.selectedFontDefaultSize ==
-                                        fontState.changedFontSize
-                                    ? true
-                                    : false,
-                                onPressed:
-                                    fontNotifier.handleSetDefaultFontSize,
+                                isSelected: fontState.selectedFontDefaultSize == fontState.changedFontSize ? true : false,
+                                onPressed: fontNotifier.handleSetDefaultFontSize,
                               ),
                               FontSizeCheckBox(
                                 label: '크게',
-                                isSelected: fontState.changedFontSize ==
-                                        fontState.selectedFontDefaultSize + 2
-                                    ? true
-                                    : false,
+                                isSelected: fontState.changedFontSize == fontState.selectedFontDefaultSize + 2 ? true : false,
                                 onPressed: fontNotifier.handleUpFontSize,
                               ),
                             ],
@@ -203,24 +192,14 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                               Text(
                                 fontList[i].title,
                                 style: kHeader6Style.copyWith(
-                                  color: fontState.selectedFontValue ==
-                                          fontList[i].value
-                                      ? Theme.of(context)
-                                          .colorScheme
-                                          .textPrimary
-                                      : Theme.of(context)
-                                          .colorScheme
-                                          .textLowEmphasis,
+                                  color: fontState.selectedFontValue == fontList[i].value ? Theme.of(context).colorScheme.textPrimary : Theme.of(context).colorScheme.textLowEmphasis,
                                 ),
                               ),
                               SizedBox(
                                 width: 24,
                                 height: 24,
                                 child: RoundRadioCheckbox(
-                                  isSelected: fontState.selectedFontValue ==
-                                          fontList[i].value
-                                      ? true
-                                      : false,
+                                  isSelected: fontState.selectedFontValue == fontList[i].value ? true : false,
                                 ),
                               ),
                             ],

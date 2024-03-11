@@ -3,7 +3,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/domain/model/topic/topic_data.dart';
 import 'package:frontend/domains/diary/model/write_diary_state.dart';
 import 'package:frontend/ui/components/toast.dart';
@@ -35,7 +35,7 @@ class WriteDiaryNotifier extends StateNotifier<WriteDiaryState> {
     state = state.copyWith(shouldShowWidget: true);
   }
 
-  void setDiaryData(DiaryData diaryData) {
+  void setDiaryData(DiaryDetailData diaryData) {
     diaryEditingController.text = diaryData.diaryContent;
 
     state = state.copyWith(diaryValueLength: diaryEditingController.text.length);

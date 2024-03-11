@@ -40,63 +40,63 @@ class FontState with _$FontState {
     );
   }
 
-  double get lineHeight {
-    switch (selectedFontValue) {
-      case 'pretendard':
-        {
-          return changedFontSize == 16
-              ? selectedFontDefaultHeight
-              : changedFontSize > selectedFontDefaultSize
-                  ? 2
-                  : 2.5;
-        }
-      case 'nanum_ddaacdandan':
-        {
-          return changedFontSize == 20
-              ? selectedFontDefaultHeight
-              : changedFontSize > selectedFontDefaultSize
-                  ? 1.5
-                  : 1.8;
-        }
-      case 'leeSeoyun':
-        {
-          return changedFontSize == 16
-              ? selectedFontDefaultHeight
-              : changedFontSize > selectedFontDefaultSize
-                  ? 1.8
-                  : 2.25;
-        }
-      case 'maruburi':
-        {
-          return changedFontSize == 16
-              ? selectedFontDefaultHeight
-              : changedFontSize > selectedFontDefaultSize
-                  ? 1.75
-                  : 3;
-        }
-      case 'nanum_junghacsang':
-        {
-          return changedFontSize == 20
-              ? selectedFontDefaultHeight
-              : changedFontSize > selectedFontDefaultSize
-                  ? 1.5
-                  : 1.8;
-        }
-      case 'nanum_bisang':
-        {
-          return changedFontSize == 20
-              ? selectedFontDefaultHeight
-              : changedFontSize > selectedFontDefaultSize
-                  ? 1.38
-                  : 1.6;
-        }
-      default:
-        {
-          return selectedFontDefaultHeight;
-        }
-    }
-  }
+  // double get lineHeight {
+  //
+  //   switch (selectedFontValue) {
+  //     case 'pretendard':
+  //       {
+  //         return changedFontSize == 16
+  //             ? selectedFontDefaultHeight
+  //             : changedFontSize > selectedFontDefaultSize
+  //                 ? 2
+  //                 : 2.5;
+  //       }
+  //     case 'nanum_ddaacdandan':
+  //       {
+  //         return changedFontSize == 20
+  //             ? selectedFontDefaultHeight
+  //             : changedFontSize > selectedFontDefaultSize
+  //                 ? 1.5
+  //                 : 1.8;
+  //       }
+  //     case 'leeSeoyun':
+  //       {
+  //         return changedFontSize == 16
+  //             ? selectedFontDefaultHeight
+  //             : changedFontSize > selectedFontDefaultSize
+  //                 ? 1.8
+  //                 : 2.25;
+  //       }
+  //     case 'maruburi':
+  //       {
+  //         return changedFontSize == 16
+  //             ? selectedFontDefaultHeight
+  //             : changedFontSize > selectedFontDefaultSize
+  //                 ? 1.75
+  //                 : 3;
+  //       }
+  //     case 'nanum_junghacsang':
+  //       {
+  //         return changedFontSize == 20
+  //             ? selectedFontDefaultHeight
+  //             : changedFontSize > selectedFontDefaultSize
+  //                 ? 1.5
+  //                 : 1.8;
+  //       }
+  //     case 'nanum_bisang':
+  //       {
+  //         return changedFontSize == 20
+  //             ? selectedFontDefaultHeight
+  //             : changedFontSize > selectedFontDefaultSize
+  //                 ? 1.38
+  //                 : 1.6;
+  //       }
+  //     default:
+  //       {
+  //         return selectedFontDefaultHeight;
+  //       }
+  //   }
+  // }
 
-  factory FontState.fromJson(Map<String, dynamic> json) =>
-      _$FontStateFromJson(json);
+  factory FontState.fromJson(Map<String, dynamic> json) => _$FontStateFromJson(json);
 }

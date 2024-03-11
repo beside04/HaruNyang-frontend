@@ -9,6 +9,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/login/provider/login_provider.dart';
+import 'package:frontend/domains/notification/provider/notification_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/domains/splash/model/splash_state.dart';
 import 'package:frontend/domains/token/provider/token_provider.dart';
@@ -235,11 +236,13 @@ class SplashNotifier extends StateNotifier<SplashState> {
           retryCount++;
 
           try {
-            final getDeviceId = await tokenUseCase.getDeviceId();
             final getLoginType = await tokenUseCase.getLoginType();
             final getSocialId = await tokenUseCase.getSocialId();
 
-            await ref.read(loginProvider.notifier).getLoginData();
+            await ref.read(notificationProvider.notifier).getToken();
+            final deviceToken = ref.read(notificationProvider).token;
+
+            await ref.read(loginProvider.notifier).getLoginData(deviceToken);
 
             // ref.read(loginProvider.notifier).getLoginSuccessData(loginType: getLoginType!);
 

@@ -41,7 +41,6 @@ class LoginNotifier extends StateNotifier<LoginState> {
   }
 
   Future<void> getLoginSuccessData({required String loginType}) async {
-    print("loginType ${loginType}");
     final loginResult = await onLogin(loginType: loginType);
 
     if (loginResult == 200) {
@@ -89,8 +88,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
   Future<int> onLogin({required loginType}) async {
     int result = 0;
-    print("state.socialId :  ${state.socialId}");
-    final loginResult = loginType == "KAKAO" ? await kakaoLoginUseCase.login(state.socialId) : await appleLoginUseCase.login(state.socialId);
+    final loginResult = loginType == "KAKAO" ? await kakaoLoginUseCase.login(state.socialId, state.deviceToken) : await appleLoginUseCase.login(state.socialId, state.deviceToken);
 
     await loginResult.when(
       success: (accessToken) async {
@@ -110,16 +108,17 @@ class LoginNotifier extends StateNotifier<LoginState> {
     return result;
   }
 
-  Future<void> getLoginData() async {
-    final getDeviceId = await tokenUseCase.getDeviceId();
+  Future<void> getLoginData(getDeviceToken) async {
     final getLoginType = await tokenUseCase.getLoginType();
     final getSocialId = await tokenUseCase.getSocialId();
 
     state = state.copyWith(
       socialId: getSocialId ?? "",
-      deviceToken: getDeviceId,
+      deviceToken: getDeviceToken,
       loginType: getLoginType ?? "",
     );
+
+    print("state.deviceToken : ${state.deviceToken}");
 
     getLoginSuccessData(loginType: getLoginType ?? "");
   }
@@ -135,7 +134,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     await ref.watch(onBoardingProvider.notifier).getMyInformation();
 
-    ref.watch(diaryProvider.notifier).getAllBookmarkData();
+    // ref.watch(diaryProvider.notifier).getAllBookmarkData();
 
     goHome();
   }

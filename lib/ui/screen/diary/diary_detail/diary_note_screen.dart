@@ -67,7 +67,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                       },
                       controller: PageController(initialPage: 0),
                       scrollDirection: Axis.horizontal,
-                      children: ref.watch(diaryProvider).diaryDetailData!.comments.asMap().entries.map((entry) {
+                      children: ref.watch(diaryProvider).diaryDetailData!.comments!.asMap().entries.map((entry) {
                         int index = entry.key;
                         var comment = entry.value;
                         return Padding(
@@ -115,11 +115,11 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                               top: 10,
                                               child: Consumer(
                                                 builder: (context, ref, child) {
-                                                  return ref.watch(diaryProvider).diaryDetailData!.comments[index].isFavorite
+                                                  return ref.watch(diaryProvider).diaryDetailData!.comments![index].isFavorite
                                                       ? GestureDetector(
                                                           onTap: () {
                                                             ref.watch(diaryProvider.notifier).deleteBookmarkByBookmarkId(
-                                                                  ref.watch(diaryProvider).diaryDetailData!.comments[index].id!,
+                                                                  ref.watch(diaryProvider).diaryDetailData!.comments![index].id!,
                                                                   0,
                                                                 );
                                                             toast(
@@ -141,7 +141,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                       : GestureDetector(
                                                           onTap: () {
                                                             ref.watch(diaryProvider.notifier).saveBookmark(
-                                                                  ref.watch(diaryProvider).diaryDetailData!.comments[index].id!,
+                                                                  ref.watch(diaryProvider).diaryDetailData!.comments![index].id!,
                                                                   0,
                                                                 );
                                                             toast(
@@ -167,7 +167,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                         ),
                                       ),
                                     ),
-                                    ref.watch(diaryProvider).diaryDetailData!.comments[index].author == "harunyang"
+                                    ref.watch(diaryProvider).diaryDetailData!.comments![index].author == "harunyang"
                                         ? Padding(
                                             padding: EdgeInsets.only(
                                               left: 24.0.w,
@@ -182,7 +182,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                         : Padding(
                                             padding: EdgeInsets.only(left: 24.0.w, right: 24.0.w, top: 24.0.h, bottom: 20.h),
                                             child: Text(
-                                              ref.watch(diaryProvider).diaryDetailData!.comments[index].author,
+                                              ref.watch(diaryProvider).diaryDetailData!.comments![index].author,
                                               style: kHeader5Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                                             ),
                                           ),
@@ -207,7 +207,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                 child: SizedBox(
                                                     width: MediaQuery.of(context).size.width,
                                                     child: Text(
-                                                      ref.watch(diaryProvider).diaryDetailData!.comments[index].message,
+                                                      ref.watch(diaryProvider).diaryDetailData!.comments![index].message,
                                                       textAlign: TextAlign.start,
                                                       style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                                                     )),
@@ -226,7 +226,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                       }).toList(),
                     ),
                   ),
-                  ref.watch(diaryProvider).diaryDetailData!.comments.length == 1
+                  ref.watch(diaryProvider).diaryDetailData!.comments!.length == 1
                       ? Container()
                       : Padding(
                           padding: EdgeInsets.only(top: 8.0.h, bottom: 16.0.h),
@@ -235,7 +235,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                             builder: (BuildContext context, int index, Widget? child) => AnimatedSmoothIndicator(
                               activeIndex: index,
                               axisDirection: Axis.horizontal,
-                              count: ref.watch(diaryProvider).diaryDetailData!.comments.length,
+                              count: ref.watch(diaryProvider).diaryDetailData!.comments!.length,
                               effect: ScrollingDotsEffect(
                                 dotColor: kGrayColor400,
                                 activeDotColor: kOrange300Color,

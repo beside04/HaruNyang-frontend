@@ -40,16 +40,77 @@ class FontNotifier extends StateNotifier<FontState> {
   }
 
   handleUpFontSize() {
+    double newFontHeight = calculateLineHeight(state.selectedFontDefaultSize + 2, true);
+
     state = state.copyWith(
       changedFontSize: state.selectedFontDefaultSize + 2,
-      changedFontHeight: state.lineHeight,
+      changedFontHeight: newFontHeight,
     );
   }
 
   handleDownFontSize() {
+    double newFontHeight = calculateLineHeight(state.selectedFontDefaultSize - 2, false);
+
     state = state.copyWith(
       changedFontSize: state.selectedFontDefaultSize - 2,
-      changedFontHeight: state.lineHeight,
+      changedFontHeight: newFontHeight,
     );
+  }
+
+  double calculateLineHeight(double fontSize, bool isFontSizeUp) {
+    switch (state.selectedFontValue) {
+      case 'pretendard':
+        {
+          return fontSize == 16
+              ? state.selectedFontDefaultHeight
+              : isFontSizeUp
+                  ? state.selectedFontDefaultHeight - 0.23
+                  : state.selectedFontDefaultHeight + 0.3;
+        }
+      case 'nanum_ddaacdandan':
+        {
+          return fontSize == 20
+              ? state.selectedFontDefaultHeight
+              : isFontSizeUp
+                  ? state.selectedFontDefaultHeight - 0.15
+                  : state.selectedFontDefaultHeight + 0.2;
+        }
+      case 'leeSeoyun':
+        {
+          return fontSize == 16
+              ? state.selectedFontDefaultHeight
+              : isFontSizeUp
+                  ? state.selectedFontDefaultHeight - 0.23
+                  : state.selectedFontDefaultHeight + 0.3;
+        }
+      case 'maruburi':
+        {
+          return fontSize == 16
+              ? state.selectedFontDefaultHeight
+              : isFontSizeUp
+                  ? state.selectedFontDefaultHeight - 0.23
+                  : state.selectedFontDefaultHeight + 0.3;
+        }
+      case 'nanum_junghacsang':
+        {
+          return fontSize == 20
+              ? state.selectedFontDefaultHeight
+              : isFontSizeUp
+                  ? state.selectedFontDefaultHeight - 0.15
+                  : state.selectedFontDefaultHeight + 0.2;
+        }
+      case 'nanum_bisang':
+        {
+          return fontSize == 20
+              ? state.selectedFontDefaultHeight
+              : isFontSizeUp
+                  ? state.selectedFontDefaultHeight - 0.15
+                  : state.selectedFontDefaultHeight + 0.2;
+        }
+      default:
+        {
+          return state.selectedFontDefaultHeight;
+        }
+    }
   }
 }

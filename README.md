@@ -1,11 +1,13 @@
 # HaruNyang front Documentation
+
 ### 프로젝트 설명
 
-일기를 작성하면 일기의 단어를 매칭하여 쪽지 또는 명대사를 추천해주는 일기 앱입니다.
+일기를 작성하면 일기의 단어를 매칭하여 편지 또는 명대사를 추천해주는 일기 앱입니다.
 
 <img src="https://user-images.githubusercontent.com/73716178/222867930-be759be5-1876-409c-b973-1c22e6ef5497.png" width="500" height="1000"/>
 
 ### 사용중인 상태관리, 디자인 패턴
+
 Getx 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나인 mvvm 디자인 패턴을 채택하여 프로젝트를 구성 할 계획입니다.
 
 ![0_zUtZYiJ1bDTugOYY](https://user-images.githubusercontent.com/73716178/201530142-9a2df361-6c7d-4898-94e9-3cd5880118df.png)
@@ -40,6 +42,7 @@ Getx 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나
 - 추출 후 `build/app/outputs/bundle/release` 에서 추출된 appbundle 확인이 가능합니다.
 
 ## Git Flow Rules
+
 - 기능/이니션-개발내용을 develop branch 기준으로 분기합니다.
     - ex ) feature/jgw-login-screen
 - 한번 커밋은 하나의 기능 개발을 목표로 합니다.
@@ -49,7 +52,7 @@ Getx 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나
 
 # C**ode Convention Rules**
 
-Flutter에서는 코딩에 대한 구체적인 표준이나 규범을 정의하지 않고 있습니다. 하지만 Flutter는 Dart 언어를 사용하기에 되도록이면 [Dart의 Coding Standard](https://dart.dev/guides/language/effective-dart/style)를 준수하여 작성하려고 합니다.
+Flutter에서는 코딩에 대한 구체적인 표준이나 규범을 정의하지 않고 있습니다. 하지만 Flutter는 Dart 언어를 사용하기에 되도록이면[Dart의 Coding Standard](https://dart.dev/guides/language/effective-dart/style)를 준수하여 작성하려고 합니다.
 
 플러터 린트가 적용되어 있어 주로 자주 사용 하거나 주의해야할 부분만 추려 간단하게 정리했습니다. 자세한 내용은 [https://dart.dev/guides/language/effective-dart/style](https://dart.dev/guides/language/effective-dart/style) 해당 페이지에서 확인 가능합니다.
 
@@ -59,10 +62,10 @@ Flutter에서는 코딩에 대한 구체적인 표준이나 규범을 정의하�
 
 Dart에서는 UppderCamelCase, lowerCamelCase, lowercase_with_underscores 네이밍 규칙을 사용합니다.
 
-| UppderCamelCase (PascalCase) | 모든 단어에서 첫 단어를 대문자로 시작하는 표기법입니다. 주로 클래스 이름에 사용합니다. |
-| --- | --- |
-| lowerCamelCase (camelCase) | 소문자로 시작하며, 각 단어의 시작 문자를 대문자로 합니다. 주로 함수나 변수에 사용합니다. |
-| lowercase_with_underscores (snake case) |  소문자만 사용하며 단어의 구분은 언더스코어(_)를 사용합니다. 대문자나 다른 구분자는 사용하지 않습니다. 주로 폴더명과 파일명에 사용합니다. |
+| UppderCamelCase (PascalCase)            | 모든 단어에서 첫 단어를 대문자로 시작하는 표기법입니다. 주로 클래스 이름에 사용합니다.                              |
+|-----------------------------------------|--------------------------------------------------------------------------------|
+| lowerCamelCase (camelCase)              | 소문자로 시작하며, 각 단어의 시작 문자를 대문자로 합니다. 주로 함수나 변수에 사용합니다.                            |
+| lowercase_with_underscores (snake case) | 소문자만 사용하며 단어의 구분은 언더스코어(_)를 사용합니다. 대문자나 다른 구분자는 사용하지 않습니다. 주로 폴더명과 파일명에 사용합니다. |
 
 ### 1) **Type의 경우 UpperCamelCase를 사용합니다.**
 
@@ -134,7 +137,7 @@ class Dice {
 
 - 상대 경로와 절대 경로의 각자 취향이 있고 장단점이 존재하지만, 절대경로를 사용하면 **직관적으로 어디서 사용**하는지 알기가 쉽고, **수정이 용이**하여 저는 대부분 절대 경로를 사용하는 편입니다.
 
-📌 그외 여러가지 있지만, 제일 중요한 두가지만 지키면 좋을 것 같습니다!
+📌 그외 여러가지 있지만, 제일 중요한 두가지만 지키면 좋을 것 같습니다!
 
 - **일관성을 최대한 유지**
 - **가독성을 높이며 최대한 간단하게**
@@ -159,25 +162,25 @@ class Dice {
 ⚠️ **어디까지나 참고로 작성한 내용이며, 작업중 불필요하다거나, 추가로 넣어야 한다면 수정이나 말씀 부탁드립니다! 🙏**
 
 - config : 앱의 **전반적** 구성요소들입니다.
-   - theme : theme 요소 및 theme 관리 데이터
-   - route : 라우팅 소스
-   - assets : images, logo 등의 앱에서 사용할 design asset
+    - theme : theme 요소 및 theme 관리 데이터
+    - route : 라우팅 소스
+    - assets : images, logo 등의 앱에서 사용할 design asset
 - core : 앱에서 **전역적**으로 사용되는 요소들입니다.
-   - params : API 호출시 필요한 파라미터 모아둔 클래스
-   - resources : API 호출시 결과를 갖는 wrapper class. 통신 성공/실패 케이스등
-   - utils : 프로젝트의 모든 유틸리티 클래스
+    - params : API 호출시 필요한 파라미터 모아둔 클래스
+    - resources : API 호출시 결과를 갖는 wrapper class. 통신 성공/실패 케이스등
+    - utils : 프로젝트의 모든 유틸리티 클래스
 - data : data layer 관련 요소들
-   - datasources : api 호출 클래스
-       - local: 로컬에 저장된 정보를 가져오는 모든 함수들이 구현되어 있다.
-       - remote: API서버와 통신에 필요한 모든 함수들이 구현되어 있다.
-   - models : api 결과 데이터 관련 클래스(DTO)
-   - repositories : api 클래스를 주입받아 사용하는 레포지토리 구현체
+    - datasources : api 호출 클래스
+        - local: 로컬에 저장된 정보를 가져오는 모든 함수들이 구현되어 있다.
+        - remote: API서버와 통신에 필요한 모든 함수들이 구현되어 있다.
+    - models : api 결과 데이터 관련 클래스(DTO)
+    - repositories : api 클래스를 주입받아 사용하는 레포지토리 구현체
 - domain : domain layer 관련 요소들
-   - model : POJO (data폴더의 model과 달리 데이터 파싱, 변환에 영향을 받지않는 근본적인 데이터 구조를 나타내는 클래스)
-   - repositories : api호출 인터페이스.
-   - usecases : repository를 주입받아서 하나의 액션 수행하는 클래스 (비지니스 로직)
+    - model : POJO (data폴더의 model과 달리 데이터 파싱, 변환에 영향을 받지않는 근본적인 데이터 구조를 나타내는 클래스)
+    - repositories : api호출 인터페이스.
+    - usecases : repository를 주입받아서 하나의 액션 수행하는 클래스 (비지니스 로직)
 - presentation : presentation layer 관련 요소들
-   - view : 사용자가 직접 확인이 가능한 하는 화면
-     - component(widget) : 공통된 위젯 컴포넌트
-   - viewmodel : View상태를 유지/관리하는 곳
+    - view : 사용자가 직접 확인이 가능한 하는 화면
+        - component(widget) : 공통된 위젯 컴포넌트
+    - viewmodel : View상태를 유지/관리하는 곳
 
