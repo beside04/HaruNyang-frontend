@@ -94,6 +94,8 @@ dependencies:
   share_plus: ^7.2.2
   image_gallery_saver: ^2.0.3
   infinite_scroll_pagination: ^3.2.0
+  device_preview: ^1.1.0
+
 
 
 dev_dependencies:

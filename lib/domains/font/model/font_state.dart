@@ -22,7 +22,7 @@ class Font {
 @freezed
 class FontState with _$FontState {
   factory FontState({
-    @Default('시스템폰트(Pretendard)') String selectedFontTitle,
+    @Default('시스템 폰트(Pretendard)') String selectedFontTitle,
     @Default('pretendard') String selectedFontValue,
     @Default(16.0) double selectedFontDefaultSize,
     @Default(16.0) double changedFontSize,

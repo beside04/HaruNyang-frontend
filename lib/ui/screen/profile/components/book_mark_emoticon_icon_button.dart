@@ -18,9 +18,8 @@ class BookMarkEmoticonIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(selected);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

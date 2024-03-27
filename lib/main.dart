@@ -66,25 +66,28 @@ class MyApp extends ConsumerWidget {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
             statusBarColor: Colors.transparent, // 투명색
-            systemNavigationBarColor: Theme.of(context).colorScheme.brightness == Brightness.dark ? kGrayColor950 : kWhiteColor,
+            systemNavigationBarColor: ref.watch(mainProvider).themeMode == ThemeMode.dark ? kGrayColor950 : kWhiteColor,
             systemNavigationBarIconBrightness: Theme.of(context).colorScheme.brightness == Brightness.dark ? Brightness.light : Brightness.dark,
-            systemNavigationBarDividerColor: Theme.of(context).colorScheme.brightness == Brightness.dark ? kGrayColor950 : kWhiteColor,
+            systemNavigationBarDividerColor: ref.watch(mainProvider).themeMode == ThemeMode.dark ? kGrayColor950 : kWhiteColor,
           ),
-          child: MaterialApp(
-            navigatorObservers: [
-              FirebaseAnalyticsObserver(analytics: analytics),
-            ],
-            navigatorKey: navigatorKey,
-            title: 'Flutter Demo',
-            debugShowCheckedModeBanner: false,
-            routes: {
-              '/': (context) => const SplashScreen(),
-              '/home': (context) => const HomeScreen(),
-            },
-            themeMode: ref.watch(mainProvider).themeMode,
-            theme: lightMode(context),
-            darkTheme: darkMode(context),
-            // home: const SplashScreen(),
+          child: MediaQuery(
+            data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
+            child: MaterialApp(
+              navigatorObservers: [
+                FirebaseAnalyticsObserver(analytics: analytics),
+              ],
+              navigatorKey: navigatorKey,
+              title: 'Flutter Demo',
+              debugShowCheckedModeBanner: false,
+              routes: {
+                '/': (context) => const SplashScreen(),
+                '/home': (context) => const HomeScreen(),
+              },
+              themeMode: ref.watch(mainProvider).themeMode,
+              theme: lightMode(context),
+              darkTheme: darkMode(context),
+              // home: const SplashScreen(),
+            ),
           ),
         );
       },

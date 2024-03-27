@@ -231,7 +231,7 @@ class EmotionStampScreenState extends ConsumerState<EmotionStampScreen> {
                       ),
                     )
                   : SizedBox(
-                      height: 100.h,
+                      height: 100,
                       child: GestureDetector(
                         onTap: () {
                           GlobalUtils.setAnalyticsCustomEvent('Click_AD');

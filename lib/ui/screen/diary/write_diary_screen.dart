@@ -221,8 +221,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
   Widget build(BuildContext context) {
     Future<bool> handleBackButton() async {
       if (ref.watch(writeDiaryProvider.notifier).diaryEditingController.text.isEmpty) {
-        Navigator.pop(context);
         FocusManager.instance.primaryFocus?.unfocus();
+        Navigator.pop(context);
         return true;
       } else if (widget.diaryData?.diaryContent != ref.watch(writeDiaryProvider.notifier).diaryEditingController.text) {
         await showDialog(
@@ -236,16 +236,9 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
         );
         return false;
       } else if (ref.watch(writeDiaryProvider.notifier).diaryEditingController.text.isNotEmpty) {
-        await showDialog(
-          barrierDismissible: true,
-          context: context,
-          builder: (ctx) => _buildDialog(
-            context,
-            title: "뒤로 가시겠어요?",
-            content: "작성 중인 모든 내용이 삭제되어요.",
-          ),
-        );
-        return false;
+        FocusManager.instance.primaryFocus?.unfocus();
+        Navigator.pop(context);
+        return true;
       }
 
       return true;
@@ -370,30 +363,33 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                   Expanded(
                     child: ListView(
                       children: [
-                        Column(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Get_Topic');
-                                ref.watch(writeDiaryProvider.notifier).getRandomTopic();
-                              },
-                              child: TopicBubbleWidget(
-                                color: Theme.of(context).colorScheme.secondaryColor,
-                                text: Consumer(builder: (context, ref, child) {
-                                  return Text(
-                                    textAlign: TextAlign.center,
-                                    ref.watch(writeDiaryProvider).topic.value,
-                                    style: fontNotifier.getFontStyle().copyWith(
-                                          color: Theme.of(context).colorScheme.textTitle,
-                                          fontSize: fontState.selectedFontDefaultSize - 2,
-                                          height: 1,
-                                        ),
-                                  );
-                                }),
-                                onDelete: () {},
+                        Padding(
+                          padding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
+                          child: Column(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Get_Topic');
+                                  ref.watch(writeDiaryProvider.notifier).getRandomTopic();
+                                },
+                                child: TopicBubbleWidget(
+                                  color: Theme.of(context).colorScheme.secondaryColor,
+                                  text: Consumer(builder: (context, ref, child) {
+                                    return Text(
+                                      textAlign: TextAlign.center,
+                                      ref.watch(writeDiaryProvider).topic.value,
+                                      style: fontNotifier.getFontStyle().copyWith(
+                                            color: Theme.of(context).colorScheme.textTitle,
+                                            fontSize: fontState.selectedFontDefaultSize - 2,
+                                            height: 1,
+                                          ),
+                                    );
+                                  }),
+                                  onDelete: () {},
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                         SizedBox(
                           height: 164,
@@ -448,7 +444,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                     child: Stack(
                                                       children: [
                                                         Container(
-                                                          color: kImageBackgroundColor,
+                                                          color: Theme.of(context).colorScheme.surface_02,
                                                           width: 260,
                                                           height: 260,
                                                           child: Image.network(
@@ -498,7 +494,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                     ? Stack(
                                                         children: [
                                                           Container(
-                                                            color: kImageBackgroundColor,
+                                                            color: Theme.of(context).colorScheme.surface_02,
                                                             width: MediaQuery.of(context).size.width - 100,
                                                             height: MediaQuery.of(context).size.width - 100,
                                                             child: Image.network(
@@ -537,7 +533,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                         ? Stack(
                                                             children: [
                                                               Container(
-                                                                color: kImageBackgroundColor,
+                                                                color: Theme.of(context).colorScheme.surface_02,
                                                                 width: 260,
                                                                 height: 260,
                                                                 child: Image.file(
