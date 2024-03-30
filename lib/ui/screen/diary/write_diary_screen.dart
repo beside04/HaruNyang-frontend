@@ -481,11 +481,18 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                               margin: const EdgeInsets.all(6),
                                                               height: 24.h,
                                                               width: 24.w,
-                                                              child: SvgPicture.asset(
-                                                                "lib/config/assets/images/diary/light_mode/new_close_dark.svg",
-                                                                height: 12,
-                                                                width: 12,
-                                                              ),
+                                                              child: Theme.of(context).colorScheme.brightness ==
+                                                                      Brightness.dark
+                                                                  ? SvgPicture.asset(
+                                                                      "lib/config/assets/images/diary/dark_mode/new_close_dark.svg",
+                                                                      height: 12,
+                                                                      width: 12,
+                                                                    )
+                                                                  : SvgPicture.asset(
+                                                                      "lib/config/assets/images/diary/light_mode/new_close_light.svg",
+                                                                      height: 12,
+                                                                      width: 12,
+                                                                    ),
                                                             ),
                                                           ),
                                                         ),
@@ -569,11 +576,18 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                                       margin: const EdgeInsets.all(6),
                                                                       width: 24.w,
                                                                       height: 24.h,
-                                                                      child: SvgPicture.asset(
-                                                                        "lib/config/assets/images/diary/light_mode/new_close_light.svg",
-                                                                        height: 12,
-                                                                        width: 12,
-                                                                      ),
+                                                                      child: Theme.of(context).colorScheme.brightness ==
+                                                                              Brightness.dark
+                                                                          ? SvgPicture.asset(
+                                                                              "lib/config/assets/images/diary/dark_mode/new_close_dark.svg",
+                                                                              height: 12,
+                                                                              width: 12,
+                                                                            )
+                                                                          : SvgPicture.asset(
+                                                                              "lib/config/assets/images/diary/light_mode/new_close_light.svg",
+                                                                              height: 12,
+                                                                              width: 12,
+                                                                            ),
                                                                     ),
                                                                   ),
                                                                 ),
