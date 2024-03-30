@@ -358,7 +358,11 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(
-                                                    top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350, left: 30, right: 30),
+                                                  top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350,
+                                                  left: 30,
+                                                  right: 30,
+                                                  bottom: 40,
+                                                ),
                                                 child: Container(
                                                   constraints: BoxConstraints(
                                                     minHeight: 500,
@@ -367,6 +371,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                                   child: CustomPaint(
                                                     painter: LetterPaperPainter(
                                                       color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                                      lineCount: 0,
                                                     ),
                                                     child: Text(
                                                       data.diaryContent,

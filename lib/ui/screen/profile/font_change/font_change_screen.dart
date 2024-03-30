@@ -63,7 +63,7 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
     ];
 
     return DefaultLayout(
-      screenName: 'Screen_Event_Main_Font_Change',
+      screenName: 'Screen_Event_Profile_FontChange',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

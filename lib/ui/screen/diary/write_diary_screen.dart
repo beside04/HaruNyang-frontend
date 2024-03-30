@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -261,6 +262,10 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
           },
           child: Scaffold(
             appBar: AppBar(
+              systemOverlayStyle: SystemUiOverlayStyle(
+                systemNavigationBarColor: Theme.of(context).colorScheme.surfaceModal,
+                systemNavigationBarDividerColor: Theme.of(context).colorScheme.surfaceModal,
+              ),
               elevation: 0,
               actions: [
                 Consumer(builder: (context, ref, child) {
@@ -576,12 +581,14 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
-                                        top: ((croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null) ||
-                                                (ref.watch(diaryProvider).diaryDetailData != null && ref.watch(diaryProvider).diaryDetailData!.image != ''))
-                                            ? 350
-                                            : 70,
-                                        left: 30,
-                                        right: 30),
+                                      top: ((croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null) ||
+                                              (ref.watch(diaryProvider).diaryDetailData != null && ref.watch(diaryProvider).diaryDetailData!.image != ''))
+                                          ? 350
+                                          : 70,
+                                      left: 30,
+                                      right: 30,
+                                      bottom: 10,
+                                    ),
                                     child: Container(
                                       constraints: BoxConstraints(
                                         minHeight: 500,
@@ -589,6 +596,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                       child: CustomPaint(
                                         painter: LetterPaperPainter(
                                           color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                          lineCount: -1,
                                         ),
                                         child: TextField(
                                           maxLength: 500,
@@ -605,10 +613,9 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                             border: InputBorder.none,
                                             helperText: "",
                                             counterText: "",
+                                            isDense: true,
                                             hintStyle: kBody1Style.copyWith(color: kGrayColor400),
-                                            contentPadding: const EdgeInsets.only(
-                                              top: 4,
-                                            ),
+                                            contentPadding: const EdgeInsets.only(),
                                             filled: true,
                                             enabledBorder: const OutlineInputBorder(
                                               borderSide: BorderSide.none,

@@ -94,11 +94,17 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                                   children: [
                                     Text(
                                       "전체보기",
-                                      style: kSubtitle1Style.copyWith(
-                                        color: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
-                                            ? Theme.of(context).colorScheme.textReversedColor
-                                            : Theme.of(context).colorScheme.textCaption,
-                                      ),
+                                      style: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                          ? kSubtitle1Style.copyWith(
+                                              color: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                                  ? Theme.of(context).colorScheme.textReversedColor
+                                                  : Theme.of(context).colorScheme.textCaption,
+                                            )
+                                          : kBody2Style.copyWith(
+                                              color: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                                  ? Theme.of(context).colorScheme.textReversedColor
+                                                  : Theme.of(context).colorScheme.textCaption,
+                                            ),
                                     ),
                                   ],
                                 ),

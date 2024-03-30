@@ -80,7 +80,7 @@ class TopicBubbleWidget extends StatelessWidget {
                 },
                 child: Image.asset(
                   "lib/config/assets/images/diary/write_diary/refresh-2.png",
-                  width: 24,
+                  width: 16,
                   color: Theme.of(context).colorScheme.iconSubColor,
                 ),
               )

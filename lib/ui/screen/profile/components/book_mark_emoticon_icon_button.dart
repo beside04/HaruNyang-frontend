@@ -45,9 +45,13 @@ class BookMarkEmoticonIconButton extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   name,
-                  style: kBody2Style.copyWith(
-                    color: selected ? Theme.of(context).colorScheme.textReversedColor : Theme.of(context).colorScheme.textCaption,
-                  ),
+                  style: selected
+                      ? kSubtitle1Style.copyWith(
+                          color: selected ? Theme.of(context).colorScheme.textReversedColor : Theme.of(context).colorScheme.textCaption,
+                        )
+                      : kBody2Style.copyWith(
+                          color: selected ? Theme.of(context).colorScheme.textReversedColor : Theme.of(context).colorScheme.textCaption,
+                        ),
                 ),
               ],
             ),
