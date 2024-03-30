@@ -25,7 +25,7 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
 
     final List<Font> fontList = [
       Font(
-        title: '시스템폰트(Pretendard)',
+        title: '시스템 폰트(Pretendard)',
         value: 'pretendard',
         size: 16,
         height: 2.1,
@@ -63,7 +63,7 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
     ];
 
     return DefaultLayout(
-      screenName: 'Screen_Event_Main_Font_Change',
+      screenName: 'Screen_Event_Profile_FontChange',
       child: Scaffold(
         appBar: AppBar(
           title: Text(

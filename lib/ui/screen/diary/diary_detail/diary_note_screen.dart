@@ -124,7 +124,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                                 );
                                                             toast(
                                                               context: context,
-                                                              text: '북마크를 삭제했어요.',
+                                                              text: '편지 보관함에서 편지를 삭제했어요.',
                                                               isCheckIcon: true,
                                                             );
                                                           },
@@ -146,7 +146,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
                                                                 );
                                                             toast(
                                                               context: context,
-                                                              text: '북마크를 추가했어요.',
+                                                              text: '편지 보관함에 편지를 보관했어요.',
                                                               isCheckIcon: true,
                                                             );
                                                           },

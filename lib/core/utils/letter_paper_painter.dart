@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 
 class LetterPaperPainter extends CustomPainter {
   final Color color;
+  final int lineCount;
 
   LetterPaperPainter({
     required this.color,
+    required this.lineCount,
   });
 
   @override
@@ -19,7 +21,7 @@ class LetterPaperPainter extends CustomPainter {
     final lineSpace = 34.0; // The space between lines
 
     // Draw lines based on the number of lines of the text
-    for (var i = 0; i < (size.height / lineHeight) + 3; i++) {
+    for (var i = 0; i < (size.height / lineHeight) + lineCount; i++) {
       final y = i * lineHeight + lineSpace;
       canvas.drawLine(Offset(0, y), Offset(size.width, y), paint);
     }

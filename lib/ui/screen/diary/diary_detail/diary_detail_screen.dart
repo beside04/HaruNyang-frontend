@@ -23,7 +23,6 @@ import 'package:frontend/ui/screen/diary/write_diary_screen.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:intl/intl.dart';
-import 'package:lottie/lottie.dart';
 import 'package:rive/rive.dart' as rive;
 
 class DiaryDetailScreen extends ConsumerStatefulWidget {
@@ -104,10 +103,13 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
 
                 if (!snapshot.hasData) {
                   return Center(
-                    child: Lottie.asset(
-                      'lib/config/assets/lottie/loading_haru.json',
-                      fit: BoxFit.fill,
+                    child: Container(
+                      color: Theme.of(context).colorScheme.backgroundColor,
                     ),
+                    // Lottie.asset(
+                    //   'lib/config/assets/lottie/loading_haru.json',
+                    //   fit: BoxFit.fill,
+                    // ),
                   );
                 }
 
@@ -339,7 +341,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                                             child: Stack(
                                                               children: [
                                                                 Container(
-                                                                  color: kImageBackgroundColor,
+                                                                  color: Theme.of(context).colorScheme.surface_02,
                                                                   width: MediaQuery.of(context).size.width - 100,
                                                                   height: MediaQuery.of(context).size.width - 100,
                                                                   child: Image.network(
@@ -356,7 +358,11 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(
-                                                    top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350, left: 30, right: 30),
+                                                  top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350,
+                                                  left: 30,
+                                                  right: 30,
+                                                  bottom: 40,
+                                                ),
                                                 child: Container(
                                                   constraints: BoxConstraints(
                                                     minHeight: 500,
@@ -365,6 +371,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                                   child: CustomPaint(
                                                     painter: LetterPaperPainter(
                                                       color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                                      lineCount: 0,
                                                     ),
                                                     child: Text(
                                                       data.diaryContent,

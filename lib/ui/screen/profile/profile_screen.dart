@@ -51,8 +51,7 @@ class ProfileScreen extends ConsumerWidget {
                         decoration: BoxDecoration(
                           color: kOrange300Color,
                           shape: BoxShape.circle,
-                          border:
-                              Border.all(width: 0.5, color: Colors.transparent),
+                          border: Border.all(width: 0.5, color: Colors.transparent),
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(6.w),
@@ -71,8 +70,7 @@ class ProfileScreen extends ConsumerWidget {
                       Consumer(builder: (context, ref, child) {
                         return Text(
                           '${ref.watch(onBoardingProvider).nickname}님 반가워요!',
-                          style: kHeader2Style.copyWith(
-                              color: Theme.of(context).colorScheme.textTitle),
+                          style: kHeader2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                         );
                       }),
                       SizedBox(
@@ -123,10 +121,7 @@ class ProfileScreen extends ConsumerWidget {
                             Consumer(builder: (context, ref, child) {
                               return Text(
                                 " ${ref.watch(onBoardingProvider).email}",
-                                style: kBody3Style.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .textSubtitle),
+                                style: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                               );
                             }),
                           ],
@@ -159,8 +154,7 @@ class ProfileScreen extends ConsumerWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => ProfileSettingScreen(
-                        isKakaoLogin:
-                            ref.watch(onBoardingProvider).loginType == 'KAKAO',
+                        isKakaoLogin: ref.watch(onBoardingProvider).loginType == 'KAKAO',
                       ),
                     ),
                   );
@@ -174,7 +168,7 @@ class ProfileScreen extends ConsumerWidget {
                   "lib/config/assets/images/profile/navigate_next.svg",
                   color: Theme.of(context).colorScheme.iconSubColor,
                 ),
-                title: '편지보관함',
+                title: '편지 보관함',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () {
                   Navigator.push(
@@ -214,12 +208,10 @@ class ProfileScreen extends ConsumerWidget {
               Consumer(builder: (context, ref, child) {
                 return InkWell(
                   onTap: () {
-                    ref.watch(mainProvider.notifier).tempThemeMode =
-                        ref.watch(mainProvider).themeMode;
+                    ref.watch(mainProvider.notifier).tempThemeMode = ref.watch(mainProvider).themeMode;
 
                     showModalBottomSheet(
-                      backgroundColor:
-                          Theme.of(context).colorScheme.backgroundModal,
+                      backgroundColor: Theme.of(context).colorScheme.backgroundModal,
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.vertical(
                           top: Radius.circular(25.0),
@@ -227,11 +219,9 @@ class ProfileScreen extends ConsumerWidget {
                       ),
                       context: context,
                       isScrollControlled: true,
-                      builder: (context) => StatefulBuilder(
-                          builder: (context, StateSetter setState) {
+                      builder: (context) => StatefulBuilder(builder: (context, StateSetter setState) {
                         return Padding(
-                          padding: EdgeInsets.only(
-                              bottom: MediaQuery.of(context).viewInsets.bottom),
+                          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
                           child: Consumer(builder: (context, ref, child) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -244,10 +234,7 @@ class ProfileScreen extends ConsumerWidget {
                                   padding: EdgeInsets.only(left: 24.0.w),
                                   child: Text(
                                     "기본 테마를 설정해주세요.",
-                                    style: kHeader4Style.copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .textTitle),
+                                    style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                   ),
                                 ),
                                 SizedBox(
@@ -255,42 +242,26 @@ class ProfileScreen extends ConsumerWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    ref
-                                        .watch(mainProvider.notifier)
-                                        .tempThemeMode = ThemeMode.system;
+                                    ref.watch(mainProvider.notifier).tempThemeMode = ThemeMode.system;
                                     setState(() {});
                                   },
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 19, horizontal: 24),
+                                        padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
                                         child: Text(
                                           "시스템 설정",
                                           style: kHeader6Style.copyWith(
-                                              color: ref
-                                                          .watch(mainProvider
-                                                              .notifier)
-                                                          .tempThemeMode ==
-                                                      ThemeMode.system
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .primaryColor
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .textLowEmphasis),
+                                              color: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.system
+                                                  ? Theme.of(context).colorScheme.primaryColor
+                                                  : Theme.of(context).colorScheme.textLowEmphasis),
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ref
-                                                .watch(mainProvider.notifier)
-                                                .tempThemeMode ==
-                                            ThemeMode.system,
+                                        visible: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.system,
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 19, horizontal: 24),
+                                          padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
                                           child: Image.asset(
                                             "lib/config/assets/images/check/primary_color_check_bold.png",
                                             width: 17,
@@ -304,42 +275,26 @@ class ProfileScreen extends ConsumerWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    ref
-                                        .watch(mainProvider.notifier)
-                                        .tempThemeMode = ThemeMode.light;
+                                    ref.watch(mainProvider.notifier).tempThemeMode = ThemeMode.light;
                                     setState(() {});
                                   },
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 19, horizontal: 24),
+                                        padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
                                         child: Text(
                                           "라이트 모드",
                                           style: kHeader6Style.copyWith(
-                                              color: ref
-                                                          .watch(mainProvider
-                                                              .notifier)
-                                                          .tempThemeMode ==
-                                                      ThemeMode.light
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .primaryColor
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .textLowEmphasis),
+                                              color: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.light
+                                                  ? Theme.of(context).colorScheme.primaryColor
+                                                  : Theme.of(context).colorScheme.textLowEmphasis),
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ref
-                                                .watch(mainProvider.notifier)
-                                                .tempThemeMode ==
-                                            ThemeMode.light,
+                                        visible: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.light,
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 19, horizontal: 24),
+                                          padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
                                           child: Image.asset(
                                             "lib/config/assets/images/check/primary_color_check_bold.png",
                                             width: 17,
@@ -353,42 +308,26 @@ class ProfileScreen extends ConsumerWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    ref
-                                        .watch(mainProvider.notifier)
-                                        .tempThemeMode = ThemeMode.dark;
+                                    ref.watch(mainProvider.notifier).tempThemeMode = ThemeMode.dark;
                                     setState(() {});
                                   },
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 19, horizontal: 24),
+                                        padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
                                         child: Text(
                                           "다크 모드",
                                           style: kHeader6Style.copyWith(
-                                              color: ref
-                                                          .watch(mainProvider
-                                                              .notifier)
-                                                          .tempThemeMode ==
-                                                      ThemeMode.dark
-                                                  ? Theme.of(context)
-                                                      .colorScheme
-                                                      .primaryColor
-                                                  : Theme.of(context)
-                                                      .colorScheme
-                                                      .textLowEmphasis),
+                                              color: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.dark
+                                                  ? Theme.of(context).colorScheme.primaryColor
+                                                  : Theme.of(context).colorScheme.textLowEmphasis),
                                         ),
                                       ),
                                       Visibility(
-                                        visible: ref
-                                                .watch(mainProvider.notifier)
-                                                .tempThemeMode ==
-                                            ThemeMode.dark,
+                                        visible: ref.watch(mainProvider.notifier).tempThemeMode == ThemeMode.dark,
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 19, horizontal: 24),
+                                          padding: const EdgeInsets.symmetric(vertical: 19, horizontal: 24),
                                           child: Image.asset(
                                             "lib/config/assets/images/check/primary_color_check_bold.png",
                                             width: 17,
@@ -406,9 +345,7 @@ class ProfileScreen extends ConsumerWidget {
                                 BottomButton(
                                   title: '변경하기',
                                   onTap: () {
-                                    ref
-                                        .watch(mainProvider.notifier)
-                                        .toggleThemeMode();
+                                    ref.watch(mainProvider.notifier).toggleThemeMode();
                                     Navigator.of(context).pop();
                                   },
                                 ),
@@ -431,19 +368,15 @@ class ProfileScreen extends ConsumerWidget {
                               Text(
                                 "${'기본 테마 설정'}   ",
                                 style: kHeader5Style.copyWith(
-                                  color:
-                                      Theme.of(context).colorScheme.textTitle,
+                                  color: Theme.of(context).colorScheme.textTitle,
                                 ),
                               ),
                             ],
                           ),
                           const Spacer(),
                           Text(
-                            ref.watch(mainProvider.notifier).themeModeToString(
-                                ref.watch(mainProvider).themeMode),
-                            style: kBody2Style.copyWith(
-                                color:
-                                    Theme.of(context).colorScheme.textSubtitle),
+                            ref.watch(mainProvider.notifier).themeModeToString(ref.watch(mainProvider).themeMode),
+                            style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                           ),
                           SizedBox(
                             width: 10,
@@ -465,12 +398,22 @@ class ProfileScreen extends ConsumerWidget {
               ),
               Consumer(builder: (context, ref, child) {
                 return ProfileButton(
-                  icon: Text(
-                    ref.watch(fontProvider).selectedFontTitle,
-                    style: kBody2Style.copyWith(
-                        color: Theme.of(context).colorScheme.textSubtitle),
+                  icon: Row(
+                    children: [
+                      Text(
+                        ref.watch(fontProvider).selectedFontTitle,
+                        style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                      ),
+                      const SizedBox(
+                        width: 10,
+                      ),
+                      SvgPicture.asset(
+                        "lib/config/assets/images/profile/navigate_next.svg",
+                        color: Theme.of(context).colorScheme.iconSubColor,
+                      ),
+                    ],
                   ),
-                  title: '폰트 설정',
+                  title: '폰트 변경',
                   titleColor: Theme.of(context).colorScheme.textTitle,
                   onPressed: () {
                     Navigator.push(
@@ -550,11 +493,9 @@ class ProfileScreen extends ConsumerWidget {
                 title: '하루냥 인스타그램',
                 titleColor: Theme.of(context).colorScheme.textTitle,
                 onPressed: () async {
-                  if (await canLaunch(
-                      "instagram://user?username=haru__nyang__")) {
+                  if (await canLaunch("instagram://user?username=haru__nyang__")) {
                     await launch("instagram://user?username=haru__nyang__");
-                  } else if (await canLaunch(
-                      "https://www.instagram.com/haru__nyang__/")) {
+                  } else if (await canLaunch("https://www.instagram.com/haru__nyang__/")) {
                     await launch("https://www.instagram.com/haru__nyang__/");
                   } else {
                     throw 'Could not launch Instagram';

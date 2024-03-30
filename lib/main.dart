@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/resource/firebase_options.dart';
 import 'package:frontend/domains/main/provider/main_provider.dart';
@@ -63,13 +62,8 @@ class MyApp extends ConsumerWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       builder: (BuildContext context, Widget? child) {
-        return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle(
-            statusBarColor: Colors.transparent, // 투명색
-            systemNavigationBarColor: Theme.of(context).colorScheme.brightness == Brightness.dark ? kGrayColor950 : kWhiteColor,
-            systemNavigationBarIconBrightness: Theme.of(context).colorScheme.brightness == Brightness.dark ? Brightness.light : Brightness.dark,
-            systemNavigationBarDividerColor: Theme.of(context).colorScheme.brightness == Brightness.dark ? kGrayColor950 : kWhiteColor,
-          ),
+        return MediaQuery(
+          data: MediaQuery.of(context).copyWith(textScaler: const TextScaler.linear(1.0)),
           child: MaterialApp(
             navigatorObservers: [
               FirebaseAnalyticsObserver(analytics: analytics),

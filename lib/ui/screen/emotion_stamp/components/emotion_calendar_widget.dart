@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -36,14 +35,14 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: 20.h,
+              top: 20,
               left: 11,
               right: 11,
             ),
             child: Consumer(builder: (context, ref, child) {
               return TableCalendar<DiaryDetailData>(
                 onPageChanged: ref.watch(diaryProvider.notifier).onPageChanged,
-                rowHeight: 70.h,
+                rowHeight: 70,
                 focusedDay: ref.watch(diaryProvider).focusedCalendarDate,
                 firstDay: DateTime(1900, 1),
                 lastDay: DateTime(2199, 12),
@@ -51,13 +50,13 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                 weekendDays: const [DateTime.sunday, 6],
                 startingDayOfWeek: StartingDayOfWeek.sunday,
                 locale: 'ko-KR',
-                daysOfWeekHeight: 30.h,
+                daysOfWeekHeight: 30,
                 headerVisible: false,
                 eventLoader: (DateTime day) {
                   return ref.watch(diaryProvider).diaryDataList.where((element) => element.targetDate == format.format(day)).toList();
                 },
                 calendarStyle: CalendarStyle(
-                  cellPadding: EdgeInsets.only(top: 10.h),
+                  cellPadding: EdgeInsets.only(top: 10),
                   cellAlignment: Alignment.bottomCenter,
                   isTodayHighlighted: true,
                   outsideDaysVisible: false,
@@ -142,7 +141,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                         textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                                       ),
                                       SizedBox(
-                                        width: 12.w,
+                                        width: 12,
                                       ),
                                       DialogButton(
                                         title: "예",
@@ -194,7 +193,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                       child: Center(
                         child: Container(
                           padding: EdgeInsets.only(
-                            top: 4.h,
+                            top: 4,
                           ),
                           child: Column(
                             children: [
@@ -254,7 +253,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                                   ),
                                                 )
                                               : Padding(
-                                                  padding: EdgeInsets.all(8.0.w),
+                                                  padding: EdgeInsets.all(8.0),
                                                   child: Text(
                                                     DateFormat('d').format(day),
                                                     style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.iconSubColor),
@@ -273,8 +272,8 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                               bottom: 14,
                             ),
                             child: Container(
-                              width: 25.w,
-                              height: 16.h,
+                              width: 25,
+                              height: 16,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10.0),
                                 color: kOrange300Color,
@@ -289,7 +288,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                           )
                         : DateTime.now().isAfter(day)
                             ? Padding(
-                                padding: EdgeInsets.all(16.0.w),
+                                padding: EdgeInsets.all(16.0),
                                 child: Text(
                                   DateFormat('d').format(day),
                                   style: kCaption1Style.copyWith(color: Theme.of(context).colorScheme.iconSubColor),

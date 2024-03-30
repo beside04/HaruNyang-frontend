@@ -47,7 +47,6 @@ const kGrayColor200 = Color(0xffe9e9e9);
 const kGrayColor100 = Color(0xfff0f0f0);
 const kGrayColor150 = Color(0xffdcdde2);
 const kGrayColor50 = Color(0xfff5f5f5);
-const kImageBackgroundColor = Color(0xffd9d9d9);
 
 const kWhiteColor = Color(0xffffffff);
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
@@ -20,6 +21,10 @@ class DiaryAppBar extends ConsumerWidget implements PreferredSizeWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Consumer(builder: (context, ref, child) {
       return AppBar(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          systemNavigationBarColor: Theme.of(context).colorScheme.backgroundModal,
+          systemNavigationBarDividerColor: Theme.of(context).colorScheme.backgroundModal,
+        ),
         elevation: 0,
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.brightness == Brightness.dark

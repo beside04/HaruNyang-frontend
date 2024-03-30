@@ -2,11 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/layout/default_layout.dart';
+import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domains/bookmark/bookmark_list_state_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
+import 'package:frontend/ui/components/dialog_button.dart';
+import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/ui/screen/profile/components/book_mark_emoticon_icon_button.dart';
@@ -64,7 +67,7 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                   child: Row(
                     children: [
                       Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 4.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
@@ -91,11 +94,17 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                                   children: [
                                     Text(
                                       "전체보기",
-                                      style: kSubtitle1Style.copyWith(
-                                        color: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
-                                            ? Theme.of(context).colorScheme.textReversedColor
-                                            : Theme.of(context).colorScheme.textCaption,
-                                      ),
+                                      style: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                          ? kSubtitle1Style.copyWith(
+                                              color: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                                  ? Theme.of(context).colorScheme.textReversedColor
+                                                  : Theme.of(context).colorScheme.textCaption,
+                                            )
+                                          : kBody2Style.copyWith(
+                                              color: ref.watch(bookmarkListStateProvider.notifier).emotionValue == null
+                                                  ? Theme.of(context).colorScheme.textReversedColor
+                                                  : Theme.of(context).colorScheme.textCaption,
+                                            ),
                                     ),
                                   ],
                                 ),
@@ -216,13 +225,39 @@ class BookMarkScreenState extends ConsumerState<BookMarkScreen> {
                             name: item.author,
                             feeling: item.feeling,
                             onTap: () {
-                              ref.watch(bookmarkListStateProvider.notifier).deleteBookmark(
-                                    item.id!,
-                                  );
-                              toast(
+                              showDialog(
+                                barrierDismissible: true,
                                 context: context,
-                                text: '북마크를 삭제했어요.',
-                                isCheckIcon: true,
+                                builder: (ctx) => DialogComponent(
+                                  title: "보관함에서 정리할까요?",
+                                  actionContent: [
+                                    DialogButton(
+                                      title: "아니요",
+                                      onTap: () => Navigator.pop(context),
+                                      backgroundColor: Theme.of(context).colorScheme.secondaryColor,
+                                      textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                    ),
+                                    const SizedBox(
+                                      width: 12,
+                                    ),
+                                    DialogButton(
+                                      title: "삭제",
+                                      onTap: () {
+                                        ref.watch(bookmarkListStateProvider.notifier).deleteBookmark(
+                                              item.id!,
+                                            );
+                                        toast(
+                                          context: context,
+                                          text: '편지 보관함에서 편지를 삭제했어요.',
+                                          isCheckIcon: true,
+                                        );
+                                        Navigator.pop(context);
+                                      },
+                                      backgroundColor: kOrange200Color,
+                                      textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                    ),
+                                  ],
+                                ),
                               );
                             },
                           ),

@@ -32,7 +32,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
   Widget build(BuildContext context) {
     var fontNotifier = ref.watch(fontProvider.notifier);
     return DefaultLayout(
-      screenName: 'Screen_Event_DiaryResult',
+      screenName: 'Screen_Event_DiaryRead_HaruNyangReply',
       child: Scaffold(
         bottomNavigationBar: SafeArea(
           child: Padding(
@@ -157,7 +157,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                 );
                             toast(
                               context: context,
-                              text: '북마크를 삭제했어요.',
+                              text: '편지 보관함에서 편지를 삭제했어요.',
                               isCheckIcon: true,
                             );
                           },
@@ -179,7 +179,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                 );
                             toast(
                               context: context,
-                              text: '북마크를 추가했어요.',
+                              text: '편지 보관함에 편지를 보관했어요.',
                               isCheckIcon: true,
                             );
                           },
@@ -236,22 +236,23 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                     ),
                     Expanded(
                       child: Padding(
-                        padding: const EdgeInsets.only(left: 30.0, right: 15.0),
+                        padding: const EdgeInsets.only(left: 30.0, right: 15.0, bottom: 20),
                         child: RawScrollbar(
                           thickness: 6,
                           thumbColor: kWhiteColor.withOpacity(0.6),
                           radius: Radius.circular(10.0),
                           child: Padding(
-                            padding: const EdgeInsets.only(right: 15.0, bottom: 30),
+                            padding: const EdgeInsets.only(right: 15.0),
                             child: ListView(
                               physics: const BouncingScrollPhysics(),
                               children: [
                                 CustomPaint(
                                   painter: LetterPaperPainter(
                                     color: kWhiteColor,
+                                    lineCount: 7,
                                   ),
                                   child: Text(
-                                    ref.watch(diaryProvider).diaryDetailData!.comments![0].message,
+                                    "${ref.watch(diaryProvider).diaryDetailData!.comments![0].message}",
                                     style: fontNotifier.getFontStyle().copyWith(
                                           color: kGrayColor850,
                                         ),
@@ -263,21 +264,30 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         ),
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        right: 24.0,
-                        top: 24,
-                        bottom: 30,
-                      ),
-                      child: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
-                          ? Text(
-                              'From. 하루냥',
-                              style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
-                            )
-                          : Text(
-                              "From. ${ref.watch(diaryProvider).diaryDetailData!.comments![0].author}",
-                              style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                    Container(
+                      color: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
+                          ? getLetterModalColor(ref.watch(diaryProvider).diaryDetailData!.feeling, context)
+                          : Theme.of(context).colorScheme.wiseSayingModalColor,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(
+                              right: 24.0,
+                              bottom: 30,
                             ),
+                            child: ref.watch(diaryProvider).diaryDetailData!.comments![0].author == "harunyang"
+                                ? Text(
+                                    'From. 하루냥',
+                                    style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                  )
+                                : Text(
+                                    "From. ${ref.watch(diaryProvider).diaryDetailData!.comments![0].author}",
+                                    style: kSubtitle1Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                  ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),

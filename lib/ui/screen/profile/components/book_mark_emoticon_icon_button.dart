@@ -18,9 +18,8 @@ class BookMarkEmoticonIconButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(selected);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -46,9 +45,13 @@ class BookMarkEmoticonIconButton extends StatelessWidget {
                 const SizedBox(width: 4),
                 Text(
                   name,
-                  style: kBody2Style.copyWith(
-                    color: selected ? Theme.of(context).colorScheme.textReversedColor : Theme.of(context).colorScheme.textCaption,
-                  ),
+                  style: selected
+                      ? kSubtitle1Style.copyWith(
+                          color: selected ? Theme.of(context).colorScheme.textReversedColor : Theme.of(context).colorScheme.textCaption,
+                        )
+                      : kBody2Style.copyWith(
+                          color: selected ? Theme.of(context).colorScheme.textReversedColor : Theme.of(context).colorScheme.textCaption,
+                        ),
                 ),
               ],
             ),
