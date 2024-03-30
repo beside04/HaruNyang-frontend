@@ -42,8 +42,8 @@ class _FontSizeCheckBoxState extends State<FontSizeCheckBox> {
                         height: 24,
                       )
                     : Container(
-                        width: 8,
-                        height: 8,
+                        width: 12,
+                        height: 12,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Theme.of(context).colorScheme.border,
