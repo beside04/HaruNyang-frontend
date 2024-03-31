@@ -121,8 +121,8 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(10, 12, 10, 0),
                             child: Divider(
-                              thickness: 1.h,
-                              height: 1.h,
+                              thickness: 2.h,
+                              height: 2.h,
                               color: Theme.of(context).colorScheme.border,
                             ),
                           ),
@@ -131,17 +131,20 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                             children: [
                               FontSizeCheckBox(
                                 label: '작게',
-                                isSelected: fontState.changedFontSize == fontState.selectedFontDefaultSize - 2 ? true : false,
+                                isSelected:
+                                    fontState.changedFontSize == fontState.selectedFontDefaultSize - 2 ? true : false,
                                 onPressed: fontNotifier.handleDownFontSize,
                               ),
                               FontSizeCheckBox(
                                 label: '기본',
-                                isSelected: fontState.selectedFontDefaultSize == fontState.changedFontSize ? true : false,
+                                isSelected:
+                                    fontState.selectedFontDefaultSize == fontState.changedFontSize ? true : false,
                                 onPressed: fontNotifier.handleSetDefaultFontSize,
                               ),
                               FontSizeCheckBox(
                                 label: '크게',
-                                isSelected: fontState.changedFontSize == fontState.selectedFontDefaultSize + 2 ? true : false,
+                                isSelected:
+                                    fontState.changedFontSize == fontState.selectedFontDefaultSize + 2 ? true : false,
                                 onPressed: fontNotifier.handleUpFontSize,
                               ),
                             ],
@@ -192,7 +195,9 @@ class _FontChangeScreenState extends ConsumerState<FontChangeScreen> {
                               Text(
                                 fontList[i].title,
                                 style: kHeader6Style.copyWith(
-                                  color: fontState.selectedFontValue == fontList[i].value ? Theme.of(context).colorScheme.textPrimary : Theme.of(context).colorScheme.textLowEmphasis,
+                                  color: fontState.selectedFontValue == fontList[i].value
+                                      ? Theme.of(context).colorScheme.textPrimary
+                                      : Theme.of(context).colorScheme.textLowEmphasis,
                                 ),
                               ),
                               SizedBox(
