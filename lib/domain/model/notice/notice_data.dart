@@ -7,10 +7,11 @@ part 'notice_data.g.dart';
 @freezed
 class NoticeData with _$NoticeData {
   factory NoticeData({
-    @Default('') String title,
-    @Default('') String content,
-    @JsonKey(name: 'created_at') @Default('') String createdAt,
-    @JsonKey(name: 'updated_at') @Default('') String updateAt,
+    @JsonKey(name: 'title') @Default('') String title,
+    @JsonKey(name: 'content') @Default('') String content,
+    @JsonKey(name: 'image') @Default('') String image,
+    @JsonKey(name: 'createAt') @Default('') String createdAt,
+    @JsonKey(name: 'updateAt') @Default('') String updateAt,
   }) = _NoticeData;
 
   factory NoticeData.fromJson(Map<String, dynamic> json) =>

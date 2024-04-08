@@ -1,5 +1,5 @@
 import 'package:frontend/core/result.dart';
-import 'package:frontend/core/utils/notification_controller.dart';
+import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -7,8 +7,6 @@ import 'package:frontend/domain/repository/social_login_repository/kakao_login_r
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
-import 'package:frontend/res/constants.dart';
-import 'package:get/get.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class KakaoLoginUseCase {
@@ -47,37 +45,45 @@ class KakaoLoginUseCase {
     );
   }
 
-  Future<SocialIDCheck> checkMember(String socialId) async {
-    //멤버 조회
-    return await serverLoginRepository.checkMember(socialId);
-  }
-
-  Future<Result<String>> login(String socialId) async {
+  Future<Result<String>> login(String socialId, deviceToken) async {
     //social id를 사용하여 서버에 login
-    final loginResult = await loginProcess(socialId);
+    final loginResult = await loginProcess(socialId, deviceToken);
     return loginResult;
   }
 
-  Future<bool> signup(String email, String socialId) async {
+  Future<bool> signup({
+    required String? email,
+    required String socialId,
+    String? deviceToken,
+    required String nickname,
+    required String job,
+    required String birthDate,
+  }) async {
     //social id를 사용하여 회원 가입
-    final bool result =
-        await serverLoginRepository.signup(email, 'KAKAO', socialId);
+    final bool result = await serverLoginRepository.signup(
+      email: email,
+      loginType: 'KAKAO',
+      socialId: socialId,
+      deviceToken: deviceToken,
+      nickname: nickname,
+      job: job,
+      birthDate: birthDate,
+    );
 
     return result;
   }
 
-  Future<Result<String>> loginProcess(String socialId) async {
+  Future<Result<String>> loginProcess(String socialId, deviceToken) async {
     String accessToken = '';
-    var deviceToken = Get.find<NotificationController>().token;
+
+    print("deviceToken deviceTokendeviceToken ${deviceToken}");
 
     //로그인 api 호출
-    final loginResult =
-        await serverLoginRepository.login('KAKAO', socialId, deviceToken);
+    final loginResult = await serverLoginRepository.login('KAKAO', socialId, deviceToken);
 
     return await loginResult.when(
       success: (loginData) async {
         await tokenRepository.setAccessToken(loginData.accessToken);
-        await tokenRepository.setRefreshToken(loginData.refreshToken);
         return Result.success(accessToken);
       },
       error: (message) {
@@ -90,6 +96,7 @@ class KakaoLoginUseCase {
   Future<UserIdResponse?> logout() async {
     await tokenRepository.deleteAllToken();
     onBoardingRepository.clearMyInformation();
+    await AutoDiarySaveDataSource().deleteAllDiary();
     return await socialLoginRepository.logout();
   }
 
@@ -97,6 +104,8 @@ class KakaoLoginUseCase {
     await tokenRepository.deleteAllToken();
     await darkModeUseCase.deleteDarkModeData();
     onBoardingRepository.clearMyInformation();
+    await AutoDiarySaveDataSource().deleteAllDiary();
+    await UserApi.instance.unlink();
     await pushMessagePermissionUseCase.deletePushMessagePermissionData();
     return await socialLoginRepository.withdrawal();
   }

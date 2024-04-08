@@ -11,8 +11,16 @@ class PopUpUseCase {
     return await popUpRepository.getLastPopUpDate();
   }
 
+  Future<String?> getLastBirthDayPopUpDate() async {
+    return await popUpRepository.getLastBirthDayPopUpDate();
+  }
+
   Future<void> setLastPopUpDate(String lastPopUpDate) async {
     await popUpRepository.setLastPopUpDate(lastPopUpDate);
+  }
+
+  Future<void> setLastBirthDayPopUpDate(String lastBirthDayPopUpDate) async {
+    await popUpRepository.setLastBirthDayPopUpDate(lastBirthDayPopUpDate);
   }
 
   Future<void> deleteLastPopUpDate() async {

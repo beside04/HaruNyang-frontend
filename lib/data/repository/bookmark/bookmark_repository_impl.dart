@@ -1,6 +1,6 @@
+import 'package:frontend/apis/bookmark_api.dart';
 import 'package:frontend/core/result.dart';
-import 'package:frontend/data/data_source/remote_data/bookmark_api.dart';
-import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
+import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/repository/bookmark/bookmark_repository.dart';
 
 class BookmarkRepositoryImpl implements BookmarkRepository {
@@ -16,8 +16,8 @@ class BookmarkRepositoryImpl implements BookmarkRepository {
   }
 
   @override
-  Future<Result<List<BookmarkData>>> getBookmark(int page, int limit) async {
-    return await bookmarkApi.getBookmark(page, limit);
+  Future<Result<List<CommentData>>> getBookmark(int page, int limit, String? feeling) async {
+    return await bookmarkApi.getBookmark(page, limit, feeling);
   }
 
   @override

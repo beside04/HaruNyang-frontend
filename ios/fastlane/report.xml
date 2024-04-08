@@ -5,57 +5,44 @@
     
     
       
-      <testcase classname="fastlane.lanes" name="00: default_platform" time="0.000228">
+      <testcase classname="fastlane.lanes" name="0: default_platform" time="0.000263">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="01: Switch to ios flutter_build_ios lane" time="8.6e-05">
+      <testcase classname="fastlane.lanes" name="1: latest_testflight_build_number" time="5.320308">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="02: cd .." time="0.009919">
+      <testcase classname="fastlane.lanes" name="2: increment_build_number" time="2.435792">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="03: flutter clean" time="2.917966">
+      <testcase classname="fastlane.lanes" name="3: Switch to ios flutter_build_ios lane" time="0.000138">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="04: flutter build ios --no-codesign -t lib/main.dart" time="128.996399">
+      <testcase classname="fastlane.lanes" name="4: cd .." time="0.008852">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="05: build_app" time="169.061193">
+      <testcase classname="fastlane.lanes" name="5: flutter clean" time="6.274691">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="06: upload_to_testflight" time="845.473668">
+      <testcase classname="fastlane.lanes" name="6: flutter build ios --no-codesign -t lib/main.dart" time="125.606038">
         
       </testcase>
     
       
-      <testcase classname="fastlane.lanes" name="07: Switch to ios send_slack_message lane" time="0.000197">
+      <testcase classname="fastlane.lanes" name="7: build_app" time="121.545114">
         
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="08: get_version_number" time="0.025099">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="09: get_build_number" time="1.468886">
-        
-      </testcase>
-    
-      
-      <testcase classname="fastlane.lanes" name="10: slack" time="0.757462">
+          <failure message="/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/actions/actions_helper.rb:67:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:255:in `block in execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:229:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:229:in `execute_action'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:157:in `trigger_action_by_name'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/fast_file.rb:159:in `method_missing'&#10;Fastfile:53:in `block (2 levels) in parsing_binding'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/lane.rb:33:in `call'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:49:in `block in execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:45:in `chdir'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/runner.rb:45:in `execute'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/lane_manager.rb:47:in `cruise_lane'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/command_line_handler.rb:36:in `handle'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:110:in `block (2 levels) in run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:187:in `call'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/command.rb:157:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/runner.rb:444:in `run_active_command'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane_core/lib/fastlane_core/ui/fastlane_runner.rb:124:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/commander-4.6.0/lib/commander/delegates.rb:18:in `run!'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:354:in `run'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/commands_generator.rb:43:in `start'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/fastlane/lib/fastlane/cli_tools_distributor.rb:123:in `take_off'&#10;/Library/Ruby/Gems/2.6.0/gems/fastlane-2.212.1/bin/fastlane:23:in `&lt;top (required)&gt;'&#10;/usr/local/bin/fastlane:23:in `load'&#10;/usr/local/bin/fastlane:23:in `&lt;main&gt;'&#10;&#10;Error packaging up the application" />
         
       </testcase>
     

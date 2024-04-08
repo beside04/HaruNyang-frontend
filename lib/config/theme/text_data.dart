@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/config/theme/color_data.dart';
 
-const pretendard = 'pretendard';
+const fontFamily = 'pretendard';
 
 //Header1 Style
 TextStyle kHeader1Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 28,
   fontWeight: FontWeight.w700,
   height: 1.2857,
@@ -13,7 +13,7 @@ TextStyle kHeader1Style = const TextStyle(
 
 //Header2 Style
 TextStyle kHeader2Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 24,
   fontWeight: FontWeight.w700,
   height: 1.3333,
@@ -21,7 +21,7 @@ TextStyle kHeader2Style = const TextStyle(
 
 //Header3 Style
 TextStyle kHeader3Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 20,
   fontWeight: FontWeight.w700,
   height: 1.4,
@@ -29,7 +29,7 @@ TextStyle kHeader3Style = const TextStyle(
 
 //Header4 Style
 TextStyle kHeader4Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 18,
   fontWeight: FontWeight.w700,
   height: 1.3333,
@@ -37,14 +37,14 @@ TextStyle kHeader4Style = const TextStyle(
 
 //Header5 Style
 TextStyle kHeader5Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 16,
   fontWeight: FontWeight.w600,
   height: 1.375,
 );
 
 TextStyle kHeader5Gray300UnderlineStyle = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 16,
   color: kGrayColor500,
   fontWeight: FontWeight.w600,
@@ -54,7 +54,7 @@ TextStyle kHeader5Gray300UnderlineStyle = const TextStyle(
 
 //Header6 Style
 TextStyle kHeader6Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 16,
   fontWeight: FontWeight.w500,
   height: 1.375,
@@ -62,7 +62,7 @@ TextStyle kHeader6Style = const TextStyle(
 
 //Subtitle1 Style
 TextStyle kSubtitle1Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
   fontSize: 14,
   fontWeight: FontWeight.w600,
   height: 1.4285,
@@ -70,15 +70,23 @@ TextStyle kSubtitle1Style = const TextStyle(
 
 //Body1 Style
 TextStyle kBody1Style = const TextStyle(
-  fontFamily: pretendard,
+  fontFamily: fontFamily,
+  fontSize: 16,
+  fontWeight: FontWeight.w400,
+  height: 1.5,
+);
+
+//Body2 Style
+TextStyle kBody2Style = const TextStyle(
+  fontFamily: fontFamily,
   fontSize: 14,
   fontWeight: FontWeight.w400,
   height: 1.4285,
 );
 
-//Body2 Style
-TextStyle kBody2Style = const TextStyle(
-  fontFamily: pretendard,
+//Body3 Style
+TextStyle kBody3Style = const TextStyle(
+  fontFamily: fontFamily,
   fontSize: 12,
   fontWeight: FontWeight.w400,
   height: 1.5,
@@ -86,8 +94,15 @@ TextStyle kBody2Style = const TextStyle(
 
 //Caption1 Style
 TextStyle kCaption1Style = const TextStyle(
-  fontFamily: pretendard,
-  fontSize: 10,
+  fontFamily: fontFamily,
+  fontSize: 11,
   fontWeight: FontWeight.w600,
+  height: 1.2,
+);
+
+TextStyle kCaption2Style = const TextStyle(
+  fontFamily: fontFamily,
+  fontSize: 10,
+  fontWeight: FontWeight.w500,
   height: 1.2,
 );

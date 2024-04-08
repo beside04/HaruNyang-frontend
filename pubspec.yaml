@@ -17,10 +17,11 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.5+16
-
+version: 2.1.4+45
+scripts:
+  codegen: flutter pub run build_runner watch
 environment:
-  sdk: '>=2.18.0 <3.0.0'
+  sdk: '>=3.0.2 <4.0.0'
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -36,29 +37,26 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  get: ^4.6.5
   kakao_flutter_sdk_user: ^1.2.2
-  json_annotation: ^4.7.0
+  json_annotation: ^4.8.1
   freezed_annotation: ^2.2.0
-  flutter_secure_storage: ^6.0.0
-  intl: ^0.17.0
-  flutter_form_builder: ^7.6.0
-  form_builder_validators: ^8.3.0
-  flutter_datetime_picker: ^1.5.1
-  flutter_screenutil: ^5.6.0
+  flutter_secure_storage: ^9.0.0
+  intl: ^0.18.0
+  flutter_form_builder: ^9.2.1
+  form_builder_validators: ^9.0.0
+  flutter_screenutil: ^5.7.0
   flutter_svg: ^1.1.6
   flutter_dotenv: ^5.0.2
-  http: ^0.13.5
   fluttertoast: ^8.1.1
-  sign_in_with_apple: ^4.2.0
+  sign_in_with_apple: ^5.0.0
   dio: ^4.0.6
   firebase_core: ^2.8.0
   firebase_messaging: ^14.1.2
   firebase_crashlytics: ^3.0.6
   flutter_local_notifications: ^12.0.4
   table_calendar: ^3.0.8
-  image_picker: ^0.8.6
-  image_cropper: ^3.0.1
+  image_picker: ^1.0.2
+  image_cropper: ^5.0.0
   flutter_keyboard_visibility: ^5.4.0
   cached_network_image: ^3.2.3
   flutter_staggered_animations: ^1.1.1
@@ -75,22 +73,42 @@ dependencies:
   bubble: ^1.2.1
   timezone: ^0.9.1
   firebase_remote_config: ^3.0.12
-  firebase_analytics: ^10.1.6
+  firebase_analytics: ^10.4.1
   url_launcher: ^6.1.9
+  google_mobile_ads: ^2.4.0
+  in_app_review: ^2.0.6
+  store_redirect: ^2.0.1
+  carousel_slider: ^4.2.1
+  smooth_page_indicator: ^1.1.0
+  flutter_animation_progress_bar: ^2.3.1
+  firebase_storage: ^11.2.3
+  rive: ^0.11.3
+  flutter_riverpod: ^2.4.0
+  riverpod_annotation: ^2.1.5
+  pretty_dio_logger: ^1.2.0-beta-1
+  device_info_plus: ^9.0.3
+  package_info_plus: ^4.1.0
+  shared_preferences: ^2.2.1
+  retrofit: ^3.3.1
+  screenshot: ^2.1.0
+  share_plus: ^7.2.2
+  image_gallery_saver: ^2.0.3
+  infinite_scroll_pagination: ^3.2.0
+  device_preview: ^1.1.0
+
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  build_runner: ^2.3.2
+  build_runner: ^2.4.6
   json_serializable: ^6.5.4
   freezed: ^2.2.1
+  riverpod_generator: ^2.3.2
+  custom_lint: ^0.5.3
+  riverpod_lint: ^2.1.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -105,21 +123,21 @@ flutter:
     - lib/config/assets/images/login/
     - lib/config/assets/images/on_boarding/
     - lib/config/assets/images/character/
+    - lib/config/assets/images/character/letter/
     - lib/config/assets/images/diary/weather/
+    - lib/config/assets/images/diary/emotion/
     - lib/config/assets/images/diary/write_diary/
     - lib/config/assets/images/diary/dark_mode/
     - lib/config/assets/images/diary/light_mode/
     - lib/config/assets/images/home/light_mode/
     - lib/config/assets/images/home/dark_mode/
+    - lib/config/assets/images/home/banner/
+    - lib/config/assets/images/check/
     - lib/config/assets/images/profile/
     - lib/config/assets/lottie/
     - .env
-  #   - images/a_dot_ham.jpeg
 
   fonts:
-    - family: CustomIcons
-      fonts:
-        - asset: lib/config/assets/font/customIcons/CustomIcons.ttf
     - family: pretendard
       fonts:
         - asset: lib/config/assets/font/pretendard/Pretendard-Bold.otf
@@ -130,3 +148,24 @@ flutter:
           weight: 500
         - asset: lib/config/assets/font/pretendard/Pretendard-Regular.otf
           weight: 400
+    - family: leeSeoyun
+      fonts:
+        - asset: lib/config/assets/font/leeSeoyun/LeeSeoyun(Mac).ttf
+          weight: 400
+    - family: maruburi
+      fonts:
+        - asset: lib/config/assets/font/maruburi/MaruBuri-Regular.ttf
+          weight: 400
+    - family: nanum_ddaacdandan
+      fonts:
+        - asset: lib/config/assets/font/nanum/nanum_ddaacdandan.ttf
+          weight: 400
+    - family: nanum_bisang
+      fonts:
+        - asset: lib/config/assets/font/nanum/nanum_bisang.ttf
+          weight: 400
+    - family: nanum_junghacsang
+      fonts:
+        - asset: lib/config/assets/font/nanum/nanum_junghacsang.ttf
+          weight: 400
+

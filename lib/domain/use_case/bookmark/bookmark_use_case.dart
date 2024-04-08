@@ -1,5 +1,5 @@
 import 'package:frontend/core/result.dart';
-import 'package:frontend/domain/model/bookmark/bookmark_data.dart';
+import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/repository/bookmark/bookmark_repository.dart';
 
 class BookmarkUseCase {
@@ -13,8 +13,8 @@ class BookmarkUseCase {
     return await bookmarkRepository.saveBookmark(wiseSayingId);
   }
 
-  Future<Result<List<BookmarkData>>> getBookmark(int page, int limit) async {
-    return await bookmarkRepository.getBookmark(page, limit);
+  Future<Result<List<CommentData>>> getBookmark(int page, int limit, String? feeling) async {
+    return await bookmarkRepository.getBookmark(page, limit, feeling);
   }
 
   Future<Result<bool>> deleteBookmark(int bookmarkId) async {

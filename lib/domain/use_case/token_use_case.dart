@@ -15,12 +15,20 @@ class TokenUseCase {
     await tokenRepository.setAccessToken(token);
   }
 
-  Future<String?> getRefreshToken() async {
-    return await tokenRepository.getRefreshToken();
+  Future<String?> getLoginType() async {
+    return await tokenRepository.getLoginType();
   }
 
-  Future<void> setRefreshToken(String token) async {
-    await tokenRepository.setRefreshToken(token);
+  Future<void> setLoginType(String type) async {
+    await tokenRepository.setLoginType(type);
+  }
+
+  Future<String?> getSocialId() async {
+    return await tokenRepository.getSocialId();
+  }
+
+  Future<void> setSocialId(String id) async {
+    await tokenRepository.setSocialId(id);
   }
 
   Future<void> deleteAllToken() async {
