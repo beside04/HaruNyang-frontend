@@ -81,19 +81,16 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref.watch(writeDiaryProvider.notifier).setRandomImageNumber(Random().nextInt(7) + 1);
       ref.watch(animationControllerProvider.notifier).state = AnimationController(vsync: this);
-      ref
-          .watch(writeDiaryProvider.notifier)
-          .diaryEditingController
-          .addListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
+      ref.watch(writeDiaryProvider.notifier).diaryEditingController.addListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
 
       ref.watch(writeDiaryProvider.notifier).getDefaultTopic(widget.emotion);
 
       if (widget.diaryData != null) {
         ref.watch(writeDiaryProvider.notifier).setDiaryData(widget.diaryData!);
+        print("ref.watch(writeDiaryProvider).networkImage ${ref.watch(writeDiaryProvider).networkImage}");
       } else {
         ref.watch(writeDiaryProvider.notifier).diaryEditingController.text = "";
-        ref.watch(writeDiaryProvider.notifier).state =
-            ref.watch(writeDiaryProvider.notifier).state.copyWith(diaryValueLength: 0);
+        ref.watch(writeDiaryProvider.notifier).state = ref.watch(writeDiaryProvider.notifier).state.copyWith(diaryValueLength: 0);
       }
     });
   }
@@ -109,9 +106,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
         weather: widget.weather,
         targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
         topic: ref.watch(writeDiaryProvider).topic.value,
-        image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
-            ? ref.watch(diaryProvider).diaryDetailData?.image ?? ""
-            : ref.watch(writeDiaryProvider).firebaseImageUrl,
+        image: ref.watch(writeDiaryProvider).firebaseImageUrl == "" ? ref.watch(diaryProvider).diaryDetailData?.image ?? "" : ref.watch(writeDiaryProvider).firebaseImageUrl,
         isAutoSave: true,
       );
 
@@ -163,6 +158,13 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
       setState(() {
         if (croppedImage != null) {
           croppedFile = croppedImage;
+          writeDiaryNotifier.state = ref.read(writeDiaryProvider).copyWith(networkImage: "");
+        }
+        if (croppedImage == null) {
+          setState(() {
+            pickedFile = null;
+            croppedFile = null;
+          });
         }
       });
     }
@@ -183,8 +185,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
 
       await ref.read(diaryProvider.notifier).postImageHistory(downloadURL);
 
-      ref.read(writeDiaryProvider.notifier).state =
-          ref.read(writeDiaryProvider).copyWith(firebaseImageUrl: downloadURL);
+      ref.read(writeDiaryProvider.notifier).state = ref.read(writeDiaryProvider).copyWith(firebaseImageUrl: downloadURL);
     } on FirebaseException {
       // Get.snackbar('알림', '이미지 업로드에 실패하였습니다.');
       // e.g, e.code == 'canceled'
@@ -198,7 +199,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     });
 
     if (mounted) {
-      writeDiaryNotifier.state = ref.read(writeDiaryProvider).copyWith(networkImage: null);
+      writeDiaryNotifier.state = ref.read(writeDiaryProvider).copyWith(networkImage: "");
+      writeDiaryNotifier.resetFirebaseImageUrl();
     }
     await Future.delayed(Duration.zero);
     diaryNotifier.setDiaryDetailData(ref.read(diaryProvider).diaryDetailData?.copyWith(image: ""));
@@ -316,10 +318,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
 
                               _autoSaveTimer?.cancel();
 
-                              ref
-                                  .watch(writeDiaryProvider.notifier)
-                                  .diaryEditingController
-                                  .removeListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
+                              ref.watch(writeDiaryProvider.notifier).diaryEditingController.removeListener(ref.watch(writeDiaryProvider.notifier).onTextChanged);
 
                               Future(() {
                                 ref.watch(diaryProvider.notifier).getEmotionStampList();
@@ -334,22 +333,29 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                 'duration': stayDuration.inSeconds,
                               });
 
+                              print("ref.watch(writeDiaryProvider).networkImage ${ref.watch(writeDiaryProvider).networkImage}");
+                              print("ref.watch(writeDiaryProvider).networkImage == " " ${ref.watch(writeDiaryProvider).networkImage == ""}");
+                              print("ref.watch(writeDiaryPasdadsdasdsaImage == "
+                                  " ${ref.watch(writeDiaryProvider).firebaseImageUrl == "" ? ref.watch(writeDiaryProvider).networkImage == "" ? "" : ref.watch(writeDiaryProvider).networkImage : ref.watch(writeDiaryProvider).firebaseImageUrl}");
+
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) => WriteDiaryLoadingScreen(
                                     diaryData: DiaryDetailData(
-                                        id: widget.diaryData?.id,
-                                        diaryContent:
-                                            ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
-                                        feeling: widget.emotion,
-                                        feelingScore: 1,
-                                        weather: widget.weather,
-                                        targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
-                                        topic: ref.watch(writeDiaryProvider).topic.value,
-                                        image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
-                                            ? ref.watch(diaryProvider).diaryDetailData?.image ?? ""
-                                            : ref.watch(writeDiaryProvider).firebaseImageUrl),
+                                      id: widget.diaryData?.id,
+                                      diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+                                      feeling: widget.emotion,
+                                      feelingScore: 1,
+                                      weather: widget.weather,
+                                      targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
+                                      topic: ref.watch(writeDiaryProvider).topic.value,
+                                      image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
+                                          ? ref.watch(writeDiaryProvider).networkImage == ""
+                                              ? ""
+                                              : ref.watch(writeDiaryProvider).networkImage
+                                          : ref.watch(writeDiaryProvider).firebaseImageUrl,
+                                    ),
                                     date: widget.date,
                                     isEditScreen: widget.isEditScreen,
                                   ),
@@ -359,9 +365,8 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                           },
                     child: Text(
                       '등록',
-                      style: ref.watch(writeDiaryProvider).diaryValue.isEmpty
-                          ? kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textDisabled)
-                          : kHeader6Style.copyWith(color: kOrange350Color),
+                      style:
+                          ref.watch(writeDiaryProvider).diaryValue.isEmpty ? kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textDisabled) : kHeader6Style.copyWith(color: kOrange350Color),
                     ),
                   );
                 }),
@@ -374,414 +379,407 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                 onPressed: handleBackButton,
               ),
             ),
-            body: SafeArea(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: ListView(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Get_Topic');
-                                  ref.watch(writeDiaryProvider.notifier).getRandomTopic();
-                                },
-                                child: TopicBubbleWidget(
-                                  color: Theme.of(context).colorScheme.secondaryColor,
-                                  text: Consumer(builder: (context, ref, child) {
-                                    return Text(
-                                      textAlign: TextAlign.center,
-                                      ref.watch(writeDiaryProvider).topic.value,
-                                      style: fontNotifier.getFontStyle().copyWith(
-                                            color: Theme.of(context).colorScheme.textTitle,
-                                            fontSize: fontState.selectedFontDefaultSize - 2,
-                                            height: 1,
-                                          ),
-                                    );
-                                  }),
-                                  onDelete: () {},
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 164,
-                          child: Stack(
-                            children: [
-                              Center(
-                                child: Image.asset(
-                                  getWeatherCharacter(widget.weather),
-                                  height: 140,
-                                ),
-                              ),
-                              getWeatherAnimation(widget.weather) == ""
-                                  ? Container()
-                                  : RiveAnimation.asset(
-                                      getWeatherAnimation(widget.weather),
-                                      fit: BoxFit.fill,
-                                    ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Container(
-                              color: Theme.of(context).colorScheme.surface_01,
-                              child: Stack(
+            body: Container(
+              color: Theme.of(context).colorScheme.surfaceModal,
+              child: SafeArea(
+                child: Container(
+                  color: Theme.of(context).colorScheme.backgroundColor,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
+                              child: Column(
                                 children: [
-                                  Align(
-                                    alignment: Alignment.center,
-                                    child: SizedBox(
-                                      height: 72.0,
-                                      child: WeatherEmotionBadgeWritingDiary(
-                                        emoticon: getEmoticonImage(widget.emotion),
-                                        emoticonDesc: getEmoticonValue(widget.emotion),
-                                        weatherIcon: getWeatherChipImage(widget.weather),
-                                        weatherIconDesc: getWeatherValue(widget.weather),
-                                        color: Theme.of(context).colorScheme.letterBackgroundLineColor,
-                                      ),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    top: 70,
-                                    child: Consumer(builder: (context, ref, child) {
-                                      return ref.watch(diaryProvider).diaryDetailData == null
-                                          ? Container()
-                                          : ref.watch(diaryProvider).diaryDetailData!.image == ''
-                                              ? Container()
-                                              : Center(
-                                                  child: Padding(
-                                                    padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-                                                    child: Stack(
-                                                      children: [
-                                                        Container(
-                                                          color: Theme.of(context).colorScheme.surface_02,
-                                                          width: 260,
-                                                          height: 260,
-                                                          child: Image.network(
-                                                            ref.watch(diaryProvider).diaryDetailData!.image!,
-                                                            width: 260,
-                                                            height: 260,
-                                                          ),
-                                                        ),
-                                                        Positioned(
-                                                          right: 12,
-                                                          top: 12,
-                                                          child: GestureDetector(
-                                                            onTap: () {
-                                                              clear();
-                                                            },
-                                                            child: Container(
-                                                              margin: const EdgeInsets.all(6),
-                                                              height: 24.h,
-                                                              width: 24.w,
-                                                              child: Theme.of(context).colorScheme.brightness ==
-                                                                      Brightness.dark
-                                                                  ? SvgPicture.asset(
-                                                                      "lib/config/assets/images/diary/dark_mode/new_close_dark.svg",
-                                                                      height: 12,
-                                                                      width: 12,
-                                                                    )
-                                                                  : SvgPicture.asset(
-                                                                      "lib/config/assets/images/diary/light_mode/new_close_light.svg",
-                                                                      height: 12,
-                                                                      width: 12,
-                                                                    ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                );
-                                    }),
-                                  ),
-                                  Positioned(
-                                    top: 70,
-                                    child: Consumer(builder: (context, ref, child) {
-                                      return (croppedFile != null ||
-                                              pickedFile != null ||
-                                              ref.watch(writeDiaryProvider).networkImage != null)
-                                          ? SizedBox(
-                                              width: MediaQuery.of(context).size.width - 40,
-                                              child: Center(
-                                                child: Padding(
-                                                  padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-                                                  child: ref.watch(writeDiaryProvider).networkImage != null
-                                                      ? Stack(
-                                                          children: [
-                                                            Container(
-                                                              color: Theme.of(context).colorScheme.surface_02,
-                                                              width: MediaQuery.of(context).size.width - 100,
-                                                              height: MediaQuery.of(context).size.width - 100,
-                                                              child: Image.network(
-                                                                ref.watch(writeDiaryProvider).networkImage!,
-                                                                width: MediaQuery.of(context).size.width - 100,
-                                                                height: MediaQuery.of(context).size.width - 100,
-                                                              ),
-                                                            ),
-                                                            Positioned(
-                                                              right: 12,
-                                                              top: 12,
-                                                              child: GestureDetector(
-                                                                onTap: () async {
-                                                                  await clear();
-                                                                },
-                                                                child: Container(
-                                                                  margin: const EdgeInsets.all(6),
-                                                                  decoration: BoxDecoration(
-                                                                    color: kWhiteColor.withOpacity(0.6),
-                                                                    shape: BoxShape.circle,
-                                                                  ),
-                                                                  height: 24.h,
-                                                                  width: 24.w,
-                                                                  child: SvgPicture.asset(
-                                                                    "lib/config/assets/images/diary/light_mode/close.svg",
-                                                                    color: kGrayColor950,
-                                                                    height: 12,
-                                                                    width: 12,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        )
-                                                      : croppedFile != null
-                                                          ? Stack(
-                                                              children: [
-                                                                Container(
-                                                                  color: Theme.of(context).colorScheme.surface_02,
-                                                                  width: 260,
-                                                                  height: 260,
-                                                                  child: Image.file(
-                                                                    File(croppedFile!.path),
-                                                                    width: 260,
-                                                                    height: 260,
-                                                                  ),
-                                                                ),
-                                                                Positioned(
-                                                                  right: 12,
-                                                                  top: 12,
-                                                                  child: GestureDetector(
-                                                                    onTap: () {
-                                                                      clear();
-                                                                    },
-                                                                    child: Container(
-                                                                      margin: const EdgeInsets.all(6),
-                                                                      width: 24.w,
-                                                                      height: 24.h,
-                                                                      child: Theme.of(context).colorScheme.brightness ==
-                                                                              Brightness.dark
-                                                                          ? SvgPicture.asset(
-                                                                              "lib/config/assets/images/diary/dark_mode/new_close_dark.svg",
-                                                                              height: 12,
-                                                                              width: 12,
-                                                                            )
-                                                                          : SvgPicture.asset(
-                                                                              "lib/config/assets/images/diary/light_mode/new_close_light.svg",
-                                                                              height: 12,
-                                                                              width: 12,
-                                                                            ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            )
-                                                          : const SizedBox.shrink(),
-                                                ),
-                                              ),
-                                            )
-                                          : Container();
-                                    }),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                      top: ((croppedFile != null ||
-                                                  pickedFile != null ||
-                                                  ref.watch(writeDiaryProvider).networkImage != null) ||
-                                              (ref.watch(diaryProvider).diaryDetailData != null &&
-                                                  ref.watch(diaryProvider).diaryDetailData!.image != ''))
-                                          ? 350
-                                          : 70,
-                                      left: 30,
-                                      right: 30,
-                                      bottom: 10,
-                                    ),
-                                    child: Container(
-                                      constraints: BoxConstraints(
-                                        minHeight: 500,
-                                      ),
-                                      child: CustomPaint(
-                                        painter: LetterPaperPainter(
-                                          color: Theme.of(context).colorScheme.letterBackgroundLineColor,
-                                          lineCount: -1,
-                                        ),
-                                        child: TextField(
-                                          maxLength: 500,
-                                          maxLines: null,
-                                          autofocus: true,
+                                  GestureDetector(
+                                    onTap: () {
+                                      GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Get_Topic');
+                                      ref.watch(writeDiaryProvider.notifier).getRandomTopic();
+                                    },
+                                    child: TopicBubbleWidget(
+                                      color: Theme.of(context).colorScheme.secondaryColor,
+                                      text: Consumer(builder: (context, ref, child) {
+                                        return Text(
+                                          textAlign: TextAlign.center,
+                                          ref.watch(writeDiaryProvider).topic.value,
                                           style: fontNotifier.getFontStyle().copyWith(
-                                                color: Theme.of(context).colorScheme.textBody,
+                                                color: Theme.of(context).colorScheme.textTitle,
+                                                fontSize: fontState.selectedFontDefaultSize - 2,
+                                                height: 1,
                                               ),
-                                          controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
-                                          keyboardType: TextInputType.multiline,
-                                          textAlignVertical: TextAlignVertical.center,
-                                          cursorColor: Theme.of(context).colorScheme.primaryColor,
-                                          decoration: InputDecoration(
-                                            border: InputBorder.none,
-                                            helperText: "",
-                                            counterText: "",
-                                            isDense: true,
-                                            hintStyle: kBody1Style.copyWith(color: kGrayColor400),
-                                            contentPadding: const EdgeInsets.only(),
-                                            filled: true,
-                                            enabledBorder: const OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                            ),
-                                            focusedBorder: const OutlineInputBorder(
-                                              borderSide: BorderSide.none,
-                                            ),
-                                          ),
-                                          onChanged: (value) {
-                                            ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
-                                            value.length == 500
-                                                ? showDialog(
-                                                    barrierDismissible: true,
-                                                    context: context,
-                                                    builder: (ctx) {
-                                                      return DialogComponent(
-                                                        title: "글자 제한",
-                                                        content: Text(
-                                                          "500 글자까지 작성할 수 있어요.",
-                                                          style: kHeader6Style.copyWith(
-                                                              color: Theme.of(context).colorScheme.textSubtitle),
-                                                        ),
-                                                        actionContent: [
-                                                          DialogButton(
-                                                            title: "확인 했어요",
-                                                            onTap: () {
-                                                              Navigator.pop(context);
-                                                            },
-                                                            backgroundColor: kOrange200Color,
-                                                            textStyle: kHeader4Style.copyWith(color: kWhiteColor),
-                                                          ),
-                                                        ],
-                                                      );
-                                                    },
-                                                  )
-                                                : null;
-                                          },
-                                        ),
-                                      ),
+                                        );
+                                      }),
+                                      onDelete: () {},
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: 44.h,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.surfaceModal,
-                      border: Border(
-                        top: BorderSide(
-                          width: 1,
-                          color: Theme.of(context).colorScheme.border,
-                        ),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Picture');
-
-                                cropImage();
-                                // ref.watch(writeDiaryProvider.notifier).selectDeviceImage().then((_) => ref.watch(writeDiaryProvider.notifier).cropImage());
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
-                                child: SvgPicture.asset(
-                                  "lib/config/assets/images/diary/write_diary/album.svg",
-                                  color: Theme.of(context).colorScheme.iconSubColor,
-                                  // width: 24.w,
-                                  // height: 24.h,
-                                ),
+                            SizedBox(
+                              height: 164,
+                              child: Stack(
+                                children: [
+                                  Center(
+                                    child: Image.asset(
+                                      getWeatherCharacter(widget.weather),
+                                      height: 140,
+                                    ),
+                                  ),
+                                  getWeatherAnimation(widget.weather) == ""
+                                      ? Container()
+                                      : RiveAnimation.asset(
+                                          getWeatherAnimation(widget.weather),
+                                          fit: BoxFit.fill,
+                                        ),
+                                ],
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Temp_Save');
-
-                                DiaryDetailData diary = DiaryDetailData(
-                                  id: widget.diaryData?.id,
-                                  diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
-                                  feeling: widget.emotion,
-                                  feelingScore: 1,
-                                  weather: widget.weather,
-                                  targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
-                                  topic: ref.watch(writeDiaryProvider).topic.value,
-                                  image: ref.watch(writeDiaryProvider).firebaseImageUrl == ""
-                                      ? ref.watch(diaryProvider).diaryDetailData?.image ?? ""
-                                      : ref.watch(writeDiaryProvider).firebaseImageUrl,
-                                  isAutoSave: true,
-                                );
-
-                                ref
-                                    .watch(diaryProvider.notifier)
-                                    .saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary)
-                                    .then((value) {
-                                  toast(
-                                    context: context,
-                                    text: '작성 중인 일기가 임시저장 되었어요.',
-                                    isCheckIcon: true,
-                                  );
-                                });
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
-                                child: Image.asset(
-                                  "lib/config/assets/images/diary/write_diary/save-2.png",
-                                  color: Theme.of(context).colorScheme.iconSubColor,
+                            Padding(
+                              padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Container(
+                                  color: Theme.of(context).colorScheme.surface_01,
+                                  child: Stack(
+                                    children: [
+                                      Align(
+                                        alignment: Alignment.center,
+                                        child: SizedBox(
+                                          height: 72.0,
+                                          child: WeatherEmotionBadgeWritingDiary(
+                                            emoticon: getEmoticonImage(widget.emotion),
+                                            emoticonDesc: getEmoticonValue(widget.emotion),
+                                            weatherIcon: getWeatherChipImage(widget.weather),
+                                            weatherIconDesc: getWeatherValue(widget.weather),
+                                            color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        top: 70,
+                                        right: 0,
+                                        left: 0,
+                                        child: Consumer(builder: (context, ref, child) {
+                                          return ref.watch(diaryProvider).diaryDetailData == null
+                                              ? Container()
+                                              : ref.watch(diaryProvider).diaryDetailData!.image == ''
+                                                  ? Container()
+                                                  : Center(
+                                                      child: Stack(
+                                                        children: [
+                                                          Container(
+                                                            color: Theme.of(context).colorScheme.surface_02,
+                                                            width: MediaQuery.of(context).size.width - 100,
+                                                            height: MediaQuery.of(context).size.width - 100,
+                                                            child: Image.network(
+                                                              ref.watch(diaryProvider).diaryDetailData!.image!,
+                                                              width: MediaQuery.of(context).size.width - 100,
+                                                              height: MediaQuery.of(context).size.width - 100,
+                                                            ),
+                                                          ),
+                                                          Positioned(
+                                                            right: 12,
+                                                            top: 12,
+                                                            child: GestureDetector(
+                                                              onTap: () {
+                                                                clear();
+                                                              },
+                                                              child: Container(
+                                                                margin: const EdgeInsets.all(6),
+                                                                height: 24.h,
+                                                                width: 24.w,
+                                                                child: Theme.of(context).colorScheme.brightness == Brightness.dark
+                                                                    ? SvgPicture.asset(
+                                                                        "lib/config/assets/images/diary/dark_mode/new_close_dark.svg",
+                                                                        height: 12,
+                                                                        width: 12,
+                                                                      )
+                                                                    : SvgPicture.asset(
+                                                                        "lib/config/assets/images/diary/light_mode/new_close_light.svg",
+                                                                        height: 12,
+                                                                        width: 12,
+                                                                      ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    );
+                                        }),
+                                      ),
+                                      Positioned(
+                                        top: 70,
+                                        right: 0,
+                                        left: 0,
+                                        child: Consumer(builder: (context, ref, child) {
+                                          return (croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != null)
+                                              ? SizedBox(
+                                                  width: MediaQuery.of(context).size.width - 40,
+                                                  child: Center(
+                                                    child: ref.watch(writeDiaryProvider).networkImage != "" && ref.watch(writeDiaryProvider).networkImage != null
+                                                        ? Stack(
+                                                            children: [
+                                                              Container(
+                                                                color: Theme.of(context).colorScheme.surface_02,
+                                                                width: MediaQuery.of(context).size.width - 100,
+                                                                height: MediaQuery.of(context).size.width - 100,
+                                                                child: Image.network(
+                                                                  ref.watch(writeDiaryProvider).networkImage!,
+                                                                  width: MediaQuery.of(context).size.width - 100,
+                                                                  height: MediaQuery.of(context).size.width - 100,
+                                                                ),
+                                                              ),
+                                                              Positioned(
+                                                                right: 12,
+                                                                top: 12,
+                                                                child: GestureDetector(
+                                                                  onTap: () {
+                                                                    clear();
+                                                                  },
+                                                                  child: Container(
+                                                                    margin: const EdgeInsets.all(6),
+                                                                    width: 24.w,
+                                                                    height: 24.h,
+                                                                    child: Theme.of(context).colorScheme.brightness == Brightness.dark
+                                                                        ? SvgPicture.asset(
+                                                                            "lib/config/assets/images/diary/dark_mode/new_close_dark.svg",
+                                                                            height: 12,
+                                                                            width: 12,
+                                                                          )
+                                                                        : SvgPicture.asset(
+                                                                            "lib/config/assets/images/diary/light_mode/new_close_light.svg",
+                                                                            height: 12,
+                                                                            width: 12,
+                                                                          ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          )
+                                                        : croppedFile != null
+                                                            ? Stack(
+                                                                children: [
+                                                                  Container(
+                                                                    color: Theme.of(context).colorScheme.surface_02,
+                                                                    width: MediaQuery.of(context).size.width - 100,
+                                                                    height: MediaQuery.of(context).size.width - 100,
+                                                                    child: Image.file(
+                                                                      File(croppedFile!.path),
+                                                                      width: MediaQuery.of(context).size.width - 100,
+                                                                      height: MediaQuery.of(context).size.width - 100,
+                                                                    ),
+                                                                  ),
+                                                                  Positioned(
+                                                                    right: 12,
+                                                                    top: 12,
+                                                                    child: GestureDetector(
+                                                                      onTap: () {
+                                                                        clear();
+                                                                      },
+                                                                      child: Container(
+                                                                        margin: const EdgeInsets.all(6),
+                                                                        width: 24.w,
+                                                                        height: 24.h,
+                                                                        child: Theme.of(context).colorScheme.brightness == Brightness.dark
+                                                                            ? SvgPicture.asset(
+                                                                                "lib/config/assets/images/diary/dark_mode/new_close_dark.svg",
+                                                                                height: 12,
+                                                                                width: 12,
+                                                                              )
+                                                                            : SvgPicture.asset(
+                                                                                "lib/config/assets/images/diary/light_mode/new_close_light.svg",
+                                                                                height: 12,
+                                                                                width: 12,
+                                                                              ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              )
+                                                            : const SizedBox.shrink(),
+                                                  ),
+                                                )
+                                              : Container();
+                                        }),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          top: ((croppedFile != null || pickedFile != null || ref.watch(writeDiaryProvider).networkImage != "") ||
+                                                  (ref.watch(diaryProvider).diaryDetailData != null && ref.watch(diaryProvider).diaryDetailData!.image != ''))
+                                              ? MediaQuery.of(context).size.width - 20
+                                              : 70,
+                                          left: 30,
+                                          right: 30,
+                                          bottom: 20,
+                                        ),
+                                        child: Container(
+                                          constraints: BoxConstraints(
+                                            minHeight: 500,
+                                          ),
+                                          child: CustomPaint(
+                                            painter: LetterPaperPainter(
+                                              color: Theme.of(context).colorScheme.letterBackgroundLineColor,
+                                              lineCount: -1,
+                                            ),
+                                            child: TextField(
+                                              maxLength: 500,
+                                              maxLines: null,
+                                              autofocus: true,
+                                              style: fontNotifier.getFontStyle().copyWith(
+                                                    color: Theme.of(context).colorScheme.textBody,
+                                                  ),
+                                              controller: ref.watch(writeDiaryProvider.notifier).diaryEditingController,
+                                              keyboardType: TextInputType.multiline,
+                                              textAlignVertical: TextAlignVertical.center,
+                                              cursorColor: Theme.of(context).colorScheme.primaryColor,
+                                              decoration: InputDecoration(
+                                                border: InputBorder.none,
+                                                helperText: "",
+                                                counterText: "",
+                                                isDense: true,
+                                                hintStyle: kBody1Style.copyWith(color: kGrayColor400),
+                                                contentPadding: const EdgeInsets.only(),
+                                                filled: true,
+                                                enabledBorder: const OutlineInputBorder(
+                                                  borderSide: BorderSide.none,
+                                                ),
+                                                focusedBorder: const OutlineInputBorder(
+                                                  borderSide: BorderSide.none,
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
+                                                value.length == 500
+                                                    ? showDialog(
+                                                        barrierDismissible: true,
+                                                        context: context,
+                                                        builder: (ctx) {
+                                                          return DialogComponent(
+                                                            title: "글자 제한",
+                                                            content: Text(
+                                                              "500 글자까지 작성할 수 있어요.",
+                                                              style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                                                            ),
+                                                            actionContent: [
+                                                              DialogButton(
+                                                                title: "확인 했어요",
+                                                                onTap: () {
+                                                                  Navigator.pop(context);
+                                                                },
+                                                                backgroundColor: kOrange200Color,
+                                                                textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      )
+                                                    : null;
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 10.h, bottom: 10.h, right: 16.w),
-                          child: Row(
-                            children: [
-                              Consumer(builder: (context, ref, child) {
-                                return Text(
-                                  "${ref.watch(writeDiaryProvider).diaryValueLength}",
-                                  style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
-                                );
-                              }),
-                              Text(
-                                "/500",
-                                style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textLowEmphasis),
-                              ),
-                            ],
+                      ),
+                      Container(
+                        height: 44.h,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.surfaceModal,
+                          border: Border(
+                            top: BorderSide(
+                              width: 1,
+                              color: Theme.of(context).colorScheme.border,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Picture');
+
+                                    cropImage();
+                                    // ref.watch(writeDiaryProvider.notifier).selectDeviceImage().then((_) => ref.watch(writeDiaryProvider.notifier).cropImage());
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
+                                    child: SvgPicture.asset(
+                                      "lib/config/assets/images/diary/write_diary/album.svg",
+                                      color: Theme.of(context).colorScheme.iconSubColor,
+                                      // width: 24.w,
+                                      // height: 24.h,
+                                    ),
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Temp_Save');
+
+                                    DiaryDetailData diary = DiaryDetailData(
+                                      id: widget.diaryData?.id,
+                                      diaryContent: ref.watch(writeDiaryProvider.notifier).diaryEditingController.text,
+                                      feeling: widget.emotion,
+                                      feelingScore: 1,
+                                      weather: widget.weather,
+                                      targetDate: DateFormat('yyyy-MM-dd').format(widget.date),
+                                      topic: ref.watch(writeDiaryProvider).topic.value,
+                                      image:
+                                          ref.watch(writeDiaryProvider).firebaseImageUrl == "" ? ref.watch(diaryProvider).diaryDetailData?.image ?? "" : ref.watch(writeDiaryProvider).firebaseImageUrl,
+                                      isAutoSave: true,
+                                    );
+
+                                    ref.watch(diaryProvider.notifier).saveDiary(DateFormat('yyyy-MM-dd').format(widget.date), diary).then((value) {
+                                      toast(
+                                        context: context,
+                                        text: '작성 중인 일기가 임시저장 되었어요.',
+                                        isCheckIcon: true,
+                                      );
+                                    });
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 16.w),
+                                    child: Image.asset(
+                                      "lib/config/assets/images/diary/write_diary/save-2.png",
+                                      color: Theme.of(context).colorScheme.iconSubColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 10.h, bottom: 10.h, right: 16.w),
+                              child: Row(
+                                children: [
+                                  Consumer(builder: (context, ref, child) {
+                                    return Text(
+                                      "${ref.watch(writeDiaryProvider).diaryValueLength}",
+                                      style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                                    );
+                                  }),
+                                  Text(
+                                    "/500",
+                                    style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textLowEmphasis),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

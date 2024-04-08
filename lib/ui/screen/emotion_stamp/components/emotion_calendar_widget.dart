@@ -229,21 +229,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                               ),
                                             )
                                           : DateTime.now().isAfter(day)
-                                              ?
-                                              // Container(
-                                              //                     padding: context.isTablet ? EdgeInsets.all(9.w) : EdgeInsets.all(16.w),
-                                              //                     decoration: BoxDecoration(
-                                              //                       border: isToday(day)
-                                              //                           ? Border.all(
-                                              //                               width: 1,
-                                              //                               color: kOrange300Color,
-                                              //                             )
-                                              //                           : null,
-                                              //                       shape: BoxShape.circle,
-                                              //                       color: Theme.of(context).colorScheme.surface_01,
-                                              //                     ),
-                                              //                   )
-                                              Padding(
+                                              ? Padding(
                                                   padding: EdgeInsets.only(top: 5),
                                                   child: Image.asset(
                                                     Theme.of(context).colorScheme.brightness == Brightness.dark

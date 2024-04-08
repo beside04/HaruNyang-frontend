@@ -72,7 +72,7 @@ class LoginApi {
           'nickname': nickname,
           'email': email,
           'job': job,
-          'birthDate': birthDate,
+          'birthDate': birthDate == "2000-" ? "" : birthDate,
         },
       );
       bool result = response.data;

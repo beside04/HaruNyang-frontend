@@ -509,6 +509,8 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   Future<void> updateDiaryDetail(DiaryDetailData diary, DateTime date) async {
     final result = await updateDiaryUseCase(diary);
 
+    print("asddsasdadasdas ${diary.image}");
+
     result.when(
       success: (data) async {
         await getDiaryDetail(data.id);

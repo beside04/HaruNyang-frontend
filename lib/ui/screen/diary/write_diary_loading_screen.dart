@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -51,32 +50,26 @@ class WriteDiaryLoadingScreenState extends ConsumerState<WriteDiaryLoadingScreen
         ),
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 20.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 60.0.w),
-              child: Lottie.asset(
+        child: Padding(
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).padding.top + 56),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Lottie.asset(
                 'lib/config/assets/lottie/loading.json',
                 height: 160,
                 width: 160,
                 fit: BoxFit.fill,
               ),
-            ),
-            SizedBox(
-              height: 10.h,
-            ),
-            Text(
-              "당신을 위로할 편지를 쓰고 있어요",
-              style: kHeader5Style.copyWith(
-                color: Theme.of(context).colorScheme.textTitle,
+              Text(
+                "당신을 위로할 편지를 쓰고 있어요",
+                style: kHeader5Style.copyWith(
+                  color: Theme.of(context).colorScheme.textTitle,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

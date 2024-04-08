@@ -332,36 +332,35 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                               ),
                                               Positioned(
                                                 top: 70,
+                                                left: 0,
+                                                right: 0,
                                                 child: Consumer(builder: (context, ref, child) {
-                                                  return ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null
+                                                  return data.image == ''
                                                       ? Container()
                                                       : Center(
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.only(left: 30.0, right: 30.0),
-                                                            child: Stack(
-                                                              children: [
-                                                                Container(
-                                                                  color: Theme.of(context).colorScheme.surface_02,
+                                                          child: Stack(
+                                                            children: [
+                                                              Container(
+                                                                color: Theme.of(context).colorScheme.surface_02,
+                                                                width: MediaQuery.of(context).size.width - 100,
+                                                                height: MediaQuery.of(context).size.width - 100,
+                                                                child: Image.network(
+                                                                  "${data.image}",
                                                                   width: MediaQuery.of(context).size.width - 100,
                                                                   height: MediaQuery.of(context).size.width - 100,
-                                                                  child: Image.network(
-                                                                    "${ref.watch(diaryProvider).diaryDetailData?.image}",
-                                                                    width: MediaQuery.of(context).size.width - 100,
-                                                                    height: MediaQuery.of(context).size.width - 100,
-                                                                  ),
                                                                 ),
-                                                              ],
-                                                            ),
+                                                              ),
+                                                            ],
                                                           ),
                                                         );
                                                 }),
                                               ),
                                               Padding(
                                                 padding: EdgeInsets.only(
-                                                  top: ref.watch(diaryProvider).diaryDetailData?.image == '' || ref.watch(diaryProvider).diaryDetailData == null ? 70 : 350,
+                                                  top: data.image == '' ? 70 : MediaQuery.of(context).size.width - 20,
                                                   left: 30,
                                                   right: 30,
-                                                  bottom: 40,
+                                                  bottom: 56,
                                                 ),
                                                 child: Container(
                                                   constraints: BoxConstraints(
