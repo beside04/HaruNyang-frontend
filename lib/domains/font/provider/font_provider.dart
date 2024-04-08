@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domains/font/model/font_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,7 +25,7 @@ class FontNotifier extends StateNotifier<FontState> {
     final selectedFontSize = prefs.getDouble('selectedFontSize') ?? 16.0;
     final selectedFontHeight = prefs.getDouble('selectedFontHeight') ?? 2.1;
     final selectedFontDefaultSize = prefs.getDouble('selectedFontDefaultSize') ?? 16.0;
-    final selectedFontDefaultHeight = prefs.getDouble('selectedFontDefaultHeight') ?? 16.0;
+    final selectedFontDefaultHeight = prefs.getDouble('selectedFontDefaultHeight') ?? 2.1;
 
     if (selectedFontValue.isNotEmpty) {
       state = state.copyWith(
@@ -54,6 +55,8 @@ class FontNotifier extends StateNotifier<FontState> {
     await prefs.setDouble('selectedFontSize', font.size);
     await prefs.setDouble('selectedFontHeight', font.height);
 
+    GlobalUtils.setAnalyticsCustomEvent('Click_Font_Change_${font.title}');
+
     state = state.copyWith(
       selectedFontTitle: font.title,
       selectedFontValue: font.value,
@@ -72,6 +75,8 @@ class FontNotifier extends StateNotifier<FontState> {
     await prefs.setDouble('selectedFontDefaultSize', state.selectedFontDefaultSize);
     await prefs.setDouble('selectedFontDefaultHeight', state.selectedFontDefaultHeight);
 
+    GlobalUtils.setAnalyticsCustomEvent('Click_Font_Scale_Default');
+
     state = state.copyWith(
       changedFontSize: state.selectedFontDefaultSize,
       changedFontHeight: state.selectedFontDefaultHeight,
@@ -88,6 +93,7 @@ class FontNotifier extends StateNotifier<FontState> {
     await prefs.setDouble('selectedFontDefaultSize', state.selectedFontDefaultSize);
     await prefs.setDouble('selectedFontDefaultHeight', calculateLineHeight(state.selectedFontDefaultSize, true));
 
+    GlobalUtils.setAnalyticsCustomEvent('Click_Font_Scale_Big');
     state = state.copyWith(
       changedFontSize: state.selectedFontDefaultSize + 2,
       changedFontHeight: newFontHeight,
@@ -103,6 +109,8 @@ class FontNotifier extends StateNotifier<FontState> {
     await prefs.setDouble('selectedFontHeight', newFontHeight);
     await prefs.setDouble('selectedFontDefaultSize', state.selectedFontDefaultSize);
     await prefs.setDouble('selectedFontDefaultHeight', calculateLineHeight(state.selectedFontDefaultSize, false));
+
+    GlobalUtils.setAnalyticsCustomEvent('Click_Font_Scale_Small');
 
     state = state.copyWith(
       changedFontSize: state.selectedFontDefaultSize - 2,

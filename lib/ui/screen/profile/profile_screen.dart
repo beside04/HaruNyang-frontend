@@ -474,9 +474,10 @@ class ProfileScreen extends ConsumerWidget {
                 onPressed: () async {
                   GlobalUtils.setAnalyticsCustomEvent('Click_CheerUp');
                   final InAppReview inAppReview = InAppReview.instance;
-
                   if (await inAppReview.isAvailable()) {
                     inAppReview.requestReview();
+                  } else {
+                    inAppReview.openStoreListing(appStoreId: '6444657575');
                   }
                 },
               ),

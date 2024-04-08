@@ -9,6 +9,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/letter_paper_painter.dart';
+import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/font/provider/font_provider.dart';
 import 'package:frontend/res/constants.dart';
@@ -49,6 +50,8 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         await imagePath.writeAsBytes(image);
 
                         final result = await Share.shareXFiles([XFile('${imagePath.path}')], text: '하루냥 편지');
+
+                        GlobalUtils.setAnalyticsCustomEvent('Click_Share_Button');
 
                         result.status == ShareResultStatus.success
                             ? toast(
@@ -92,6 +95,8 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
 
                         final result = await ImageGallerySaver.saveFile('${imagePath.path}', name: "하루냥");
 
+                        GlobalUtils.setAnalyticsCustomEvent('Click_Save_Image');
+
                         result["isSuccess"]
                             ? toast(
                                 context: context,
@@ -132,6 +137,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
           ),
           leading: IconButton(
             onPressed: () {
+              GlobalUtils.setAnalyticsCustomEvent('Click_Diary_Letter_Close_Icon');
               Navigator.of(context).pop();
             },
             icon: SvgPicture.asset(

@@ -8,7 +8,7 @@ class TopicBubbleWidget extends StatelessWidget {
   const TopicBubbleWidget({
     Key? key,
     required this.text,
-    this.padding = const EdgeInsets.only(left: 20, top: 12, bottom: 12, right: 8),
+    this.padding = const EdgeInsets.only(left: 16, top: 12, bottom: 12, right: 12),
     this.margin,
     this.radius = 12,
     this.shadow = 0,

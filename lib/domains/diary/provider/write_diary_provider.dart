@@ -38,6 +38,8 @@ class WriteDiaryNotifier extends StateNotifier<WriteDiaryState> {
   void setDiaryData(DiaryDetailData diaryData) {
     diaryEditingController.text = diaryData.diaryContent;
 
+    state = state.copyWith(networkImage: diaryData.image ?? "");
+
     state = state.copyWith(diaryValueLength: diaryEditingController.text.length);
   }
 

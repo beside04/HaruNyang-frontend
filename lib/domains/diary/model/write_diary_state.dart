@@ -8,7 +8,7 @@ part 'write_diary_state.g.dart';
 class WriteDiaryState with _$WriteDiaryState {
   factory WriteDiaryState({
     @Default('') String diaryValue,
-    @Default(null) String? networkImage,
+    @Default("") String networkImage,
     @Default(0) int diaryValueLength,
     @Default('') String firebaseImageUrl,
     @Default(false) bool isUpdated,
