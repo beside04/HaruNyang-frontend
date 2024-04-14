@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/apis/login_api.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -9,7 +9,7 @@ class ServerLoginRepositoryImpl implements ServerLoginRepository {
   final LoginApi loginApi = LoginApi(dio: Dio());
 
   @override
-  Future<Result<LoginTokenData>> login(
+  Future<ResponseResult<LoginTokenData>> login(
     loginType,
     socialId,
     deviceId,

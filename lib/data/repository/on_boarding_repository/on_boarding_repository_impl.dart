@@ -1,5 +1,5 @@
 import 'package:frontend/apis/on_boarding_api.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 
@@ -11,10 +11,10 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
   });
 
   @override
-  Future<Result<MyInformation>> getMyInformation() async {
+  Future<ResponseResult<MyInformation>> getMyInformation() async {
     if (myInformation != null) {
       if (myInformation!.nickname != null || myInformation!.age != null || myInformation!.email != null) {
-        return Result.success(myInformation!);
+        return ResponseResult.success(myInformation!);
       }
     }
 
@@ -29,7 +29,7 @@ class OnBoardingRepositoryImpl implements OnBoardingRepository {
   }
 
   @override
-  Future<Result<bool>> putMyInformation({
+  Future<ResponseResult<bool>> putMyInformation({
     required nickname,
     required job,
     required age,

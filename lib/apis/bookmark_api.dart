@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/res/constants.dart';
 
@@ -12,7 +12,7 @@ class BookmarkApi {
     required this.dio,
   });
 
-  Future<Result<bool>> saveBookmark(int wiseSayingId) async {
+  Future<ResponseResult<bool>> saveBookmark(int wiseSayingId) async {
     String bookmarkUrl = '$_baseUrl/v2/comments/$wiseSayingId/favorite';
     try {
       Response response;
@@ -21,9 +21,9 @@ class BookmarkApi {
       );
 
       if (response.statusCode == 200) {
-        return const Result.success(true);
+        return const ResponseResult.success(true);
       } else {
-        return const Result.error('북마크 저장에 실패했습니다.');
+        return const ResponseResult.error('북마크 저장에 실패했습니다.');
       }
     } on DioError catch (e) {
       String errMessage = '';
@@ -37,13 +37,13 @@ class BookmarkApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 
-  Future<Result<List<CommentData>>> getBookmark(int page, int limit, String? feeling) async {
+  Future<ResponseResult<List<CommentData>>> getBookmark(int page, int limit, String? feeling) async {
     String bookmarkUrl = '$_baseUrl/v2/comments/favorites/search';
 
     Map<String, dynamic> queryParameters = {};
@@ -68,7 +68,7 @@ class BookmarkApi {
 
       final List<CommentData> bookmarkList = bookmarkIterable.map((e) => CommentData.fromJson(e)).toList();
 
-      return Result.success(bookmarkList);
+      return ResponseResult.success(bookmarkList);
     } on DioError catch (e) {
       String errMessage = '';
 
@@ -81,13 +81,13 @@ class BookmarkApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 
-  Future<Result<bool>> deleteBookmark(int bookmarkId) async {
+  Future<ResponseResult<bool>> deleteBookmark(int bookmarkId) async {
     String bookmarkUrl = '$_baseUrl/v2/comments/$bookmarkId/favorite';
     try {
       Response response;
@@ -96,9 +96,9 @@ class BookmarkApi {
       );
 
       if (response.statusCode == 200) {
-        return const Result.success(true);
+        return const ResponseResult.success(true);
       } else {
-        return const Result.error('북마크를 삭제하는데 실패했습니다.');
+        return const ResponseResult.error('북마크를 삭제하는데 실패했습니다.');
       }
     } on DioError catch (e) {
       String errMessage = '';
@@ -112,9 +112,9 @@ class BookmarkApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 }

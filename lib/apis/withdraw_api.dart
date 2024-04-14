@@ -1,17 +1,17 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/res/constants.dart';
 
 class WithdrawApi {
   final Dio dio;
+
   String get _baseUrl => usingServer;
 
   WithdrawApi({
     required this.dio,
   });
 
-  Future<Result<bool>> withdrawUser() async {
+  Future<ResponseResult<bool>> withdrawUser() async {
     String withdrawUrl = '$_baseUrl/v2/users';
     try {
       Response response;
@@ -20,9 +20,9 @@ class WithdrawApi {
       );
       final int withdrawResult = response.statusCode ?? 0;
       if (withdrawResult == 200) {
-        return const Result.success(true);
+        return const ResponseResult.success(true);
       } else {
-        return const Result.error('회원 탈퇴가 실패했습니다.');
+        return const ResponseResult.error('회원 탈퇴가 실패했습니다.');
       }
     } on DioError catch (e) {
       String errMessage = '';
@@ -35,9 +35,9 @@ class WithdrawApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 }

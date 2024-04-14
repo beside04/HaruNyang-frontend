@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
 import 'package:frontend/res/constants.dart';
 
@@ -12,7 +12,7 @@ class LoginApi {
     required this.dio,
   });
 
-  Future<Result<LoginTokenData>> login(String loginType, String socialId, String? deviceId) async {
+  Future<ResponseResult<LoginTokenData>> login(String loginType, String socialId, String? deviceId) async {
     String loginUrl = '$_baseUrl/v2/users/sign-in';
 
     try {
@@ -28,7 +28,7 @@ class LoginApi {
 
       final cookies = response.headers.map['set-cookie'];
 
-      return Result.success(
+      return ResponseResult.success(
         LoginTokenData(
           accessToken: cookies![0].split(';')[0],
         ),
@@ -42,9 +42,9 @@ class LoginApi {
         print(e);
         errMessage = e.response!.statusCode!.toString();
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 

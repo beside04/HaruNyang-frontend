@@ -1,4 +1,4 @@
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/repository/diary/diary_repository.dart';
 
 class DeleteDiaryUseCase {
@@ -8,7 +8,7 @@ class DeleteDiaryUseCase {
     required this.diaryRepository,
   });
 
-  Future<Result<bool>> call(int diaryId) async {
+  Future<ResponseResult<bool>> call(int diaryId) async {
     return await diaryRepository.deleteDiary(diaryId);
   }
 }

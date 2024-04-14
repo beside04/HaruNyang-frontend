@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
@@ -25,7 +25,7 @@ class OnBoardingNotifier extends StateNotifier<OnBoardingState> {
   final KakaoLoginUseCase kakaoLoginUseCase;
   final AppleLoginUseCase appleLoginUseCase;
 
-  Future<Result<bool>> getMyInformation() async {
+  Future<ResponseResult<bool>> getMyInformation() async {
     bool check = false;
     bool isError = false;
     final myInfo = await onBoardingUseCase.getMyInformation();
@@ -50,9 +50,9 @@ class OnBoardingNotifier extends StateNotifier<OnBoardingState> {
       },
     );
     if (isError) {
-      return const Result.error('401');
+      return const ResponseResult.error('401');
     } else {
-      return Result.success(check);
+      return ResponseResult.success(check);
     }
   }
 
@@ -71,14 +71,14 @@ class OnBoardingNotifier extends StateNotifier<OnBoardingState> {
     required bool isOnBoarding,
     required BuildContext context,
   }) async {
-    Result<bool> isNicknameError = await onBoardingUseCase.putMyInformation(
+    ResponseResult<bool> isNicknameError = await onBoardingUseCase.putMyInformation(
       nickname: nickname,
       job: state.job,
       age: state.age,
       email: state.email,
     );
 
-    if (isNicknameError == const Result<bool>.error('중복된 닉네임 입니다.')) {
+    if (isNicknameError == const ResponseResult<bool>.error('중복된 닉네임 입니다.')) {
       // isDuplicateNickname.value = true;
       // nicknameError.value = '중복된 닉네임 입니다.';
     } else {

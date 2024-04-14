@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
@@ -57,7 +57,7 @@ class AppleLoginUseCase {
     );
   }
 
-  Future<Result<String>> login(String socialId, deviceToken) async {
+  Future<ResponseResult<String>> login(String socialId, deviceToken) async {
     //social id를 사용하여 서버에 login
     final loginResult = await loginProcess(socialId, deviceToken);
     return loginResult;
@@ -85,7 +85,7 @@ class AppleLoginUseCase {
     return result;
   }
 
-  Future<Result<String>> loginProcess(String socialId, deviceToken) async {
+  Future<ResponseResult<String>> loginProcess(String socialId, deviceToken) async {
     String accessToken = '';
 
     //로그인 api 호출
@@ -94,11 +94,11 @@ class AppleLoginUseCase {
     return await loginResult.when(
       success: (loginData) async {
         await tokenRepository.setAccessToken(loginData.accessToken);
-        return Result.success(accessToken);
+        return ResponseResult.success(accessToken);
       },
       error: (message) {
         //로그인 에러 처리
-        return Result.error(message);
+        return ResponseResult.error(message);
       },
     );
   }

@@ -1,4 +1,4 @@
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 
@@ -9,13 +9,13 @@ class OnBoardingUseCase {
     required this.onBoardingRepository,
   });
 
-  Future<Result<MyInformation>> getMyInformation() async {
+  Future<ResponseResult<MyInformation>> getMyInformation() async {
     final result = await onBoardingRepository.getMyInformation();
 
     return result;
   }
 
-  Future<Result<bool>> putMyInformation({
+  Future<ResponseResult<bool>> putMyInformation({
     required nickname,
     required job,
     required age,
@@ -30,11 +30,11 @@ class OnBoardingUseCase {
 
     return await loginResult.when(
       success: (successData) async {
-        return Result.success(successData);
+        return ResponseResult.success(successData);
       },
       error: (message) {
         //로그인 에러 처리
-        return Result.error(message);
+        return ResponseResult.error(message);
       },
     );
   }

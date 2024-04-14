@@ -1,8 +1,5 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/repository/token_repository.dart';
 import 'package:frontend/res/constants.dart';
@@ -10,6 +7,7 @@ import 'package:frontend/res/constants.dart';
 class OnBoardingApi {
   final TokenRepository tokenRepository;
   final Dio dio;
+
   String get _baseUrl => usingServer;
 
   OnBoardingApi({
@@ -17,7 +15,7 @@ class OnBoardingApi {
     required this.tokenRepository,
   });
 
-  Future<Result<MyInformation>> getMyInformation() async {
+  Future<ResponseResult<MyInformation>> getMyInformation() async {
     String myInformationUrl = '$_baseUrl/v2/users';
 
     try {
@@ -30,20 +28,20 @@ class OnBoardingApi {
 
       MyInformation result = MyInformation.fromJson(json);
 
-      return Result.success(result);
+      return ResponseResult.success(result);
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 
-  Future<Result<bool>> putMyInformation({
+  Future<ResponseResult<bool>> putMyInformation({
     required nickname,
     required job,
     required age,
@@ -77,7 +75,7 @@ class OnBoardingApi {
 
       final bool result = response.data['data'];
 
-      return Result.success(result);
+      return ResponseResult.success(result);
     } on DioError catch (e) {
       String errMessage = '';
 
@@ -94,9 +92,9 @@ class OnBoardingApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 }

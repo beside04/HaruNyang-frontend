@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 // import 'package:frontend/presentation/login/login_view_model.dart';
 import 'package:frontend/res/constants.dart';
@@ -13,7 +13,7 @@ class EmotionStampApi {
     required this.dio,
   });
 
-  Future<Result<List<DiaryDetailData>>> getEmotionStamp(String from, String to) async {
+  Future<ResponseResult<List<DiaryDetailData>>> getEmotionStamp(String from, String to) async {
     print("adsasddsaasd");
 
     try {
@@ -42,7 +42,7 @@ class EmotionStampApi {
         return a.id!.compareTo(b.id!);
       });
 
-      return Result.success(emotionStampList);
+      return ResponseResult.success(emotionStampList);
     } on DioError catch (e) {
       String errMessage = '';
 
@@ -53,9 +53,9 @@ class EmotionStampApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 }
