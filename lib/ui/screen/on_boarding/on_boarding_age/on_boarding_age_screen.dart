@@ -6,9 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
-import 'package:frontend/core/utils/library/date_time_spinner/date_time_spinner.dart';
-import 'package:frontend/core/utils/library/date_time_spinner/i18n_model.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_age/on_boarding_age_provider.dart';
 import 'package:frontend/ui/components/age_text_field.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
@@ -16,6 +13,9 @@ import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/ui/screen/on_boarding/on_boarding_job/on_boarding_job_screen.dart';
 import 'package:frontend/ui/screen/profile/profile_setting/profile_setting_screen.dart';
+import 'package:frontend/utils/library/date_time_spinner/date_picker_theme.dart' as picker_theme;
+import 'package:frontend/utils/library/date_time_spinner/date_time_spinner.dart';
+import 'package:frontend/utils/library/date_time_spinner/i18n_model.dart';
 
 class OnBoardingAgeScreen extends ConsumerWidget {
   final String nickname;

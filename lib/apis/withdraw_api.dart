@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/apis/response_result.dart';
-import 'package:frontend/res/constants.dart';
+import 'package:frontend/config/constants.dart';
 
 class WithdrawApi {
   final Dio dio;

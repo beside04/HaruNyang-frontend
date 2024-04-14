@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/apis/response_result.dart';
-import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 // import 'package:frontend/presentation/login/login_view_model.dart';
-import 'package:frontend/res/constants.dart';
+import 'package:frontend/config/constants.dart';
+import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 
 class EmotionStampApi {
   final Dio dio;

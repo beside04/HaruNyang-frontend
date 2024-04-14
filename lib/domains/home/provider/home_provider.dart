@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/apis/emotion_stamp_api.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -15,6 +14,7 @@ import 'package:frontend/ui/screen/birth_day/birth_day_screen.dart';
 import 'package:frontend/ui/screen/diary/diary_screen.dart';
 import 'package:frontend/ui/screen/emotion_stamp/emotion_stamp_screen.dart';
 import 'package:frontend/ui/screen/profile/profile_screen.dart';
+import 'package:frontend/utils/utils.dart';
 import 'package:intl/intl.dart';
 
 enum DiarySate {

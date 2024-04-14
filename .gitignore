@@ -36,7 +36,7 @@ migrate_working_dir/
 strings.xml
 /ios/Runner/Info.plist
 /ios/Runner.ipa
-/lib/core/resource/firebase_options.dart
+/lib/config/resource/firebase_options.dart
 
 # Symbolication related
 app.*.symbols

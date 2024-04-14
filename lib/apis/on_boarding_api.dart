@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/apis/response_result.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/domain/model/my_information.dart';
 import 'package:frontend/domain/repository/token_repository.dart';
-import 'package:frontend/res/constants.dart';
 
 class OnBoardingApi {
   final TokenRepository tokenRepository;

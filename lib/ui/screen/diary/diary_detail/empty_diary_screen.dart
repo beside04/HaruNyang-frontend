@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/diary/diary_screen.dart';
+import 'package:frontend/utils/utils.dart';
 import 'package:intl/intl.dart';
 
 class EmptyDiaryScreen extends StatelessWidget {

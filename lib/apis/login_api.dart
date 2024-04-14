@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:frontend/apis/response_result.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/domain/model/login_token_data.dart';
-import 'package:frontend/res/constants.dart';
 
 class LoginApi {
   String get _baseUrl => usingServer;

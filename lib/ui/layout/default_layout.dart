@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/core/utils/utils.dart';
+import 'package:frontend/utils/utils.dart';
 
-  class DefaultLayout extends StatefulWidget {
+class DefaultLayout extends StatefulWidget {
   final String screenName;
   final Widget child;
 

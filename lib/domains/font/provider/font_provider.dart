@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domains/font/model/font_state.dart';
+import 'package:frontend/utils/utils.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final fontProvider = StateNotifierProvider<FontNotifier, FontState>((ref) {
