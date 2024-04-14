@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domains/profile/provider/notice/notice_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/profile/components/notice_button.dart';
 import 'package:frontend/ui/screen/profile/notice/notice_detail_screen.dart';
 

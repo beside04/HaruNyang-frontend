@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/on_boarding/on_boarding_nickname/on_boarding_nickname_screen.dart';
 
 class SignInCompleteScreen extends StatelessWidget {

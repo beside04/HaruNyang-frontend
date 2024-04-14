@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/core/utils/utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,26 +32,25 @@ class _LoginScreenState extends State<LoginScreen> {
                   top: 250.h,
                 ),
                 child: Center(
-                    child: Theme.of(context).colorScheme.brightness ==
-                        Brightness.dark
+                    child: Theme.of(context).colorScheme.brightness == Brightness.dark
                         ? Image.asset(
-                      "lib/config/assets/images/login/login_logo_dark.png",
-                      width: 92.w,
-                    )
+                            "lib/config/assets/images/login/login_logo_dark.png",
+                            width: 92.w,
+                          )
                         : Image.asset(
-                      "lib/config/assets/images/login/login_logo_light.png",
-                      width: 92.w,
-                    )),
+                            "lib/config/assets/images/login/login_logo_light.png",
+                            width: 92.w,
+                          )),
               ),
               SizedBox(
                 height: Platform.isAndroid ? 310.h : 230.h,
               ),
               InkWell(
-                // onTap: () async {
-                //   await controller.connectKakaoLogin();
-                // },
-                // child: const KakaoLoginWidget(),
-              ),
+                  // onTap: () async {
+                  //   await controller.connectKakaoLogin();
+                  // },
+                  // child: const KakaoLoginWidget(),
+                  ),
               SizedBox(
                 height: 12.h,
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -28,8 +28,7 @@ class NoticeDetailScreen extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             title,
-            style: kHeader4Style.copyWith(
-                color: Theme.of(context).colorScheme.textTitle),
+            style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
           ),
           centerTitle: true,
           elevation: 0,
@@ -55,36 +54,32 @@ class NoticeDetailScreen extends StatelessWidget {
                   children: [
                     isImportant
                         ? Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30.w),
-                        color: kOrange200Color,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 4.0.h, horizontal: 6.0.w),
-                        child: Text(
-                          '중요',
-                          style:
-                          kCaption1Style.copyWith(color: kWhiteColor),
-                        ),
-                      ),
-                    )
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30.w),
+                              color: kOrange200Color,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 4.0.h, horizontal: 6.0.w),
+                              child: Text(
+                                '중요',
+                                style: kCaption1Style.copyWith(color: kWhiteColor),
+                              ),
+                            ),
+                          )
                         : Container(),
                     SizedBox(
                       height: 13.h,
                     ),
                     Text(
                       DateFormat('yyyy.MM.dd').format(date),
-                      style: kBody2Style.copyWith(
-                          color: Theme.of(context).colorScheme.textLowEmphasis),
+                      style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textLowEmphasis),
                     ),
                     SizedBox(
                       height: 9.h,
                     ),
                     Text(
                       content.replaceAll(r'\n', '\n'),
-                      style: kBody1Style.copyWith(
-                          color: Theme.of(context).colorScheme.textBody),
+                      style: kBody1Style.copyWith(color: Theme.of(context).colorScheme.textBody),
                     ),
                   ],
                 ),

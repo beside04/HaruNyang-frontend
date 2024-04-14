@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -11,6 +10,7 @@ import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/components/toast.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
 import 'package:frontend/ui/screen/profile/components/book_mark_emoticon_icon_button.dart';
 import 'package:frontend/ui/screen/profile/components/book_mark_list.dart';
