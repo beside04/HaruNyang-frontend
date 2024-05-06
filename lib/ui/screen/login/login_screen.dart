@@ -3,11 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domains/login/provider/login_provider.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/login/components/apple_login_widget.dart';
 import 'package:frontend/ui/screen/login/components/kakao_login_widget.dart';
+import 'package:frontend/utils/utils.dart';
 
 class LoginScreen extends ConsumerWidget {
   final bool isSignup;

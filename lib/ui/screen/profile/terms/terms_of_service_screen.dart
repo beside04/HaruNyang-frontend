@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/ui/components/back_icon.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {
   final bool isProfileScreen;

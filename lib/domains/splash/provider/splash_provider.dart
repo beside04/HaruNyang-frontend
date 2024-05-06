@@ -3,6 +3,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
@@ -14,7 +15,6 @@ import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart'
 import 'package:frontend/domains/splash/model/splash_state.dart';
 import 'package:frontend/domains/token/provider/token_provider.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';

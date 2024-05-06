@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
 import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/notification/provider/notification_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/main.dart';
-import 'package:frontend/res/constants.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/login/login_screen.dart';
 

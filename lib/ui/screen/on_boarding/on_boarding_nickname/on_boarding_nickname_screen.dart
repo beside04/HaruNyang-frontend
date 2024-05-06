@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_nickname/on_boarding_nickname_provider.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/components/nickname_text_field.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/on_boarding/components/on_boarding_stepper.dart';
 import 'package:frontend/ui/screen/on_boarding/on_boarding_age/on_boarding_age_screen.dart';
+import 'package:frontend/utils/utils.dart';
 
 final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 

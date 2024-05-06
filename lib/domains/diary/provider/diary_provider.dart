@@ -5,7 +5,6 @@ import 'package:frontend/apis/emotion_stamp_api.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
@@ -23,6 +22,7 @@ import 'package:frontend/main.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/screen/diary/diary_detail/diary_detail_screen.dart';
+import 'package:frontend/utils/utils.dart';
 import 'package:intl/intl.dart';
 
 final diaryProvider = StateNotifierProvider<DiaryNotifier, DiaryState>((ref) {

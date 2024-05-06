@@ -1,4 +1,4 @@
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/repository/withdraw/withdraw_repository.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
@@ -14,7 +14,7 @@ class WithdrawUseCase {
     required this.appleLoginUseCase,
   });
 
-  Future<Result<bool>> withdrawUser(bool isKakao) async {
+  Future<ResponseResult<bool>> withdrawUser(bool isKakao) async {
     final result = await withdrawRepository.withdrawUser();
     await result.when(
       success: (isSuccess) async {

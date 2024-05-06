@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
+import 'package:frontend/config/constants.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
-import 'package:frontend/res/constants.dart';
 
 class DiaryApi {
   final Dio dio;
@@ -12,7 +12,7 @@ class DiaryApi {
     required this.dio,
   });
 
-  Future<Result<DiaryDetailData>> getDiaryDetail(int id) async {
+  Future<ResponseResult<DiaryDetailData>> getDiaryDetail(int id) async {
     String bookmarkUrl = '$_baseUrl/v2/diaries/$id';
     try {
       Response response;
@@ -20,7 +20,7 @@ class DiaryApi {
         bookmarkUrl,
       );
 
-      return Result.success(DiaryDetailData.fromJson(response.data));
+      return ResponseResult.success(DiaryDetailData.fromJson(response.data));
     } on DioError catch (e) {
       String errMessage = '';
 
@@ -33,13 +33,13 @@ class DiaryApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 
-  Future<Result<DiaryDetailData>> saveDiary(DiaryDetailData diary) async {
+  Future<ResponseResult<DiaryDetailData>> saveDiary(DiaryDetailData diary) async {
     String diaryUrl = '$_baseUrl/v2/diaries';
     try {
       Response response;
@@ -56,7 +56,7 @@ class DiaryApi {
         },
       );
 
-      return Result.success(DiaryDetailData.fromJson(response.data));
+      return ResponseResult.success(DiaryDetailData.fromJson(response.data));
     } on DioError catch (e) {
       String errMessage = '';
       if (e.response != null) {
@@ -68,13 +68,13 @@ class DiaryApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 
-  Future<Result<DiaryDetailData>> updateDiary(DiaryDetailData diary) async {
+  Future<ResponseResult<DiaryDetailData>> updateDiary(DiaryDetailData diary) async {
     String diaryUrl = '$_baseUrl/v2/diaries/${diary.id}';
     try {
       Response response;
@@ -88,7 +88,7 @@ class DiaryApi {
         "targetDate": diary.targetDate,
       });
 
-      return Result.success(DiaryDetailData.fromJson(response.data));
+      return ResponseResult.success(DiaryDetailData.fromJson(response.data));
     } on DioError catch (e) {
       String errMessage = '';
 
@@ -101,13 +101,13 @@ class DiaryApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 
-  Future<Result<bool>> deleteDiary(int diaryId) async {
+  Future<ResponseResult<bool>> deleteDiary(int diaryId) async {
     String diaryUrl = '$_baseUrl/v2/diaries/$diaryId';
     try {
       Response response;
@@ -117,9 +117,9 @@ class DiaryApi {
 
       final bool resultData = response.data;
       if (resultData) {
-        return const Result.success(true);
+        return const ResponseResult.success(true);
       } else {
-        return const Result.error('일기 삭제가 실패 했습니다.');
+        return const ResponseResult.error('일기 삭제가 실패 했습니다.');
       }
     } on DioError catch (e) {
       String errMessage = '';
@@ -133,13 +133,13 @@ class DiaryApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 
-  Future<Result<bool>> postImageHistory(String imageUrl) async {
+  Future<ResponseResult<bool>> postImageHistory(String imageUrl) async {
     String diaryUrl = '$_baseUrl/v2/storage/images/history';
     try {
       Response response;
@@ -151,9 +151,9 @@ class DiaryApi {
       );
 
       if (response.statusCode == 200) {
-        return const Result.success(true);
+        return const ResponseResult.success(true);
       } else {
-        return const Result.error('일기 이미지 히스토리 저장 실패');
+        return const ResponseResult.error('일기 이미지 히스토리 저장 실패');
       }
     } on DioError catch (e) {
       String errMessage = '';
@@ -166,9 +166,9 @@ class DiaryApi {
       } else {
         errMessage = '401';
       }
-      return Result.error(errMessage);
+      return ResponseResult.error(errMessage);
     } catch (e) {
-      return Result.error(e.toString());
+      return ResponseResult.error(e.toString());
     }
   }
 }

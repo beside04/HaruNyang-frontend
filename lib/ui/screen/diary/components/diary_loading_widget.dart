@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
-import 'package:frontend/core/utils/library/delay_tween_animation.dart';
+import 'package:frontend/utils/library/delay_tween_animation.dart';
 
 class DiaryLoadingWidget extends StatefulWidget {
   const DiaryLoadingWidget({
@@ -14,8 +13,7 @@ class DiaryLoadingWidget extends StatefulWidget {
   State<DiaryLoadingWidget> createState() => _DiaryLoadingWidgetState();
 }
 
-class _DiaryLoadingWidgetState extends State<DiaryLoadingWidget>
-    with SingleTickerProviderStateMixin {
+class _DiaryLoadingWidgetState extends State<DiaryLoadingWidget> with SingleTickerProviderStateMixin {
   final List<double> delays = [-0.9, -0.6, -0.3];
   late AnimationController _animationController;
 
@@ -55,8 +53,7 @@ class _DiaryLoadingWidgetState extends State<DiaryLoadingWidget>
                 itemCount: 3,
                 itemBuilder: (BuildContext context, int i) {
                   return FadeTransition(
-                    opacity: DelayTween(begin: 0.0, end: 1.0, delay: delays[i])
-                        .animate(_animationController),
+                    opacity: DelayTween(begin: 0.0, end: 1.0, delay: delays[i]).animate(_animationController),
                     child: Row(
                       children: [
                         SizedBox(

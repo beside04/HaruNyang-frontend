@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/layout/default_layout.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/core/utils/utils.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/weather_data.dart';
 import 'package:frontend/domains/diary/provider/diary_select_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
+import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/diary/components/diary_app_bar.dart';
 import 'package:frontend/ui/screen/diary/components/emotion_modal.dart';
 import 'package:frontend/ui/screen/diary/components/weather_modal.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
+import 'package:frontend/utils/utils.dart';
 
 class DiaryScreen extends ConsumerStatefulWidget {
   const DiaryScreen({

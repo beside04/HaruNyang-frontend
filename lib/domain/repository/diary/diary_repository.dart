@@ -1,14 +1,14 @@
-import 'package:frontend/core/result.dart';
+import 'package:frontend/apis/response_result.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 
 abstract class DiaryRepository {
-  Future<Result<DiaryDetailData>> getDiaryDetail(int id);
+  Future<ResponseResult<DiaryDetailData>> getDiaryDetail(int id);
 
-  Future<Result<DiaryDetailData>> saveDiary(DiaryDetailData diary);
+  Future<ResponseResult<DiaryDetailData>> saveDiary(DiaryDetailData diary);
 
-  Future<Result<DiaryDetailData>> updateDiary(DiaryDetailData diary);
+  Future<ResponseResult<DiaryDetailData>> updateDiary(DiaryDetailData diary);
 
-  Future<Result<bool>> deleteDiary(int diaryId);
+  Future<ResponseResult<bool>> deleteDiary(int diaryId);
 
-  Future<Result<bool>> postImageHistory(String imageUrl);
+  Future<ResponseResult<bool>> postImageHistory(String imageUrl);
 }

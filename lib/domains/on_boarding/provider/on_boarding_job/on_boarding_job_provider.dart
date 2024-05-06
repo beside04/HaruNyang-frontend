@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/res/constants.dart';
+import 'package:frontend/config/constants.dart';
 
 // class OnBoardingJobViewModel extends GetxController {
 //   final Rx<Job?> jobStatus = Rx<Job?>(null);

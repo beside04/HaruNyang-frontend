@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/core/utils/utils.dart';
-import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
 import 'package:frontend/domains/profile/model/withdraw_state.dart';
+import 'package:frontend/utils/utils.dart';
 
 final withdrawProvider = StateNotifierProvider<NoticeNotifier, WithdrawState>((ref) {
   return NoticeNotifier(
