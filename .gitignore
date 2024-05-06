@@ -37,6 +37,8 @@ strings.xml
 /ios/Runner/Info.plist
 /ios/Runner.ipa
 /lib/config/resource/firebase_options.dart
+/lib/utils/firebase_options.dart
+
 
 # Symbolication related
 app.*.symbols
