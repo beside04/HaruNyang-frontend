@@ -5,7 +5,7 @@ import 'package:frontend/apis/emotion_stamp_api.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
+import 'package:frontend/data/data_source/local_data/shared_preferences/auto_diary_save_data_source.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
@@ -358,14 +358,12 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   }
 
   Future<DiaryDetailData?> getDiaryDetail(id) async {
-    print("ASDDSA");
     final result = await getDiaryDetailUseCase(id);
 
     return result.when(
       success: (data) async {
         await getEmotionStampList();
         state = state.copyWith(diaryDetailData: data);
-        print("DSADSA");
         return data;
       },
       error: (message) {
@@ -508,8 +506,6 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
 
   Future<void> updateDiaryDetail(DiaryDetailData diary, DateTime date) async {
     final result = await updateDiaryUseCase(diary);
-
-    print("asddsasdadasdas ${diary.image}");
 
     result.when(
       success: (data) async {

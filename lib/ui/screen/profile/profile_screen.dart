@@ -9,9 +9,11 @@ import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domains/font/provider/font_provider.dart';
 import 'package:frontend/domains/main/provider/main_provider.dart';
+import 'package:frontend/domains/new_bagde/provider/password_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
+import 'package:frontend/ui/screen/password/password_screen.dart';
 import 'package:frontend/ui/screen/profile/book_mark/book_mark_screen.dart';
 import 'package:frontend/ui/screen/profile/components/profile_button.dart';
 import 'package:frontend/ui/screen/profile/font_change/font_change_screen.dart';
@@ -29,6 +31,8 @@ class ProfileScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isReadAppLock = ref.watch(newBadgeProvider);
+
     return DefaultLayout(
       screenName: 'Screen_Event_Main_Profile',
       child: Scaffold(
@@ -174,7 +178,7 @@ class ProfileScreen extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => BookMarkScreen(),
+                      builder: (context) => const BookMarkScreen(),
                     ),
                   );
                 },
@@ -195,10 +199,63 @@ class ProfileScreen extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PushMessageScreen(),
+                      builder: (context) => const PushMessageScreen(),
                     ),
                   );
                 },
+              ),
+              Divider(
+                thickness: 1.h,
+                height: 1.h,
+                color: Theme.of(context).colorScheme.border,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const PasswordScreen(),
+                    ),
+                  );
+                },
+                child: Container(
+                  color: Theme.of(context).colorScheme.backgroundColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Stack(
+                          children: [
+                            Text(
+                              "앱 잠금",
+                              style: kHeader5Style.copyWith(
+                                color: Theme.of(context).colorScheme.textTitle,
+                              ),
+                            ),
+                          ],
+                        ),
+                        if (!isReadAppLock)
+                          Padding(
+                            padding: const EdgeInsets.only(left: 4.0, top: 4.0),
+                            child: Image.asset(
+                              "lib/config/assets/images/profile/new_badge.png",
+                              width: 18,
+                              height: 18,
+                            ),
+                          ),
+                        const Spacer(),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        SvgPicture.asset(
+                          "lib/config/assets/images/profile/navigate_next.svg",
+                          color: Theme.of(context).colorScheme.iconSubColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ),
               Divider(
                 thickness: 1.h,
@@ -227,7 +284,7 @@ class ProfileScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                SizedBox(
+                                const SizedBox(
                                   height: 32.0,
                                 ),
                                 Padding(
@@ -237,7 +294,7 @@ class ProfileScreen extends ConsumerWidget {
                                     style: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10.0,
                                 ),
                                 InkWell(
@@ -339,7 +396,7 @@ class ProfileScreen extends ConsumerWidget {
                                     ],
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   height: 10,
                                 ),
                                 BottomButton(
@@ -378,7 +435,7 @@ class ProfileScreen extends ConsumerWidget {
                             ref.watch(mainProvider.notifier).themeModeToString(ref.watch(mainProvider).themeMode),
                             style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           SvgPicture.asset(
@@ -419,7 +476,7 @@ class ProfileScreen extends ConsumerWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => FontChangeScreen(),
+                        builder: (context) => const FontChangeScreen(),
                       ),
                     );
                   },
@@ -438,7 +495,7 @@ class ProfileScreen extends ConsumerWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => NoticeScreen()),
+                    MaterialPageRoute(builder: (context) => const NoticeScreen()),
                   );
                 },
               ),
@@ -457,7 +514,7 @@ class ProfileScreen extends ConsumerWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => TermsScreen()),
+                    MaterialPageRoute(builder: (context) => const TermsScreen()),
                   );
                 },
               ),

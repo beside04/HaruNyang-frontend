@@ -4,9 +4,9 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/on_boarding/job_data.dart';
 
 // ignore: constant_identifier_names
-const int APP_BUILD_NUMBER = 15;
+const int APP_BUILD_NUMBER = 16;
 // ignore: constant_identifier_names
-const String APP_VERSION_NUMBER = '2.1.4';
+const String APP_VERSION_NUMBER = '2.1.5';
 
 // ignore: constant_identifier_names
 const Map<String, String> UNIT_ID = kReleaseMode

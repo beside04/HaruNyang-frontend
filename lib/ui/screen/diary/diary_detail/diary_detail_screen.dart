@@ -66,7 +66,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
         // ignore: use_build_context_synchronously
         ? await Navigator.of(context).push(
             PageRouteBuilder(
-              pageBuilder: (_, __, ___) => DiaryResultScreen(),
+              pageBuilder: (_, __, ___) => const DiaryResultScreen(),
             ),
           )
         : null;
@@ -76,8 +76,9 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
     try {
       return await ref.watch(diaryProvider.notifier).getDiaryDetail(widget.diaryId);
     } catch (e) {
-      print("e ${e}");
+      print("e $e");
     }
+    return null;
   }
 
   @override
@@ -386,7 +387,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                                         ),
                                       ),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 50,
                                     ),
                                   ],
@@ -417,7 +418,7 @@ class DiaryDetailScreenState extends ConsumerState<DiaryDetailScreen> {
                             onTap: () {
                               Navigator.of(context).push(
                                 PageRouteBuilder(
-                                  pageBuilder: (_, __, ___) => DiaryResultScreen(),
+                                  pageBuilder: (_, __, ___) => const DiaryResultScreen(),
                                 ),
                               );
                             },

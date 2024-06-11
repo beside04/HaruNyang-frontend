@@ -34,7 +34,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 20,
               left: 11,
               right: 11,
@@ -55,7 +55,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                 eventLoader: (DateTime day) {
                   return ref.watch(diaryProvider).diaryDataList.where((element) => element.targetDate == format.format(day)).toList();
                 },
-                calendarStyle: CalendarStyle(
+                calendarStyle: const CalendarStyle(
                   cellPadding: EdgeInsets.only(top: 10),
                   cellAlignment: Alignment.bottomCenter,
                   isTodayHighlighted: true,
@@ -140,7 +140,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                         backgroundColor: Theme.of(context).colorScheme.secondaryColor,
                                         textStyle: kHeader4Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 12,
                                       ),
                                       DialogButton(
@@ -192,14 +192,14 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                       },
                       child: Center(
                         child: Container(
-                          padding: EdgeInsets.only(
+                          padding: const EdgeInsets.only(
                             top: 4,
                           ),
                           child: Column(
                             children: [
                               events.isEmpty && isToday(day)
                                   ? Padding(
-                                      padding: EdgeInsets.only(top: 5),
+                                      padding: const EdgeInsets.only(top: 5),
                                       child: Image.asset(
                                         Theme.of(context).colorScheme.brightness == Brightness.dark
                                             ? "lib/config/assets/images/diary/dark_mode/empty_container.png"
@@ -230,7 +230,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                             )
                                           : DateTime.now().isAfter(day)
                                               ? Padding(
-                                                  padding: EdgeInsets.only(top: 5),
+                                                  padding: const EdgeInsets.only(top: 5),
                                                   child: Image.asset(
                                                     Theme.of(context).colorScheme.brightness == Brightness.dark
                                                         ? "lib/config/assets/images/diary/dark_mode/empty_container.png"
@@ -239,7 +239,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                                                   ),
                                                 )
                                               : Padding(
-                                                  padding: EdgeInsets.all(8.0),
+                                                  padding: const EdgeInsets.all(8.0),
                                                   child: Text(
                                                     DateFormat('d').format(day),
                                                     style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.iconSubColor),
@@ -274,7 +274,7 @@ class EmotionCalendarWidgetState extends ConsumerState<EmotionCalendarWidget> {
                           )
                         : DateTime.now().isAfter(day)
                             ? Padding(
-                                padding: EdgeInsets.all(16.0),
+                                padding: const EdgeInsets.all(16.0),
                                 child: Text(
                                   DateFormat('d').format(day),
                                   style: kCaption1Style.copyWith(color: Theme.of(context).colorScheme.iconSubColor),

@@ -33,7 +33,7 @@ class DairyNoteScreenState extends ConsumerState<DairyNoteScreen> {
         behavior: HitTestBehavior.opaque,
         child: Scaffold(
           backgroundColor: Colors.black38,
-          floatingActionButton: Container(
+          floatingActionButton: SizedBox(
             width: 60.w,
             height: 60.h,
             child: FloatingActionButton(

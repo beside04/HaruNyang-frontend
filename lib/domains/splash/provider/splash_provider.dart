@@ -10,6 +10,7 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/login/provider/login_provider.dart';
+import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/domains/notification/provider/notification_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/domains/splash/model/splash_state.dart';
@@ -19,6 +20,7 @@ import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/login/login_screen.dart';
+import 'package:frontend/ui/screen/password/password_verification_screen.dart';
 import 'package:store_redirect/store_redirect.dart';
 
 final splashProvider = StateNotifierProvider<SplashNotifier, SplashState>((ref) {
@@ -31,7 +33,7 @@ final splashProvider = StateNotifierProvider<SplashNotifier, SplashState>((ref) 
 });
 
 class SplashNotifier extends StateNotifier<SplashState> {
-  SplashNotifier(this.ref, this.tokenController, this.onBoardingController, this.diaryController) : super(SplashState()) {}
+  SplashNotifier(this.ref, this.tokenController, this.onBoardingController, this.diaryController) : super(SplashState());
 
   final Ref ref;
   final TokenNotifier tokenController;
@@ -53,7 +55,7 @@ class SplashNotifier extends StateNotifier<SplashState> {
         ));
 
         usingServer = remoteConfig.getString("using_server");
-        print("usingServer ${usingServer}");
+        print("usingServer $usingServer");
         isBannerOpen = remoteConfig.getBool("is_christmas_banner_open");
         bannerUrl = remoteConfig.getString("banner_url");
 
@@ -193,7 +195,7 @@ class SplashNotifier extends StateNotifier<SplashState> {
           print("Remote Config 데이터를 가져오는 데 실패했습니다: $e");
         } else {
           print("재시도 중... ($currentRetries/$maxRetries)");
-          await Future.delayed(Duration(seconds: 2)); // 2초 동안 기다립니다.
+          await Future.delayed(const Duration(seconds: 2)); // 2초 동안 기다립니다.
         }
       }
     }
@@ -214,6 +216,9 @@ class SplashNotifier extends StateNotifier<SplashState> {
     await initUpdatePopup();
     await getLastDate();
 
+    print("1233333 ${ref.read(mainProvider).password}");
+    print("${ref.read(mainProvider).password}");
+
     state.isNeedUpdate ? null : await goToHome();
   }
 
@@ -225,12 +230,19 @@ class SplashNotifier extends StateNotifier<SplashState> {
 
       if (accessToken == null) {
         //token이 없으면 로그인 화면 이동
-        navigatorKey.currentState!.pushAndRemoveUntil(
-          MaterialPageRoute(
-            builder: (context) => const LoginScreen(),
-          ),
-          (route) => false,
-        );
+        ref.read(mainProvider).isPasswordSet
+            ? navigatorKey.currentState!.pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => PasswordVerificationScreen(
+                          nextPage: (context) => const LoginScreen(),
+                        )),
+                (route) => false)
+            : navigatorKey.currentState!.pushAndRemoveUntil(
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen(),
+                ),
+                (route) => false,
+              );
       } else {
         if (retryCount < 1) {
           retryCount++;
@@ -242,17 +254,30 @@ class SplashNotifier extends StateNotifier<SplashState> {
             await ref.read(notificationProvider.notifier).getToken();
             final deviceToken = ref.read(notificationProvider).token;
 
-            await ref.read(loginProvider.notifier).getLoginData(deviceToken);
+            //isGoToHome파라미터는 홈을 가야 하는지 여부 판단
+            await ref.read(loginProvider.notifier).getLoginData(deviceToken, isGoToHome: false);
 
-            // ref.read(loginProvider.notifier).getLoginSuccessData(loginType: getLoginType!);
-
-            navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
-          } on DioError catch (e) {
+            ref.read(mainProvider).isPasswordSet
+                ? navigatorKey.currentState!.pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => PasswordVerificationScreen(
+                              nextPage: (context) => const HomeScreen(),
+                            )),
+                    (route) => false)
+                : navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
+          } on DioError {
             // 로그인 화면으로 다시 이동
             // Get.snackbar('알림', '세션이 만료되었습니다.');
             await tokenUseCase.deleteAllToken();
 
-            navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+            ref.read(mainProvider).isPasswordSet
+                ? navigatorKey.currentState!.pushAndRemoveUntil(
+                    MaterialPageRoute(
+                        builder: (context) => PasswordVerificationScreen(
+                              nextPage: (context) => const LoginScreen(),
+                            )),
+                    (route) => false)
+                : navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
           }
           // Your existing code here
         } else {
@@ -260,7 +285,15 @@ class SplashNotifier extends StateNotifier<SplashState> {
           // Get.snackbar('알림', '세션이 만료되었습니다.');
           await tokenUseCase.deleteAllToken();
 
-          navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+          ref.read(mainProvider).isPasswordSet
+              ? navigatorKey.currentState!.pushAndRemoveUntil(
+                  MaterialPageRoute(
+                    builder: (context) => PasswordVerificationScreen(
+                      nextPage: (context) => const LoginScreen(),
+                    ),
+                  ),
+                  (route) => false)
+              : navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
         }
       }
     });

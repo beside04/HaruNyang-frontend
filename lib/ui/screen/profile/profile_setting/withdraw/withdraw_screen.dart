@@ -66,7 +66,7 @@ class WithdrawScreen extends ConsumerWidget {
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => WithdrawDoneScreen()),
+                              MaterialPageRoute(builder: (context) => const WithdrawDoneScreen()),
                             );
                           },
                           child: Center(

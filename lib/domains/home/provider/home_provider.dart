@@ -78,7 +78,7 @@ class HomeNotifier extends StateNotifier<HomeState> {
       if (isTodayTempSave) {
         return DiarySate.alreadySaved;
       } else {
-        navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) => DiaryScreen()));
+        navigatorKey.currentState!.push(MaterialPageRoute(builder: (context) => const DiaryScreen()));
       }
     }
     state = state.copyWith(selectedIndex: index);

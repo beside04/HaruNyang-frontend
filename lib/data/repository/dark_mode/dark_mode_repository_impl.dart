@@ -1,4 +1,4 @@
-import 'package:frontend/data/data_source/local_data/dark_mode_data_source.dart';
+import 'package:frontend/data/data_source/local_data/secure_storage/dark_mode_data_source.dart';
 import 'package:frontend/domain/repository/dark_mode/dark_mode_repository.dart';
 
 class DarkModeRepositoryImpl implements DarkModeRepository {

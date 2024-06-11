@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:frontend/domain/model/diary/diary_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -43,8 +42,21 @@ class AutoDiarySaveDataSource {
     await prefs.remove(date);
   }
 
+  // 다이어리 데이터만 삭제하도록 수정된 메서드
   Future<void> deleteAllDiary() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
+    final allKeys = prefs.getKeys();
+
+    for (var key in allKeys) {
+      if (_isDiaryKey(key)) {
+        await prefs.remove(key);
+      }
+    }
+  }
+
+  // 다이어리 키인지 확인하는 헬퍼 메서드
+  bool _isDiaryKey(String key) {
+    final RegExp diaryKeyPattern = RegExp(r'^\d{4}-\d{2}-\d{2}'); // YYYY-MM-DD 형식의 키
+    return diaryKeyPattern.hasMatch(key);
   }
 }

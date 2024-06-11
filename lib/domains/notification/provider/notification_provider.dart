@@ -82,7 +82,7 @@ class NotificationNotifier extends StateNotifier<NotificationState> {
     try {
       token = await FirebaseMessaging.instance.getToken();
       state = state.copyWith(token: token);
-      print("tokentoken : ${token}");
+      print("tokentoken : $token");
       if (kDebugMode) {
         print("notification token:$token");
       }

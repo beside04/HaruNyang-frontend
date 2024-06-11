@@ -40,11 +40,11 @@ class LoginNotifier extends StateNotifier<LoginState> {
     getLoginSuccessData(loginType: "APPLE");
   }
 
-  Future<void> getLoginSuccessData({required String loginType}) async {
+  Future<void> getLoginSuccessData({required String loginType, bool? isGoToHome}) async {
     final loginResult = await onLogin(loginType: loginType);
 
     if (loginResult == 200) {
-      await loginDone();
+      await loginDone(isGoToHome: isGoToHome);
     } else if (loginResult == 404) {
       navigatorKey.currentState!.push(
         MaterialPageRoute(
@@ -108,7 +108,7 @@ class LoginNotifier extends StateNotifier<LoginState> {
     return result;
   }
 
-  Future<void> getLoginData(getDeviceToken) async {
+  Future<void> getLoginData(getDeviceToken, {bool? isGoToHome}) async {
     final getLoginType = await tokenUseCase.getLoginType();
     final getSocialId = await tokenUseCase.getSocialId();
 
@@ -120,23 +120,21 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     print("state.deviceToken : ${state.deviceToken}");
 
-    getLoginSuccessData(loginType: getLoginType ?? "");
+    getLoginSuccessData(loginType: getLoginType ?? "", isGoToHome: isGoToHome);
   }
 
   void goHome() {
     navigatorKey.currentState!.pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomeScreen()), (route) => false);
   }
 
-  Future<void> loginDone() async {
+  Future<void> loginDone({bool? isGoToHome}) async {
     //캘린더 업데이트
 
     ref.watch(diaryProvider.notifier).initPage();
 
     await ref.watch(onBoardingProvider.notifier).getMyInformation();
 
-    // ref.watch(diaryProvider.notifier).getAllBookmarkData();
-
-    goHome();
+    isGoToHome == false ? null : goHome();
   }
 
   Future<void> kakaoLogout() async {

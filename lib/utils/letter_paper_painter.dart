@@ -17,8 +17,8 @@ class LetterPaperPainter extends CustomPainter {
       ..strokeWidth = 1.5;
 
     // You can calculate the line height based on the text style.
-    final lineHeight = 34.0;
-    final lineSpace = 34.0; // The space between lines
+    const lineHeight = 34.0;
+    const lineSpace = 34.0; // The space between lines
 
     // Draw lines based on the number of lines of the text
     for (var i = 0; i < (size.height / lineHeight) + lineCount; i++) {

@@ -51,7 +51,7 @@ class TopicBubbleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 44,
       child: CustomPaint(
         painter: RectangleWithNotchPainter(
@@ -71,7 +71,7 @@ class TopicBubbleWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               text,
-              SizedBox(
+              const SizedBox(
                 width: 10,
               ),
               InkWell(

@@ -36,7 +36,7 @@ class EmotionStampApi {
 
       final List<DiaryDetailData> emotionStampList = emotionStampIterable.map((e) => DiaryDetailData.fromJson(e)).toList();
 
-      print("emotionStampListaaa ${emotionStampList}");
+      print("emotionStampListaaa $emotionStampList");
 
       emotionStampList.sort((a, b) {
         return a.id!.compareTo(b.id!);

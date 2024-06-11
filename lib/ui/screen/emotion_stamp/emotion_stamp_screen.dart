@@ -213,7 +213,7 @@ class EmotionStampScreenState extends ConsumerState<EmotionStampScreen> {
                   //       )
                   Padding(
                       padding: const EdgeInsets.all(20.0),
-                      child: Container(
+                      child: SizedBox(
                         width: double.infinity,
                         height: 96,
                         child: GestureDetector(

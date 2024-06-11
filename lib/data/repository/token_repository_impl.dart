@@ -1,4 +1,4 @@
-import 'package:frontend/data/data_source/local_data/memory_token_data_source.dart';
+import 'package:frontend/data/data_source/local_data/secure_storage/memory_token_data_source.dart';
 import 'package:frontend/domain/repository/token_repository.dart';
 
 class TokenRepositoryImpl implements TokenRepository {

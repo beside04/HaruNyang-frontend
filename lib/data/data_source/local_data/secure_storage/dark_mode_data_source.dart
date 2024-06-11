@@ -1,4 +1,4 @@
-import 'package:frontend/data/data_source/local_data/local_secure_data_source.dart';
+import 'package:frontend/data/data_source/local_data/secure_storage/local_secure_data_source.dart';
 
 class DarkModeDataSource {
   final LocalSecureDataSource localSecureDataSource = LocalSecureDataSource();
