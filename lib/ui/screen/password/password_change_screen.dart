@@ -9,6 +9,7 @@ import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/password/components/password_keyboard.dart';
 import 'package:frontend/ui/screen/password/components/password_text_display.dart';
 import 'package:frontend/ui/screen/password/password_hint_setting_screen.dart';
+import 'package:vibration/vibration.dart';
 
 class PasswordChangeScreen extends ConsumerStatefulWidget {
   const PasswordChangeScreen({super.key});
@@ -24,6 +25,7 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
   String secondPassword = '';
   bool isCurrentPasswordVerified = false;
   int failedAttempts = 0;
+  bool isNewPasswordDifferent = false;
 
   @override
   void initState() {
@@ -64,12 +66,12 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
   }
 
   successPassword() async {
-    ref.read(mainProvider.notifier).setPassword(secondPassword!);
-
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PasswordHintSettingScreen(),
+        builder: (context) => PasswordHintSettingScreen(
+          password: secondPassword,
+        ),
       ),
     );
   }
@@ -82,6 +84,7 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
   }
 
   onNumberPress(val) {
+    Vibration.vibrate(duration: 100);
     setState(() {
       passwordKeyword = passwordKeyword! + val;
     });
@@ -115,17 +118,31 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
 
       if (passwordKeyword!.length == 4 && firstPassword.isEmpty) {
         Future.delayed(const Duration(milliseconds: 100), () {
-          setState(() {
-            firstPassword = passwordKeyword!;
-            passwordKeyword = '';
-            passwordText = '비밀번호를 한 번 더 입력해주세요';
-          });
+          if (ref.read(mainProvider).password == passwordKeyword) {
+            //이전과 같은 비밀번호 일때
+            Vibration.vibrate(duration: 500);
+            setState(() {
+              isCurrentPasswordVerified = true;
+              failedAttempts = 0;
+              passwordKeyword = '';
+              passwordText = '새 비밀번호를 입력해주세요';
+              isNewPasswordDifferent = true; // 이전과 다른 비밀번호 체크
+            });
+          } else {
+            setState(() {
+              firstPassword = passwordKeyword!;
+              passwordKeyword = '';
+              passwordText = '비밀번호를 한 번 더 입력해주세요';
+              isNewPasswordDifferent = false;
+            });
+          }
         });
       }
     }
   }
 
   onBackspacePress(val) {
+    Vibration.vibrate(duration: 100);
     setState(() {
       if (passwordKeyword!.isNotEmpty) {
         passwordKeyword = passwordKeyword!.substring(0, passwordKeyword!.length - 1);
@@ -156,13 +173,16 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
               PasswordTextDisplay(
                 passwordKeyword: passwordKeyword!,
                 passwordText: passwordText,
-                isHintVisible: failedAttempts > 0 && ref.read(mainProvider).hint != null, // 실패 횟수가 1 이상, 힌트가 있을때 노출
+                isHintVisible: failedAttempts > 0 && ref.read(mainProvider).hint != null,
+                // 실패 횟수가 1 이상, 힌트가 있을때 노출
                 hint: ref.read(mainProvider).hint,
+                isNewPasswordDifferent: isNewPasswordDifferent,
               ),
               PasswordKeyboard(
                 onNumberPress: onNumberPress,
                 onBackspacePress: onBackspacePress,
-                isBioAuth: isCurrentPasswordVerified ? null : verificationBioAuth,
+                bioAuthOnTap: verificationBioAuth,
+                isBioAuth: ref.read(mainProvider).isBioAuth,
               ),
             ],
           ),

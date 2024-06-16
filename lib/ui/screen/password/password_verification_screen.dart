@@ -5,6 +5,7 @@ import 'package:frontend/domains/password/provider/password_provider.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/password/components/password_keyboard.dart';
 import 'package:frontend/ui/screen/password/components/password_text_display.dart';
+import 'package:vibration/vibration.dart';
 
 class PasswordVerificationScreen extends ConsumerStatefulWidget {
   final Widget Function(BuildContext) nextPage;
@@ -60,6 +61,7 @@ class PasswordVerificationScreenState extends ConsumerState<PasswordVerification
   }
 
   onNumberPress(val) {
+    Vibration.vibrate(duration: 100);
     setState(() {
       passwordKeyword = passwordKeyword! + val;
     });
@@ -73,6 +75,7 @@ class PasswordVerificationScreenState extends ConsumerState<PasswordVerification
   }
 
   onBackspacePress(val) {
+    Vibration.vibrate(duration: 100);
     setState(() {
       if (passwordKeyword!.isNotEmpty) {
         passwordKeyword = passwordKeyword!.substring(0, passwordKeyword!.length - 1);
@@ -94,7 +97,12 @@ class PasswordVerificationScreenState extends ConsumerState<PasswordVerification
                 isHintVisible: failedAttempts > 0 && ref.read(mainProvider).hint != null, // 실패 횟수가 1 이상, 힌트가 있을때 노출
                 hint: ref.read(mainProvider).hint,
               ),
-              PasswordKeyboard(onNumberPress: onNumberPress, onBackspacePress: onBackspacePress, isBioAuth: verificationBioAuth),
+              PasswordKeyboard(
+                onNumberPress: onNumberPress,
+                onBackspacePress: onBackspacePress,
+                bioAuthOnTap: verificationBioAuth,
+                isBioAuth: ref.read(mainProvider).isBioAuth,
+              ),
             ],
           ),
         ),

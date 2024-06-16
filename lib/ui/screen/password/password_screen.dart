@@ -88,7 +88,12 @@ class PasswordScreenState extends ConsumerState<PasswordScreen> {
                         ref.read(mainProvider.notifier).disablePassword();
                       } else {
                         if (await ref.read(mainProvider.notifier).isPasswordStored()) {
-                          ref.read(mainProvider.notifier).enablePassword();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const PasswordSettingScreen(),
+                            ),
+                          );
                         } else {
                           showDialog(
                             barrierDismissible: false,
@@ -156,9 +161,60 @@ class PasswordScreenState extends ConsumerState<PasswordScreen> {
                   onPressed: null,
                 );
               }),
-              if (_supportState == _SupportState.supported)
-                Column(
+              Visibility(
+                visible: ref.watch(mainProvider).isPasswordSet == false,
+                child: Divider(
+                  thickness: 1.h,
+                  height: 1.h,
+                  color: Theme.of(context).colorScheme.border,
+                ),
+              ),
+              Visibility(
+                visible: ref.watch(mainProvider).isPasswordSet == true,
+                child: Column(
                   children: [
+                    if (_supportState == _SupportState.supported)
+                      Column(
+                        children: [
+                          Divider(
+                            thickness: 1.h,
+                            height: 1.h,
+                            color: Theme.of(context).colorScheme.border,
+                          ),
+                          Consumer(builder: (context, ref, child) {
+                            return ProfileButton(
+                              padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
+                              icon: FlutterSwitch(
+                                padding: 2,
+                                width: 52.0.w,
+                                height: 32.0.h,
+                                activeColor: Theme.of(context).primaryColor,
+                                inactiveColor: Theme.of(context).colorScheme.iconSubColor,
+                                toggleSize: 28.0.w,
+                                value: ref.watch(mainProvider).isBioAuth,
+                                borderRadius: 50.0.w,
+                                onToggle: (val) async {
+                                  if (!val) {
+                                    ref.read(mainProvider.notifier).disableBioAuth();
+                                  } else {
+                                    if (await ref.read(passwordProvider.notifier).authenticateWithBiometrics(
+                                          isAuthenticateToggle: true,
+                                          context: context,
+                                        )) {
+                                      ref.read(mainProvider.notifier).enableBioAuth();
+                                    }
+                                  }
+                                },
+                              ),
+                              title: '생체인증 잠금',
+                              titleColor: Theme.of(context).colorScheme.textTitle,
+                              onPressed: null,
+                            );
+                          }),
+                        ],
+                      )
+                    else
+                      Container(),
                     Divider(
                       thickness: 1.h,
                       height: 1.h,
@@ -166,68 +222,31 @@ class PasswordScreenState extends ConsumerState<PasswordScreen> {
                     ),
                     Consumer(builder: (context, ref, child) {
                       return ProfileButton(
-                        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 20),
-                        icon: FlutterSwitch(
-                          disabled: ref.watch(mainProvider).password == null,
-                          padding: 2,
-                          width: 52.0.w,
-                          height: 32.0.h,
-                          activeColor: Theme.of(context).primaryColor,
-                          inactiveColor: Theme.of(context).colorScheme.iconSubColor,
-                          toggleSize: 28.0.w,
-                          value: ref.watch(mainProvider).isBioAuth,
-                          borderRadius: 50.0.w,
-                          onToggle: (val) async {
-                            if (!val) {
-                              ref.read(mainProvider.notifier).disableBioAuth();
-                            } else {
-                              if (await ref.read(passwordProvider.notifier).authenticateWithBiometrics(
-                                    isAuthenticateToggle: true,
-                                    context: context,
-                                  )) {
-                                ref.read(mainProvider.notifier).enableBioAuth();
-                              }
-                            }
-                          },
+                        icon: SvgPicture.asset(
+                          "lib/config/assets/images/profile/navigate_next.svg",
+                          color: Theme.of(context).colorScheme.iconSubColor,
                         ),
-                        title: '생체인증 잠금',
-                        titleColor: ref.watch(mainProvider).password == null ? Theme.of(context).colorScheme.textDisabled : Theme.of(context).colorScheme.textTitle,
-                        onPressed: null,
+                        title: '비밀번호 변경',
+                        titleColor: Theme.of(context).colorScheme.textTitle,
+                        onPressed: () {
+                          if (ref.watch(mainProvider).password != null) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const PasswordChangeScreen(),
+                              ),
+                            );
+                          }
+                        },
                       );
                     }),
+                    Divider(
+                      thickness: 1.h,
+                      height: 1.h,
+                      color: Theme.of(context).colorScheme.border,
+                    ),
                   ],
-                )
-              else
-                Container(),
-              Divider(
-                thickness: 1.h,
-                height: 1.h,
-                color: Theme.of(context).colorScheme.border,
-              ),
-              Consumer(builder: (context, ref, child) {
-                return ProfileButton(
-                  icon: SvgPicture.asset(
-                    "lib/config/assets/images/profile/navigate_next.svg",
-                    color: Theme.of(context).colorScheme.iconSubColor,
-                  ),
-                  title: '비밀번호 변경',
-                  titleColor: ref.watch(mainProvider).password == null ? Theme.of(context).colorScheme.textDisabled : Theme.of(context).colorScheme.textTitle,
-                  onPressed: () {
-                    if (ref.watch(mainProvider).password != null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PasswordChangeScreen(),
-                        ),
-                      );
-                    }
-                  },
-                );
-              }),
-              Divider(
-                thickness: 1.h,
-                height: 1.h,
-                color: Theme.of(context).colorScheme.border,
+                ),
               ),
             ],
           ),

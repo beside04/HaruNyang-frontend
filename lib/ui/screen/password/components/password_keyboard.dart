@@ -7,12 +7,14 @@ import 'package:frontend/ui/screen/password/components/password_keyboard_key.dar
 class PasswordKeyboard extends StatelessWidget {
   final ValueSetter<dynamic> onNumberPress;
   final ValueSetter<void> onBackspacePress;
-  final void Function(dynamic)? isBioAuth;
+  final void Function(dynamic)? bioAuthOnTap;
+  final bool? isBioAuth;
 
   const PasswordKeyboard({
     super.key,
     required this.onNumberPress,
     required this.onBackspacePress,
+    this.bioAuthOnTap,
     this.isBioAuth,
   });
 
@@ -107,7 +109,7 @@ class PasswordKeyboard extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: isBioAuth == null
+                  child: isBioAuth == false || isBioAuth == null
                       ? const AspectRatio(
                           aspectRatio: 2,
                           child: Center(
@@ -129,7 +131,7 @@ class PasswordKeyboard extends StatelessWidget {
                                   height: 24,
                                   width: 24,
                                 ),
-                          onTap: isBioAuth!,
+                          onTap: bioAuthOnTap!,
                           value: null,
                         ),
                 ),

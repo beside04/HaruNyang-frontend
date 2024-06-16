@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/password/components/password_keyboard.dart';
 import 'package:frontend/ui/screen/password/components/password_text_display.dart';
 import 'package:frontend/ui/screen/password/password_hint_setting_screen.dart';
+import 'package:vibration/vibration.dart';
 
 class PasswordSettingScreen extends ConsumerStatefulWidget {
   const PasswordSettingScreen({super.key});
@@ -30,13 +30,10 @@ class PasswordSettingScreenState extends ConsumerState<PasswordSettingScreen> {
   }
 
   successPassword() async {
-    ref.read(mainProvider.notifier).enablePassword();
-    ref.read(mainProvider.notifier).setPassword(secondPassword!);
-
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const PasswordHintSettingScreen(),
+        builder: (context) => PasswordHintSettingScreen(password: secondPassword),
       ),
     );
   }
@@ -47,6 +44,7 @@ class PasswordSettingScreenState extends ConsumerState<PasswordSettingScreen> {
   }
 
   onNumberPress(val) {
+    Vibration.vibrate(duration: 100);
     setState(() {
       passwordKeyword = passwordKeyword! + val;
     });
@@ -83,6 +81,7 @@ class PasswordSettingScreenState extends ConsumerState<PasswordSettingScreen> {
   }
 
   onBackspacePress(val) {
+    Vibration.vibrate(duration: 100);
     setState(() {
       if (passwordKeyword!.isNotEmpty) {
         passwordKeyword = passwordKeyword!.substring(0, passwordKeyword!.length - 1);

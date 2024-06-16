@@ -20,9 +20,12 @@ import 'package:frontend/utils/utils.dart';
 final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
 class PasswordHintSettingScreen extends ConsumerStatefulWidget {
+  final String password;
+
   const PasswordHintSettingScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+    required this.password,
+  });
 
   @override
   PasswordHintSettingScreenState createState() => PasswordHintSettingScreenState();
@@ -159,6 +162,9 @@ class PasswordHintSettingScreenState extends ConsumerState<PasswordHintSettingSc
                   padding: const EdgeInsets.only(bottom: 4.0, right: 8.0),
                   child: TextButton(
                     onPressed: () async {
+                      ref.read(mainProvider.notifier).setPassword(widget.password);
+                      ref.read(mainProvider.notifier).enablePassword();
+
                       ref.read(mainProvider.notifier).deleteHint();
 
                       GlobalUtils.setAnalyticsCustomEvent('Click_Delete_Hint');
@@ -258,6 +264,9 @@ class PasswordHintSettingScreenState extends ConsumerState<PasswordHintSettingSc
                           : () async {
                               var key = _fbKey.currentState!;
                               if (key.saveAndValidate()) {
+                                ref.read(mainProvider.notifier).enablePassword();
+                                ref.read(mainProvider.notifier).setPassword(widget.password);
+
                                 FocusScope.of(context).unfocus();
 
                                 ref.read(mainProvider.notifier).setHint(hintEditingController.text);

@@ -7,6 +7,7 @@ class PasswordTextDisplay extends StatelessWidget {
   final String passwordText;
   final bool? isHintVisible;
   final String? hint;
+  final bool? isNewPasswordDifferent;
 
   const PasswordTextDisplay({
     super.key,
@@ -14,6 +15,7 @@ class PasswordTextDisplay extends StatelessWidget {
     required this.passwordText,
     this.isHintVisible,
     this.hint,
+    this.isNewPasswordDifferent,
   });
 
   @override
@@ -65,6 +67,22 @@ class PasswordTextDisplay extends StatelessWidget {
                   "$hint",
                   style: kBody3Style.copyWith(color: Theme.of(context).colorScheme.textCaption),
                 ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: isNewPasswordDifferent ?? false,
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.surface_02,
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(4.0),
+                ),
+              ),
+              child: Text(
+                "이전과 다른 비밀번호를 입력해주세요",
+                style: kBody3Style.copyWith(color: Theme.of(context).colorScheme.errorColor),
               ),
             ),
           ),
