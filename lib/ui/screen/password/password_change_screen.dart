@@ -71,9 +71,23 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
       MaterialPageRoute(
         builder: (context) => PasswordHintSettingScreen(
           password: secondPassword,
+          onBack: resetState,
         ),
       ),
     );
+  }
+
+  resetState() {
+    ref.read(mainProvider).isBioAuth ? verificationBioAuth("") : null;
+    setState(() {
+      passwordKeyword = '';
+      passwordText = "현재 비밀번호를 입력해주세요";
+      firstPassword = '';
+      secondPassword = '';
+      isCurrentPasswordVerified = false;
+      failedAttempts = 0;
+      isNewPasswordDifferent = false;
+    });
   }
 
   checkAgainPassword() {
@@ -182,7 +196,7 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
                 onNumberPress: onNumberPress,
                 onBackspacePress: onBackspacePress,
                 bioAuthOnTap: verificationBioAuth,
-                isBioAuth: ref.read(mainProvider).isBioAuth,
+                isBioAuth: isCurrentPasswordVerified ? null : ref.read(mainProvider).isBioAuth,
               ),
             ],
           ),

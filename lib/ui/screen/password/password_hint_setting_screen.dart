@@ -21,10 +21,12 @@ final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
 class PasswordHintSettingScreen extends ConsumerStatefulWidget {
   final String password;
+  final VoidCallback onBack;
 
   const PasswordHintSettingScreen({
     super.key,
     required this.password,
+    required this.onBack,
   });
 
   @override
@@ -139,6 +141,7 @@ class PasswordHintSettingScreenState extends ConsumerState<PasswordHintSettingSc
       screenName: 'Screen_Event_Profile_Password_Hint_Setting',
       child: WillPopScope(
         onWillPop: () async {
+          widget.onBack();
           return await Future.value(true);
         },
         child: GestureDetector(
@@ -154,6 +157,7 @@ class PasswordHintSettingScreenState extends ConsumerState<PasswordHintSettingSc
               elevation: 0,
               leading: BackIcon(
                 onPressed: () {
+                  widget.onBack();
                   Navigator.pop(context);
                 },
               ),
@@ -258,7 +262,7 @@ class PasswordHintSettingScreenState extends ConsumerState<PasswordHintSettingSc
                   ),
                   Consumer(builder: (context, ref, child) {
                     return BottomButton(
-                      title: '다음',
+                      title: '확인',
                       onTap: hintEditingController.text.trim().isEmpty
                           ? null
                           : () async {
