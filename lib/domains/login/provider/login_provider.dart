@@ -3,10 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
 import 'package:frontend/domains/diary/provider/diary_provider.dart';
 import 'package:frontend/domains/login/model/login_state.dart';
+import 'package:frontend/domains/main/provider/main_provider.dart';
 import 'package:frontend/domains/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/main.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/login/login_terms_information_screen.dart';
+import 'package:frontend/ui/screen/password/password_verification_screen.dart';
 import 'package:frontend/ui/screen/sign_in_complete/sign_in_complete_screen.dart';
 
 final loginProvider = StateNotifierProvider<LoginNotifier, LoginState>((ref) {
@@ -134,7 +136,16 @@ class LoginNotifier extends StateNotifier<LoginState> {
 
     await ref.watch(onBoardingProvider.notifier).getMyInformation();
 
-    isGoToHome == false ? null : goHome();
+    isGoToHome == false
+        ? null
+        : ref.read(mainProvider).isPasswordSet
+            ? navigatorKey.currentState!.pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => PasswordVerificationScreen(
+                          nextPage: (context) => const HomeScreen(),
+                        )),
+                (route) => false)
+            : goHome();
   }
 
   Future<void> kakaoLogout() async {
