@@ -237,6 +237,7 @@ class PasswordHintSettingScreenState extends ConsumerState<PasswordHintSettingSc
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
                                   ),
+                                  suffixIconConstraints: BoxConstraints(minHeight: 38, minWidth: 38),
                                   suffixIcon: Consumer(builder: (context, ref, child) {
                                     return hintEditingController.text.isEmpty
                                         ? Visibility(
@@ -244,10 +245,19 @@ class PasswordHintSettingScreenState extends ConsumerState<PasswordHintSettingSc
                                             child: Container(),
                                           )
                                         : GestureDetector(
-                                            child: Icon(
-                                              Icons.cancel,
-                                              color: Theme.of(context).colorScheme.iconSubColor,
-                                              size: 20,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(left: 8.0, top: 10, bottom: 10, right: 8),
+                                              child: Theme.of(context).colorScheme.brightness == Brightness.dark
+                                                  ? Image.asset(
+                                                      "lib/config/assets/images/password/dark_close_button.png",
+                                                      width: 16,
+                                                      height: 16,
+                                                    )
+                                                  : Image.asset(
+                                                      "lib/config/assets/images/password/light_close_button.png",
+                                                      width: 16,
+                                                      height: 16,
+                                                    ),
                                             ),
                                             onTap: () => hintEditingController.clear(),
                                           );

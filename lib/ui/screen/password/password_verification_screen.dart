@@ -52,7 +52,7 @@ class PasswordVerificationScreenState extends ConsumerState<PasswordVerification
       goToNextPage();
     } else {
       setState(() {
-        passwordText = '비밀번호가 일치하지 않아요';
+        passwordText = '비밀번호가 일치하지 않아요\n다시 한 번 더 입력해주세요';
         passwordKeyword = '';
         enteredPassword = '';
         failedAttempts++;

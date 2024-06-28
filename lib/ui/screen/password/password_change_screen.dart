@@ -92,7 +92,7 @@ class PasswordChangeScreenState extends ConsumerState<PasswordChangeScreen> {
 
   checkAgainPassword() {
     setState(() {
-      passwordText = '비밀번호가 일치하지 않아요';
+      passwordText = '비밀번호가 일치하지 않아요\n다시 한 번 더 입력해주세요';
       passwordKeyword = '';
     });
   }
