@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/constants.dart';
@@ -59,7 +62,7 @@ class SplashNotifier extends StateNotifier<SplashState> {
         isBannerOpen = remoteConfig.getBool("is_christmas_banner_open");
         bannerUrl = remoteConfig.getString("banner_url");
 
-        if (APP_BUILD_NUMBER < remoteConfig.getInt("min_build_number")) {
+        if (APP_BUILD_NUMBER < remoteConfig.getInt("min_supported_app_version_build_number")) {
           state = state.copyWith(isNeedUpdate: true);
 
           showDialog(
@@ -75,21 +78,76 @@ class SplashNotifier extends StateNotifier<SplashState> {
                     children: [
                       Image.asset(
                         "lib/config/assets/images/character/haru_error_case.png",
-                        width: 120.w,
-                        height: 120.h,
-                      ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
-                      Text(
-                        "업데이트가 필요합니다.",
-                        style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                        width: 120,
+                        height: 120,
                       ),
                       SizedBox(
                         height: 4.h,
                       ),
                       Text(
-                        "필수 업데이트를 해야만 앱을 이용할 수 있습니다.",
+                        "하루냥 집 점검중",
+                        style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                      ),
+                      Text(
+                        remoteConfig.getString("maintenance_pop_up_content").replaceAll(r'\n', '\n'),
+                        textAlign: TextAlign.center,
+                        style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
+                      ),
+                    ],
+                  ),
+                  actionContent: [
+                    DialogButton(
+                      title: "다음에 올게요",
+                      onTap: () async {
+                        if (Platform.isAndroid) {
+                          SystemNavigator.pop();
+                        } else {
+                          exit(0);
+                        }
+                      },
+                      backgroundColor: kOrange200Color,
+                      textStyle: kHeader4Style.copyWith(color: kWhiteColor),
+                    ),
+                  ],
+                ),
+              );
+            },
+          );
+        } else if (APP_BUILD_NUMBER < remoteConfig.getInt("min_build_number")) {
+          state = state.copyWith(isNeedUpdate: true);
+
+          showDialog(
+            barrierDismissible: false,
+            context: navigatorKey.currentContext!,
+            builder: (context) {
+              return WillPopScope(
+                onWillPop: () async => false,
+                child: DialogComponent(
+                  titlePadding: EdgeInsets.zero,
+                  title: "",
+                  content: Column(
+                    children: [
+                      Image.asset(
+                        "lib/config/assets/images/character/character6.png",
+                        width: 120,
+                        height: 120,
+                      ),
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Text(
+                        "필수 업데이트",
+                        style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                      ),
+                      Text(
+                        "하루냥이 일기장을 새롭게 준비했어요!\n지금 바로 업데이트해보세요",
+                        textAlign: TextAlign.center,
                         style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                       ),
                     ],
@@ -129,29 +187,30 @@ class SplashNotifier extends StateNotifier<SplashState> {
                   content: Column(
                     children: [
                       Image.asset(
-                        "lib/config/assets/images/character/update2.png",
-                        width: 120.w,
-                        height: 120.h,
+                        "lib/config/assets/images/character/character6.png",
+                        width: 120,
+                        height: 120,
                       ),
                       SizedBox(
                         height: 12.h,
                       ),
                       Text(
-                        "새로운 버전이 있습니다.",
+                        "새로운 버전 업데이트",
                         style: kHeader3Style.copyWith(color: Theme.of(context).colorScheme.textTitle),
                       ),
                       SizedBox(
                         height: 4.h,
                       ),
                       Text(
-                        "업데이트하고 새로운 기능을 만나보세요.",
+                        "더 좋아진 하루냥을 만나기 위해\n업데이트를 해보세요!",
+                        textAlign: TextAlign.center,
                         style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                       ),
                     ],
                   ),
                   actionContent: [
                     DialogButton(
-                      title: "다음에",
+                      title: "나중에",
                       onTap: () async {
                         Navigator.pop(context);
                         String time = DateTime.now().toIso8601String();
