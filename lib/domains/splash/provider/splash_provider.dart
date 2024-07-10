@@ -289,19 +289,12 @@ class SplashNotifier extends StateNotifier<SplashState> {
 
       if (accessToken == null) {
         //token이 없으면 로그인 화면 이동
-        ref.read(mainProvider).isPasswordSet
-            ? navigatorKey.currentState!.pushAndRemoveUntil(
-                MaterialPageRoute(
-                    builder: (context) => PasswordVerificationScreen(
-                          nextPage: (context) => const LoginScreen(),
-                        )),
-                (route) => false)
-            : navigatorKey.currentState!.pushAndRemoveUntil(
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen(),
-                ),
-                (route) => false,
-              );
+        navigatorKey.currentState!.pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (context) => const LoginScreen(),
+          ),
+          (route) => false,
+        );
       } else {
         if (retryCount < 1) {
           retryCount++;
