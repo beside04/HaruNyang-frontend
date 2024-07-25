@@ -15,7 +15,7 @@ enum ListAPIStatus {
 
 @Riverpod(keepAlive: true)
 class BookmarkListState extends _$BookmarkListState {
-  int _lastPage = 0;
+  final int _lastPage = 0;
   ListAPIStatus _apiStatus = ListAPIStatus.idle;
 
   String? searchWord;
@@ -38,12 +38,6 @@ class BookmarkListState extends _$BookmarkListState {
       _apiStatus = ListAPIStatus.loading;
 
       final searchResult = await bookmarkUseCase.getBookmark(pageKey, 10, emotionValue);
-
-      if (searchResult == null) {
-        _apiStatus = ListAPIStatus.loaded;
-        state.appendPage([], 0);
-        return;
-      }
 
       List<CommentData>? searchList;
       searchResult.when(

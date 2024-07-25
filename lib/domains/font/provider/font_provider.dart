@@ -55,7 +55,7 @@ class FontNotifier extends StateNotifier<FontState> {
     await prefs.setDouble('selectedFontSize', font.size);
     await prefs.setDouble('selectedFontHeight', font.height);
 
-    GlobalUtils.setAnalyticsCustomEvent('Click_Font_Change_${font.title}');
+    font.title == "시스템 폰트(Pretendard)" ? GlobalUtils.setAnalyticsCustomEvent('Click_Font_Change_시스템 폰트') : GlobalUtils.setAnalyticsCustomEvent('Click_Font_Change_${font.title}');
 
     state = state.copyWith(
       selectedFontTitle: font.title,

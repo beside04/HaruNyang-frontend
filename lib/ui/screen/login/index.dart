@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(
                 height: Platform.isAndroid ? 310.h : 230.h,
               ),
-              InkWell(
+              const InkWell(
                   // onTap: () async {
                   //   await controller.connectKakaoLogin();
                   // },

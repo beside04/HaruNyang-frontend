@@ -19,8 +19,6 @@ import 'package:frontend/data/repository/social_login_repository/apple_login_imp
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
-import 'package:frontend/domain/model/diary/diary_data.dart';
-import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';

@@ -42,7 +42,7 @@ class MonthDayModel extends DatePickerModel {
 class ProfileSettingScreen extends ConsumerStatefulWidget {
   final bool isKakaoLogin;
 
-  ProfileSettingScreen({
+  const ProfileSettingScreen({
     Key? key,
     required this.isKakaoLogin,
   }) : super(key: key);
@@ -61,7 +61,7 @@ class ProfileSettingScreenState extends ConsumerState<ProfileSettingScreen> {
     ageEditingController.text = DateFormat('MM-dd').format(date);
   }
 
-  Job? jobStatus = null;
+  Job? jobStatus;
 
   @override
   void initState() {

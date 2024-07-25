@@ -1,10 +1,8 @@
-import 'package:frontend/data/data_source/local_data/push_message_permission_data_source.dart';
+import 'package:frontend/data/data_source/local_data/secure_storage/push_message_permission_data_source.dart';
 import 'package:frontend/domain/repository/push_message_permission/push_message_permission_repository.dart';
 
-class PushMessagePermissionRepositoryImpl
-    implements PushMessagePermissionRepository {
-  final PushMessagePermissionDataSource _dataSource =
-      PushMessagePermissionDataSource();
+class PushMessagePermissionRepositoryImpl implements PushMessagePermissionRepository {
+  final PushMessagePermissionDataSource _dataSource = PushMessagePermissionDataSource();
 
   @override
   Future<String?> getIsPushMessagePermission() async {

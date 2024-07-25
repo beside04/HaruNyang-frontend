@@ -44,7 +44,7 @@ void main() async {
       (_) => runApp(
         UncontrolledProviderScope(
           container: container,
-          child: MyApp(),
+          child: const MyApp(),
         ),
       ),
     );

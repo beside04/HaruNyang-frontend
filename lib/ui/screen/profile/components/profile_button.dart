@@ -38,7 +38,7 @@ class ProfileButton extends ConsumerWidget {
               Stack(
                 children: [
                   Text(
-                    "${title}   ",
+                    "$title   ",
                     style: kHeader5Style.copyWith(
                       color: titleColor,
                     ),

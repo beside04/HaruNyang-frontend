@@ -49,21 +49,17 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         final imagePath = await File('${directory.path}/image.png').create();
                         await imagePath.writeAsBytes(image);
 
-                        final result = await Share.shareXFiles([XFile('${imagePath.path}')], text: '하루냥 편지');
+                        final result = await Share.shareXFiles([XFile(imagePath.path)], text: '하루냥 편지');
 
                         GlobalUtils.setAnalyticsCustomEvent('Click_Share_Button');
 
-                        result.status == ShareResultStatus.success
-                            ? toast(
-                                context: context,
-                                text: '이미지 공유를 성공했습니다!',
-                                isCheckIcon: true,
-                              )
-                            : toast(
-                                context: context,
-                                text: '공유 UI를 닫았습니다.',
-                                isCheckIcon: false,
-                              );
+                        if (result.status == ShareResultStatus.success) {
+                          toast(
+                            context: context,
+                            text: '이미지 공유를 성공했습니다!',
+                            isCheckIcon: true,
+                          );
+                        }
                       }
                     });
                   },
@@ -82,7 +78,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 12,
                 ),
                 GestureDetector(
@@ -93,7 +89,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         final imagePath = await File('${directory.path}/image.png').create();
                         await imagePath.writeAsBytes(image);
 
-                        final result = await ImageGallerySaver.saveFile('${imagePath.path}', name: "하루냥");
+                        final result = await ImageGallerySaver.saveFile(imagePath.path, name: "하루냥");
 
                         GlobalUtils.setAnalyticsCustomEvent('Click_Save_Image');
 
@@ -155,8 +151,9 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
               child: Consumer(
                 builder: (context, ref, child) {
                   return ref.watch(diaryProvider).diaryDetailData!.comments![0].isFavorite
-                      ? GestureDetector(
+                      ? InkWell(
                           onTap: () {
+                            GlobalUtils.setAnalyticsCustomEvent('Click_Delete_BookMark');
                             ref.watch(diaryProvider.notifier).deleteBookmarkByBookmarkId(
                                   ref.watch(diaryProvider).diaryDetailData!.comments![0].id!,
                                   0,
@@ -177,8 +174,9 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                             ),
                           ),
                         )
-                      : GestureDetector(
+                      : InkWell(
                           onTap: () {
+                            GlobalUtils.setAnalyticsCustomEvent('Click_Save_BookMark');
                             ref.watch(diaryProvider.notifier).saveBookmark(
                                   ref.watch(diaryProvider).diaryDetailData!.comments![0].id!,
                                   0,
@@ -246,7 +244,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         child: RawScrollbar(
                           thickness: 6,
                           thumbColor: kWhiteColor.withOpacity(0.6),
-                          radius: Radius.circular(10.0),
+                          radius: const Radius.circular(10.0),
                           child: Padding(
                             padding: const EdgeInsets.only(right: 15.0),
                             child: ListView(
@@ -258,7 +256,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                                     lineCount: 7,
                                   ),
                                   child: Text(
-                                    "${ref.watch(diaryProvider).diaryDetailData!.comments![0].message}",
+                                    ref.watch(diaryProvider).diaryDetailData!.comments![0].message,
                                     style: fontNotifier.getFontStyle().copyWith(
                                           color: kGrayColor850,
                                         ),
@@ -278,7 +276,7 @@ class DiaryResultScreenState extends ConsumerState<DiaryResultScreen> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(
+                            padding: const EdgeInsets.only(
                               right: 24.0,
                               bottom: 30,
                             ),

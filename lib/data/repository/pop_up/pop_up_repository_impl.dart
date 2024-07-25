@@ -1,4 +1,4 @@
-import 'package:frontend/data/data_source/local_data/pop_up_data_source.dart';
+import 'package:frontend/data/data_source/local_data/secure_storage/pop_up_data_source.dart';
 import 'package:frontend/domain/repository/pop_up/pop_up_repository.dart';
 
 class PopUpRepositoryImpl implements PopUpRepository {

@@ -44,7 +44,7 @@ class WriteDiaryScreen extends ConsumerStatefulWidget {
 
   final bool isAutoSave;
 
-  WriteDiaryScreen({
+  const WriteDiaryScreen({
     Key? key,
     required this.date,
     required this.emotion,
@@ -76,7 +76,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
     diaryNotifier = ref.read(diaryProvider.notifier);
     screenEntryTime = ref.read(screenEntryTimeProvider);
 
-    _autoSaveTimer = Timer.periodic(Duration(seconds: 3), (Timer t) => _autoSaveDiary());
+    _autoSaveTimer = Timer.periodic(const Duration(seconds: 3), (Timer t) => _autoSaveDiary());
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       ref.watch(writeDiaryProvider.notifier).setRandomImageNumber(Random().nextInt(7) + 1);
@@ -87,7 +87,6 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
 
       if (widget.diaryData != null) {
         ref.watch(writeDiaryProvider.notifier).setDiaryData(widget.diaryData!);
-        print("ref.watch(writeDiaryProvider).networkImage ${ref.watch(writeDiaryProvider).networkImage}");
       } else {
         ref.watch(writeDiaryProvider.notifier).diaryEditingController.text = "";
         ref.watch(writeDiaryProvider.notifier).state = ref.watch(writeDiaryProvider.notifier).state.copyWith(diaryValueLength: 0);
@@ -518,7 +517,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                               ? SizedBox(
                                                   width: MediaQuery.of(context).size.width - 40,
                                                   child: Center(
-                                                    child: ref.watch(writeDiaryProvider).networkImage != "" && ref.watch(writeDiaryProvider).networkImage != null
+                                                    child: ref.watch(writeDiaryProvider).networkImage != ""
                                                         ? Stack(
                                                             children: [
                                                               Container(
@@ -526,7 +525,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                                 width: MediaQuery.of(context).size.width - 100,
                                                                 height: MediaQuery.of(context).size.width - 100,
                                                                 child: Image.network(
-                                                                  ref.watch(writeDiaryProvider).networkImage!,
+                                                                  ref.watch(writeDiaryProvider).networkImage,
                                                                   width: MediaQuery.of(context).size.width - 100,
                                                                   height: MediaQuery.of(context).size.width - 100,
                                                                 ),
@@ -615,7 +614,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                           bottom: 20,
                                         ),
                                         child: Container(
-                                          constraints: BoxConstraints(
+                                          constraints: const BoxConstraints(
                                             minHeight: 500,
                                           ),
                                           child: CustomPaint(

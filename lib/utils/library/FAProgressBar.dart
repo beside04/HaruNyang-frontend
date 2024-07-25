@@ -1,4 +1,3 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/widgets.dart';
 
 String _defaultFormatValue(double value, int? fixed) {
@@ -28,7 +27,7 @@ class FAProgressBar extends StatefulWidget {
       this.formatValueFixed,
       this.displayText,
       this.displayTextStyle =
-          const TextStyle(color: const Color(0xFFFFFFFF), fontSize: 12),
+          const TextStyle(color: Color(0xFFFFFFFF), fontSize: 12),
       this.progressGradient})
       : _borderRadius = borderRadius ?? BorderRadius.circular(8),
         super(key: key);
@@ -109,7 +108,7 @@ class _FAProgressBarState extends State<FAProgressBar>
 }
 
 class AnimatedProgressBar extends AnimatedWidget {
-  AnimatedProgressBar({
+  const AnimatedProgressBar({
     Key? key,
     required Animation<double> animation,
     required this.widget,
@@ -122,17 +121,18 @@ class AnimatedProgressBar extends AnimatedWidget {
     return y < 0 ? 0 : ((y > 1) ? 1 : y);
   }
 
+  @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
     Color progressColor = widget.progressColor;
 
     if (widget.changeColorValue != null) {
-      final _colorTween = ColorTween(
+      final colorTween = ColorTween(
         begin: widget.progressColor,
         end: widget.changeProgressColor,
       );
 
-      progressColor = _colorTween.transform(transformValue(
+      progressColor = colorTween.transform(transformValue(
         animation.value,
         widget.changeColorValue,
         widget.maxValue,
@@ -154,10 +154,10 @@ class AnimatedProgressBar extends AnimatedWidget {
     if (widget.displayText != null) {
       Widget textProgress = Container(
         alignment: widget.direction == Axis.horizontal
-            ? FractionalOffset(0.95, 0.5)
+            ? const FractionalOffset(0.95, 0.5)
             : (widget.verticalDirection == VerticalDirection.up
-                ? FractionalOffset(0.5, 0.05)
-                : FractionalOffset(0.5, 0.95)),
+                ? const FractionalOffset(0.5, 0.05)
+                : const FractionalOffset(0.5, 0.95)),
       );
       progressWidgets.add(textProgress);
     }

@@ -1,5 +1,5 @@
 import 'package:frontend/apis/response_result.dart';
-import 'package:frontend/data/data_source/local_data/auto_diary_save_data_source.dart';
+import 'package:frontend/data/data_source/local_data/shared_preferences/auto_diary_save_data_source.dart';
 import 'package:frontend/domain/model/social_login_result.dart';
 import 'package:frontend/domain/repository/on_boarding_repository/on_boarding_repository.dart';
 import 'package:frontend/domain/repository/server_login_repository.dart';
@@ -75,8 +75,6 @@ class KakaoLoginUseCase {
 
   Future<ResponseResult<String>> loginProcess(String socialId, deviceToken) async {
     String accessToken = '';
-
-    print("deviceToken deviceTokendeviceToken ${deviceToken}");
 
     //로그인 api 호출
     final loginResult = await serverLoginRepository.login('KAKAO', socialId, deviceToken);

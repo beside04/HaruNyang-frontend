@@ -11,6 +11,10 @@ class MainState with _$MainState {
     required bool pushMessagePermission,
     required bool marketingConsentAgree,
     required DateTime pushMessageTime,
+    required bool isPasswordSet,
+    required String? password,
+    required bool isBioAuth,
+    required String? hint,
   }) = _MainState;
 
   factory MainState.fromJson(Map<String, dynamic> json) => _$MainStateFromJson(json);

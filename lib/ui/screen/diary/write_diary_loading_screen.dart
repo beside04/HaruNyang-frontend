@@ -63,7 +63,7 @@ class WriteDiaryLoadingScreenState extends ConsumerState<WriteDiaryLoadingScreen
                 fit: BoxFit.fill,
               ),
               Text(
-                "당신을 위로할 편지를 쓰고 있어요",
+                "당신을 위한 편지를 쓰고 있어요",
                 style: kHeader5Style.copyWith(
                   color: Theme.of(context).colorScheme.textTitle,
                 ),

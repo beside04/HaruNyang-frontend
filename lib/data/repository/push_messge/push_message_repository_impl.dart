@@ -1,4 +1,4 @@
-import 'package:frontend/data/data_source/local_data/push_message_data_source.dart';
+import 'package:frontend/data/data_source/local_data/secure_storage/push_message_data_source.dart';
 import 'package:frontend/domain/repository/push_message/push_message_repository.dart';
 
 class PushMessageRepositoryImpl implements PushMessageRepository {

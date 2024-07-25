@@ -90,7 +90,7 @@ class OnBoardingFinishScreen extends ConsumerWidget {
 
                     Navigator.of(context).pushAndRemoveUntil(
                         CupertinoPageRoute(
-                          builder: (context) => HomeScreen(),
+                          builder: (context) => const HomeScreen(),
                           settings: const RouteSettings(arguments: {"index": 1}),
                         ),
                         (route) => false);
