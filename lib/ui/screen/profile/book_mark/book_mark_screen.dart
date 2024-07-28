@@ -5,7 +5,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
-import 'package:frontend/domains/bookmark/bookmark_list_state_provider.dart';
+import 'package:frontend/providers/bookmark/bookmark_list_state_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';

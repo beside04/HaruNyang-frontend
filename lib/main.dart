@@ -9,7 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/main/provider/main_provider.dart';
+import 'package:frontend/providers/main/provider/main_provider.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:frontend/ui/screen/splash/splash_sreen.dart';
 import 'package:frontend/utils/firebase_options.dart';

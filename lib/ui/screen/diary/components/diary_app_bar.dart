@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/diary/provider/diary_select_provider.dart';
+import 'package:frontend/providers/diary/provider/diary_select_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
 import 'package:intl/intl.dart';

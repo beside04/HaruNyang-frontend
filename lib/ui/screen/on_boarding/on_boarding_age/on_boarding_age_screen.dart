@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/on_boarding/provider/on_boarding_age/on_boarding_age_provider.dart';
+import 'package:frontend/providers/on_boarding/provider/on_boarding_age/on_boarding_age_provider.dart';
 import 'package:frontend/ui/components/age_text_field.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/layout/default_layout.dart';

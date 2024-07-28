@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/domains/splash/provider/splash_provider.dart';
+import 'package:frontend/providers/splash/provider/splash_provider.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:lottie/lottie.dart';
 

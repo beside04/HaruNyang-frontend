@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/domains/main/provider/main_provider.dart';
-import 'package:frontend/domains/password/provider/password_provider.dart';
+import 'package:frontend/providers/main/provider/main_provider.dart';
+import 'package:frontend/providers/password/provider/password_provider.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/password/components/password_keyboard.dart';
 import 'package:frontend/ui/screen/password/components/password_text_display.dart';

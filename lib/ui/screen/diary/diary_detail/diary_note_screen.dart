@@ -8,7 +8,7 @@ import 'package:frontend/config/constants.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/diary/provider/diary_provider.dart';
+import 'package:frontend/providers/diary/provider/diary_provider.dart';
 import 'package:frontend/ui/components/toast.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

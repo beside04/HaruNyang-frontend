@@ -6,7 +6,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:frontend/config/constants.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/diary/provider/diary_provider.dart';
+import 'package:frontend/providers/diary/provider/diary_provider.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:frontend/ui/screen/emotion_stamp/components/emotion_calendar_widget.dart';
 import 'package:frontend/ui/screen/emotion_stamp/components/emotion_list_widget.dart';
