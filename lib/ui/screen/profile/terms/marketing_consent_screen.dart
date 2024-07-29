@@ -7,7 +7,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/domains/main/provider/main_provider.dart';
+import 'package:frontend/providers/main/provider/main_provider.dart';
 import 'package:frontend/ui/components/back_icon.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:notification_permissions/notification_permissions.dart';

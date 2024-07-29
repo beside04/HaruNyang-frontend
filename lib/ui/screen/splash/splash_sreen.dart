@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/domains/splash/provider/splash_provider.dart';
+import 'package:frontend/providers/splash/provider/splash_provider.dart';
 import 'package:frontend/ui/layout/default_layout.dart';
 import 'package:lottie/lottie.dart';
 
@@ -35,12 +35,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPro
   Widget build(BuildContext context) {
     return DefaultLayout(
       screenName: 'Screen_Event_Splash',
-      child:
-          // Image.asset(
-          //   Theme.of(context).colorScheme.brightness == Brightness.dark ? 'lib/config/assets/lottie/splash_dark.png' : 'lib/config/assets/lottie/splash_light.png',
-          //   fit: BoxFit.fill,
-          // ),
-          Lottie.asset(
+      child: Lottie.asset(
         Theme.of(context).colorScheme.brightness == Brightness.dark ? 'lib/config/assets/lottie/splash_dark.json' : 'lib/config/assets/lottie/splash_light.json',
         controller: _controller,
         onLoaded: (composition) {
