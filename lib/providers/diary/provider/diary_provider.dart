@@ -320,7 +320,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
 
   void initPage() {
     onPageChanged(DateTime.now());
-    getBanner();
+    // getBanner();
     state = state.copyWith(
       selectedCalendarDate: DateTime.now(),
     );

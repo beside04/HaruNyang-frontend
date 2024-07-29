@@ -8,7 +8,7 @@ import 'package:frontend/ui/screen/password/components/password_text_display.dar
 import 'package:vibration/vibration.dart';
 
 class PasswordVerificationScreen extends ConsumerStatefulWidget {
-  final Widget Function(BuildContext) nextPage;
+  final Widget Function(BuildContext)? nextPage;
 
   const PasswordVerificationScreen({
     super.key,
@@ -30,7 +30,9 @@ class PasswordVerificationScreenState extends ConsumerState<PasswordVerification
     super.initState();
     passwordKeyword = '';
 
-    ref.read(mainProvider).isBioAuth ? verificationBioAuth("") : null;
+    if (ref.read(mainProvider).isBioAuth) {
+      verificationBioAuth("");
+    }
   }
 
   verificationBioAuth(val) async {
@@ -43,7 +45,9 @@ class PasswordVerificationScreenState extends ConsumerState<PasswordVerification
   }
 
   goToNextPage() {
-    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: widget.nextPage), (route) => false);
+    if (mounted) {
+      widget.nextPage == null ? Navigator.pop(context) : Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: widget.nextPage!), (route) => false);
+    }
   }
 
   verifyPassword() async {
