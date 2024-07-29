@@ -1,4 +1,5 @@
-import 'dart:async';
+import 'dart:isolate';
+import 'dart:ui';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -36,19 +37,32 @@ void main() async {
 
   await container.read(mainProvider.notifier).initializeState();
 
-  //FirebaseCrashlytics
-  runZonedGuarded<Future<void>>(() async {
-    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
 
-    initializeDateFormatting().then(
-      (_) => runApp(
-        UncontrolledProviderScope(
-          container: container,
-          child: const MyApp(),
-        ),
-      ),
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
+
+  Isolate.current.addErrorListener(RawReceivePort((pair) async {
+    final List<dynamic> errorAndStacktrace = pair;
+    await FirebaseCrashlytics.instance.recordError(
+      errorAndStacktrace.first,
+      errorAndStacktrace.last,
+      fatal: true,
     );
-  }, (error, stack) => FirebaseCrashlytics.instance.recordError(error, stack));
+  }).sendPort);
+
+  initializeDateFormatting().then(
+    (_) => runApp(
+      UncontrolledProviderScope(
+        container: container,
+        child: const MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends ConsumerWidget {
