@@ -35,12 +35,7 @@ class SplashScreenState extends ConsumerState<SplashScreen> with SingleTickerPro
   Widget build(BuildContext context) {
     return DefaultLayout(
       screenName: 'Screen_Event_Splash',
-      child:
-          // Image.asset(
-          //   Theme.of(context).colorScheme.brightness == Brightness.dark ? 'lib/config/assets/lottie/splash_dark.png' : 'lib/config/assets/lottie/splash_light.png',
-          //   fit: BoxFit.fill,
-          // ),
-          Lottie.asset(
+      child: Lottie.asset(
         Theme.of(context).colorScheme.brightness == Brightness.dark ? 'lib/config/assets/lottie/splash_dark.json' : 'lib/config/assets/lottie/splash_light.json',
         controller: _controller,
         onLoaded: (composition) {

@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:frontend/domain/model/banner/banner_data.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
@@ -26,6 +27,7 @@ class DiaryState with _$DiaryState {
     @Default(250) int currentPageCount,
     @Default(false) bool isNote,
     @Default(null) DiaryDetailData? diaryDetailData,
+    @Default([]) List<BannerData> bannerList,
   }) = _DiaryState;
 
   factory DiaryState.fromJson(Map<String, dynamic> json) => _$DiaryStateFromJson(json);

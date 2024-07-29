@@ -8,9 +8,11 @@ import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/data/data_source/local_data/shared_preferences/auto_diary_save_data_source.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/domain/model/banner/banner_data.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/diary/diary_card_data.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
+import 'package:frontend/domain/use_case/banner_use_case/get_banner_use_case.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/diary/delete_diary_use_case.dart';
 import 'package:frontend/domain/use_case/diary/image_history_use_case.dart';
@@ -50,11 +52,14 @@ final diaryProvider = StateNotifierProvider<DiaryNotifier, DiaryState>((ref) {
     ImageHistoryUseCase(
       diaryRepository: diaryRepository,
     ),
+    GetBannerUseCase(
+      bannerRepository: bannerRepository,
+    ),
   );
 });
 
 class DiaryNotifier extends StateNotifier<DiaryState> {
-  DiaryNotifier(this.ref, this.getEmotionStampUseCase, this.saveDiaryUseCase, this.updateDiaryUseCase, this.deleteDiaryUseCase, this.bookmarkUseCase, this.imageHistoryUseCase)
+  DiaryNotifier(this.ref, this.getEmotionStampUseCase, this.saveDiaryUseCase, this.updateDiaryUseCase, this.deleteDiaryUseCase, this.bookmarkUseCase, this.imageHistoryUseCase, this.getBannerUseCase)
       : super(DiaryState(
           focusedStartDate: DateTime.now(),
           focusedEndDate: DateTime.now(),
@@ -70,6 +75,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
   final BookmarkUseCase bookmarkUseCase;
   final GetEmotionStampUseCase getEmotionStampUseCase;
   final ImageHistoryUseCase imageHistoryUseCase;
+  final GetBannerUseCase getBannerUseCase;
 
   resetDiary() {
     state = state.copyWith(
@@ -314,6 +320,7 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
 
   void initPage() {
     onPageChanged(DateTime.now());
+    getBanner();
     state = state.copyWith(
       selectedCalendarDate: DateTime.now(),
     );
@@ -628,6 +635,20 @@ class DiaryNotifier extends StateNotifier<DiaryState> {
             );
           },
         );
+      },
+    );
+  }
+
+  Future<List<BannerData>?> getBanner() async {
+    final result = await getBannerUseCase();
+
+    return result.when(
+      success: (data) async {
+        state = state.copyWith(bannerList: data);
+        return data;
+      },
+      error: (message) {
+        return null;
       },
     );
   }

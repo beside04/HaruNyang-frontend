@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:frontend/apis/banner_api.dart';
 import 'package:frontend/apis/bookmark_api.dart';
 import 'package:frontend/apis/diary_api.dart';
 import 'package:frontend/apis/emotion_stamp_api.dart';
@@ -6,6 +7,7 @@ import 'package:frontend/apis/notice_api.dart';
 import 'package:frontend/apis/on_boarding_api.dart';
 import 'package:frontend/apis/refresh_interceptor.dart';
 import 'package:frontend/apis/withdraw_api.dart';
+import 'package:frontend/data/repository/banner/banner_repository_impl.dart';
 import 'package:frontend/data/repository/bookmark/bookmark_repository_impl.dart';
 import 'package:frontend/data/repository/dark_mode/dark_mode_repository_impl.dart';
 import 'package:frontend/data/repository/diary/diary_repository_impl.dart';
@@ -14,10 +16,10 @@ import 'package:frontend/data/repository/notice/notice_repository_impl.dart';
 import 'package:frontend/data/repository/on_boarding_repository/on_boarding_repository_impl.dart';
 import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
 import 'package:frontend/data/repository/push_messge/push_message_repository_impl.dart';
-import 'package:frontend/data/repository/token_repository_impl.dart';
-import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/server_login_repository_impl.dart';
+import 'package:frontend/data/repository/social_login_repository/apple_login_impl.dart';
 import 'package:frontend/data/repository/social_login_repository/kakao_login_impl.dart';
+import 'package:frontend/data/repository/token_repository_impl.dart';
 import 'package:frontend/data/repository/withdraw/withdraw_repository_impl.dart';
 import 'package:frontend/domain/use_case/bookmark/bookmark_use_case.dart';
 import 'package:frontend/domain/use_case/dark_mode/dark_mode_use_case.dart';
@@ -30,9 +32,9 @@ import 'package:frontend/domain/use_case/notice_use_case/get_notice_use_case.dar
 import 'package:frontend/domain/use_case/on_boarding_use_case/on_boarding_use_case.dart';
 import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
-import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/apple_login_use_case.dart';
 import 'package:frontend/domain/use_case/social_login_use_case/kakao_login_use_case.dart';
+import 'package:frontend/domain/use_case/token_use_case.dart';
 import 'package:frontend/domain/use_case/withdraw/withdraw_use_case.dart';
 
 final TokenRepositoryImpl tokenRepositoryImpl = TokenRepositoryImpl();
@@ -90,6 +92,10 @@ final noticeApi = NoticeApi(
   dio: getDio(),
 );
 
+final bannerApi = BannerApi(
+  dio: getDio(),
+);
+
 final KakaoLoginImpl kakaoLoginImpl = KakaoLoginImpl();
 final AppleLoginImpl appleLoginImpl = AppleLoginImpl();
 final ServerLoginRepositoryImpl serverLoginImpl = ServerLoginRepositoryImpl();
@@ -105,6 +111,10 @@ final bookmarkRepository = BookmarkRepositoryImpl(
 
 final noticeRepository = NoticeRepositoryImpl(
   noticeApi: noticeApi,
+);
+
+final bannerRepository = BannerRepositoryImpl(
+  bannerApi: bannerApi,
 );
 
 //use case

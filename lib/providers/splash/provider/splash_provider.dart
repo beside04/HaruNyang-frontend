@@ -11,6 +11,7 @@ import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
 import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/main.dart';
 import 'package:frontend/providers/diary/provider/diary_provider.dart';
 import 'package:frontend/providers/login/provider/login_provider.dart';
 import 'package:frontend/providers/main/provider/main_provider.dart';
@@ -18,7 +19,6 @@ import 'package:frontend/providers/notification/provider/notification_provider.d
 import 'package:frontend/providers/on_boarding/provider/on_boarding_provider.dart';
 import 'package:frontend/providers/splash/model/splash_state.dart';
 import 'package:frontend/providers/token/provider/token_provider.dart';
-import 'package:frontend/main.dart';
 import 'package:frontend/ui/components/dialog_button.dart';
 import 'package:frontend/ui/components/dialog_component.dart';
 import 'package:frontend/ui/screen/home/home_screen.dart';
@@ -274,9 +274,6 @@ class SplashNotifier extends StateNotifier<SplashState> {
   Future<void> init() async {
     await initUpdatePopup();
     await getLastDate();
-
-    print("1233333 ${ref.read(mainProvider).password}");
-    print("${ref.read(mainProvider).password}");
 
     state.isNeedUpdate ? null : await goToHome();
   }

@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -37,19 +38,111 @@ class EmotionStampScreen extends ConsumerStatefulWidget {
 }
 
 class EmotionStampScreenState extends ConsumerState<EmotionStampScreen> {
-  @override
-  Widget build(BuildContext context) {
-    TargetPlatform os = Theme.of(context).platform;
+  late BannerAd _bannerAd;
+  bool _isBannerAdLoaded = false;
 
-    BannerAd banner = BannerAd(
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _loadBannerAd();
+    });
+  }
+
+  void _loadBannerAd() {
+    TargetPlatform os = Theme.of(context).platform;
+    _bannerAd = BannerAd(
       listener: BannerAdListener(
-        onAdFailedToLoad: (Ad ad, LoadAdError error) {},
-        onAdLoaded: (_) {},
+        onAdFailedToLoad: (Ad ad, LoadAdError error) {
+          ad.dispose();
+        },
+        onAdLoaded: (_) {
+          setState(() {
+            _isBannerAdLoaded = true;
+          });
+        },
       ),
       size: AdSize.banner,
       adUnitId: UNIT_ID[os == TargetPlatform.iOS ? 'ios' : 'android']!,
       request: const AdRequest(),
     )..load();
+  }
+
+  @override
+  void dispose() {
+    _bannerAd.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bannerList = ref.watch(diaryProvider).bannerList;
+
+    List<Widget> carouselItems = bannerList.isEmpty
+        ? [
+            Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: SizedBox(
+                width: double.infinity,
+                height: 96,
+                child: GestureDetector(
+                  onTap: () async {
+                    GlobalUtils.setAnalyticsCustomEvent('Click_Default_Banner');
+                    if (!await launch("https://www.instagram.com/haru__nyang__/")) {
+                      throw Exception('Could not launch');
+                    }
+                  },
+                  child: Image.asset(
+                    "lib/config/assets/images/home/banner/default_banner.png",
+                  ),
+                ),
+              ),
+            ),
+          ]
+        : bannerList.map((banner) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: 96,
+                    child: GestureDetector(
+                      onTap: () async {
+                        GlobalUtils.setAnalyticsCustomEvent('Click_Default_Banner');
+                        if (!await launch(banner.landingUrl)) {
+                          throw Exception('Could not launch');
+                        }
+                      },
+                      child: Image.network(
+                        banner.image,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          }).toList();
+
+    if (_isBannerAdLoaded) {
+      carouselItems.add(
+        Builder(
+          builder: (BuildContext context) {
+            return SizedBox(
+              width: double.infinity,
+              height: 96,
+              child: GestureDetector(
+                onTap: () {
+                  GlobalUtils.setAnalyticsCustomEvent('Click_AD');
+                },
+                child: AdWidget(ad: _bannerAd),
+              ),
+            );
+          },
+        ),
+      );
+    }
 
     return DefaultLayout(
       screenName: 'Screen_Event_Main_EmotionCalendar',
@@ -148,99 +241,19 @@ class EmotionStampScreenState extends ConsumerState<EmotionStampScreen> {
                   );
                 }),
               ),
-              isBannerOpen
-                  ?
-                  // Padding(
-                  //         padding: const EdgeInsets.all(20.0),
-                  //         child: Container(
-                  //           width: double.infinity,
-                  //           height: 96,
-                  //           decoration: BoxDecoration(
-                  //             color: Theme.of(context).colorScheme.brightness == Brightness.dark ? Color(0xffF4D3B3) : Color(0xffffe9d5),
-                  //             borderRadius: BorderRadius.all(
-                  //               Radius.circular(16),
-                  //             ),
-                  //           ),
-                  //           child: GestureDetector(
-                  //             onTap: () async {
-                  //               GlobalUtils.setAnalyticsCustomEvent('Click_Banner');
-                  //               if (!await launch(bannerUrl)) {
-                  //                 throw Exception('Could not launch');
-                  //               }
-                  //             },
-                  //             child: Row(
-                  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //               children: [
-                  //                 Padding(
-                  //                   padding: const EdgeInsets.only(
-                  //                     left: 24.0,
-                  //                     top: 20,
-                  //                   ),
-                  //                   child: Column(
-                  //                     crossAxisAlignment: CrossAxisAlignment.start,
-                  //                     children: [
-                  //                       Text(
-                  //                         "하루냥 사용자 단체 인터뷰 모집",
-                  //                         style: TextStyle(
-                  //                           fontFamily: pretendard,
-                  //                           fontSize: 12,
-                  //                           fontWeight: FontWeight.w600,
-                  //                         ).copyWith(color: kGrayColor550),
-                  //                       ),
-                  //                       SizedBox(
-                  //                         height: 2,
-                  //                       ),
-                  //                       Text(
-                  //                         "하루냥 개발 크루를 만나고\n의견을 말해주세요!",
-                  //                         style: kHeader5Style.copyWith(color: kBlackColor),
-                  //                       ),
-                  //                     ],
-                  //                   ),
-                  //                 ),
-                  //                 Padding(
-                  //                   padding: const EdgeInsets.only(
-                  //                     right: 28.0,
-                  //                   ),
-                  //                   child: Image.asset(
-                  //                     "lib/config/assets/images/character/character11.png",
-                  //                     height: 74,
-                  //                   ),
-                  //                 ),
-                  //               ],
-                  //             ),
-                  //           ),
-                  //         ),
-                  //       )
-                  Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 96,
-                        child: GestureDetector(
-                          onTap: () async {
-                            GlobalUtils.setAnalyticsCustomEvent('Click_Default_Banner');
-                            // if (!await launch(bannerUrl)) {
-                            if (!await launch("https://www.instagram.com/haru__nyang__/")) {
-                              throw Exception('Could not launch');
-                            }
-                          },
-                          child: Image.asset(
-                            "lib/config/assets/images/home/banner/default_banner.png",
-                          ),
-                        ),
-                      ),
-                    )
-                  : SizedBox(
-                      height: 100,
-                      child: GestureDetector(
-                        onTap: () {
-                          GlobalUtils.setAnalyticsCustomEvent('Click_AD');
-                        },
-                        child: AdWidget(
-                          ad: banner,
-                        ),
-                      ),
-                    ),
+              CarouselSlider(
+                options: CarouselOptions(
+                  height: 100,
+                  viewportFraction: 1,
+                  autoPlay: true,
+                  autoPlayInterval: const Duration(seconds: 5),
+                  autoPlayAnimationDuration: const Duration(seconds: 1),
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enlargeCenterPage: true,
+                  scrollDirection: Axis.horizontal,
+                ),
+                items: carouselItems,
+              ),
             ],
           ),
         ),
