@@ -1,4 +1,4 @@
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/di/dependency_injection.dart';
 import 'package:frontend/domain/model/diary/comment_data.dart';
 import 'package:frontend/domain/model/emoticon_weather/emoticon_data.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';

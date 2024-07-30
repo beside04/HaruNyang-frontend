@@ -39,15 +39,18 @@ void main() async {
 
   await container.read(mainProvider.notifier).initializeState();
 
+  //Flutter 프레임워크에서 발생하는 오류를 Firebase Crashlytics에 보고
   FlutterError.onError = (errorDetails) {
     FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
   };
 
+  //플랫폼 수준에서 발생하는 오류를 처리하고 Firebase Crashlytics에 보고
   PlatformDispatcher.instance.onError = (error, stack) {
     FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
     return true;
   };
 
+  //Isolate에서 발생하는 오류를 처리하고 Firebase Crashlytics에 보고
   Isolate.current.addErrorListener(RawReceivePort((pair) async {
     final List<dynamic> errorAndStacktrace = pair;
     await FirebaseCrashlytics.instance.recordError(

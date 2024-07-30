@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/di/dependency_injection.dart';
 import 'package:frontend/domain/model/notice/notice_data.dart';
 import 'package:frontend/domain/use_case/notice_use_case/get_notice_use_case.dart';
 

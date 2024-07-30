@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/config/theme/size_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/di/dependency_injection.dart';
 import 'package:frontend/providers/home/provider/home_provider.dart';
 import 'package:frontend/ui/components/bottom_button.dart';
 import 'package:frontend/ui/layout/default_layout.dart';

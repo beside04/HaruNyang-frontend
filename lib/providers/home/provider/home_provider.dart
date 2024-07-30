@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frontend/apis/emotion_stamp_api.dart';
 import 'package:frontend/data/repository/emotion_stamp_repository/emotion_stamp_repository_impl.dart';
 import 'package:frontend/data/repository/pop_up/pop_up_repository_impl.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/di/dependency_injection.dart';
 import 'package:frontend/domain/use_case/emotion_stamp_use_case/get_emotion_diary_use_case.dart';
 import 'package:frontend/domain/use_case/pop_up/pop_up_use_case.dart';
 import 'package:frontend/main.dart';

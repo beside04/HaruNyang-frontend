@@ -1,6 +1,6 @@
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/di/dependency_injection.dart';
 import 'package:frontend/domain/use_case/push_message/push_message_use_case.dart';
 import 'package:frontend/providers/main/provider/main_provider.dart';
 
