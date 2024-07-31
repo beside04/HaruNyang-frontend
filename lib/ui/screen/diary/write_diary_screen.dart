@@ -13,7 +13,7 @@ import 'package:frontend/config/constants.dart';
 import 'package:frontend/config/theme/color_data.dart';
 import 'package:frontend/config/theme/text_data.dart';
 import 'package:frontend/config/theme/theme_data.dart';
-import 'package:frontend/di/getx_binding_builder_call_back.dart';
+import 'package:frontend/di/dependency_injection.dart';
 import 'package:frontend/domain/model/diary/diary_detail_data.dart';
 import 'package:frontend/providers/diary/provider/diary_provider.dart';
 import 'package:frontend/providers/diary/provider/write_diary_provider.dart';

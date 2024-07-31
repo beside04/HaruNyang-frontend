@@ -2,22 +2,22 @@
 
 ### 프로젝트 설명
 
-일기를 작성하면 일기의 단어를 매칭하여 편지 또는 명대사를 추천해주는 일기 앱입니다.
+일기를 작성하면 일기의 단어와 문장을 매칭하여 AI의 쪽지(한마디)를 받을 수 있는 일기 앱입니다.
 
 <img src="https://user-images.githubusercontent.com/73716178/222867930-be759be5-1876-409c-b973-1c22e6ef5497.png" width="500" height="1000"/>
 
 ### 사용중인 상태관리, 디자인 패턴
 
-Getx 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나인 mvvm 디자인 패턴을 채택하여 프로젝트를 구성 할 계획입니다.
+riverpod 상태관리 패키지를 사용하며 클린 아키텍쳐 패턴중 하나인 mvvm 디자인 패턴을 채택하여 프로젝트를 구성 할 계획입니다.
 
 ![0_zUtZYiJ1bDTugOYY](https://user-images.githubusercontent.com/73716178/201530142-9a2df361-6c7d-4898-94e9-3cd5880118df.png)
 
 # 프로젝트 구성 안내
 
-- Flutter version 3.3.1
-- Dart version 2.18.0
-- DevTools version 2.15.0
-- Android SDK version 33.0.0
+- Flutter version 3.22.2
+- Dart version 3.4.3
+- DevTools version 2.34.3
+- Android SDK version 34.0.0
 
 `flutter doctor -v` 로 현재 사용중인 프로젝트의 개발환경 확인이 가능합니다.
 
@@ -72,8 +72,14 @@ Dart에서는 UppderCamelCase, lowerCamelCase, lowercase_with_underscores 네이
 Class, Enum, Typedef, Type 매개변수는 UpperCamelCase를 사용합니다.
 
 ```dart
-class SliderMenu { ... }
-class HttpRequest { ... }
+class SliderMenu {
+  ...
+}
+
+class HttpRequest {
+  ...
+}
+
 typedef Predicate<T> = bool Function(T value);
 
 ...
@@ -102,7 +108,7 @@ import 'slider_menu.dart';
 const pi = 3.14;
 const defaultTimeout = 1000;
 final urlScheme = RegExp('^([a-z]+):');
- 
+
 class Dice {
   static final numberGenerator = Random();
 }
@@ -111,7 +117,7 @@ class Dice {
 const PI = 3.14;
 const DefaultTimeout = 1000;
 final URL_SCHEME = RegExp('^([a-z]+):');
- 
+
 class Dice {
   static final NUMBER_GENERATOR = Random();
 }
@@ -157,30 +163,27 @@ class Dice {
 
 해당 디렉토리 구조는 클린 아키텍쳐 패턴중 하나인 MVVM 패턴의 사용되는 여러 구조의 자료를 찾아 적용했습니다.
 
-![제목 없는 다이어그램 drawio (1)](https://user-images.githubusercontent.com/73716178/201528919-277f99a9-64e3-409e-afbb-ba8b8e000252.png)
-
 ⚠️ **어디까지나 참고로 작성한 내용이며, 작업중 불필요하다거나, 추가로 넣어야 한다면 수정이나 말씀 부탁드립니다! 🙏**
 
+- api : API서버와 통신에 필요한 모든 함수들이 구현되어 있다.
 - config : 앱의 **전반적** 구성요소들입니다.
     - theme : theme 요소 및 theme 관리 데이터
     - route : 라우팅 소스
     - assets : images, logo 등의 앱에서 사용할 design asset
-- core : 앱에서 **전역적**으로 사용되는 요소들입니다.
-    - params : API 호출시 필요한 파라미터 모아둔 클래스
-    - resources : API 호출시 결과를 갖는 wrapper class. 통신 성공/실패 케이스등
-    - utils : 프로젝트의 모든 유틸리티 클래스
 - data : data layer 관련 요소들
-    - datasources : api 호출 클래스
+    - data_source : api 호출 클래스
         - local: 로컬에 저장된 정보를 가져오는 모든 함수들이 구현되어 있다.
-        - remote: API서버와 통신에 필요한 모든 함수들이 구현되어 있다.
     - models : api 결과 데이터 관련 클래스(DTO)
     - repositories : api 클래스를 주입받아 사용하는 레포지토리 구현체
+- di : 의존성 주입 초기화
 - domain : domain layer 관련 요소들
-    - model : POJO (data폴더의 model과 달리 데이터 파싱, 변환에 영향을 받지않는 근본적인 데이터 구조를 나타내는 클래스)
+    - model : data폴더의 model과 달리 데이터 파싱, 변환에 영향을 받지않는 근본적인 데이터 구조를 나타내는 클래스
     - repositories : api호출 인터페이스.
-    - usecases : repository를 주입받아서 하나의 액션 수행하는 클래스 (비지니스 로직)
-- presentation : presentation layer 관련 요소들
-    - view : 사용자가 직접 확인이 가능한 하는 화면
-        - component(widget) : 공통된 위젯 컴포넌트
-    - viewmodel : View상태를 유지/관리하는 곳
+    - use_case : repository를 주입받아서 하나의 액션 수행하는 클래스 (비지니스 로직)
+- ui : presentation layer 관련 요소들
+    - components : 공통된 위젯 컴포넌트
+    - screen : View 페이지
+- providers : 상태관리 요소들
+    - model : provider의 모델 클래스
+    - providers : View 상태의 상태관리를 유지/관리하는 곳
 
