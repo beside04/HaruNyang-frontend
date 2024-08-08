@@ -623,7 +623,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                               lineCount: -1,
                                             ),
                                             child: TextField(
-                                              maxLength: 500,
+                                              maxLength: 1000,
                                               maxLines: null,
                                               autofocus: true,
                                               style: fontNotifier.getFontStyle().copyWith(
@@ -650,7 +650,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                               ),
                                               onChanged: (value) {
                                                 ref.watch(writeDiaryProvider.notifier).setDiaryValueLength(value.length);
-                                                value.length == 500
+                                                value.length == 1000
                                                     ? showDialog(
                                                         barrierDismissible: true,
                                                         context: context,
@@ -658,7 +658,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                                           return DialogComponent(
                                                             title: "글자 제한",
                                                             content: Text(
-                                                              "500 글자까지 작성할 수 있어요.",
+                                                              "1000 글자까지 작성할 수 있어요.",
                                                               style: kHeader6Style.copyWith(color: Theme.of(context).colorScheme.textSubtitle),
                                                             ),
                                                             actionContent: [
@@ -767,7 +767,7 @@ class WriteDiaryScreenState extends ConsumerState<WriteDiaryScreen> with SingleT
                                     );
                                   }),
                                   Text(
-                                    "/500",
+                                    "/1000",
                                     style: kBody2Style.copyWith(color: Theme.of(context).colorScheme.textLowEmphasis),
                                   ),
                                 ],

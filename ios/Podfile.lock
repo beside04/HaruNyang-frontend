@@ -118,6 +118,8 @@ PODS:
     - FirebaseCoreExtension (~> 10.0)
     - GTMSessionFetcher/Core (< 4.0, >= 2.1)
   - Flutter (1.0.0)
+  - flutter_fgbg (0.0.1):
+    - Flutter
   - flutter_image_compress (1.0.0):
     - Flutter
     - Mantle
@@ -271,6 +273,7 @@ DEPENDENCIES:
   - firebase_remote_config (from `.symlinks/plugins/firebase_remote_config/ios`)
   - firebase_storage (from `.symlinks/plugins/firebase_storage/ios`)
   - Flutter (from `Flutter`)
+  - flutter_fgbg (from `.symlinks/plugins/flutter_fgbg/ios`)
   - flutter_image_compress (from `.symlinks/plugins/flutter_image_compress/ios`)
   - flutter_keyboard_visibility (from `.symlinks/plugins/flutter_keyboard_visibility/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
@@ -345,6 +348,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/firebase_storage/ios"
   Flutter:
     :path: Flutter
+  flutter_fgbg:
+    :path: ".symlinks/plugins/flutter_fgbg/ios"
   flutter_image_compress:
     :path: ".symlinks/plugins/flutter_image_compress/ios"
   flutter_keyboard_visibility:
@@ -416,6 +421,7 @@ SPEC CHECKSUMS:
   FirebaseSharedSwift: c92645b392db3c41a83a0aa967de16f8bad25568
   FirebaseStorage: bc7bddc743548a89cfb896843a77cf4bdde2c231
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_fgbg: 31c0d1140a131daea2d342121808f6aa0dcd879d
   flutter_image_compress: 5a5e9aee05b6553048b8df1c3bc456d0afaac433
   flutter_keyboard_visibility: 0339d06371254c3eb25eeb90ba8d17dca8f9c069
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
